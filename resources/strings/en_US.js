@@ -487,7 +487,7 @@ export default {
 			},
 			description: {
 				placeholder: "Post description",
-				hint: "You can use HTML markup to improve your description!",
+				hint: "You can use Markdown formatting to improve your description!",
 			},
 		},
 		download: {

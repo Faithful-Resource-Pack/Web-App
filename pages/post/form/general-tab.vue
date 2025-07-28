@@ -61,7 +61,6 @@
 
 		<tabbed-text-field
 			v-model="formData.description"
-			type="html"
 			:textareaProps="{
 				clearable: true,
 				placeholder: $root.lang().posts.general.description.placeholder,
