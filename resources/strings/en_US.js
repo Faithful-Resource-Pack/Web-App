@@ -560,7 +560,8 @@ export default {
 			description: "Are you sure you want to delete your account?",
 			warning: "This process is irreversible!",
 			addons: {
-				title: "This will affect %d add-on(s)",
+				title_singular: "This will affect %d add-on",
+				title_plural: "This will affect %d add-ons",
 				deleted: "Deleted",
 				transferred: "Transferred to other authors",
 			},

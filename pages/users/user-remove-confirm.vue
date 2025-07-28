@@ -72,6 +72,14 @@ export default {
 					this.$emit("close", true);
 				});
 		},
+		getAddons() {
+			axios
+				.get(`${this.$root.apiURL}/users/${this.data.id}/addons`, this.$root.apiOptions)
+				.then((res) => {
+					this.transferredAddons = res.data.filter((a) => a.authors.length > 1);
+					this.deletedAddons = res.data.filter((a) => a.authors.length === 1);
+				});
+		},
 	},
 	computed: {
 		description() {
@@ -82,12 +90,12 @@ export default {
 				.replace("%d", this.data.id);
 		},
 		addonDeleteTitle() {
+			const count = this.transferredAddons.length + this.deletedAddons.length;
 			return this.$root
 				.lang()
-				.profile.delete.addons.title.replace(
-					"%d",
-					this.transferredAddons.length + this.deletedAddons.length,
-				);
+				.profile.delete.addons[
+					count === 1 ? "title_singular" : "title_plural"
+				].replace("%d", count);
 		},
 	},
 	watch: {
@@ -97,14 +105,13 @@ export default {
 		modalOpened(newValue) {
 			this.$emit("input", newValue);
 		},
-	},
-	created() {
-		axios
-			.get(`${this.$root.apiURL}/users/${this.data.id}/addons`, this.$root.apiOptions)
-			.then((res) => {
-				this.transferredAddons = res.data.filter((a) => a.authors.length > 1);
-				this.deletedAddons = res.data.filter((a) => a.authors.length === 1);
-			});
+		"data.id": {
+			handler() {
+				// start loading addons as soon as user has loaded
+				this.getAddons();
+			},
+			immediate: true,
+		},
 	},
 };
 </script>
