@@ -5,14 +5,16 @@
 		<div class="text-h4 py-4">
 			{{ $root.lang().settings.title }}
 		</div>
-		<v-btn :color="pageColor" :disabled="jsonIsNotValid" block append-icon @click="save">
+		<div class="my-2 text-h5">{{ $root.lang().settings.edit_raw }}</div>
+
+		<v-btn :color="pageColor" class="my-6" :disabled="jsonIsNotValid" block @click="save">
 			{{ $root.lang().global.btn.save }} <v-icon right>mdi-content-save</v-icon>
 		</v-btn>
-		<div class="my-5 text-h5">{{ $root.lang().settings.label.edit_raw }}</div>
+
 		<prism-editor
 			v-model="jsonText"
-			style="max-height: 600px"
-			class="ma-0 json-editor mb-2"
+			class="ma-0 json-editor my-2"
+			style="height: auto"
 			:highlight="highlighter"
 			line-numbers
 		/>

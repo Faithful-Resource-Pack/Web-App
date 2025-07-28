@@ -661,10 +661,7 @@ export default {
 	},
 	settings: {
 		title: "Settings",
-		label: {
-			edit_raw: "Edit raw JSON",
-			edit_editor: "Edit with visual editor",
-		},
+		edit_raw: "Edit raw JSON",
 	},
 	dashboard: {
 		welcome_user: "Welcome %USER%!",
