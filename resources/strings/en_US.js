@@ -2,12 +2,12 @@ export default {
 	credits: ["Put your name here on your respective language's file if you've translated!"],
 	global: {
 		name: "Faithful Web Application",
-		logout: "Log Out",
+		logout: "Log out",
 		login: "Log in via Discord",
 		ends_success: "Completed successfully",
 		loading: "Loading, please wait…",
 		no_results: "No results were found",
-		nyi: "Not yet implemented.",
+		nyi: "Not yet implemented",
 		invalid_url: "This URL is not valid",
 		translations: "Translations",
 		navbar_labels: {
@@ -41,7 +41,7 @@ export default {
 			deny: "Deny",
 			approve: "Approve",
 			archive: "Archive",
-			load_more: "Load More",
+			load_more: "Load more",
 			discard: "Discard",
 			confirm: "Confirm",
 			publish: "Publish",
@@ -120,7 +120,7 @@ export default {
 		},
 		json_editor: {
 			import_data: "Import JSON data",
-			parse_json: "Parse JSON to data",
+			parse_json: "Convert JSON to data",
 		},
 		text_field_tabs: {
 			write: "Write",
@@ -149,7 +149,7 @@ export default {
 				add_new_contribution: "Add a new contribution",
 				clone_contribution: "Clone contribution",
 				one_contributor: "Select at least one contributor",
-				pack: "Resource Pack",
+				pack: "Resource pack",
 				texture_id: "Texture ID",
 				texture_ids: "Texture IDs",
 				id_field_errors: {
@@ -183,12 +183,12 @@ export default {
 			search_texture: "Search texture name",
 			add_success: "Added texture(s) successfully",
 			delete_modal: {
-				deleting_use_will_delete_paths: "Deleting a use will also delete all its paths.",
+				deleting_use_will_delete_paths: "Deleting a use will also delete all its paths",
 				load_paths: "Load affected paths",
 			},
 			modal: {
 				title: "Texture",
-				subtitle: "Uses and Paths",
+				subtitle: "Uses and paths",
 				tagless: "No tags added",
 				copy_json_data: "Copied JSON data to clipboard",
 				clear_on_save: "Clear on save",
@@ -204,7 +204,7 @@ export default {
 				add_use: "Add new use",
 				change_use: "Edit use",
 				add_edition_use: "Add automatic %edition% use",
-				no_use_found: "No uses found for this texture.",
+				no_use_found: "No uses found for this texture",
 				id_hint: "Changing the use ID can break everything!",
 				id: "Use ID",
 				name: "Use name",
@@ -216,7 +216,7 @@ export default {
 				plural: "Paths",
 				add_path: "Add new path",
 				change_path: "Edit path",
-				no_path_found: "No paths found for this use.",
+				no_path_found: "No paths found for this use",
 				id_hint: "Changing the path ID can break everything!",
 				id: "Path ID",
 				name_hint: "The path should start from the root directory (ex: assets/…)",
@@ -256,7 +256,7 @@ export default {
 				add_pack: "Add new pack",
 				change_pack: "Edit pack",
 				id: "Pack ID",
-				id_creation_hint: "A pack ID can either be manually specified or automatically generated.",
+				id_creation_hint: "A pack ID can either be manually specified or automatically generated",
 				id_editing_hint: "Changing a pack ID can break everything!",
 				name: "Pack name",
 				tags: "Pack tags",
@@ -265,8 +265,8 @@ export default {
 				logo: "Pack logo URL",
 				github: {
 					title: "GitHub",
-					title_hint: "An edition can be left blank if it's not yet supported.",
-					length_notice: "At least one GitHub repository needs to be present.",
+					title_hint: "An edition can be left blank if it's not yet supported",
+					length_notice: "At least one GitHub repository needs to be present",
 					organization: "Organization",
 					repository: "Repository",
 				},
@@ -276,13 +276,13 @@ export default {
 				add_submission: "Add submission information",
 				edit_submission: "Edit submission information",
 				reference_pack: "Reference pack",
-				reference_hint: "Pack to compare against in submission embeds.",
+				reference_hint: "Pack to compare against in submission embeds",
 				contributor_role: "Contributor role ID",
 				time_to_results: "Time to results",
-				time_hint: "Delays are measured in days.",
+				time_hint: "Delays are measured in days",
 				channels: {
 					title: "Discord channels",
-					title_hint: "Enable Developer Mode and right click on a channel to get channel IDs.",
+					title_hint: "Enable Developer Mode and right click on a channel to get channel IDs",
 					submit: "Submission channel",
 					results: "Results channel",
 				},
@@ -294,7 +294,7 @@ export default {
 		titles: {
 			addons: "Review add-ons",
 			translation: "Review translations",
-			pending: "Pending Approval",
+			pending: "Pending approval",
 			denied: "Denied",
 			approved: "Approved",
 			archived: "Archived",
@@ -340,7 +340,7 @@ export default {
 			title: "Confirm deletion",
 			labels: {
 				question: "Do you want to delete %s?",
-				warning: "You can't undo this operation.",
+				warning: "You can't undo this operation",
 			},
 		},
 		general: {
@@ -349,11 +349,11 @@ export default {
 			title: "General",
 			name: {
 				label: "Add-on name",
-				hint: "A shorter name is preferred.",
+				hint: "A shorter name is preferred",
 				rules: {
-					name_required: "A name is required.",
-					name_too_big: "Add-on name must be less than %s characters.",
-					name_too_small: "Add-on name must be at least %s characters long.",
+					name_required: "A name is required",
+					name_too_big: "Add-on name must be less than %s characters",
+					name_too_small: "Add-on name must be at least %s characters long",
 					name_unavailable: "This name is already taken!",
 				},
 			},
@@ -378,16 +378,16 @@ export default {
 				placeholder: "Add-on description",
 				hint: "You can use Markdown formatting to improve your description!",
 				rules: {
-					description_required: "The description is required.",
-					description_too_big: "Description must be less than %s characters.",
-					description_too_small: "Description must be at least %s characters long.",
+					description_required: "The description is required",
+					description_too_big: "Description must be less than %s characters",
+					description_too_small: "Description must be at least %s characters long",
 				},
 			},
 			embed_description: {
 				label: "Embed description",
 				hint: "Description seen when sharing the add-on on social media",
 				rules: {
-					too_big: "Embed description must be less than %s characters.",
+					too_big: "Embed description must be less than %s characters",
 				},
 			},
 		},
@@ -401,10 +401,10 @@ export default {
 				},
 				rules: {
 					image_size:
-						"Image size should be less than %s KB! Use https://compressor.io/ to compress it.",
-					image_ratio: "Wrong Ratio: The provided image doesn't have a 16:9 side ratio.",
-					image_required: "A header image is required.",
-					jpeg: "Image must be a lossy JPEG.",
+						"Image size should be less than %s KB! Use https://compressor.io/ to compress it",
+					image_ratio: "Wrong ratio: The provided image doesn't have a 16:9 side ratio",
+					image_required: "A header image is required",
+					jpeg: "Image must be a lossy JPEG",
 				},
 			},
 			carousel: {
@@ -413,7 +413,7 @@ export default {
 					normal: "Additional image(s)",
 					replace: "Replace additional image(s)",
 				},
-				rule: "Wrong Ratio: All images with a side ratio other than 16:9 have been removed.",
+				rule: "Wrong ratio: All images with a side ratio other than 16:9 have been removed",
 			},
 		},
 		compatibility: {
@@ -434,14 +434,14 @@ export default {
 				placeholder: "CurseForge, GitHub…",
 				label: "Name",
 				rules: {
-					name_required: "A name is required.",
-					name_cannot_be_empty: "Name can't be empty.",
+					name_required: "A name is required",
+					name_cannot_be_empty: "Name can't be empty",
 				},
 			},
 			link: {
 				placeholder: "https://www.example.com/",
 				label: "Link",
-				rule: "URL must be valid.",
+				rule: "URL must be valid",
 			},
 		},
 		status: {
@@ -483,7 +483,7 @@ export default {
 			},
 			discontinued: {
 				label: "Discontinued",
-				hint: "If checked, the post will be marked as discontinued.",
+				hint: "If checked, the post will be marked as discontinued",
 			},
 			description: {
 				placeholder: "Post description",
@@ -521,7 +521,7 @@ export default {
 		},
 	},
 	statistics: {
-		title: "Contribution Statistics",
+		title: "Contribution statistics",
 		loading: "Loading graph…",
 		label: {
 			textures: "Textures",
@@ -535,11 +535,11 @@ export default {
 			title: "General",
 			uuid: {
 				label: "Minecraft profile UUID",
-				hint: "Your skin will be displayed on your created or credited add-ons.",
+				hint: "Your skin will be displayed on your created or credited add-ons",
 			},
 			username: {
 				label: "Username",
-				hint: "Your username will be displayed on Faithful services for contributions, add-ons, etc.",
+				hint: "Your username will be displayed on Faithful services for contributions, add-ons, etc",
 			},
 			anonymous: {
 				label: "Anonymous",
@@ -547,7 +547,7 @@ export default {
 			},
 		},
 		social: {
-			title: "Social Links",
+			title: "Social links",
 			link_label: "Edit link",
 			type_label: "Select media type",
 			placeholder: "https://www.example.com/",
@@ -572,18 +572,18 @@ export default {
 				label: "File name",
 				hint: "Name describes shortly the file",
 				rules: {
-					name_required: "A name is required.",
-					name_too_big: "File name must be less than %s characters.",
-					name_too_small: "File name must be at least %s characters long.",
+					name_required: "A name is required",
+					name_too_big: "File name must be less than %s characters",
+					name_too_small: "File name must be at least %s characters long",
 				},
 			},
 			use: {
 				label: "File use",
 				hint: "Describes short use",
 				rules: {
-					name_required: "A value is required.",
-					name_too_big: "File use must be less than %s characters.",
-					name_too_small: "File use must be at least %s characters long.",
+					name_required: "A value is required",
+					name_too_big: "File use must be less than %s characters",
+					name_too_small: "File use must be at least %s characters long",
 				},
 			},
 		},
@@ -599,14 +599,14 @@ export default {
 		error_message: {
 			texture_not_done: "This texture is missing!",
 			user_anonymous: "Anonymous",
-			user_not_found: "Unknown User",
+			user_not_found: "Unknown user",
 			contribution_not_found: "No contributions found in database!",
 			search_failed: "Failed to search",
 		},
 		category: {
 			search: "Search",
 			tag: "Tag",
-			mc_version: "Minecraft Version",
+			mc_version: "Minecraft version",
 			edition: "Edition",
 			pack: "Pack",
 		},
@@ -615,7 +615,7 @@ export default {
 			name_desc: "Name (Z → A)",
 			id_asc: "Texture ID (smallest → largest)",
 			id_desc: "Texture ID (largest → smallest)",
-			contrib_desc: "Recently Contributed",
+			contrib_desc: "Recently contributed",
 		},
 		tooltip: {
 			modded: "Modded Texture",
@@ -624,7 +624,7 @@ export default {
 		},
 		all: "All",
 		latest: "Latest",
-		clear_cache: "Clear Gallery Cache",
+		clear_cache: "Clear gallery cache",
 		result_stats_singular: "%COUNT% texture found in %SECONDS% seconds",
 		result_stats_plural: "%COUNT% textures found in %SECONDS% seconds",
 		modal: {
@@ -679,7 +679,7 @@ export default {
 		titles: {
 			users: "Users",
 			addons: "Add-ons",
-			contribution_activity: "Contribution Activity",
+			contribution_activity: "Contribution activity",
 			contribution_stats: "Contributions",
 			profile: "Profile",
 		},
