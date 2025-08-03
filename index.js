@@ -322,17 +322,24 @@ const app = new Vue({
 		 * @returns all tabs to be added in the html
 		 */
 		availableTabs() {
-			// if there's no whitelisted roles assume it's available for everyone
-			return this.tabs
-				.filter((tab) => !tab.roles || tab.roles.some((role) => this.userRoles.includes(role)))
-				.map((tab) => {
-					tab.labelText = this.lang().global.tabs[tab.label]?.title;
-					tab.subtabs = tab.subtabs.map((subtab) => {
-						subtab.labelText = this.lang().global.tabs[tab.label]?.subtabs[subtab.label];
-						return subtab;
-					});
-					return tab;
-				});
+			return (
+				this.tabs
+					// first filter categories
+					.filter((tab) => !tab.roles || tab.roles.some((r) => this.userRoles.includes(r)))
+					.map((tab) => ({
+						// must create a new object so if the user logs in the old tabs aren't deleted
+						...tab,
+						labelText: this.lang().global.tabs[tab.label]?.title,
+						subtabs: tab.subtabs
+							.filter((s) => this.isLoggedIn || s.public)
+							.map((s) => {
+								s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
+								return s;
+							}),
+					}))
+					// then when subtabs are filtered filter again
+					.filter((tab) => tab.subtabs.length)
+			);
 		},
 		/**
 		 * Tell if the user is logged in
