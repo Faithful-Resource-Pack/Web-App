@@ -6,7 +6,7 @@
 
 		<div :class="['my-2 text-h5', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
 			<v-list :rounded="$vuetify.breakpoint.mdAndUp" class="main-container">
-				<v-list-item>
+				<v-list-item two-line>
 					<v-list-item-avatar>
 						<v-img :src="$root.user.avatar" />
 					</v-list-item-avatar>
@@ -14,12 +14,17 @@
 					<v-list-item-content>
 						<v-list-item-title>
 							{{ $root.discordUser.discordName || $root.user.username }}
+							<span class="text--secondary">• {{ $root.user.id }}</span>
 						</v-list-item-title>
-						<v-list-item-subtitle style="font-size: 0.7rem; opacity: 0.8">
-							{{ $root.user.id }}
-						</v-list-item-subtitle>
 						<v-list-item-subtitle>
-							{{ ($root.user.roles || []).join(" • ") }}
+							<v-chip
+								v-for="role in $root.user.roles || []"
+								:key="role"
+								class="mr-1 px-2 my-1"
+								x-small
+							>
+								{{ role }}
+							</v-chip>
 						</v-list-item-subtitle>
 					</v-list-item-content>
 				</v-list-item>
