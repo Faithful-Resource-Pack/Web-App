@@ -31,7 +31,7 @@
 			</v-row>
 			<v-row v-else class="mb-0" style="width: 100%">
 				<v-col
-					v-for="i in 5"
+					v-for="i in 6"
 					:key="`skeleton-${i}`"
 					cols="12"
 					sm="6"
@@ -53,7 +53,7 @@ import DashboardCard from "./dashboard-card.vue";
 import { CalendarHeatmap } from "vue-calendar-heatmap";
 
 export default {
-	name: "contribution-card",
+	name: "contribution-activity-card",
 	components: {
 		DashboardCard,
 		CalendarHeatmap,

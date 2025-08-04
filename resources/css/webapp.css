@@ -689,11 +689,6 @@ img.texture-img {
 	width: 100%;
 }
 
-#dashboard-page #dashboard-row > * {
-	display: flex;
-	align-items: stretch;
-}
-
 #dashboard-page p, #dashboard-page .p {
 	background-color: rgba(0, 0, 0, 0.08);
 }

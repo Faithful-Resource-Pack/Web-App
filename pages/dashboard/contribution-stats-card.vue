@@ -31,7 +31,7 @@
 				<v-col cols="12" class="d-flex align-stretch">
 					<v-row dense class="d-flex">
 						<v-col
-							v-for="i in 4"
+							v-for="i in 5"
 							:key="`skeleton-${i}`"
 							cols="12"
 							sm="6"

@@ -8,7 +8,7 @@
 			}}
 		</div>
 
-		<v-row id="dashboard-row">
+		<v-row class="d-flex align-stretch">
 			<v-col cols="12" sm="3">
 				<profile-card v-if="$root.isLoggedIn" />
 				<faithful-card v-else />
@@ -23,14 +23,7 @@
 				<contribution-stats-card ref="cs" />
 			</v-col>
 			<v-col cols="12" sm="12">
-				<contribution-card
-					:colors="colors"
-					@stats="
-						(t) => {
-							$refs.cs.onTotals(t);
-						}
-					"
-				/>
+				<contribution-activity-card :colors="colors" @stats="(t) => $refs.cs.onTotals(t)" />
 			</v-col>
 		</v-row>
 	</div>
@@ -40,7 +33,7 @@
 import AddonCard from "./addon-card.vue";
 import ProfileCard from "./profile-card.vue";
 import UserCard from "./user-card.vue";
-import ContributionCard from "./contribution-card.vue";
+import ContributionActivityCard from "./contribution-activity-card.vue";
 import ContributionStatsCard from "./contribution-stats-card.vue";
 import FaithfulCard from "./faithful-card.vue";
 
@@ -50,7 +43,7 @@ export default {
 		AddonCard,
 		ProfileCard,
 		UserCard,
-		ContributionCard,
+		ContributionActivityCard,
 		ContributionStatsCard,
 		FaithfulCard,
 	},
