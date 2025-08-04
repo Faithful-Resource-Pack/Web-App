@@ -20,7 +20,7 @@
 					<div class="heatmap-wrapper">
 						<calendar-heatmap
 							:values="values"
-							:end-date="today"
+							:end-date="Date.now()"
 							:max="data.percentiles[activity]"
 							:tooltip-unit="$root.lang().dashboard.totals.contributions"
 							:locale="locale"
@@ -82,7 +82,6 @@ export default {
 					};
 				});
 		},
-		today: () => new Date(),
 		locale() {
 			return {
 				months: moment.monthsShort().map((e) => e[0].toUpperCase() + e.slice(1)),

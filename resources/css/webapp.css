@@ -689,6 +689,11 @@ img.texture-img {
 	width: 100%;
 }
 
+#dashboard-page #dashboard-row > * {
+	display: flex;
+	align-items: stretch;
+}
+
 #dashboard-page p, #dashboard-page .p {
 	background-color: rgba(0, 0, 0, 0.08);
 }
@@ -752,8 +757,15 @@ img.texture-img {
 
 .heatmap-wrapper {
 	min-height: 100px;
-	overflow: auto;
+	overflow: hidden;
+	scrollbar-gutter: stable;
 }
+
+.heatmap-wrapper:hover,
+.heatmap-wrapper:active {
+	overflow-x: auto;
+}
+
 .heatmap-wrapper svg {
 	min-height: 100px;
 }

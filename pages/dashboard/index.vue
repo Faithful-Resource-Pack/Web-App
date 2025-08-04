@@ -8,7 +8,7 @@
 			}}
 		</div>
 
-		<v-row class="d-flex align-stretch">
+		<v-row id="dashboard-row">
 			<v-col cols="12" sm="3">
 				<profile-card v-if="$root.isLoggedIn" />
 				<faithful-card v-else />
