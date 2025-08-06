@@ -178,68 +178,7 @@
 				</span>
 			</v-app-bar>
 
-			<v-navigation-drawer v-model="drawerOpen" app width="320">
-				<v-card :style="bannerStyles" class="rounded-t-0">
-					<div v-if="isLoggedIn" class="py-2">
-						<v-card-title class="pl-2">
-							<v-avatar size="48" class="mr-2">
-								<img
-									v-if="user.avatar"
-									style="line-height: 48px"
-									:alt="user.username.charAt(0)"
-									:src="user.avatar"
-								/>
-								<span v-else class="text-center primary font-weight-bold">
-									{{ user.username[0] }}
-								</span>
-							</v-avatar>
-							<span class="white--text clean-shadow">{{ shortUsername }}</span>
-						</v-card-title>
-						<v-card-actions class="mt-n1">
-							<v-btn small color="red white--text" width="40%" @click="logout">
-								{{ $root.lang().global.logout }}
-							</v-btn>
-						</v-card-actions>
-					</div>
-					<div v-else class="px-5 py-5">
-						<v-btn block class="blurple" :href="$root.discordAuth.discordAuthURL">
-							{{ $root.lang().global.login }}
-						</v-btn>
-					</div>
-				</v-card>
-
-				<div v-for="tab in availableTabs" :key="tab.label">
-					<v-list nav dense>
-						<v-list-item>
-							<v-list-item-title class="uppercase-unsized">
-								{{ tab.labelText }}
-							</v-list-item-title>
-						</v-list-item>
-
-						<v-list-item
-							v-for="subtab in tab.subtabs"
-							:key="subtab.label"
-							link
-							:to="subtab.to"
-							:disabled="subtab.disabled"
-							class="uppercase-unsized"
-						>
-							<v-list-item-icon v-if="subtab.icon" class="mr-1">
-								<v-icon small style="color: inherit">{{ subtab.icon }}</v-icon>
-							</v-list-item-icon>
-							<v-list-item-title>{{ subtab.labelText }}</v-list-item-title>
-
-							<v-list-item-action v-if="subtab.badge && badgeData[subtab.label]" class="nav-badge">
-								<span class="nav-badge-inner error">{{ badgeData[subtab.label] }}</span>
-							</v-list-item-action>
-						</v-list-item>
-					</v-list>
-					<v-divider class="mx-2"></v-divider>
-				</div>
-
-				<!-- Fix problem on firefox on mobile where bar disappears and fixed elements are hidden -->
-				<div class="py-5" v-if="$vuetify.breakpoint.mdAndDown"></div>
-			</v-navigation-drawer>
+			<nav-sidebar v-model="drawerOpen" :tabs="availableTabs" :badges="badgeData"></nav-sidebar>
 
 			<v-main>
 				<router-view></router-view>

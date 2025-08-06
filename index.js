@@ -14,6 +14,7 @@ import { appUserStore } from "./stores/appUserStore.js";
 
 // sidebar and routing stuff
 import ALL_TABS from "@helpers/tabs.js";
+import NavSidebar from "@components/nav-sidebar.vue";
 import MissingPage from "./pages/404/index.vue";
 
 Vue.config.devtools = import.meta.env.MODE === "development";
@@ -141,6 +142,9 @@ await loadSettings();
 
 const app = new Vue({
 	el: "#app",
+	components: {
+		NavSidebar,
+	},
 	data() {
 		return {
 			discordUser: discordUserStore(),
@@ -396,21 +400,6 @@ const app = new Vue({
 		},
 		isDark() {
 			return this.$vuetify.theme.dark;
-		},
-		shortUsername() {
-			const username = this.user.username;
-			if (username.length < 15) return username;
-			return `${username.slice(0, 15)}…`;
-		},
-		bannerStyles() {
-			// MUST be done through css, using an image element does strange things with the padding
-			const DEFAULT_IMAGE =
-				"https://database.faithfulpack.net/images/branding/backgrounds/main_background.png?w=320";
-			return {
-				backgroundImage: `url(${this.user.banner || DEFAULT_IMAGE})`,
-				backgroundPosition: "center",
-				backgroundSize: "cover",
-			};
 		},
 		monochromeLogo() {
 			const filename = this.isDark ? "white" : "black";
