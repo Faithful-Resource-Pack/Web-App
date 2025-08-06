@@ -42,7 +42,7 @@
 <script>
 import axios from "axios";
 import AddonForm from "./addon-form.vue";
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 
 export default {
 	name: "edit-addon-form",

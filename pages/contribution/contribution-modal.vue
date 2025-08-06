@@ -62,7 +62,7 @@
 <script>
 import axios from "axios";
 
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 import ContributionForm from "./contribution-form.vue";
 import SummaryItem from "./summary-item.vue";
 import generateRange from "@helpers/generateRange";

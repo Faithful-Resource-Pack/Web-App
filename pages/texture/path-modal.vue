@@ -48,7 +48,7 @@
 import axios from "axios";
 import versionSorter from "@helpers/versionSorter";
 
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 
 export default {
 	name: "path-modal",

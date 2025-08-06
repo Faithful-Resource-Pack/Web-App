@@ -52,7 +52,7 @@
 <script>
 import axios from "axios";
 import PostRemoveConfirm from "./post-remove-confirm.vue";
-import CardGrid from "@components/card-grid.vue";
+import CardGrid from "@layouts/card-grid.vue";
 
 export default {
 	name: "post-grid",

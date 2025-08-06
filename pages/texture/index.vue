@@ -125,7 +125,7 @@
 <script>
 import axios from "axios";
 
-import SmartGrid from "@components/smart-grid.vue";
+import SmartGrid from "@layouts/smart-grid.vue";
 import SearchBox from "@components/search-box.vue";
 
 import TextureModal from "./texture-modal.vue";

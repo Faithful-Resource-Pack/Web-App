@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 import axios from "axios";
 
 export default {

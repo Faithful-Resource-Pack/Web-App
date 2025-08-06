@@ -40,10 +40,10 @@
 				<v-list-item
 					v-for="subtab in tab.subtabs"
 					:key="subtab.label"
+					class="uppercase-unsized"
 					link
 					:to="subtab.to"
 					:disabled="subtab.disabled"
-					class="uppercase-unsized"
 				>
 					<v-list-item-icon v-if="subtab.icon" class="mr-1">
 						<v-icon small style="color: inherit">{{ subtab.icon }}</v-icon>
@@ -59,7 +59,7 @@
 		</div>
 
 		<!-- Fix problem on firefox on mobile where bar disappears and fixed elements are hidden -->
-		<div class="py-5" v-if="$vuetify.breakpoint.mdAndDown" />
+		<div v-if="$vuetify.breakpoint.mdAndDown" class="py-5" />
 	</v-navigation-drawer>
 </template>
 

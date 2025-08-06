@@ -95,7 +95,7 @@
 <script>
 import axios from "axios";
 
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 import PathModal from "./path-modal.vue";
 import TextureRemoveConfirm from "./texture-remove-confirm.vue";
 import versionSorter from "@helpers/versionSorter";

@@ -149,7 +149,7 @@ import moment from "moment";
 import ContributionModal from "./contribution-modal.vue";
 import ContributionRemoveConfirm from "./contribution-remove-confirm.vue";
 import UserSelect from "@components/user-select.vue";
-import SmartGrid from "@components/smart-grid.vue";
+import SmartGrid from "@layouts/smart-grid.vue";
 
 const ALL_PACK_KEY = "all";
 

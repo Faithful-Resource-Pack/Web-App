@@ -90,7 +90,7 @@ import versionSorter from "@helpers/versionSorter";
 
 import axios from "axios";
 
-import FullscreenModal from "@components/fullscreen-modal.vue";
+import FullscreenModal from "@layouts/fullscreen-modal.vue";
 import JsonModal from "@components/json-modal.vue";
 import TexturePanel from "./texture-panel.vue";
 import SummaryItem from "./summary-item.vue";

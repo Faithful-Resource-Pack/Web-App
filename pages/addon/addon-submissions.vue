@@ -49,7 +49,7 @@
 import axios from "axios";
 
 import AddonRemoveConfirm from "./addon-remove-confirm.vue";
-import CardGrid from "@components/card-grid.vue";
+import CardGrid from "@layouts/card-grid.vue";
 
 export default {
 	name: "addon-submissions",

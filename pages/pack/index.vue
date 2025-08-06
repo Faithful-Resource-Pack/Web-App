@@ -94,7 +94,7 @@
 <script>
 import axios from "axios";
 
-import SmartGrid from "@components/smart-grid.vue";
+import SmartGrid from "@layouts/smart-grid.vue";
 
 import PackModal from "./pack-modal.vue";
 import PackRemoveConfirm from "./pack-remove-confirm.vue";

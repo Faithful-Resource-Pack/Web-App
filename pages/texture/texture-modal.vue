@@ -111,7 +111,7 @@
 <script>
 import axios from "axios";
 
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 import UseModal from "./use-modal.vue";
 import TextureRemoveConfirm from "./texture-remove-confirm.vue";
 import { formatTag, sortTags } from "@helpers/textures";

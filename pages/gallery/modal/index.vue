@@ -69,7 +69,7 @@ import TextureTab from "./texture-tab.vue";
 import AuthorTab from "./author-tab.vue";
 import AnimationTab from "./animation-tab.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
-import FullscreenModal from "@components/fullscreen-modal.vue";
+import FullscreenModal from "@layouts/fullscreen-modal.vue";
 
 const PACK_GRID_ORDER = [
 	["default", "faithful_32x", "faithful_64x"],

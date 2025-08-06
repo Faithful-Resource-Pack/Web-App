@@ -4,14 +4,10 @@
 			<v-img
 				:style="styles"
 				:src="src"
-				alt="fullscreen preview"
+				:alt="alt"
 				:aspect-ratio="aspectRatio"
 				contain
-				@click="
-					() => {
-						modalOpened = false;
-					}
-				"
+				@click="close"
 			/>
 		</v-card>
 	</v-dialog>
@@ -35,6 +31,11 @@ export default {
 			required: false,
 			default: "",
 		},
+		alt: {
+			type: String,
+			required: false,
+			default: "fullscreen preview",
+		},
 		texture: {
 			type: Boolean,
 			required: false,
@@ -45,6 +46,11 @@ export default {
 		return {
 			modalOpened: false,
 		};
+	},
+	methods: {
+		close() {
+			this.modalOpened = false;
+		},
 	},
 	computed: {
 		styles() {

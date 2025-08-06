@@ -92,7 +92,7 @@ import axios from "axios";
 
 import UserModal from "./user-modal.vue";
 import UserRemoveConfirm from "./user-remove-confirm.vue";
-import SmartGrid from "@components/smart-grid.vue";
+import SmartGrid from "@layouts/smart-grid.vue";
 import SearchBox from "@components/search-box.vue";
 
 import { generatePageStyles } from "@helpers/colors.js";

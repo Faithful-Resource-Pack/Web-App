@@ -114,7 +114,7 @@
 <script>
 import axios from "axios";
 
-import ModalForm from "@components/modal-form.vue";
+import ModalForm from "@layouts/modal-form.vue";
 import SubmissionModal from "./submission-modal.vue";
 import PackRemoveConfirm from "./pack-remove-confirm.vue";
 
