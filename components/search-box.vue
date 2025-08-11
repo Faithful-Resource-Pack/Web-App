@@ -2,6 +2,7 @@
 	<!-- these specific settings are used a lot -->
 	<v-text-field
 		v-model="search"
+		autofocus
 		filled
 		hide-details
 		clearable

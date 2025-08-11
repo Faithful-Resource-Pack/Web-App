@@ -29,6 +29,7 @@
 				<p>{{ $root.lang().addons.general.reason.text }}</p>
 				<v-text-field
 					v-model="reason"
+					autofocus
 					:label="$root.lang().addons.general.reason.title"
 					required
 					:rules="reasonRules"

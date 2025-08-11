@@ -24,6 +24,7 @@
 			<v-text-field
 				v-model="form.new"
 				:color="color"
+				autofocus
 				required
 				:label="$root.lang().database.textures.rename_version.new_version"
 			/>

@@ -20,6 +20,7 @@
 			<v-text-field
 				v-model="formData.name"
 				:color="color"
+				autofocus
 				:hint="$root.lang().database.textures.paths.name_hint"
 				:label="$root.lang().database.textures.paths.name"
 				@change="(e) => formatPath(e)"

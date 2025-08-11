@@ -28,6 +28,7 @@
 			<v-text-field
 				v-model="formData.name"
 				:color="color"
+				autofocus
 				required
 				clearable
 				:label="$root.lang().database.textures.modal.name"

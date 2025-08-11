@@ -144,7 +144,7 @@ export default {
 	computed: {
 		isIgnored() {
 			return this.ignoreList.some((el) => this.src.includes(el));
-		}
+		},
 	},
 	watch: {
 		animatedTextures() {

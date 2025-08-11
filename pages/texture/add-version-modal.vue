@@ -27,6 +27,7 @@
 			<v-text-field
 				v-model="form.newVersion"
 				:color="color"
+				autofocus
 				:label="$root.lang().database.textures.add_version.new_version"
 			/>
 		</v-form>

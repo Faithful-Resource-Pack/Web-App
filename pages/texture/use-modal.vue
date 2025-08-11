@@ -39,6 +39,7 @@
 			<v-text-field
 				v-model="formData.name"
 				:color="color"
+				autofocus
 				:label="$root.lang().database.textures.uses.name"
 			/>
 			<v-text-field
