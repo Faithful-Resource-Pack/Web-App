@@ -4,11 +4,10 @@
 		v-model="search"
 		filled
 		hide-details
-		:color="color"
-		:placeholder="placeholder"
 		clearable
 		clear-icon="mdi-close"
 		append-icon="mdi-send"
+		v-bind="$attrs"
 		@keyup.enter="$emit('search')"
 		@click:append="$emit('search')"
 		@click:clear="$emit('clear')"
@@ -23,16 +22,6 @@ export default {
 			type: String,
 			required: false,
 			default: "",
-		},
-		color: {
-			type: String,
-			required: false,
-			default: "primary",
-		},
-		placeholder: {
-			type: String,
-			required: false,
-			default: null,
 		},
 	},
 	data() {

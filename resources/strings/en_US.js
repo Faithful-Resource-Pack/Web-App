@@ -340,7 +340,7 @@ export default {
 			title: "Confirm deletion",
 			labels: {
 				question: "Do you want to delete %s?",
-				warning: "You can't undo this operation",
+				warning: "This operation cannot be undone!",
 			},
 		},
 		general: {

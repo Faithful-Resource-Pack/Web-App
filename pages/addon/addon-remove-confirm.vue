@@ -7,7 +7,9 @@
 		@submit="deleteAddon"
 	>
 		<p>{{ $root.lang().addons.remove.labels.question.replace("%s", data.name) }}</p>
-		<p style="color: red">{{ $root.lang().addons.remove.labels.warning }}</p>
+		<v-alert type="warning" outlined dense>
+			{{ $root.lang().addons.remove.labels.warning }}
+		</v-alert>
 	</modal-form>
 </template>
 
