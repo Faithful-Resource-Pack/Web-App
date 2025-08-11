@@ -13,7 +13,7 @@
 						v-model="formData.id"
 						:color="color"
 						required
-						:readonly="add == false"
+						:readonly="!add"
 						:label="$root.lang().database.users.modal.id"
 					/>
 					<v-text-field

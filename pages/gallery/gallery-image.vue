@@ -14,16 +14,21 @@
 			@click="$emit('click')"
 			@loaded="(val) => $emit('loaded', val)"
 		/>
-		<img
+		<v-img
 			v-if="exists"
 			v-show="!hasAnimation || !animated"
 			ref="imageRef"
 			class="gallery-texture-image gallery-animated-image"
 			:src="imageURL"
-			lazy-src="https://database.faithfulpack.net/images/bot/loading.gif"
-			@error="textureNotFound"
 			@click="$emit('click')"
-		/>
+			@error="textureNotFound"
+		>
+			<template #placeholder>
+				<div class="d-flex align-center justify-center" style="height: 100%; width: 100%">
+					<v-progress-circular indeterminate size="50" />
+				</div>
+			</template>
+		</v-img>
 		<div v-else class="not-done">
 			<span style="height: 100%" />
 			<!-- no idea why this div is needed but it is -->
@@ -95,7 +100,7 @@ export default {
 		textureNotFound() {
 			// fall back to default if ignored (simulates default behavior)
 			// + fetch animation if it exists
-			if (this.ignoreList.some((el) => this.src.includes(el))) {
+			if (this.isIgnored) {
 				this.imageURL = `${this.$root.apiURL}/textures/${this.textureID}/url/default/latest`;
 				this.fetchAnimation();
 				return;
@@ -135,6 +140,11 @@ export default {
 		reset() {
 			this.$refs.animation?.resetCurrentTick();
 		},
+	},
+	computed: {
+		isIgnored() {
+			return this.ignoreList.some((el) => this.src.includes(el));
+		}
 	},
 	watch: {
 		animatedTextures() {

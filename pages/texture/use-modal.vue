@@ -27,7 +27,7 @@
 
 		<v-form ref="form" v-model="formValid">
 			<v-text-field
-				v-if="add == false"
+				v-if="!add"
 				v-model="formData.id"
 				:color="color"
 				disabled
@@ -42,7 +42,7 @@
 				:label="$root.lang().database.textures.uses.name"
 			/>
 			<v-text-field
-				v-if="add == false"
+				v-if="!add"
 				v-model="formData.texture"
 				:color="color"
 				persistent-hint

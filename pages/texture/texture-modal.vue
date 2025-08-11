@@ -22,7 +22,7 @@
 				persistent-hint
 				:hint="'⚠️' + $root.lang().database.textures.modal.id_hint"
 				required
-				:readonly="add == false"
+				:readonly="!add"
 				:label="$root.lang().database.textures.modal.id"
 			/>
 			<v-text-field

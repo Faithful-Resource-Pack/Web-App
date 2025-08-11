@@ -2,7 +2,7 @@
 	<modal-form v-model="modalOpened" :title="modalTitle" @close="$emit('close')" @submit="send">
 		<v-form ref="form">
 			<v-text-field
-				v-if="add == false"
+				v-if="!add"
 				v-model="formData.id"
 				:color="color"
 				disabled
@@ -11,7 +11,7 @@
 				:label="$root.lang().database.textures.paths.id"
 			/>
 			<v-text-field
-				v-if="add == false"
+				v-if="!add"
 				v-model="formData.use"
 				:color="color"
 				:hint="'⚠️' + $root.lang().database.textures.uses.id_hint"

@@ -103,6 +103,11 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 	color: #fff;
 }
 
+/* vuetify 3 backported feature (really handy) */
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
 /* Keep background from #app when the page is loading */
 .theme--dark.v-application {
 	background: #191919;
@@ -467,8 +472,6 @@ img.texture-img {
 
 .v-image__image--preload {
 	filter: none !important;
-	width: 50%;
-	margin-left: 25%;
 }
 
 .gallery-textures-container {
