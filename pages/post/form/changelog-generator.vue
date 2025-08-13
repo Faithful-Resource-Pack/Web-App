@@ -15,7 +15,7 @@
 							v-model="date"
 							:label="$root.lang().posts.changelog_generator.date"
 							:placeholder="$root.lang().posts.general.date.placeholder"
-							autofocus
+							:autofocus="!$vuetify.breakpoint.mobile"
 							persistent-placeholder
 							hide-details
 						/>

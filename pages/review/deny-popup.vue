@@ -8,7 +8,7 @@
 	>
 		<v-text-field
 			v-model="denyReason"
-			autofocus
+			:autofocus="!$vuetify.breakpoint.mobile"
 			required
 			:label="$root.lang().review.deny_window.label"
 			:rules="reasonRules"

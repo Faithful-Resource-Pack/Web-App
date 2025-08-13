@@ -27,7 +27,7 @@
 			<v-text-field
 				v-model="form.newVersion"
 				:color="color"
-				autofocus
+				:autofocus="!$vuetify.breakpoint.mobile"
 				:label="$root.lang().database.textures.add_version.new_version"
 			/>
 		</v-form>

@@ -17,7 +17,7 @@
 					<v-text-field
 						v-model="srcTextureID"
 						:color="color"
-						autofocus
+						:autofocus="!$vuetify.breakpoint.mobile"
 						required
 						type="number"
 						:label="$root.lang().database.textures.merge_textures.source"

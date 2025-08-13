@@ -68,7 +68,7 @@
 							v-model="path.name"
 							:color="color"
 							:label="$root.lang().database.textures.paths.name"
-							autofocus
+							:autofocus="!$vuetify.breakpoint.mobile"
 							clearable
 							persistent-hint
 							:hint="$root.lang().database.textures.paths.name_prefill"

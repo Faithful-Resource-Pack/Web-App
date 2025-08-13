@@ -28,7 +28,7 @@
 			<v-text-field
 				v-model="formData.name"
 				:color="color"
-				autofocus
+				:autofocus="!$vuetify.breakpoint.mobile"
 				required
 				clearable
 				:label="$root.lang().database.textures.modal.name"

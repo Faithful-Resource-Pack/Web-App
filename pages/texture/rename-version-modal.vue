@@ -24,7 +24,7 @@
 			<v-text-field
 				v-model="form.new"
 				:color="color"
-				autofocus
+				:autofocus="!$vuetify.breakpoint.mobile"
 				required
 				:label="$root.lang().database.textures.rename_version.new_version"
 			/>

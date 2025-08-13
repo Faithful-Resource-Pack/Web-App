@@ -2,7 +2,7 @@
 	<!-- these specific settings are used a lot -->
 	<v-text-field
 		v-model="search"
-		autofocus
+		:autofocus="!$vuetify.breakpoint.mobile"
 		filled
 		hide-details
 		clearable
