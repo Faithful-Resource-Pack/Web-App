@@ -1,19 +1,26 @@
+// add injected methods to entire webapp
+import "@helpers/utilityMethods.js";
+
+// frameworks
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 
+// general dependencies
 import axios from "axios";
 import moment from "moment";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { createPinia } from "pinia";
 
+// pinia stores
 import { discordAuthStore } from "./stores/discordAuthStore.js";
 import { discordUserStore } from "./stores/discordUserStore.js";
 import { appUserStore } from "./stores/appUserStore.js";
 
-// sidebar and routing stuff
+// layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
+import NavAppBar from "@components/nav-app-bar.vue";
 import NavSidebar from "@components/nav-sidebar.vue";
 import MissingPage from "./pages/404/index.vue";
 
@@ -23,9 +30,6 @@ Vue.use(VueRouter);
 
 const pinia = createPinia();
 Vue.use(pinia);
-
-// add injected methods to entire webapp
-import "@helpers/utilityMethods.js";
 
 // dynamic import because vite, used for fallback translation
 const { default: en_US } = await import("./resources/strings/en_US.js");
@@ -143,6 +147,7 @@ await loadSettings();
 const app = new Vue({
 	el: "#app",
 	components: {
+		NavAppBar,
 		NavSidebar,
 	},
 	data() {
