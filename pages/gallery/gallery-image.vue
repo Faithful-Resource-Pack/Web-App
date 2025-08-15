@@ -14,7 +14,7 @@
 			@click="$emit('click')"
 			@loaded="(val) => $emit('loaded', val)"
 		/>
-		<v-img
+		<img
 			v-if="exists"
 			v-show="!hasAnimation || !animated"
 			ref="imageRef"
@@ -22,13 +22,7 @@
 			:src="imageURL"
 			@click="$emit('click')"
 			@error="textureNotFound"
-		>
-			<template #placeholder>
-				<div class="d-flex align-center justify-center" style="height: 100%; width: 100%">
-					<v-progress-circular indeterminate size="50" />
-				</div>
-			</template>
-		</v-img>
+		/>
 		<div v-else class="not-done">
 			<span style="height: 100%" />
 			<!-- no idea why this div is needed but it is -->
