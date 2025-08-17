@@ -191,7 +191,6 @@ export default {
 			this.getPaths(this.formData.id);
 			this.$forceUpdate();
 		},
-
 		send() {
 			const formData = this.formData;
 			const data = {

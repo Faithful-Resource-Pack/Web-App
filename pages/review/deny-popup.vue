@@ -44,6 +44,7 @@ export default {
 	},
 	methods: {
 		interacted(submit = false) {
+			this.modalOpened = false;
 			this.$emit("close", submit, this.denyReason);
 			// reset modal
 			if (submit) this.denyReason = "";
