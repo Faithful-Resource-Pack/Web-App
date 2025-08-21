@@ -1,5 +1,7 @@
 export default {
-	credits: ["Put your name here on your respective language's file if you've translated!"],
+	credits: [
+		"DO NOT TRANSLATE THIS STRING! Instead, delete all the text in it and replace it with your name instead. This is how you will be credited for your translation.",
+	],
 	global: {
 		name: "Faithful Web Application",
 		logout: "Log out",
