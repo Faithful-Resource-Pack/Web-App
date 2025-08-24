@@ -503,6 +503,11 @@ img.texture-img {
 }
 
 .not-done {
+	/* text as centered columns */
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
 	padding: 0.25rem;
 	text-align: center;
 	aspect-ratio: 1;
@@ -510,11 +515,9 @@ img.texture-img {
 	white-space: pre-wrap;
 	word-break: break-word;
 }
-.not-done > * {
-	vertical-align: middle;
-	display: inline-block;
-}
-.not-done div p {
+
+/* makes sure content is actually centered */
+.not-done :last-child {
 	margin-bottom: 0;
 }
 

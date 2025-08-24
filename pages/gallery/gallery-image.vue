@@ -24,11 +24,7 @@
 			@error="textureNotFound"
 		/>
 		<div v-else class="not-done">
-			<span style="height: 100%" />
-			<!-- no idea why this div is needed but it is -->
-			<div>
-				<slot />
-			</div>
+			<slot />
 		</div>
 	</div>
 </template>
