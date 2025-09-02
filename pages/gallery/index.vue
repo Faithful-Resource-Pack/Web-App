@@ -7,6 +7,7 @@
 			<v-col v-if="$root.isAdmin" class="ml-auto my-4" cols="12" sm="6">
 				<v-btn block @click="clearCache">
 					{{ $root.lang().gallery.clear_cache }}
+					<v-icon right>mdi-sync</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>
