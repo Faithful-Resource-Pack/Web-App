@@ -217,7 +217,8 @@
 
 				<div class="text-h5">{{ $root.lang().addons.downloads.title }}</div>
 
-				<v-row v-for="(obj, index) in submittedForm.downloads" :key="obj.key" class="mt-0">
+				<!-- cannot use obj.key as index since it rerenders the form on change otherwise -->
+				<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-0">
 					<v-col cols="12" sm="3">
 						<v-text-field
 							v-model="obj.key"
