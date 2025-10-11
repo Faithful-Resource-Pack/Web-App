@@ -14,7 +14,7 @@
 					:color="danger ? dangerColor : normalColor"
 					:disabled="disabled"
 					text
-					@click="$emit('submit')"
+					@click="submitModal"
 				>
 					{{ $root.lang().global.btn[buttonText] }}
 				</v-btn>
@@ -35,6 +35,11 @@ export default {
 		value: {
 			type: Boolean,
 			required: true,
+		},
+		persistent: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 		// couldn't think of better prop names
 		danger: {
@@ -62,6 +67,10 @@ export default {
 		closeModal() {
 			this.modalOpened = false;
 			this.$emit("close");
+		},
+		submitModal() {
+			if (!this.persistent) this.modalOpened = false;
+			this.$emit("submit");
 		},
 	},
 	computed: {
