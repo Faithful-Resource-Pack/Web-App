@@ -16,10 +16,10 @@
 		</ul>
 		<template v-if="type == 'use'">
 			<v-divider class="ma-3" />
-			<v-btn block color="secondary" @click="getPaths(data.id)">
+			<v-btn block color="secondary" @click="loadUsePaths">
 				{{ $root.lang().database.textures.delete_modal.load_paths }}
 			</v-btn>
-			<v-list v-if="paths.length">
+			<v-list v-if="Object.keys(paths).length">
 				<v-list-item v-for="path in paths" :key="path.id">
 					<v-list-item-title>
 						{{ path.name }}
@@ -69,9 +69,10 @@ export default {
 		};
 	},
 	methods: {
-		getPaths(useID) {
+		// only available if type === "use"
+		loadUsePaths() {
 			axios
-				.get(`${this.$root.apiURL}/uses/${useID}/paths`, this.$root.apiOptions)
+				.get(`${this.$root.apiURL}/uses/${this.data.id}/paths`, this.$root.apiOptions)
 				.then((res) => {
 					this.paths = res.data.reduce((acc, path) => {
 						acc[path.id] = path;
@@ -81,6 +82,7 @@ export default {
 					this.$forceUpdate();
 				})
 				.catch((err) => {
+					this.$root.showSnackBar(err, "error");
 					console.error(err);
 				});
 		},
