@@ -79,7 +79,7 @@
 				<div v-html="$root.compileMarkdown(addonInPanel.description)" />
 			</template>
 		</v-card>
-		<div v-if="status === 'pending'" class="mt-2 rounded-lg pa-2">
+		<div v-if="status === 'pending' && addonInPanel.approval.reason" class="mt-2 rounded-lg pa-2">
 			<v-list-item-title class="uppercase pb-1">
 				{{ $root.lang().addons.general.reason.title }}
 			</v-list-item-title>
