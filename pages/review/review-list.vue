@@ -2,7 +2,7 @@
 	<v-card flat class="overflow-y-auto rounded-lg">
 		<div v-if="items.length > 0">
 			<v-list-item
-				v-for="(item, i) in items"
+				v-for="(item, i) in sortedItems"
 				:key="item.key"
 				two-line
 				:class="classes[i]"
@@ -44,8 +44,12 @@ export default {
 		},
 	},
 	computed: {
+		sortedItems() {
+			// newest to oldest (could maybe add a sort mode but eh)
+			return Array.from(this.items).sort((a, b) => b.key - a.key);
+		},
 		classes() {
-			return this.items.map(({ key }) =>
+			return this.sortedItems.map(({ key }) =>
 				key === this.value ? `${this.activeColor} selected` : "",
 			);
 		},
