@@ -219,8 +219,10 @@ export default {
 			this.updateRoute();
 		},
 		updateRoute() {
-			let route = `/gallery/${this.current.edition}/${this.current.pack}/${this.current.version}/${this.current.tag}`;
-			if (this.current.search) route += `/${this.current.search.replace(/ /g, "_")}`;
+			// annoyingly the api endpoint and webapp route order the params differently
+			const { pack, edition, version, tag, search } = this.current;
+			let route = `/gallery/${edition}/${pack}/${version}/${tag}`;
+			if (search) route += `/${search.replace(/ /g, "_")}`;
 			if (this.modalTextureID !== undefined) route += `?show=${this.modalTextureID}`;
 
 			if (this.$route.path === route) return; // new search is the same as before
@@ -234,17 +236,13 @@ export default {
 			this.loading = true;
 			this.timer.start = Date.now();
 			this.textures = [];
-			let url = `${this.$root.apiURL}/gallery/${this.current.pack}/${this.current.edition}/${this.current.version}/${
-				this.current.tag
-			}`;
-			if (this.current.search) url += `?search=${this.current.search}`;
 
-			// /gallery/{pack}/{edition}/{mc_version}/{tag}
 			axios
-				.get(url, { signal: this.abortController.signal })
+				.get(this.apiRoute, { signal: this.abortController.signal })
 				.then((res) => {
 					this.textures = res.data;
 					this.timer.end = Date.now();
+					// can't use .finally() since ERR_CANCELED doesn't update loading
 					this.loading = false;
 				})
 				.catch((err) => {
@@ -269,7 +267,9 @@ export default {
 		clearCache() {
 			axios
 				.get(`${this.$root.apiURL}/gallery/cache/purge`, this.$root.apiOptions)
-				.then(() => this.$root.showSnackBar(this.$root.lang().global.ends_success, "success"))
+				.then(() => {
+					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
+				})
 				.catch((err) => {
 					console.error(err);
 					this.$root.showSnackBar(err, "error");
@@ -277,6 +277,13 @@ export default {
 		},
 	},
 	computed: {
+		apiRoute() {
+			// /gallery/{pack}/{edition}/{mc_version}/{tag}
+			const { pack, edition, version, tag, search } = this.current;
+			let url = `${this.$root.apiURL}/gallery/${pack}/${edition}/${version}/${tag}`;
+			if (search) url += `?search=${search}`;
+			return url;
+		},
 		requestTime() {
 			if (!this.timer.end || !this.timer.start) return;
 			const seconds = (this.timer.end - this.timer.start) / 1000;
