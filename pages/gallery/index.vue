@@ -269,6 +269,8 @@ export default {
 				.get(`${this.$root.apiURL}/gallery/cache/purge`, this.$root.apiOptions)
 				.then(() => {
 					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
+					// prevents stale results, also makes it seem like something actually happened
+					this.searchGallery();
 				})
 				.catch((err) => {
 					console.error(err);
