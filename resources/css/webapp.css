@@ -588,6 +588,11 @@ img.texture-img {
 	padding: 5px;
 }
 
+.gallery-modal-authors:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 .go-up-btn {
 	position: fixed;
 	bottom: 64px;

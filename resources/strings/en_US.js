@@ -597,6 +597,7 @@ export default {
 		animated_switcher: "Play animated textures",
 		share: "Share texture",
 		share_link_copied_to_clipboard: "Share link copied to clipboard",
+		authors_copied_to_clipboard: "Texture submission authors copied to clipboard",
 		title: "Gallery",
 		loading_message: "Loading…",
 		error_message: {

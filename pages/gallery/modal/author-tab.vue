@@ -16,7 +16,13 @@
 						hide-default-footer
 						disable-pagination
 						:no-data-text="$root.lang().gallery.modal.no_contributions"
-					/>
+					>
+						<template #item.authors="{ value }">
+							<span class="gallery-modal-authors" @click="copySubmissionAuthors(value)">
+								{{ formatAuthors(value) }}
+							</span>
+						</template>
+					</v-data-table>
 				</v-col>
 			</v-row>
 		</div>
@@ -75,12 +81,24 @@ export default {
 		};
 	},
 	methods: {
-		formatPathVersions(versions) {
-			if (versions.length === 1) return versions[0];
-			return `${versions[0]} – ${versions[versions.length - 1]}`;
+		formatAuthors(authors) {
+			return authors.map((a) => a.username).join(", ");
 		},
 		timestampToDate(t) {
 			return moment(new Date(t)).format("ll");
+		},
+		copySubmissionAuthors(authors) {
+			const authorString = authors
+				.map((a) => {
+					// there is almost certainly a better way to check if the user is anonymous
+					if (a.username === this.$root.lang().gallery.error_message.user_anonymous)
+						return `<@${a.id}>`;
+					return `{${a.username}}`;
+				})
+				.join(" ");
+
+			navigator.clipboard.writeText(authorString);
+			this.$root.showSnackBar(this.$root.lang().gallery.authors_copied_to_clipboard, "success");
 		},
 		getContributions(pack) {
 			return this.contributions
@@ -89,7 +107,7 @@ export default {
 				.map((el) => ({
 					id: el.id,
 					date: this.timestampToDate(el.date),
-					authors: el.authors.map((el) => this.discordIDtoName(el)).join(",\n"),
+					authors: el.authors.map((el) => ({ id: el, username: this.discordIDtoName(el) })),
 				}));
 		},
 	},
