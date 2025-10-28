@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<!-- eslint-disable vue/valid-v-slot -->
+		<!-- vuetify uses dots as table fields but eslint reads them as modifiers -->
 		<div v-for="{ category, packs } in authorCategories" :key="category" class="py-3">
 			<h2 class="mb-3">{{ category }}</h2>
 			<!-- only need dense for lg since the mobile layout is horizontal anyways -->
