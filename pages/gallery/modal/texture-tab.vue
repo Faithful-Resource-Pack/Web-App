@@ -44,6 +44,10 @@
 					hide-default-footer
 					disable-pagination
 				>
+					<template #item.name="{ value }">
+						<span :title="value">{{ truncatePathName(value) }}</span>
+					</template>
+
 					<template #item.versions="{ value }">
 						<!-- title property gives alt text -->
 						<span :title="value.join(', ')">{{ formatPathVersions(value) }}</span>
@@ -161,6 +165,17 @@ export default {
 
 			// trick to make sure editions are sorted
 			return settings.editions.filter((e) => availableEditions.includes(e));
+		},
+		// cool trick to ensure the method is rerun when the width changes
+		truncatePathName() {
+			const { md } = this.$vuetify.breakpoint.thresholds;
+			console.log(md);
+			return (pathName) => {
+				// https://www.desmos.com/calculator/k9eskissne for more info
+				const limit = Math.max(20, (this.$vuetify.breakpoint.width - md) / 3);
+				if (this.$vuetify.breakpoint.mobile || pathName.length < limit) return pathName;
+				return `…${pathName.slice(pathName.length - limit)}`;
+			};
 		},
 	},
 };

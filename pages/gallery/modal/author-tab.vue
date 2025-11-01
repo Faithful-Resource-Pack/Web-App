@@ -20,7 +20,7 @@
 						:no-data-text="$root.lang().gallery.modal.no_contributions"
 					>
 						<template #item.authors="{ value }">
-							<span class="gallery-modal-authors" @click="copySubmissionAuthors(value)">
+							<span class="gallery-modal-clickable" @click="copySubmissionAuthors(value)">
 								{{ formatAuthors(value) }}
 							</span>
 						</template>
@@ -28,6 +28,7 @@
 				</v-col>
 			</v-row>
 		</div>
+		<!-- eslint-enable vue/valid-v-slot -->
 	</div>
 </template>
 

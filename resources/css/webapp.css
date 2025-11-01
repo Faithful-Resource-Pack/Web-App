@@ -588,7 +588,7 @@ img.texture-img {
 	padding: 5px;
 }
 
-.gallery-modal-authors:hover {
+.gallery-modal-clickable:hover {
 	text-decoration: underline;
 	cursor: pointer;
 }
