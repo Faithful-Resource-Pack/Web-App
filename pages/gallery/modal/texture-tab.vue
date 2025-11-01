@@ -168,11 +168,10 @@ export default {
 		},
 		// cool trick to ensure the method is rerun when the width changes
 		truncatePathName() {
-			const { md } = this.$vuetify.breakpoint.thresholds;
-			console.log(md);
+			const { width, thresholds } = this.$vuetify.breakpoint;
 			return (pathName) => {
 				// https://www.desmos.com/calculator/k9eskissne for more info
-				const limit = Math.max(20, (this.$vuetify.breakpoint.width - md) / 3);
+				const limit = Math.max(20, (width - thresholds.md) / 3);
 				if (this.$vuetify.breakpoint.mobile || pathName.length < limit) return pathName;
 				return `…${pathName.slice(pathName.length - limit)}`;
 			};

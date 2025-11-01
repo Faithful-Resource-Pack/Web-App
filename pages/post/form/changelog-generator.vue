@@ -109,9 +109,8 @@ export default {
 			navigator.clipboard.writeText(this.outputData);
 			this.$root.showSnackBar(this.$root.lang().database.textures.modal.copy_json_data, "success");
 		},
-		async generate() {
-			this.loading = true;
-			const [allContributions, textures] = await Promise.all([
+		getContributions() {
+			return Promise.all([
 				axios
 					.get(
 						`${this.$root.apiURL}/contributions/between/${new Date(this.date).getTime()}/${Date.now()}`,
@@ -123,6 +122,34 @@ export default {
 				this.$root.showSnackBar(err, "error");
 				return [null, null];
 			});
+		},
+		mergeContribution(texture, contribution) {
+			if (!texture) {
+				this.$root.showSnackBar(
+					`Texture [#${texture.id}] doesn't exist anymore! (${contribution.id})`,
+					"error",
+				);
+				return null;
+			}
+			return {
+				id: texture.id,
+				name: texture.name,
+				tags: texture.tags.filter((tag) => !["java", "bedrock"].includes(tag.toLowerCase())).sort(),
+				date: contribution.date,
+				authors: contribution.authors.map((author) => this.idToUsername[author] || "Anonymous"),
+			};
+		},
+		formatContributions(contributions) {
+			// group by texture tag (easier than going off paths)
+			return contributions.reduce((acc, { tags, name, authors }) => {
+				acc[tags[0]] ||= [];
+				acc[tags[0]].push(`${name.toTitleCase()} (${(authors || []).listify()})`);
+				return acc;
+			}, {});
+		},
+		async generate() {
+			this.loading = true;
+			const [allContributions, textures] = await this.getContributions();
 
 			if (allContributions === null) return;
 
@@ -130,27 +157,7 @@ export default {
 				// get correct pack (there's no endpoint for both date and pack)
 				.filter((contribution) => contribution.pack === this.selectedPack)
 				// merge the two objects by id
-				.map(({ texture, date, authors, id }) => {
-					const tex = textures[texture];
-					if (!tex) {
-						this.$root.showSnackBar(
-							`Texture [#${texture}] doesn't exist anymore! (${id})`,
-							"error",
-						);
-						return null;
-					}
-					const tags = tex.tags
-						.filter((tag) => !["java", "bedrock"].includes(tag.toLowerCase()))
-						.sort();
-
-					return {
-						id: texture,
-						name: tex.name,
-						tags,
-						date,
-						authors: authors.map((author) => this.idToUsername[author] || "Anonymous"),
-					};
-				})
+				.map((contribution) => this.mergeContribution(textures[contribution.texture], contribution))
 				// remove duplicates
 				.reduce((acc, cur) => {
 					if (cur === null) return acc;
@@ -159,14 +166,7 @@ export default {
 					return acc;
 				}, {});
 
-			// group by texture tag (easier than going off paths)
-			const formatted = Object.values(finalData).reduce((acc, { tags, name, authors }) => {
-				acc[tags[0]] ||= [];
-				acc[tags[0]].push(`${name.toTitleCase()} (${(authors || []).listify()})`);
-				return acc;
-			}, {});
-
-			this.outputData = JSON.stringify(formatted, null, 2);
+			this.outputData = JSON.stringify(this.formatContributions(Object.values(finalData)), null, 2);
 			this.loading = false;
 			this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 		},
