@@ -9,8 +9,8 @@
 	>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
-		<v-card>
-			<v-toolbar>
+		<v-card class="d-flex flex-column">
+			<v-toolbar class="flex-grow-0">
 				<v-btn icon @click.stop="closeModal">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>

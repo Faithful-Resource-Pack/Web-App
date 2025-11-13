@@ -12,7 +12,10 @@
 		</template>
 		<fullscreen-preview v-model="previewOpen" :src="clickedImage" :aspect-ratio="1 / 1" texture />
 
-		<div v-if="Object.keys(textureObj).length > 0" class="gallery-modal-container pa-5">
+		<v-container v-if="error" class="d-flex align-center justify-center flex-grow-1">
+			<ascii-error :subtitle="error" :errorCode="errorCode" />
+		</v-container>
+		<div v-else class="gallery-modal-container pa-5">
 			<!-- image display -->
 			<div class="mx-auto overflow-auto pa-2">
 				<div v-for="(group, i) in grouped" :key="i" class="d-flex flex-row pb-2 pb-sm-0">
@@ -70,6 +73,7 @@ import AuthorTab from "./author-tab.vue";
 import AnimationTab from "./animation-tab.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import FullscreenModal from "@layouts/fullscreen-modal.vue";
+import AsciiError from "@components/ascii-error.vue";
 
 const PACK_GRID_ORDER = [
 	["default", "faithful_32x", "faithful_64x"],
@@ -91,6 +95,7 @@ const PACK_SLIDER_ORDER = [
 export default {
 	name: "gallery-modal",
 	components: {
+		AsciiError,
 		GalleryImage,
 		FullscreenPreview,
 		FullscreenModal,
@@ -132,6 +137,8 @@ export default {
 	data() {
 		return {
 			textureObj: {},
+			error: null,
+			errorCode: 0,
 			selectedTab: null,
 			modalOpened: false,
 			clickedImage: "",
@@ -159,10 +166,14 @@ export default {
 			this.clickedImage = url;
 			this.previewOpen = true;
 		},
+		resetModal() {
+			this.textureObj = {};
+			this.error = null;
+		},
 	},
 	computed: {
 		grouped() {
-			if (!this.textureObj) return [];
+			if (this.loading) return [];
 
 			// don't display duplicates on mobile
 			if (this.$vuetify.breakpoint.mdAndDown)
@@ -178,17 +189,20 @@ export default {
 			);
 		},
 		loading() {
-			return !Object.keys(this.textureObj).length;
+			const hasContent = Object.keys(this.textureObj).length || this.error;
+			return !hasContent;
 		},
 		modalTitle() {
+			if (this.error) return this.$root.lang().gallery.error_message.search_failed;
 			if (this.loading) return this.$root.lang().global.loading;
 			return `[#${this.textureID}] ${this.textureObj.texture.name}`;
 		},
 		displayedTabs() {
+			if (this.loading) return [];
 			const availableTabs = ["information", "authors"];
 
 			// only show animation tab if there's an mcmeta
-			if (Object.keys(this.textureObj.mcmeta).length) availableTabs.push("animation");
+			if (Object.keys(this.textureObj.mcmeta || {}).length) availableTabs.push("animation");
 
 			return availableTabs.reduce((acc, cur) => {
 				acc[cur] = this.$root.lang().gallery.modal.tabs[cur];
@@ -201,10 +215,7 @@ export default {
 			handler(newValue, oldValue) {
 				// doesn't matter if the modal isn't open yet
 				if (newValue === oldValue) return;
-				if (newValue === undefined) {
-					this.textureObj = {};
-					return;
-				}
+				if (newValue === undefined) return this.resetModal();
 
 				axios
 					.get(
@@ -215,8 +226,10 @@ export default {
 						this.textureObj = res.data;
 					})
 					.catch((err) => {
+						this.errorCode = err.response.status;
 						console.error(err);
-						this.$root.showSnackBar(err, "error");
+						this.error =
+							err.response?.data?.message || this.$root.lang().gallery.error_message.search_failed;
 					});
 			},
 			immediate: true,

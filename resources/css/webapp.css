@@ -38,12 +38,6 @@ input[type=number]::-webkit-outer-spin-button {
 	margin: 0;
 }
 
-pre {
-	background-color: hsla(0, 0%, 100%, 0.1);
-	color: currentColor;
-	border-radius: 2px;
-}
-
 code {
 	background-color: transparent !important;
 }
@@ -842,17 +836,6 @@ img.texture-img {
 }
 .theme--dark.v-list-item:not(.v-list-item--disabled).yellow.darken-3 .v-list-item__subtitle {
 	color: rgba(0,0,0,0.6);
-}
-
-#empty > * > * {
-	height: auto;
-}
-
-#empty pre {
-	background: transparent;
-	font-size: 10pt;
-	font-family: Monospace;
-	white-space: pre;
 }
 
 #review-expanders {

@@ -17,23 +17,7 @@
 
 		<div id="review-content" :class="['mt-1 mb-2', { desktop: $vuetify.breakpoint.mdAndUp }]">
 			<div v-if="selectedItems.length === 0" id="empty">
-				<div class="rounded-lg d-flex flex-column align-center justify-center">
-					<!-- eslint-disable vue/html-closing-bracket-newline -->
-					<pre v-if="$vuetify.breakpoint.mdAndUp">
-    d8888   .d8888b.      d8888 &nbsp;
-   d8P888  d88P  Y88b    d8P888 &nbsp;
-  d8P 888  888    888   d8P 888 &nbsp;
- d8P  888  888    888  d8P  888 &nbsp;
-d88   888  888    888 d88   888 &nbsp;
-8888888888 888    888 8888888888&nbsp;
-      888  Y88b  d88P       888 &nbsp;
-      888   "Y8888P"        888 &nbsp;
-</pre
-					>
-					<!-- eslint-enable vue/html-closing-bracket-newline -->
-					<p v-else class="text-h2 my-2">404</p>
-					<p class="text-h6 my-2 px-2">{{ empty }}</p>
-				</div>
+				<ascii-error :subtitle="empty" />
 			</div>
 			<template v-else>
 				<template v-if="$vuetify.breakpoint.mdAndUp">
@@ -77,6 +61,7 @@ d88   888  888    888 d88   888 &nbsp;
 <script>
 import axios from "axios";
 
+import AsciiError from "@components/ascii-error.vue";
 import ExpansionPanel from "./expansion-panel.vue";
 import DenyPopup from "./deny-popup.vue";
 import ReviewCategories from "./review-categories.vue";
@@ -115,6 +100,7 @@ const searchMixin = {
 export default {
 	name: "review-addons-page",
 	components: {
+		AsciiError,
 		ExpansionPanel,
 		DenyPopup,
 		ReviewCategories,
