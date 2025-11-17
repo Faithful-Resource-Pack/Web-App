@@ -33,7 +33,7 @@
 		<h2 class="py-3">
 			{{ $root.lang().database.textures.modal.subtitle }}
 		</h2>
-		<v-timeline dense align-top class="pl-0">
+		<v-timeline class="timeline-left" dense align-top>
 			<v-timeline-item v-for="(use, ui) in texture.uses" :key="use.key" fill-dot :color="color">
 				<template #icon>
 					<span class="white--text">{{ useIDFromIndex(ui) }}</span>

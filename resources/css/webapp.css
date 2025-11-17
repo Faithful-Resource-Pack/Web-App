@@ -902,3 +902,18 @@ img.texture-img {
 .v-color-picker__controls {
 	flex: 1;
 }
+
+.timeline-left.v-timeline::before {
+	/* (38px item / 2) + 1 padding */
+	left: 18px !important;
+}
+
+.timeline-left .v-timeline-item__divider {
+	justify-content: flex-start;
+	/* 38px item + 24px padding */
+	min-width: 62px;
+}
+
+.timeline-left .v-timeline-item__body {
+    max-width: calc(100% - 62px);
+}
