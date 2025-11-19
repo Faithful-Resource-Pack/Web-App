@@ -51,7 +51,7 @@
 					<v-list-item-title>{{ subtab.labelText }}</v-list-item-title>
 
 					<v-list-item-action v-if="subtab.badge && badges[subtab.label]" class="nav-badge">
-						<span class="nav-badge-inner error">{{ badges[subtab.label] }}</span>
+						<span class="nav-badge-inner error white--text">{{ badges[subtab.label] }}</span>
 					</v-list-item-action>
 				</v-list-item>
 			</v-list>
