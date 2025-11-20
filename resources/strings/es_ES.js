@@ -41,46 +41,43 @@ export default {
 		},
 		tabs: {
 			general: {
-				title: "general",
+				title: "General",
 				subtabs: {
-					dashboard: "panel de control",
-					profile: "perfil",
-					statistics: "estadísticas",
-					gallery: "galería",
+					dashboard: "Panel de control",
+					profile: "Perfil",
+					statistics: "Estadísticas",
+					gallery: "Galería",
 				},
 			},
 			addons: {
-				title: "complementos",
+				title: "Complementos",
 				subtabs: {
-					submissions: "envíos",
-					upload: "subir",
+					submissions: "Envíos",
+					upload: "Subir",
 				},
 			},
 			review: {
-				title: "comentarios",
+				title: "Comentarios",
 				subtabs: {
-					addons: "complementos",
-					translations: "traducciones",
+					addons: "Complementos",
+					translations: "Traducciones",
 				},
 			},
 			posts: {
-				title: "publicaciones",
+				title: "Publicaciones",
 				subtabs: {
-					list: "lista",
-					create: "crear",
+					list: "Lista",
+					create: "Crear",
 				},
 			},
 			database: {
-				title: "base de datos",
+				title: "Base de datos",
 				subtabs: {
-					contributions: "contribuciones",
-					users: "usuarios",
-					textures: "texturas",
-					packs: "packs",
-					files: "archivos",
-					mods: "mods",
-					modpacks: "modpacks",
-					settings: "ajustes",
+					contributions: "Contribuciones",
+					users: "Usuarios",
+					textures: "Texturas",
+					packs: "Packs",
+					settings: "Ajustes",
 				},
 			},
 		},
@@ -573,8 +570,8 @@ export default {
 		modal: {
 			no_contributions: "No se ha encontrado ninguna contribución",
 			tabs: {
-				information: "información",
-				authors: "autores",
+				information: "Información",
+				authors: "Autores",
 			},
 			info: {
 				texture: "Textura",

@@ -38,42 +38,32 @@ export default {
 		tabs: {
 			general: {
 				subtabs: {
-					dashboard: "dashboard",
-					profile: "profil",
-					statistics: "statistiques",
-					gallery: "galerie",
+					dashboard: "Dashboard",
+					profile: "Profil",
+					statistics: "Statistiques",
+					gallery: "Galerie",
 				},
 			},
 			addons: {
-				title: "add-on",
+				title: "Add-on",
 				subtabs: {
-					submissions: "mes add-ons",
-					upload: "upload",
-				},
-			},
-			modding: {
-				title: "modding",
-				subtabs: {
-					mod: "soumettre un mod",
-					modpack: "soumettre un modpack",
+					submissions: "Mes add-ons",
+					upload: "Upload",
 				},
 			},
 			review: {
-				title: "vérification",
+				title: "Vérification",
 				subtabs: {
-					addons: "add-ons",
-					translations: "traductions",
+					addons: "Add-ons",
+					translations: "Traductions",
 				},
 			},
 			database: {
-				title: "database",
+				title: "Database",
 				subtabs: {
-					contributions: "contributions",
-					users: "utilisateurs",
-					textures: "textures",
-					files: "fichiers",
-					mods: "mods",
-					modpacks: "modpacks",
+					contributions: "Contributions",
+					users: "Utilisateurs",
+					textures: "Textures",
 					settings: "Paramètres",
 				},
 			},
@@ -441,10 +431,9 @@ export default {
 		},
 		modal: {
 			tabs: {
-				information: "information",
-				authors: "auteurs",
-				animated: "animée",
-				model: "3D",
+				information: "Information",
+				authors: "Auteurs",
+				animated: "Animée",
 			},
 			info: {
 				texture: "Texture",

@@ -673,8 +673,9 @@ img.texture-img {
 .theme--light .v-app-bar__nav-icon.v-btn.v-btn.v-btn--icon {
 	background: transparent;
 }
-.theme--light .main-container {
-	background: #f0f0f0;
+.theme--light .main-container,
+#dashboard-page .dashboard-card {
+	background: #f5f5f5;
 }
 .theme--light .database-list-avatar {
 	background: white;

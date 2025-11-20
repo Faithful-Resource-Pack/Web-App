@@ -30,23 +30,16 @@ export default {
 				},
 			},
 			addons: {
-				title: "add-ons",
+				title: "Add-ons",
 				subtabs: {
 					submissions: "Einreichungen",
-					upload: "hochladen",
-				},
-			},
-			modding: {
-				title: "modding",
-				subtabs: {
-					mod: "Mod einreichen",
-					modpack: "Modpack einreichen",
+					upload: "Hochladen",
 				},
 			},
 			review: {
 				title: "Überprüfen",
 				subtabs: {
-					addons: "add-ons",
+					addons: "Add-ons",
 					translations: "Übersetzungen",
 				},
 			},
@@ -55,9 +48,6 @@ export default {
 				subtabs: {
 					contributions: "Beiträge",
 					textures: "Texturen",
-					files: "Dateien",
-					mods: "mods",
-					modpacks: "modpacks",
 				},
 			},
 		},

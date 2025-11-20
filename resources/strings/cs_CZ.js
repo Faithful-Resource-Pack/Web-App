@@ -33,43 +33,33 @@ export default {
 		tabs: {
 			general: {
 				subtabs: {
-					dashboard: "nástěnka",
-					profile: "profil",
-					statistics: "statistiky",
-					gallery: "galerie",
+					dashboard: "Nástěnka",
+					profile: "Profil",
+					statistics: "Statistiky",
+					gallery: "Galerie",
 				},
 			},
 			addons: {
-				title: "doplňky",
+				title: "Doplňky",
 				subtabs: {
-					submissions: "přihlášky",
-					upload: "nahrát",
-				},
-			},
-			modding: {
-				title: "módy",
-				subtabs: {
-					mod: "nahrát mód",
-					modpack: "nahrát modpack",
+					submissions: "Přihlášky",
+					upload: "Nahrát",
 				},
 			},
 			review: {
-				title: "schvalování",
+				title: "Schvalování",
 				subtabs: {
-					addons: "doplňky",
-					translations: "překlady",
+					addons: "Doplňky",
+					translations: "Překlady",
 				},
 			},
 			database: {
-				title: "databáze",
+				title: "Databáze",
 				subtabs: {
-					contributions: "příspěvky",
-					users: "uživatelé",
-					textures: "textury",
-					files: "soubory",
-					mods: "módy",
-					modpacks: "modpacky",
-					settings: "nastavení",
+					contributions: "Příspěvky",
+					users: "Uživatelé",
+					textures: "Textury",
+					settings: "Nastavení",
 				},
 			},
 		},
@@ -387,10 +377,9 @@ export default {
 		all: "vše",
 		modal: {
 			tabs: {
-				information: "informace",
-				authors: "autoři",
-				animated: "animace",
-				model: "3D",
+				information: "Informace",
+				authors: "Autoři",
+				animated: "Animace",
 			},
 			type: {
 				label: "Druh souboru",
