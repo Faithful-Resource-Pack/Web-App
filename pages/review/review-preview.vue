@@ -9,7 +9,19 @@
 				<div class="pb-2 d-flex align-center">
 					<div>
 						<h2 class="h6" style="line-height: 24px">
-							{{ addonInPanel.name }}
+							<a
+								v-if="addonInPanel.approval.status === 'approved'"
+								:href="`https://www.faithfulpack.net/addons/${addonInPanel.slug}`"
+								target="blank"
+								rel="noopener noreferrer"
+							>
+								<span class="text--primary hover-underline">
+									{{ addonInPanel.name }}
+								</span>
+							</a>
+							<span v-else>
+								{{ addonInPanel.name }}
+							</span>
 							<span class="text--secondary font-weight-regular">{{ `#${addonInPanel.id}` }}</span>
 						</h2>
 						<div class="text--secondary subtitle-2 mt-1" style="line-height: 14px">

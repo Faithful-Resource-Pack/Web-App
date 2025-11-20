@@ -20,7 +20,7 @@
 						:no-data-text="$root.lang().gallery.modal.no_contributions"
 					>
 						<template #item.authors="{ value }">
-							<span class="gallery-modal-clickable" @click="copySubmissionAuthors(value)">
+							<span class="hover-underline" @click="copySubmissionAuthors(value)">
 								{{ formatAuthors(value) }}
 							</span>
 						</template>
