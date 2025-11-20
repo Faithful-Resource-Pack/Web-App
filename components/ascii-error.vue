@@ -2,7 +2,7 @@
 	<div class="d-flex flex-column align-center justify-center">
 		<!-- eslint-disable vue/html-closing-bracket-newline -->
 		<span v-if="$vuetify.breakpoint.mdAndUp" class="my-5">
-			<!-- USE https://www.asciiart.eu/text-to-ascii-art with the "Colossal" font -->
+			<!-- use https://www.asciiart.eu/text-to-ascii-art with the "Colossal" font -->
 			<pre v-if="errorCode === 422">
     d8888   .d8888b.   .d8888b. &nbsp;
    d8P888  d88P  Y88b d88P  Y88b&nbsp;

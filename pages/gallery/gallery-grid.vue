@@ -200,7 +200,8 @@ export default {
 
 		axios.get(`${this.$root.apiURL}/contributions/raw`).then((res) => {
 			this.loadedContributions = Object.values(res.data).reduce((acc, cur) => {
-				if (!cur.date) console.log(cur);
+				if (!cur.date)
+					console.error(`Contribution ${cur.id} ([#${cur.texture}] for ${cur.pack}) has no date!`);
 				acc[cur.pack] ||= {};
 				const existing = acc[cur.pack][cur.texture];
 
