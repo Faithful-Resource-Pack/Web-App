@@ -487,15 +487,6 @@ export default {
 			},
 		},
 	},
-	statistics: {
-		title: "Estatísticas de contribuição",
-		loading: "Carregando gráfico…",
-		label: {
-			textures: "Texturas",
-			contributors: "Contribuidores",
-			contributions: "Contribuições",
-		},
-	},
 	profile: {
 		title: "Perfil",
 		general: {

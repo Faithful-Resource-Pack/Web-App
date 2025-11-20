@@ -519,15 +519,6 @@ export default {
 			warning: "Please manually review the changelog before importing it!",
 		},
 	},
-	statistics: {
-		title: "Contribution statistics",
-		loading: "Loading graph…",
-		label: {
-			textures: "Textures",
-			contributors: "Contributors",
-			contributions: "Contributions",
-		},
-	},
 	profile: {
 		title: "Profile",
 		general: {

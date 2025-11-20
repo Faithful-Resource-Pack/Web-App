@@ -258,14 +258,6 @@ export default {
 			pending: "Ausstehend",
 		},
 	},
-	statistics: {
-		title: "Beitragsstatistik",
-		label: {
-			textures: "Texturen",
-			contributors: "Mitwirkende",
-			contributions: "Beiträge",
-		},
-	},
 	profile: {
 		title: "Profil",
 		general: {

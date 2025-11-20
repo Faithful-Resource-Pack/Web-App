@@ -325,14 +325,6 @@ export default {
 			pending: "En attente",
 		},
 	},
-	statistics: {
-		title: "Statistiques des contributions",
-		label: {
-			textures: "Textures",
-			contributors: "Contributeurs",
-			contributions: "Contributions",
-		},
-	},
 	profile: {
 		title: "Profil",
 		general: {

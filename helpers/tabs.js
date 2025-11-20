@@ -3,7 +3,6 @@ import axios from "axios";
 // pages used in sidebar
 import DashboardPage from "../pages/dashboard/index.vue";
 import ProfilePage from "../pages/profile/index.vue";
-import ContributorStatsPage from "../pages/contribution-stats/index.vue";
 import GalleryPage from "../pages/gallery/index.vue";
 import AddonSubmissionsPage from "../pages/addon/addon-submissions.vue";
 import NewAddonPage from "../pages/addon/new-addon-form.vue";
@@ -35,14 +34,6 @@ export default [
 				label: "profile",
 				icon: "mdi-account",
 				routes: [{ path: "/profile", component: ProfilePage, name: "Profile" }],
-			},
-			{
-				label: "statistics",
-				icon: "mdi-chart-timeline-variant",
-				public: true,
-				routes: [
-					{ path: "/contribution-stats", component: ContributorStatsPage, name: "Statistics" },
-				],
 			},
 			{
 				label: "gallery",

@@ -311,14 +311,6 @@ export default {
 			pending: "Čeká na schválení",
 		},
 	},
-	statistics: {
-		title: "Statistiky příspěvků",
-		label: {
-			textures: "Textury",
-			contributors: "Přispěvatelé",
-			contributions: "Příspěvky",
-		},
-	},
 	profile: {
 		title: "Profil",
 		general: {
