@@ -46,7 +46,7 @@
 					:disabled="subtab.disabled"
 				>
 					<v-list-item-icon v-if="subtab.icon" class="mr-1">
-						<v-icon small style="color: inherit">{{ subtab.icon }}</v-icon>
+						<v-icon small>{{ subtab.icon }}</v-icon>
 					</v-list-item-icon>
 					<v-list-item-title>{{ subtab.labelText }}</v-list-item-title>
 
