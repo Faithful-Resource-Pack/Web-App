@@ -281,19 +281,16 @@ const app = new Vue({
 			this.authListeners.push(listener);
 			if (this.isLoggedIn) listener(this.user.access_token);
 		},
-		onMediaChange(isDark) {
+		/** @param {"dark" | "light"} theme */
+		onMediaChange(theme) {
 			// only if system theme
-			if (this.theme === "system") {
-				this.$vuetify.theme.dark = isDark;
+			if (this.theme !== "system") return;
 
-				// nice snackbar sentence
-				const notify = this.lang().global.snackbar_system_theme;
-				this.showSnackBar(
-					notify.sentence.replace("%s", isDark ? notify.themes.dark : notify.themes.light),
-					"success",
-					2000,
-				);
-			}
+			this.$vuetify.theme.dark = theme === "dark";
+
+			// nice snackbar sentence
+			const notify = this.lang().global.snackbar_system_theme;
+			this.showSnackBar(notify.sentence.replace("%s", notify.themes[theme]), "success", 2000);
 		},
 		reloadSettings() {
 			return loadSettings();
@@ -334,12 +331,11 @@ const app = new Vue({
 					.map((tab) => ({
 						// must create a new object so if the user logs in the old tabs aren't deleted
 						...tab,
-						subtabs: tab.subtabs.filter((s) => {
-							if (s.public) return true;
-							const roles = s.roles;
+						subtabs: tab.subtabs.filter((subtab) => {
+							if (subtab.public) return true;
 							// if there's no roles then it's available to all logged in users
-							if (!roles) return this.isLoggedIn;
-							return s.roles.some((r) => this.userRoles.includes(r));
+							if (!subtab.roles) return this.isLoggedIn;
+							return subtab.roles.some((r) => this.userRoles.includes(r));
 						}),
 					}))
 					// then when subtabs are filtered filter again
@@ -415,10 +411,6 @@ const app = new Vue({
 		},
 		isDark() {
 			return this.$vuetify.theme.dark;
-		},
-		monochromeLogo() {
-			const filename = this.isDark ? "white" : "black";
-			return `https://database.faithfulpack.net/images/branding/logos/transparent/original/${filename}.png`;
 		},
 	},
 	watch: {
@@ -560,10 +552,10 @@ const app = new Vue({
 	mounted() {
 		// watch color schemes for light and dark
 		window.matchMedia("(prefers-color-scheme: dark)").onchange = (ev) => {
-			if (ev.matches) this.onMediaChange(true);
+			if (ev.matches) this.onMediaChange("dark");
 		};
 		window.matchMedia("(prefers-color-scheme: light)").onchange = (ev) => {
-			if (ev.matches) this.onMediaChange(false);
+			if (ev.matches) this.onMediaChange("light");
 		};
 	},
 	// plugins
