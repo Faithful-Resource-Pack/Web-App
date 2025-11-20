@@ -51,13 +51,6 @@ export default {
 					upload: "Upload",
 				},
 			},
-			review: {
-				title: "Vérification",
-				subtabs: {
-					addons: "Add-ons",
-					translations: "Traductions",
-				},
-			},
 			database: {
 				title: "Database",
 				subtabs: {

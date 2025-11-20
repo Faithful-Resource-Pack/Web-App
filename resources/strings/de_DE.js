@@ -36,13 +36,6 @@ export default {
 					upload: "Hochladen",
 				},
 			},
-			review: {
-				title: "Überprüfen",
-				subtabs: {
-					addons: "Add-ons",
-					translations: "Übersetzungen",
-				},
-			},
 			database: {
 				title: "Datenbank",
 				subtabs: {

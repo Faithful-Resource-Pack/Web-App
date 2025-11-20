@@ -57,8 +57,16 @@ export default [
 		label: "addons",
 		subtabs: [
 			{
+				label: "upload",
+				icon: "mdi-plus-thick",
+				routes: [
+					{ path: "/addons/new", component: NewAddonPage, name: "New Add-on" },
+					{ path: "/addons/edit/:id", component: EditAddonPage, name: "Edit Add-on" },
+				],
+			},
+			{
 				label: "submissions",
-				icon: "mdi-folder-multiple",
+				icon: "mdi-plus-box-multiple",
 				routes: [
 					{
 						path: "/addons/submissions",
@@ -68,39 +76,12 @@ export default [
 				],
 			},
 			{
-				label: "upload",
-				icon: "mdi-upload",
-				routes: [
-					{ path: "/addons/new", component: NewAddonPage, name: "New Add-on" },
-					{ path: "/addons/edit/:id", component: EditAddonPage, name: "Edit Add-on" },
-				],
-			},
-		],
-	},
-	{
-		label: "review",
-		roles: ["Administrator"],
-		subtabs: [
-			{
-				label: "addons",
+				label: "review",
+				roles: ["Administrator"],
 				icon: "mdi-puzzle",
 				badge: (app) =>
 					axios.get(`${app.apiURL}/addons/pending`, app.apiOptions).then((r) => r.data.length || 0),
 				routes: [{ path: "/review/addons", component: ReviewAddonsPage, name: "Add-on Review" }],
-			},
-			{
-				label: "translations",
-				icon: "mdi-translate",
-				routes: [
-					{
-						path: "/review/translations",
-						component: ReviewTranslationsPage,
-						name: "Translations",
-						beforeEnter() {
-							location.href = "https://translate.faithfulpack.net/";
-						},
-					},
-				],
 			},
 		],
 	},

@@ -340,7 +340,13 @@ const app = new Vue({
 						...tab,
 						labelText: this.lang().global.tabs[tab.label]?.title,
 						subtabs: tab.subtabs
-							.filter((s) => this.isLoggedIn || s.public)
+							.filter((s) => {
+								if (s.public) return true;
+								const roles = s.roles;
+								// if there's no roles then it's available to all logged in users
+								if (!roles) return this.isLoggedIn;
+								return s.roles.some((r) => this.userRoles.includes(r));
+							})
 							.map((s) => {
 								s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
 								return s;

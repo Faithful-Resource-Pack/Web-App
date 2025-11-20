@@ -64,13 +64,7 @@ export default {
 				subtabs: {
 					submissions: "Submissions",
 					upload: "Upload",
-				},
-			},
-			review: {
-				title: "Reviews",
-				subtabs: {
-					addons: "Add-ons",
-					translations: "Translations",
+					review: "Review",
 				},
 			},
 			posts: {
@@ -344,6 +338,7 @@ export default {
 		},
 		general: {
 			loading_addon: "Loading add-on",
+			no_submissions: "You don't have any submitted add-ons!",
 			rules: "Make sure to read the add-on rules before submitting",
 			title: "General",
 			name: {

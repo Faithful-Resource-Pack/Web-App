@@ -5,7 +5,7 @@
 			<v-progress-circular v-if="loading" indeterminate />
 		</div>
 		<div v-if="!loading && addons.length === 0">
-			{{ error || $root.lang().global.no_results }}
+			{{ error || $root.lang().addons.general.no_submissions }}
 		</div>
 		<div v-else class="my-2 text-h5">
 			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)">

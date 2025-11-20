@@ -58,13 +58,6 @@ export default {
 					upload: "Enviar",
 				},
 			},
-			review: {
-				title: "Avaliações",
-				subtabs: {
-					addons: "Addons",
-					translations: "Traduções",
-				},
-			},
 			posts: {
 				title: "Publicações",
 				subtabs: {

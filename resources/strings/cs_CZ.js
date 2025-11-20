@@ -46,13 +46,6 @@ export default {
 					upload: "Nahrát",
 				},
 			},
-			review: {
-				title: "Schvalování",
-				subtabs: {
-					addons: "Doplňky",
-					translations: "Překlady",
-				},
-			},
 			database: {
 				title: "Databáze",
 				subtabs: {

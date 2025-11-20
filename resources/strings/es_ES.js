@@ -56,13 +56,6 @@ export default {
 					upload: "Subir",
 				},
 			},
-			review: {
-				title: "Comentarios",
-				subtabs: {
-					addons: "Complementos",
-					translations: "Traducciones",
-				},
-			},
 			posts: {
 				title: "Publicaciones",
 				subtabs: {
