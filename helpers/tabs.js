@@ -8,7 +8,6 @@ import AddonSubmissionsPage from "../pages/addon/addon-submissions.vue";
 import NewAddonPage from "../pages/addon/new-addon-form.vue";
 import EditAddonPage from "../pages/addon/edit-addon-form.vue";
 import ReviewAddonsPage from "../pages/review/index.vue";
-import ReviewTranslationsPage from "../pages/translation/index.vue";
 import PostListPage from "../pages/post/post-grid.vue";
 import EditPostPage from "../pages/post/edit-post.vue";
 import NewPostPage from "../pages/post/new-post.vue";

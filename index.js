@@ -326,11 +326,7 @@ const app = new Vue({
 				headers: { discord: this.user.access_token },
 			};
 		},
-		/**
-		 * Check user perms & add (or not) tabs & routes following user perms
-		 * @returns all tabs to be added in the html
-		 */
-		availableTabs() {
+		availableTabObjects() {
 			return (
 				this.tabs
 					// first filter categories
@@ -338,23 +334,31 @@ const app = new Vue({
 					.map((tab) => ({
 						// must create a new object so if the user logs in the old tabs aren't deleted
 						...tab,
-						labelText: this.lang().global.tabs[tab.label]?.title,
-						subtabs: tab.subtabs
-							.filter((s) => {
-								if (s.public) return true;
-								const roles = s.roles;
-								// if there's no roles then it's available to all logged in users
-								if (!roles) return this.isLoggedIn;
-								return s.roles.some((r) => this.userRoles.includes(r));
-							})
-							.map((s) => {
-								s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
-								return s;
-							}),
+						subtabs: tab.subtabs.filter((s) => {
+							if (s.public) return true;
+							const roles = s.roles;
+							// if there's no roles then it's available to all logged in users
+							if (!roles) return this.isLoggedIn;
+							return s.roles.some((r) => this.userRoles.includes(r));
+						}),
 					}))
 					// then when subtabs are filtered filter again
 					.filter((tab) => tab.subtabs.length)
 			);
+		},
+		/**
+		 * Check user perms & add (or not) tabs & routes following user perms
+		 * @returns all tabs to be added in the html
+		 */
+		availableTabs() {
+			return this.availableTabObjects.map((tab) => {
+				tab.labelText = this.lang().global.tabs[tab.label]?.title;
+				tab.subtabs = tab.subtabs.map((s) => {
+					s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
+					return s;
+				});
+				return tab;
+			});
 		},
 		/**
 		 * Tell if the user is logged in
@@ -479,15 +483,16 @@ const app = new Vue({
 			if (!n) return;
 
 			// add all routes with no role
-			ALL_TABS.filter((t) => t.roles === undefined)
-				.flatMap((t) => t.subtabs)
-				// public routes are already added at this point
-				.filter((s) => !s.public)
-				.flatMap((s) => s.routes)
-				.forEach((r) => router.addRoute(r));
+			this.$nextTick(() => {
+				this.availableTabObjects
+					.flatMap((t) => t.subtabs)
+					.filter((s) => !s.public)
+					.flatMap((s) => s.routes)
+					.forEach((r) => router.addRoute(r));
 
-			// add missing route last (prevents some weird fallback shenanigans)
-			router.addRoute(missingRoute);
+				// add missing route last (prevents some weird fallback shenanigans)
+				router.addRoute(missingRoute);
+			});
 		},
 		userRoles(n, o) {
 			if (o === undefined || o.length === undefined) return;
@@ -496,22 +501,18 @@ const app = new Vue({
 			// leave if new role list is shorter or equal
 			if (n.length <= o.length) return;
 
-			// add all routes with matching roles
-			const subtabs = ALL_TABS.filter((t) => {
-				if (t.roles === undefined) return false;
-				return t.roles.some((role) => n.includes(role));
-			})
-				.flatMap((t) => t.subtabs)
-				.filter((s) => !s.public);
+			// add all routes with no role
+			this.$nextTick(() => {
+				const subtabs = this.availableTabObjects.flatMap((t) => t.subtabs).filter((s) => !s.public);
+				subtabs.forEach((s) => {
+					if (s.badge) this.loadBadge(s.badge, s.label);
+				});
 
-			subtabs.forEach((s) => {
-				if (s.badge) this.loadBadge(s.badge, s.label);
+				subtabs.flatMap((s) => s.routes).forEach((r) => router.addRoute(r));
+
+				// add missing route last (prevents some weird fallback shenanigans)
+				router.addRoute(missingRoute);
 			});
-
-			subtabs.flatMap((s) => s.routes).forEach((r) => router.addRoute(r));
-
-			// add missing route last (prevents some weird fallback shenanigans)
-			router.addRoute(missingRoute);
 		},
 	},
 	created() {
