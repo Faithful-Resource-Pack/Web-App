@@ -105,12 +105,8 @@ export default {
 		modalOpened(newValue) {
 			this.$emit("input", newValue);
 		},
-		"data.id": {
-			handler() {
-				// start loading addons as soon as user has loaded
-				this.getAddons();
-			},
-			immediate: true,
+		"data.id"() {
+			this.getAddons();
 		},
 	},
 };
