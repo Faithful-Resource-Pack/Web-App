@@ -302,10 +302,8 @@ const app = new Vue({
 				2000,
 			);
 		},
-		syncRoutes() {
-			return syncRoutes(
-				this.availableTabObjects.flatMap((r) => r.subtabs).flatMap((s) => s.routes),
-			);
+		syncRoutes(tabs) {
+			return syncRoutes(tabs.flatMap((r) => r.subtabs).flatMap((s) => s.routes));
 		},
 		reloadSettings() {
 			return loadSettings();
@@ -501,6 +499,9 @@ const app = new Vue({
 						if (s.badge) this.loadBadge(s.badge, s.label);
 					});
 			});
+		},
+		availableTabObjects(n) {
+			this.syncRoutes(n);
 		},
 	},
 	created() {
