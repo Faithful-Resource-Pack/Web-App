@@ -286,7 +286,6 @@ export default {
 	review: {
 		titles: {
 			addons: "Review add-ons",
-			translation: "Review translations",
 			pending: "Pending approval",
 			denied: "Denied",
 			approved: "Approved",

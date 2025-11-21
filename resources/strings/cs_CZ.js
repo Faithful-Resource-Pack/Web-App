@@ -173,7 +173,6 @@ export default {
 	review: {
 		titles: {
 			addons: "Posoudit doplňky",
-			translation: "Posoudit překlady",
 			pending: "Čekající na schválení",
 			denied: "Zamítnuto",
 			approved: "Schváleno",

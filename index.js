@@ -111,19 +111,26 @@ router.beforeEach((to, _from, next) => {
 	next();
 });
 
-// add all public routes
-ALL_TABS.filter((t) => t.roles === undefined)
-	.flatMap((t) => t.subtabs)
-	.filter((s) => s.public)
-	.flatMap((s) => s.routes)
-	.forEach((r) => router.addRoute(r));
-
-// add missing route last (prevents some weird fallback shenanigans)
-router.addRoute(missingRoute);
-
 window.apiURL = import.meta.env.VITE_API_URL;
 // fix trailing slash
 if (apiURL.endsWith("/")) window.apiURL = window.apiURL.slice(0, -1);
+
+function syncRoutes(routes) {
+	// accepts any number of routes
+	const curRoutes = router.getRoutes().map((r) => r.path);
+	const diff = routes.filter((r) => !curRoutes.includes(r.path));
+	diff.forEach((r) => router.addRoute(r));
+}
+
+// add all public routes
+syncRoutes(
+	ALL_TABS.filter((t) => t.roles === undefined)
+		.flatMap((t) => t.subtabs)
+		.filter((s) => s.public)
+		.flatMap((s) => s.routes),
+);
+// add missing route last (prevents some weird fallback shenanigans)
+router.addRoute(missingRoute);
 
 async function loadSettings() {
 	// set as global
@@ -289,8 +296,16 @@ const app = new Vue({
 			this.$vuetify.theme.dark = theme === "dark";
 
 			// nice snackbar sentence
-			const notify = this.lang().global.snackbar_system_theme;
-			this.showSnackBar(notify.sentence.replace("%s", notify.themes[theme]), "success", 2000);
+			this.showSnackBar(
+				notify.sentence.replace("%s", this.lang().global.snackbar_system_theme.themes[theme]),
+				"success",
+				2000,
+			);
+		},
+		syncRoutes() {
+			return syncRoutes(
+				this.availableTabObjects.flatMap((r) => r.subtabs).flatMap((s) => s.routes),
+			);
 		},
 		reloadSettings() {
 			return loadSettings();
@@ -471,21 +486,6 @@ const app = new Vue({
 			if (this.$vuetify.breakpoint.mobile) return;
 			localStorage.setItem(MENU_KEY, String(n));
 		},
-		isLoggedIn(n) {
-			if (!n) return;
-
-			// add all routes with no role
-			this.$nextTick(() => {
-				this.availableTabObjects
-					.flatMap((t) => t.subtabs)
-					.filter((s) => !s.public)
-					.flatMap((s) => s.routes)
-					.forEach((r) => router.addRoute(r));
-
-				// add missing route last (prevents some weird fallback shenanigans)
-				router.addRoute(missingRoute);
-			});
-		},
 		userRoles(n, o) {
 			if (o === undefined || o.length === undefined) return;
 			if (n.length === undefined) return;
@@ -495,15 +495,11 @@ const app = new Vue({
 
 			// add all routes with no role
 			this.$nextTick(() => {
-				const subtabs = this.availableTabObjects.flatMap((t) => t.subtabs).filter((s) => !s.public);
-				subtabs.forEach((s) => {
-					if (s.badge) this.loadBadge(s.badge, s.label);
-				});
-
-				subtabs.flatMap((s) => s.routes).forEach((r) => router.addRoute(r));
-
-				// add missing route last (prevents some weird fallback shenanigans)
-				router.addRoute(missingRoute);
+				this.availableTabObjects
+					.flatMap((t) => t.subtabs)
+					.forEach((s) => {
+						if (s.badge) this.loadBadge(s.badge, s.label);
+					});
 			});
 		},
 	},

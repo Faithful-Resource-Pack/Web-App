@@ -132,7 +132,6 @@ export default {
 	review: {
 		titles: {
 			addons: "Add-ons überprüfen",
-			translation: "Übersetzungen überprüfen",
 			pending: "Genehmigung ausstehend",
 			denied: "Abgelehnt",
 			approved: "Genehmigt",

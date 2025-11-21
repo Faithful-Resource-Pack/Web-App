@@ -16,10 +16,10 @@
 						:class="['d-flex align-stretch', adminResults ? 'col-sm-3' : '']"
 					>
 						<p class="mb-0 rounded-lg pa-2">
-							<span :class="['v-card__title pa-0 d-inline', status_color[status]]">
+							<span :class="['v-card__title pa-0 d-inline', statusColor[status]]">
 								{{ data[status] || 0 }}
 							</span>
-							{{ $root.lang(`review.titles.${status}`) }}
+							{{ $root.lang().review.titles[status] }}
 						</p>
 					</v-col>
 				</template>
@@ -106,7 +106,7 @@ export default {
 	data() {
 		return {
 			data: undefined,
-			status_color: {
+			statusColor: {
 				approved: "success--text",
 				pending: "warning--text",
 				denied: "error--text",
@@ -121,7 +121,7 @@ export default {
 			return this.data && Object.keys(this.data).length > 2;
 		},
 		statuses() {
-			return Object.keys(this.status_color);
+			return Object.keys(this.statusColor);
 		},
 		roles() {
 			return this.$root.user.roles.length;

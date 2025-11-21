@@ -266,7 +266,6 @@ export default {
 	review: {
 		titles: {
 			addons: "Analisar addons",
-			translation: "Analisar traduções",
 			pending: "Esperando aprovação",
 			denied: "Negado",
 			approved: "Aprovado",
