@@ -202,8 +202,13 @@ div.tooltip.vue-tooltip-theme {
     border-left: 4px solid hsla(0, 0%, 100%, .12);
 }
 
+.snackbar-status .v-snack__content {
+	/* 16px horizontal padding - 4px left border */
+	padding-right: 12px;
+}
+
 .snackbar-status .v-snack__wrapper.theme--dark {
-	/* color of webapp background */
+	/* makes text more legible in dark mode */
 	background-color: rgb(25, 25, 25);
 }
 
@@ -387,6 +392,10 @@ img.texture-img {
 
 .json-modal-editor {
 	min-height: 20em;
+}
+
+.snackbar-json {
+	border-radius: 4px;
 }
 
 /* optional class for removing the outline */
@@ -639,7 +648,6 @@ img.texture-img {
 }
 
 .v-list-item__action.merged .v-btn {
-	display: inline-block;
 	border-radius: 0;
 }
 .v-list-item__action.merged .v-btn:first-child {
@@ -653,6 +661,12 @@ img.texture-img {
 
 .theme--dark .v-list-item__action.merged .v-btn {
 	background: #272727;
+}
+
+.btn-square-icon {
+	min-width: 36px !important;
+	width: 36px;
+	height: 36px;
 }
 
 .v-dialog {

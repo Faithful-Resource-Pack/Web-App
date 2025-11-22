@@ -8,17 +8,46 @@
 		bottom
 		right
 	>
-		<h3>{{ split.message }}</h3>
-		<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
-		<v-card v-if="json" class="snackbar-json pa-3 mt-2" elevation="0">
-			<pre>{{ JSON.stringify(json, null, 2) }}</pre>
-		</v-card>
+		<div class="d-flex align-center">
+			<div>
+				<h3>{{ split.message }}</h3>
+				<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
+			</div>
+			<!-- this is such a stupid workaround for showing it only on errors -->
+			<div v-if="snackbar.color === 'error'" class="ml-3">
+				<v-btn text class="btn-square-icon" @click="copyMessage">
+					<v-icon color="lighten-1">mdi-content-copy</v-icon>
+				</v-btn>
+				<v-btn
+					text
+					class="btn-square-icon"
+					:href="reportURL"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<v-icon color="error">mdi-flag-variant</v-icon>
+				</v-btn>
+			</div>
+		</div>
+
+		<prism-editor
+			v-if="json"
+			:value="JSON.stringify(json, null, 2)"
+			class="json-editor snackbar-json pa-3 mt-2"
+			:highlight="highlighter"
+		/>
 	</v-snackbar>
 </template>
 
 <script>
+import Prism from "prismjs";
+import { PrismEditor } from "vue-prism-editor";
+
 export default {
 	name: "snackbar-status",
+	components: {
+		PrismEditor,
+	},
 	props: {
 		value: {
 			type: Boolean,
@@ -32,7 +61,21 @@ export default {
 	data() {
 		return {
 			snackbarShown: false,
+			reportURL:
+				"https://github.com/Faithful-Resource-Pack/Web-App/issues/new?template=bug_report.yml",
 		};
+	},
+	methods: {
+		highlighter(code) {
+			return Prism.highlight(code, Prism.languages.js, "json");
+		},
+		copyMessage() {
+			const { message, submessage } = this.split;
+			let formatted = `${message}:\n${submessage}`;
+			if (this.json) formatted += `\n\n\`\`\`json\n${JSON.stringify(this.json, null, 4)}\`\`\``;
+			formatted += `\n\nCreated: ${new Date().toString()}`;
+			navigator.clipboard.writeText(formatted);
+		},
 	},
 	computed: {
 		split() {
