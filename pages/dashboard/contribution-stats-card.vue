@@ -2,7 +2,7 @@
 	<dashboard-card
 		id="contribution-stats-card"
 		:title="$root.lang().dashboard.titles.contribution_stats"
-		to="/textures"
+		to="/users"
 		:clickable="$root.isAdmin"
 	>
 		<v-card-text class="pb-4 flex-grow-1 d-flex align-stretch">

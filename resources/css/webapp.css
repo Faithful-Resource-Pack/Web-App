@@ -439,7 +439,7 @@ img.texture-img {
 
 	border: 1px dashed currentColor;
 	z-index: 3;
-	border-radius: 10px;
+	border-radius: 4px;
 }
 
 .drop-zone.disabled {
