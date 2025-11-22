@@ -14,7 +14,7 @@
 				<faithful-card v-else />
 			</v-col>
 			<v-col cols="12" sm="9">
-				<user-card :colors="colors" />
+				<texture-card :colors="colors" />
 			</v-col>
 			<v-col cols="12" sm="6">
 				<addon-card />
@@ -32,7 +32,7 @@
 <script>
 import AddonCard from "./addon-card.vue";
 import ProfileCard from "./profile-card.vue";
-import UserCard from "./user-card.vue";
+import TextureCard from "./texture-card.vue";
 import ContributionActivityCard from "./contribution-activity-card.vue";
 import ContributionStatsCard from "./contribution-stats-card.vue";
 import FaithfulCard from "./faithful-card.vue";
@@ -42,7 +42,7 @@ export default {
 	components: {
 		AddonCard,
 		ProfileCard,
-		UserCard,
+		TextureCard,
 		ContributionActivityCard,
 		ContributionStatsCard,
 		FaithfulCard,

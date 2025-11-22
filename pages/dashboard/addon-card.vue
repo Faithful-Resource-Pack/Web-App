@@ -15,12 +15,11 @@
 						cols="12"
 						:class="['d-flex align-stretch', adminResults ? 'col-sm-3' : '']"
 					>
-						<p class="mb-0 rounded-lg pa-2">
-							<span :class="['v-card__title pa-0 d-inline', statusColor[status]]">
-								{{ data[status] || 0 }}
-							</span>
-							{{ $root.lang().review.titles[status] }}
-						</p>
+						<dashboard-stat
+							:label="$root.lang().review.titles[status]"
+							:value="data[status] || 0"
+							:color="statusColor[status]"
+						/>
 					</v-col>
 				</template>
 			</v-row>
@@ -48,12 +47,7 @@
 					sm="3"
 					class="d-flex align-stretch"
 				>
-					<p class="mb-0 rounded-lg pa-2">
-						<span class="v-card__title pa-0 d-inline text--primary">
-							{{ number }}
-						</span>
-						{{ " " + tag }}
-					</p>
+					<dashboard-stat :label="tag" :value="number" />
 				</v-col>
 			</v-row>
 			<v-row v-else id="stats-loader" class="mt-1 py-0 my-0 align-self-stretch" dense>
@@ -97,11 +91,13 @@
 <script>
 import axios from "axios";
 import DashboardCard from "./dashboard-card.vue";
+import DashboardStat from "@components/dashboard-stat.vue";
 
 export default {
 	name: "addon-card",
 	components: {
 		DashboardCard,
+		DashboardStat,
 	},
 	data() {
 		return {

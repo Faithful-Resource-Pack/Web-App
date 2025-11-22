@@ -718,11 +718,11 @@ img.texture-img {
 	background: rgba(0, 0, 0, 0.2);
 }
 
-.roles-graph #roles-graph-cell {
+.treemap-graph #treemap-graph-cell {
 	position: relative;
 }
 
-.roles-graph #graph-loader {
+.treemap-graph #graph-loader {
 	position: absolute;
 	top: 4px;
 	left: 4px;
@@ -730,16 +730,16 @@ img.texture-img {
 	bottom: 4px;
 }
 
-.roles-graph #graph-loader > *, .roles-graph #graph-loader > *::after {
+.treemap-graph #graph-loader > *, .treemap-graph #graph-loader > *::after {
 	height: 100%;
 	bottom: 0;
 }
 
-.roles-graph .v-skeleton-loader__text {
+.treemap-graph .v-skeleton-loader__text {
 	margin-bottom: 0;
 }
 
-.roles-graph svg {
+.treemap-graph svg {
 	background: transparent !important;
 	overflow: visible;
 	width: 100%;

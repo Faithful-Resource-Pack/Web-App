@@ -1,11 +1,10 @@
 <template>
-	<v-row class="roles-graph mt-0" dense>
-		<v-col id="roles-graph-cell" class="flex-sm-shrink-0 flex-grow-0" cols="12" sm="6">
+	<v-row class="treemap-graph mt-0" dense>
+		<v-col id="treemap-graph-cell" class="flex-sm-shrink-0 flex-grow-0" cols="12" sm="6">
 			<v-skeleton-loader v-if="loading || !renderComponent" id="graph-loader" type="image" />
 			<graph-treemap
 				v-if="renderComponent"
 				:theme="theme"
-				:width="width"
 				:height="height"
 				:paddingTop="1"
 				:paddingBottom="1"
@@ -40,9 +39,8 @@
 				<template v-else>
 					<v-col
 						v-for="(value, key, index) in types"
-						:key="`list-contributor-${key}`"
-						cols="12"
-						sm="6"
+						:key="key"
+						cols="6"
 						class="d-flex align-stretch"
 					>
 						<p class="rounded-lg pa-2 mb-0 flex-grow-1">
@@ -50,7 +48,10 @@
 								class="mr-1 rounded d-inline-block"
 								:style="{ 'background-color': shade[index], height: '10px', width: '10px' }"
 							/>
-							<span class="font-weight-medium text--primary">{{ value }}</span> {{ key }}
+							<span class="font-weight-medium text--primary">
+								{{ value }}
+							</span>
+							{{ key }}
 						</p>
 					</v-col>
 				</template>
@@ -64,7 +65,7 @@ import GraphTreemap from "vue-graph/src/components/treemap.js";
 import Tooltip from "vue-graph/src/widgets/tooltip.js";
 
 export default {
-	name: "roles-graph",
+	name: "detailed-treemap",
 	components: {
 		GraphTreemap,
 		Tooltip,
@@ -89,8 +90,8 @@ export default {
 	},
 	data() {
 		return {
-			ratio: 5 / 3,
-			height: 314,
+			ratio: 3 / 4,
+			height: 400,
 			renderComponent: false,
 		};
 	},
@@ -109,9 +110,7 @@ export default {
 		},
 		values() {
 			return this.series
-				.map((e, i) => {
-					return [this.labels[i], e];
-				})
+				.map((e, i) => [this.labels[i], e])
 				.sort((a, b) => b[1] - a[1])
 				.map((e, i) => [i, ...e]);
 		},

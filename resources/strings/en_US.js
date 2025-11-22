@@ -660,7 +660,7 @@ export default {
 			last_month: "contributions last month",
 		},
 		titles: {
-			users: "Users",
+			textures: "Textures",
 			addons: "Add-ons",
 			contribution_activity: "Contribution activity",
 			contribution_stats: "Contributions",
@@ -670,10 +670,9 @@ export default {
 			submissions: "Submissions",
 			upload: "Upload",
 		},
-		users: {
-			total: "users",
-			total_anonymous: "anonymous",
-			total_roles: "roles",
+		textures: {
+			total: "Textures",
+			versions: "Versions",
 		},
 		locale: {
 			on: "on",
