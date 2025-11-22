@@ -1,8 +1,9 @@
 <template>
 	<v-container>
-		<div v-if="loading" class="text-center">
-			<h2 class="mb-5">{{ $root.lang().posts.loading }}</h2>
-			<v-progress-circular :size="70" :width="7" color="primary" indeterminate />
+		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
+			<span />
+			<v-progress-circular :size="150" :width="10" indeterminate />
+			<p class="text-h6 my-5">{{ $root.lang().posts.loading }}</p>
 		</div>
 		<template v-else>
 			<v-tabs v-model="selectedTab" grow :class="[{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">

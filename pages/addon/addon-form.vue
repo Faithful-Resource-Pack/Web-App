@@ -2,9 +2,10 @@
 	<v-container>
 		<fullscreen-preview v-model="previewOpen" :src="header" />
 
-		<div v-if="loading" class="text-center">
-			<h2 class="mb-5">{{ $root.lang().addons.general.loading_addon }}</h2>
-			<v-progress-circular :size="70" :width="7" color="primary" indeterminate />
+		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
+			<span />
+			<v-progress-circular :size="150" :width="10" indeterminate />
+			<p class="text-h6 my-5">{{ $root.lang().addons.general.loading_addon }}</p>
 		</div>
 		<v-list
 			v-else
