@@ -14,14 +14,16 @@
 				<v-btn icon @click.stop="closeModal">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
-				<v-toolbar-title v-if="loading">{{ $root.lang().global.loading }}</v-toolbar-title>
+				<v-toolbar-title v-if="loading">
+					{{ $root.lang().global.loading }}
+				</v-toolbar-title>
 				<template v-else>
 					<v-toolbar-title v-if="title">{{ title }}</v-toolbar-title>
 					<v-spacer v-if="$slots.toolbar" />
 					<slot name="toolbar" />
 				</template>
 			</v-toolbar>
-			<slot v-if="!loading" />
+			<slot />
 		</v-card>
 	</v-dialog>
 </template>

@@ -336,7 +336,7 @@ export default {
 			},
 		},
 		general: {
-			loading_addon: "Loading add-on",
+			loading_addon: "Loading add-on…",
 			no_submissions: "You don't have any submitted add-ons!",
 			rules: "Make sure to read the add-on rules before submitting",
 			title: "General",
@@ -615,6 +615,7 @@ export default {
 		result_stats_plural: "%COUNT% textures found in %SECONDS% seconds",
 		modal: {
 			no_contributions: "No contributions found",
+			loading: "Loading texture…",
 			tabs: {
 				information: "Information",
 				authors: "Authors",
