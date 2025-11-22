@@ -128,10 +128,7 @@ export default {
 				b = Number.parseInt(r.slice(5, 7), 16);
 				r = Number.parseInt(r.slice(1, 3), 16);
 			}
-			r = typeof r === "undefined" ? 0 : r;
-			g = typeof g === "undefined" ? 0 : g;
-			b = typeof b === "undefined" ? 0 : b;
-			return { r: r, g: g, b: b };
+			return { r: r ?? 0, g: g ?? 0, b: b ?? 0 };
 		},
 		toRGB(gColor) {
 			return `rgb(${gColor.r}, ${gColor.g}, ${gColor.b})`;

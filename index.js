@@ -77,16 +77,14 @@ const _get_lang = () => {
 	return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
 };
 
-/**
- * ROUTING
- */
-
+const THEME_KEY = "THEME";
 const AUTH_STORAGE_KEY = "auth";
 const MENU_KEY = "menu_key";
 const MENU_DEFAULT = false;
 
-/** @type {import("vue-router").RouteConfig[]} */
-const missingRoute = { path: "*", name: "404", component: MissingPage };
+/**
+ * ROUTING
+ */
 
 const router = new VueRouter({
 	mode: "history",
@@ -130,8 +128,9 @@ syncRoutes(
 		.filter((s) => s.public)
 		.flatMap((s) => s.routes),
 );
+
 // add missing route last (prevents some weird fallback shenanigans)
-router.addRoute(missingRoute);
+router.addRoute({ path: "*", name: "404", component: MissingPage });
 
 async function loadSettings() {
 	// set as global
@@ -161,22 +160,28 @@ const app = new Vue({
 	},
 	data() {
 		return {
+			/** authentication stuff */
 			discordUser: discordUserStore(),
 			discordAuth: discordAuthStore(),
 			appUser: appUserStore(),
-			badgeData: {},
-			// incremented to force the lang() function to update (more granular than $forceUpdate)
-			refreshLang: 0,
+			authListeners: [],
+			/** localization stuff */
+			refreshLang: 0, // more granular than $forceUpdate for updating langs
 			selectedLang: _get_lang(),
 			loadedLangs: LOADED_LANGS,
 			availableLangs: AVAILABLE_LANGS,
-			tabs: ALL_TABS.map((tab) => {
-				tab.subtabs = tab.subtabs.map((s) => {
-					s.to = s.routes[0].path;
-					return s;
-				});
-				return tab;
-			}),
+			/** theme stuff */
+			theme: undefined,
+			themes: {
+				dark: "mdi-weather-night",
+				system: "mdi-desktop-tower-monitor",
+				light: "mdi-white-balance-sunny",
+			},
+			/** sidebar stuff */
+			drawerOpen: localStorage.getItem(MENU_KEY)
+				? localStorage.getItem(MENU_KEY) === "true"
+				: MENU_DEFAULT,
+			badgeData: {},
 			snackbar: {
 				show: false,
 				message: "",
@@ -184,16 +189,6 @@ const app = new Vue({
 				timeout: 4000,
 				json: undefined,
 			},
-			drawerOpen: localStorage.getItem(MENU_KEY)
-				? localStorage.getItem(MENU_KEY) === "true"
-				: MENU_DEFAULT,
-			theme: undefined,
-			themes: {
-				dark: "mdi-weather-night",
-				system: "mdi-desktop-tower-monitor",
-				light: "mdi-white-balance-sunny",
-			},
-			authListeners: [],
 		};
 	},
 	methods: {
@@ -214,9 +209,7 @@ const app = new Vue({
 			// already cached, no need to load
 			if (this.loadedLangs[langObj.id]) return;
 
-			const strings = await langObj.load().catch((e) => {
-				this.showSnackBar(e.toString(), "error");
-			});
+			const strings = await langObj.load().catch((err) => void this.showSnackBar(err, "error"));
 			this.loadedLangs[langObj.id] = Object.merge({}, en_US, strings || {});
 
 			// wait until the data changes have pushed to refresh the lang function
@@ -320,7 +313,7 @@ const app = new Vue({
 		},
 		availableTabObjects() {
 			return (
-				this.tabs
+				ALL_TABS
 					// first filter categories
 					.filter((tab) => !tab.roles || tab.roles.some((r) => this.userRoles.includes(r)))
 					.map((tab) => ({
@@ -346,6 +339,7 @@ const app = new Vue({
 				tab.labelText = this.lang().global.tabs[tab.label]?.title;
 				tab.subtabs = tab.subtabs.map((s) => {
 					s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
+					s.to = s.routes[0].path;
 					return s;
 				});
 				return tab;
@@ -425,21 +419,20 @@ const app = new Vue({
 		theme: {
 			handler(n) {
 				const availableThemes = Object.keys(this.themes);
+				const defaultTheme = availableThemes[0];
 				if (n === undefined) {
-					let theme = localStorage.getItem("THEME");
+					const theme = localStorage.getItem(THEME_KEY);
 
 					// input validation
-					if (!this.themes[theme]) theme = availableThemes[0];
-
-					this.theme = theme;
+					this.theme = this.themes[theme] ? theme : defaultTheme;
 					return;
 				}
 				if (!this.themes[n]) {
-					this.theme = availableThemes[0];
+					this.theme = defaultTheme;
 					return;
 				}
 
-				localStorage.setItem("THEME", String(n));
+				localStorage.setItem(THEME_KEY, String(n));
 				const isDark =
 					n !== "light" &&
 					(n === "dark" || window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -469,7 +462,7 @@ const app = new Vue({
 		userRoles(n, o) {
 			if (o === undefined || o.length === undefined) return;
 			if (n.length === undefined) return;
-			// only update routes based on your roles fetched (role list is longer)
+			// only update routes based on your fetched roles (role list is longer)
 			// leave if new role list is shorter or equal
 			if (n.length <= o.length) return;
 
