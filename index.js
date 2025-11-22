@@ -495,9 +495,8 @@ const app = new Vue({
 			this.$nextTick(() => {
 				this.availableTabObjects
 					.flatMap((t) => t.subtabs)
-					.forEach((s) => {
-						if (s.badge) this.loadBadge(s.badge, s.label);
-					});
+					.filter((s) => s.badge)
+					.forEach((s) => this.loadBadge(s.badge, s.label));
 			});
 		},
 		availableTabObjects(n) {

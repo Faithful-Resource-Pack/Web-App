@@ -197,6 +197,10 @@ div.tooltip.vue-tooltip-theme {
 	padding: 8px 0 8px 8px;
 }
 
+.snackbar-status .v-snack__wrapper {
+    border-left: 5px solid hsla(0, 0%, 100%, .12);
+}
+
 .texture-img {
 	max-height: 256px;
 	max-width: 256px;
