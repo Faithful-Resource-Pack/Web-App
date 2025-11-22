@@ -22,6 +22,7 @@ import { appUserStore } from "./stores/appUserStore.js";
 import ALL_TABS from "@helpers/tabs.js";
 import NavAppBar from "@components/nav-app-bar.vue";
 import NavSidebar from "@components/nav-sidebar.vue";
+import SnackbarStatus from "@components/snackbar-status.vue";
 import MissingPage from "./pages/404/index.vue";
 
 Vue.config.devtools = import.meta.env.MODE === "development";
@@ -156,6 +157,7 @@ const app = new Vue({
 	components: {
 		NavAppBar,
 		NavSidebar,
+		SnackbarStatus,
 	},
 	data() {
 		return {
@@ -241,29 +243,11 @@ const app = new Vue({
 			};
 		},
 		showSnackBar(message, color = "#222", timeout = 4000, json = undefined) {
-			this.snackbar.submessage = "";
-			if (typeof message === "string") {
-				const newline = message.indexOf("\n");
-				if (newline !== -1) {
-					this.snackbar.message = `${message.substring(0, newline)}:`;
-					this.snackbar.submessage = message.substring(newline + 1);
-				} else {
-					this.snackbar.message = message;
-				}
-			} else {
-				this.snackbar.message = message?.message;
-
-				if (message.response && message.response.data) {
-					const submessage = message.response.data.error || message.response.data.message;
-					this.snackbar.message += ":";
-					this.snackbar.submessage = submessage;
-				}
-			}
-
-			this.snackbar.json = json;
+			this.snackbar.show = true;
+			this.snackbar.message = message;
 			this.snackbar.color = color;
 			this.snackbar.timeout = timeout;
-			this.snackbar.show = true;
+			this.snackbar.json = json;
 		},
 		logout() {
 			this.discordAuth.logout();

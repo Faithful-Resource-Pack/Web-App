@@ -83,19 +83,7 @@
 				</span>
 			</v-main>
 
-			<v-snackbar
-				v-model="snackbar.show"
-				class="snackbar-status"
-				:timeout="snackbar.timeout"
-				:color="snackbar.color"
-				text
-				bottom
-				right
-			>
-				<h3>{{ snackbar.message }}</h3>
-				<p v-if="snackbar.submessage" class="mt-2 mb-0">{{ snackbar.submessage }}</p>
-				<pre v-if="snackbar.json" class="mt-2">{{ JSON.stringify(snackbar.json, null, 2) }}</pre>
-			</v-snackbar>
+			<snackbar-status v-model="snackbar.show" :snackbar="snackbar" />
 		</v-app>
 
 		<!-- main script -->

@@ -198,7 +198,13 @@ div.tooltip.vue-tooltip-theme {
 }
 
 .snackbar-status .v-snack__wrapper {
-    border-left: 5px solid hsla(0, 0%, 100%, .12);
+	/* accent color, same width as discord embed accent */
+    border-left: 4px solid hsla(0, 0%, 100%, .12);
+}
+
+.snackbar-status .v-snack__wrapper.theme--dark {
+	/* color of webapp background */
+	background-color: rgb(25, 25, 25);
 }
 
 .texture-img {
