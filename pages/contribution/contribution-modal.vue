@@ -156,13 +156,13 @@ export default {
 			const finalContributions = [];
 			// can't use map since errors can be thrown
 			for (const contrib of this.contribs) {
-				const snackBar = this.$root.jsonSnackBar(contrib);
+				const showSnackBar = this.$root.makeJsonSnackBar(contrib);
 
 				// convert ranges into actual texture IDs
 				const generatedRange = generateRange(contrib.texture);
 
 				if (!generatedRange.length) {
-					snackBar.showSnackBar(
+					showSnackBar(
 						this.$root.lang().database.contributions.modal.id_field_errors.one_required,
 						"error",
 					);
@@ -171,7 +171,7 @@ export default {
 				}
 
 				if (contrib.authors.length === 0) {
-					snackBar.showSnackBar(
+					showSnackBar(
 						this.$root.lang().database.contributions.no_contributor_yet,
 						"error",
 					);

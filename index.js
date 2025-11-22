@@ -180,8 +180,7 @@ const app = new Vue({
 			snackbar: {
 				show: false,
 				message: "",
-				submessage: "",
-				color: "#222",
+				color: "",
 				timeout: 4000,
 				json: undefined,
 			},
@@ -231,18 +230,17 @@ const app = new Vue({
 			// since it's recursive you don't need setInterval
 			return setTimeout(() => this.loadBadge(cb, key), 30000);
 		},
-		jsonSnackBar(json = undefined) {
-			return {
-				showSnackBar: (...allArgs) => {
-					if (allArgs.length < 2) allArgs.push("#222");
-					if (allArgs.length < 3) allArgs.push(4000);
-					allArgs.push(json);
+		// reverse curried version of showSnackBar with json first
+		makeJsonSnackBar(json = undefined) {
+			return (...allArgs) => {
+				if (allArgs.length < 2) allArgs.push("");
+				if (allArgs.length < 3) allArgs.push(4000);
+				allArgs.push(json);
 
-					return this.showSnackBar(...allArgs);
-				},
+				return this.showSnackBar(...allArgs);
 			};
 		},
-		showSnackBar(message, color = "#222", timeout = 4000, json = undefined) {
+		showSnackBar(message, color = "", timeout = 4000, json = undefined) {
 			this.snackbar.show = true;
 			this.snackbar.message = message;
 			this.snackbar.color = color;

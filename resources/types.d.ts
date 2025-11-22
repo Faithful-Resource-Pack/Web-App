@@ -21,6 +21,7 @@ declare module "vue/types/vue" {
 		message: string | AxiosResponse,
 		color?: string, // can be vuetify color also
 		timeout?: number,
+		json?: unknown, // any json-encodable object
 	) => void;
 
 	// inject methods being used
@@ -37,7 +38,7 @@ declare module "vue/types/vue" {
 		log(...objs: any[]): void;
 		lang(): Readonly<typeof strings>;
 		lang(key: string): string;
-		jsonSnackBar(json?: string): { showSnackBar: SnackBarCallback };
+		makeJsonSnackBar(json: unknown): SnackBarCallback;
 		showSnackBar: SnackBarCallback;
 		logout(): void;
 		compileMarkdown(rawText: string): string;
