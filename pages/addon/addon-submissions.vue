@@ -21,6 +21,7 @@
 						color="blue"
 						:href="`https://www.faithfulpack.net/addons/${slug}`"
 						target="_blank"
+						rel="noopener noreferrer"
 						icon
 						small
 					>

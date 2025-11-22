@@ -21,9 +21,10 @@
 						<v-btn
 							v-for="listing in listings"
 							:key="listing.name"
+							class="text--secondary"
 							:href="listing.href"
 							target="_blank"
-							class="text--secondary"
+							rel="noopener noreferrer"
 							:aria-label="listing.name"
 							icon
 						>

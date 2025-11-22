@@ -14,7 +14,11 @@
 			two-line
 		>
 			<v-form ref="form" v-model="validForm" lazy-validation>
-				<a href="https://docs.faithfulpack.net/pages/manuals/add-on-rules" target="_blank">
+				<a
+					href="https://docs.faithfulpack.net/pages/manuals/add-on-rules"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<v-alert type="warning" class="pb-4" color="orange darken-3">
 						<span style="color: inherit; text-decoration: underline">
 							{{ $root.lang().addons.general.rules }}

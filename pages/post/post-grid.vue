@@ -28,6 +28,7 @@
 						color="blue"
 						:href="`https://faithfulpack.net${permalink}`"
 						target="_blank"
+						rel="noopener noreferrer"
 						icon
 						small
 					>

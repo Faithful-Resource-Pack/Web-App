@@ -9,7 +9,9 @@
 		<div class="text--secondary mb-2">
 			<ul v-for="file in addonInPanel.files.filter((f) => f.use === 'download')" :key="file.id">
 				<li>
-					<a :href="file.source" target="_blank">{{ file.name }}</a>
+					<a :href="file.source" target="_blank" rel="noopener noreferrer">
+						{{ file.name }}
+					</a>
 				</li>
 			</ul>
 		</div>

@@ -98,7 +98,7 @@
 		<smart-grid v-if="searchResults.length" :items="searchResults" track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar tile class="texture-preview">
-					<a :href="`/gallery?show=${item.texture}`" target="_blank">
+					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
 						<v-img class="texture-img" :src="item.url" :lazy-src="logos[item.pack]" />
 					</a>
 				</v-list-item-avatar>
@@ -117,7 +117,7 @@
 
 					<div>
 						<v-chip label x-small class="mr-1"> {{ packToCode[item.pack] }} </v-chip>
-						<a :href="`/gallery?show=${item.texture}`" target="_blank">
+						<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
 							<v-chip style="cursor: pointer" label x-small class="mr-1">
 								#{{ item.texture }} <span class="mdi mdi-open-in-new ml-1" />
 							</v-chip>
