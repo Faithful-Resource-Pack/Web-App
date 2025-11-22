@@ -366,15 +366,23 @@ img.texture-img {
 
 /* required class */
 .json-editor {
-	/* we don't use `language-` classes anymore so that's why we need to add background and text color manually */
-	background: #2d2d2d;
-	color: #ccc;
-
 	/* you must provide font-family font-size line-height. Example: */
 	font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
 	font-size: 12px;
 	line-height: 1.5;
 	padding: 5px;
+}
+
+/* we don't use `language-` classes anymore so we need to add the background/text color manually */
+.theme--dark .json-editor {
+	/* same colors as main container */
+	background: #272727;
+	color: rgba(255, 255, 255, 0.87);
+}
+
+.theme--light .json-editor {
+	background: #f5f5f5;
+	color: rgba(0, 0, 0, 0.87);
 }
 
 .json-modal-editor {

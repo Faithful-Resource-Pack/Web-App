@@ -55,10 +55,6 @@
 		/>
 		<link
 			rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/prismjs@1.27.0/themes/prism-tomorrow.min.css"
-		/>
-		<link
-			rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/vue-calendar-heatmap@0.8.4/dist/vue-calendar-heatmap.min.css"
 		/>
 		<link rel="stylesheet" href="./resources/css/webapp.css" />
@@ -81,6 +77,16 @@
 				<span class="py-3 d-flex justify-center">
 					&copy; {{ new Date().getFullYear() }} Faithful Resource Pack
 				</span>
+
+				<!-- this looks really weird but it needs to be here to dynamically change -->
+				<link
+					rel="stylesheet"
+					:href="
+						isDark
+							? 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-vsc-dark-plus.css'
+							: 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css'
+					"
+				/>
 			</v-main>
 
 			<snackbar-status v-model="snackbar.show" :snackbar="snackbar" />

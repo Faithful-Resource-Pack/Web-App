@@ -7,7 +7,7 @@
 		</div>
 		<div class="my-2 text-h5">{{ $root.lang().settings.edit_raw }}</div>
 
-		<v-btn :color="pageColor" class="my-6" :disabled="jsonIsNotValid" block @click="save">
+		<v-btn :color="pageColor" class="white--text my-6" :disabled="jsonIsNotValid" block @click="save">
 			{{ $root.lang().global.btn.save }} <v-icon right>mdi-content-save</v-icon>
 		</v-btn>
 
