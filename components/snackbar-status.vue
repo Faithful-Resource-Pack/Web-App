@@ -14,7 +14,7 @@
 				<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
 			</div>
 			<!-- this is such a stupid workaround for showing it only on errors -->
-			<div v-if="snackbar.color === 'error'" class="ml-5">
+			<div v-if="snackbar.color === 'error'" class="d-flex flex-nowrap ml-5">
 				<v-btn text class="btn-square-icon" @click="copyMessage">
 					<v-icon color="error" class="snackbar-accent">{{ copyIcon }}</v-icon>
 				</v-btn>
