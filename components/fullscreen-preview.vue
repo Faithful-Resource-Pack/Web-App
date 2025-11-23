@@ -54,10 +54,7 @@ export default {
 	},
 	computed: {
 		styles() {
-			if (!this.texture) return {};
-			return {
-				"image-rendering": "pixelated",
-			};
+			return this.texture ? { "image-rendering": "pixelated" } : {};
 		},
 	},
 	watch: {

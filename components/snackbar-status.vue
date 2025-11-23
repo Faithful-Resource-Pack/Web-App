@@ -8,15 +8,15 @@
 		bottom
 		right
 	>
-		<div class="d-flex align-center">
+		<div class="d-flex justify-space-between" :class="json ? 'align-start' : 'align-center'">
 			<div>
-				<h3>{{ split.message }}</h3>
+				<h3 class="snackbar-accent">{{ split.message }}</h3>
 				<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
 			</div>
 			<!-- this is such a stupid workaround for showing it only on errors -->
-			<div v-if="snackbar.color === 'error'" class="ml-3">
+			<div v-if="snackbar.color === 'error'" class="ml-5">
 				<v-btn text class="btn-square-icon" @click="copyMessage">
-					<v-icon color="lighten-1">mdi-content-copy</v-icon>
+					<v-icon color="error" class="snackbar-accent">{{ copyIcon }}</v-icon>
 				</v-btn>
 				<v-btn
 					text
@@ -30,24 +30,19 @@
 			</div>
 		</div>
 
-		<prism-editor
+		<pre
 			v-if="json"
-			:value="JSON.stringify(json, null, 2)"
 			class="json-editor snackbar-json pa-3 mt-2"
-			:highlight="highlighter"
+			v-html="highlighter(JSON.stringify(json, null, 2))"
 		/>
 	</v-snackbar>
 </template>
 
 <script>
 import Prism from "prismjs";
-import { PrismEditor } from "vue-prism-editor";
 
 export default {
 	name: "snackbar-status",
-	components: {
-		PrismEditor,
-	},
 	props: {
 		value: {
 			type: Boolean,
@@ -63,6 +58,7 @@ export default {
 			snackbarShown: false,
 			reportURL:
 				"https://github.com/Faithful-Resource-Pack/Web-App/issues/new?template=bug_report.yml",
+			copyIcon: "mdi-content-copy",
 		};
 	},
 	methods: {
@@ -75,6 +71,12 @@ export default {
 			if (this.json) formatted += `\n\n\`\`\`json\n${JSON.stringify(this.json, null, 4)}\`\`\``;
 			formatted += `\n\nCreated: ${new Date().toString()}`;
 			navigator.clipboard.writeText(formatted);
+
+			// snackbar is already visible so we just replace the button icon for a second
+			this.copyIcon = "mdi-check";
+			setTimeout(() => {
+				this.copyIcon = "mdi-content-copy";
+			}, 1000);
 		},
 	},
 	computed: {

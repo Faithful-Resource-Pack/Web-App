@@ -183,6 +183,17 @@ a {
 	padding: 8px 0 8px 8px;
 }
 
+.theme--dark .snackbar-accent,
+.theme--dark .snackbar-accent .v-icon::before {
+	/* since the color can change we just lighten it directly */
+	filter: brightness(2.25) saturate(0.7);
+}
+
+.theme--light .snackbar-accent,
+.theme--light .snackbar-accent .v-icon::before {
+	filter: brightness(0.7);
+}
+
 .snackbar-status .v-snack__wrapper {
 	/* accent color, same width as discord embed accent */
     border-left: 4px solid hsla(0, 0%, 100%, .12);

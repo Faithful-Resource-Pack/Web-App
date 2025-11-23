@@ -88,8 +88,7 @@ export default {
 			return moment(new Date(this.lastContribution.date)).format("ll");
 		},
 		icon() {
-			if (this.lastContribution.authors.length === 1) return "mdi-account";
-			return "mdi-account-multiple";
+			return this.lastContribution.authors.length === 1 ? "mdi-account" : "mdi-account-multiple";
 		},
 		// can be changed if we ever find a better way to handle this
 		modded() {
