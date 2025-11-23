@@ -30,15 +30,15 @@
 			</div>
 		</div>
 
-		<pre
-			v-if="json"
-			class="json-editor snackbar-json pa-3 mt-2"
-			v-html="highlighter(JSON.stringify(json, null, 2))"
-		/>
+		<div v-if="json" class="json-editor snackbar-json pa-3 mt-2">
+			<!-- eslint-disable-next-line vue/no-v-html -->
+			<pre v-html="sanitize(highlighter(JSON.stringify(json, null, 2)))"></pre>
+		</div>
 	</v-snackbar>
 </template>
 
 <script>
+import DOMPurify from "dompurify";
 import Prism from "prismjs";
 
 export default {
@@ -64,6 +64,9 @@ export default {
 	methods: {
 		highlighter(code) {
 			return Prism.highlight(code, Prism.languages.js, "json");
+		},
+		sanitize(text) {
+			return DOMPurify.sanitize(text);
 		},
 		copyMessage() {
 			const { message, submessage } = this.split;
