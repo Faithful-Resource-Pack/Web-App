@@ -1,45 +1,43 @@
 <template>
-	<div class="tooltip">
-		<div class="texture-tooltip">
-			<div class="texture-info-container">
-				<span class="texture-id">#{{ texture.textureID }}</span>
-				<h1 align="left" class="encased">{{ texture.name }}</h1>
-				<div align="left" class="encased">
-					<!-- always show contributions even if a texture is ignored/modded -->
-					<template v-if="lastContribution !== undefined">
-						<p>
-							<v-icon small>{{ icon }}</v-icon>
-							{{ authors }}
-						</p>
-						<p>
-							<v-icon small>mdi-clock-outline</v-icon>
-							{{ date }}
-						</p>
-					</template>
-					<!-- even in 16x the modded textures aren't by mojang -->
-					<p v-else-if="modded">
-						<v-icon small>mdi-wrench</v-icon>
-						{{ $root.lang().gallery.tooltip.modded }}
+	<div class="gallery-tooltip">
+		<div class="gallery-tooltip-texture">
+			<span class="gallery-tooltip-id">#{{ texture.textureID }}</span>
+			<h1 align="left" class="encased">{{ texture.name }}</h1>
+			<div align="left" class="encased">
+				<!-- always show contributions even if a texture is ignored/modded -->
+				<template v-if="lastContribution !== undefined">
+					<p>
+						<v-icon small>{{ icon }}</v-icon>
+						{{ authors }}
 					</p>
-					<!-- there's no mdi mojang icon so this is a custom one -->
-					<p v-else-if="mojang">
-						<i class="icon-mojang-red" />
-						{{ $root.lang().gallery.tooltip.mojang }}
+					<p>
+						<v-icon small>mdi-clock-outline</v-icon>
+						{{ date }}
 					</p>
-					<p v-else-if="ignored">
-						<v-icon small>mdi-texture</v-icon>
-						{{ $root.lang().gallery.tooltip.ignored }}
-					</p>
-					<p v-else>
-						{{ $root.lang().gallery.error_message.contribution_not_found }}
-					</p>
-				</div>
+				</template>
+				<!-- even in 16x the modded textures aren't by mojang -->
+				<p v-else-if="modded">
+					<v-icon small>mdi-wrench</v-icon>
+					{{ $root.lang().gallery.tooltip.modded }}
+				</p>
+				<!-- there's no mdi mojang icon so this is a custom one -->
+				<p v-else-if="mojang">
+					<i class="icon-mojang-red" />
+					{{ $root.lang().gallery.tooltip.mojang }}
+				</p>
+				<p v-else-if="ignored">
+					<v-icon small>mdi-texture</v-icon>
+					{{ $root.lang().gallery.tooltip.ignored }}
+				</p>
+				<p v-else>
+					{{ $root.lang().gallery.error_message.contribution_not_found }}
+				</p>
 			</div>
-			<div class="texture-tags-container">
-				<span v-for="tag in texture.tags" :key="tag" class="encased">
-					{{ tag }}
-				</span>
-			</div>
+		</div>
+		<div class="gallery-tooltip-tags">
+			<span v-for="tag in texture.tags" :key="tag" class="encased">
+				{{ tag }}
+			</span>
 		</div>
 	</div>
 </template>

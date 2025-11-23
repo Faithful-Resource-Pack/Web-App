@@ -114,6 +114,9 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 .theme--light .card-text-shadow {
 	text-shadow: 2px 2px rgba(0,0,0,.2);
 }
+.clean-shadow {
+	text-shadow: 2px 2px #000;
+}
 
 a {
 	text-decoration: none;
@@ -148,35 +151,18 @@ a {
 	max-width: 1080px;
 }
 
-.tippy-tooltip {
-	padding: 0 !important;
-}
-
 .tippy-backdrop {
 	background: transparent;
 }
 
-div.tooltip {
-	text-align: center;
+
+.gallery-tooltip {
 	font-family: "Roboto", sans-serif;
-	font-size: 12px;
-	color: white;
-	border: 0px;
-	border-radius: 4px;
-	pointer-events: none;
 }
 
-div.tooltip .number {
-	font-size: 18px;
-	font-weight: 600;
-}
-
-div.tooltip.vue-tooltip-theme {
-	background: transparent;
-}
-
-.clean-shadow {
-	text-shadow: 2px 2px #000;
+.gallery-tooltip i {
+	/* icons really hate being white for some reason */
+	color: white !important;
 }
 
 .v-text-field {
@@ -227,17 +213,7 @@ img.texture-img {
 	image-rendering: pixelated;
 }
 
-.texture-tooltip {
-	width: 100%;
-	max-height: 256px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	align-content: center;
-	font-size: larger;
-}
-
-.texture-info-container {
+.gallery-tooltip-texture {
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -245,7 +221,7 @@ img.texture-img {
 	position: relative;
 }
 
-.texture-info-container .texture-id {
+.gallery-tooltip-texture .gallery-tooltip-id {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -259,26 +235,26 @@ img.texture-img {
 	margin-left: -3px;
 	margin-top: -11px;
 }
-.texture-info-container h1 {
+.gallery-tooltip-texture h1 {
 	padding-top: 8px;
 	text-align: center;
 }
-.texture-info-container h1 {
+.gallery-tooltip-texture h1 {
 	word-break: break-all;
 }
 
-.texture-tags-container {
+.gallery-tooltip-tags {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: left;
 }
 
-.texture-info-container > ul {
+.gallery-tooltip-texture > ul {
 	list-style: none;
 }
 
-.encased, .texture-info-container .texture-id {
+.encased, .gallery-tooltip-texture .gallery-tooltip-id {
 	background-color: #272727;
 
 	-webkit-box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.4);
@@ -295,17 +271,17 @@ img.texture-img {
 	margin-right: 3px;
 	border-radius: 3px;
 }
-.texture-info-container h1.encased {
+.gallery-tooltip-texture h1.encased {
 	border-top-left-radius: 6px;
 	border-top-right-radius: 6px;
 }
-.texture-info-container ul.encased {
+.gallery-tooltip-texture ul.encased {
 	border-bottom-right-radius: 6px;
 }
-.texture-tags-container .encased:first-child {
+.gallery-tooltip-tags .encased:first-child {
 	border-bottom-left-radius: 6px;
 }
-.texture-tags-container .encased:last-child {
+.gallery-tooltip-tags .encased:last-child {
 	border-bottom-right-radius: 6px;
 }
 
