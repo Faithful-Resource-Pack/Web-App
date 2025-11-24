@@ -71,7 +71,7 @@ export default {
 		copyMessage() {
 			const { message, submessage } = this.split;
 			let formatted = `${message}:\n${submessage}`;
-			if (this.json) formatted += `\n\n\`\`\`json\n${JSON.stringify(this.json, null, 4)}\`\`\``;
+			if (this.json) formatted += `\n\n\`\`\`json\n${JSON.stringify(this.json, null, 4)}\n\`\`\``;
 			formatted += `\n\nCreated: ${new Date().toString()}`;
 			navigator.clipboard.writeText(formatted);
 
