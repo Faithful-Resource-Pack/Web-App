@@ -43,11 +43,7 @@
 				small-chips
 				:items="tags"
 				:label="$root.lang().database.textures.modal.tags"
-				@change="
-					() => {
-						formData.tags = sortTags(formData.tags);
-					}
-				"
+				@change="updateTags(formData)"
 			/>
 
 			<h2 class="title">{{ $root.lang().database.textures.uses.title }}</h2>
@@ -250,6 +246,9 @@ export default {
 					console.error(err);
 					this.$root.showSnackBar(err, "error");
 				});
+		},
+		updateTags(data) {
+			data.tags = sortTags(data.tags);
 		},
 		recomputeTagList() {
 			// compute based on existing paths and uses

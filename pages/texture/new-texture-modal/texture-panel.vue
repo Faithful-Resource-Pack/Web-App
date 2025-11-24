@@ -22,11 +22,7 @@
 					deletable-chips
 					:items="tags"
 					:label="$root.lang().database.textures.modal.tags"
-					@change="
-						() => {
-							texture.tags = sortTags(texture.tags);
-						}
-					"
+					@change="updateTags(texture)"
 				/>
 			</v-col>
 		</v-row>
@@ -199,6 +195,9 @@ export default {
 		addEditionTag(edition) {
 			if (!this.texture.tags.includes(edition.toTitleCase()))
 				this.texture.tags = sortTags([edition.toTitleCase(), ...this.texture.tags]);
+		},
+		updateTags(data) {
+			data.tags = sortTags(data.tags);
 		},
 		onEditionChange(edition, use) {
 			use.paths ||= [emptyPath()];

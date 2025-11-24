@@ -10,7 +10,7 @@
 			<v-card
 				:class="['py-2 px-4 d-flex align-center rounded-lg overflow-hidden', classes[cat_i]]"
 				elevation="2"
-				@click="() => $emit('input', cat.value)"
+				@click="$emit('input', cat.value)"
 			>
 				<v-badge inline dot left :color="cat.color" style="margin-left: -4px">
 					<div class="subtitle-1" style="margin-left: 5px">{{ cat.label }}</div>

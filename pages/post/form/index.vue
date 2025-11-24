@@ -31,10 +31,10 @@
 					</v-tab-item>
 				</v-tabs-items>
 				<div class="d-flex justify-end pa-2">
-					<v-btn color="darken-1" text @click="() => onSubmit(false)">
+					<v-btn color="darken-1" text @click="onSubmit(false)">
 						{{ $root.lang().global.btn.save_draft }}
 					</v-btn>
-					<v-btn color="primary" text @click="() => onSubmit(true)">
+					<v-btn color="primary" text @click="onSubmit(true)">
 						{{ $root.lang().global.btn.publish }}
 					</v-btn>
 				</div>

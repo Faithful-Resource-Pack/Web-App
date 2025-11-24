@@ -66,25 +66,12 @@
 									@click.stop="openPreview"
 								/>
 								<v-card
-									class="ma-2"
+									class="d-inline-block ma-2"
 									rounded
-									style="display: inline-block; position: absolute; right: 0; top: 0"
+									style="position: absolute; right: 0; top: 0"
 								>
-									<v-icon small class="ma-1" @click.stop="openPreview">
-										mdi-fullscreen
-									</v-icon>
-									<v-icon
-										small
-										class="ma-1"
-										@click="
-											() => {
-												$emit('header', undefined, true);
-												submittedForm.headerFile = undefined;
-											}
-										"
-									>
-										mdi-delete
-									</v-icon>
+									<v-icon small class="ma-1" @click.stop="openPreview">mdi-fullscreen</v-icon>
+									<v-icon small class="ma-1" @click="headerRemove"> mdi-delete </v-icon>
 								</v-card>
 							</div>
 							<v-responsive
@@ -282,11 +269,11 @@
 						:disabled="!validForm"
 						color="primary"
 						text
-						@click="() => onSubmit(true)"
+						@click="onSubmit(true)"
 					>
 						{{ $root.lang().global.btn.submit_and_approve }}
 					</v-btn>
-					<v-btn :disabled="!validForm" color="darken-1" text @click="() => onSubmit(false)">
+					<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
 						{{ $root.lang().global.btn.submit_for_review }}
 					</v-btn>
 				</div>
@@ -628,6 +615,10 @@ export default {
 				.finally(() => {
 					this.headerValidating = false;
 				});
+		},
+		headerRemove() {
+			this.$emit("header", undefined, true);
+			this.submittedForm.headerFile = undefined;
 		},
 		downloadAdd() {
 			this.submittedForm.downloads.push({ key: "", links: [""] });

@@ -18,13 +18,7 @@
 					style="border-radius: 5px"
 					:src="getImage(item)"
 					:aspect-ratio="16 / 9"
-					@error="
-						() => {
-							failed[item[track]] = true;
-							$forceUpdate();
-							return false;
-						}
-					"
+					@error="onImageFail(item)"
 				>
 					<template #placeholder>
 						<v-row
@@ -74,6 +68,13 @@ export default {
 		return {
 			failed: {},
 		};
+	},
+	methods: {
+		onImageFail(item) {
+			this.failed[item[this.track]] = true;
+			$forceUpdate();
+			return false;
+		},
 	},
 };
 </script>

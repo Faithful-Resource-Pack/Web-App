@@ -20,7 +20,7 @@
 					<v-list-item-title class="body-2" style="text-overflow: ellipsis; white-space: nowrap">
 						{{ $root.user.username }}
 					</v-list-item-title>
-					<v-list-item-subtitle>@{{ $root.user.discordUsername }}</v-list-item-subtitle>
+					<v-list-item-subtitle>{{ $root.user.discordUsername }}</v-list-item-subtitle>
 				</v-list-item-content>
 				<v-btn fab x-small color="red" elevation="3" @click="$root.logout">
 					<v-icon small color="white">mdi-logout-variant</v-icon>

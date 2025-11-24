@@ -30,7 +30,7 @@
 					:disabled="disabled"
 					elevation="0"
 					small
-					@click="() => newMonth(i)"
+					@click="newMonth(i)"
 				>
 					{{ upperMonths[i - 1] }}
 				</v-btn>
@@ -47,7 +47,7 @@
 				:text="i !== day"
 				:elevation="i == day ? 2 : 0"
 				:disabled="disabled || i > daysInCurMonth"
-				@click="() => newDay(i)"
+				@click="newDay(i)"
 			>
 				{{ i }}
 			</v-btn>

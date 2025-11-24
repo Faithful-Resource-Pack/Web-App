@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-list-item class="pl-2" @click.stop.prevent="() => $emit('select')">
+		<v-list-item class="pl-2" @click.stop.prevent="$emit('select')">
 			<v-list-item-content :class="selected ? 'primary--text' : ''">
 				<v-list-item-title>{{ title }}</v-list-item-title>
 				<v-list-item-subtitle class="text-truncate">
