@@ -2,9 +2,12 @@
 	<v-container>
 		<div class="text-h4 py-4">
 			{{ $root.lang().addons.titles.submissions }}
-			<v-progress-circular v-if="loading" indeterminate />
 		</div>
-		<div v-if="!loading && addons.length === 0">
+		<div v-if="loading" class="d-flex flex-column justify-center align-center my-10">
+			<v-progress-circular indeterminate :size="150" :width="10" />
+			<p class="text-h6 my-5">{{ $root.lang().addons.general.loading_addons }}</p>
+		</div>
+		<div v-else-if="addons.length === 0">
 			{{ error || $root.lang().addons.general.no_submissions }}
 		</div>
 		<div v-else class="my-2 text-h5">

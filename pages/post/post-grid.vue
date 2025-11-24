@@ -2,9 +2,12 @@
 	<v-container>
 		<div class="text-h4 py-4">
 			{{ $root.lang().posts.titles.list }}
-			<v-progress-circular v-if="loading" indeterminate />
 		</div>
-		<div v-if="!loading && posts.length === 0">
+		<div v-if="loading" class="d-flex flex-column justify-center align-center my-10">
+			<v-progress-circular indeterminate :size="150" :width="10" />
+			<p class="text-h6 my-5">{{ $root.lang().posts.loading_list }}</p>
+		</div>
+		<div v-else-if="posts.length === 0">
 			{{ error || $root.lang().global.no_results }}
 		</div>
 		<div v-else class="my-2 text-h5">

@@ -65,9 +65,9 @@
 			</v-col>
 		</v-row>
 		<v-list class="main-container pa-2 text-center">
-			<div v-if="loading">
-				<div class="text-h6 ma-1">{{ $root.lang().gallery.loading_message }}</div>
-				<v-progress-circular v-if="loading" class="ma-1" indeterminate />
+			<div v-if="loading" class="my-5">
+				<v-progress-circular :size="150" :width="10" indeterminate />
+				<div class="text-h6 my-5">{{ $root.lang().gallery.loading_message }}</div>
 			</div>
 			<div v-else-if="textures.length === 0" class="text-h6 my-2">
 				{{ error || $root.lang().global.no_results }}

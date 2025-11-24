@@ -37,7 +37,7 @@ import DetailedTreemap from "@components/detailed-treemap.vue";
 import DashboardStat from "@components/dashboard-stat.vue";
 
 export default {
-	name: "user-card",
+	name: "texture-card",
 	components: {
 		DashboardCard,
 		DetailedTreemap,
@@ -52,7 +52,7 @@ export default {
 	data() {
 		return {
 			totalTextures: 0,
-			versions: Object.values(settings.versions).flat().length,
+			versions: Object.values(settings.versions || {}).flat().length,
 			texturesByEdition: {},
 			texturesByTags: {},
 		};

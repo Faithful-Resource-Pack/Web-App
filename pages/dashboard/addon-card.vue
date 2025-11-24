@@ -25,10 +25,10 @@
 			</v-row>
 			<v-row v-else id="status-loader" dense class="d-flex align-stretch">
 				<v-col
-					v-for="i in loading_for"
+					v-for="i in skeletonCount"
 					:key="`skeleton-status-${i}`"
 					cols="12"
-					:class="['d-flex align-end', loading_for > 1 ? 'col-sm-3' : '']"
+					:class="['d-flex align-end', skeletonCount > 1 ? 'col-sm-3' : '']"
 				>
 					<div class="p mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader">
 						<div class="d-flex align-end">
@@ -109,7 +109,6 @@ export default {
 				archived: "grey--text",
 			},
 			loading: true,
-			loading_for: 1,
 		};
 	},
 	computed: {
@@ -123,8 +122,10 @@ export default {
 			return this.$root.user.roles.length;
 		},
 		url() {
-			if (this.$root.isAdmin) return "/addons/stats-admin";
-			return "/addons/stats";
+			return this.$root.isAdmin ? "/addons/stats-admin" : "/addons/stats";
+		},
+		skeletonCount() {
+			return this.$root.isAdmin ? 4 : 1;
 		},
 	},
 	methods: {
@@ -147,7 +148,6 @@ export default {
 		roles(n, o) {
 			if (n != o && this.$root.isAdmin) {
 				this.loading = true;
-				this.loading_for = 4;
 				this.get();
 			}
 		},

@@ -344,7 +344,6 @@ export default {
 	},
 	gallery: {
 		title: "Galerie",
-		loading_message: "Načítám…",
 		error_message: {
 			texture_not_done: "Textura chybí nebo byla schválně vynechána.",
 			user_anonymous: "Anonym",

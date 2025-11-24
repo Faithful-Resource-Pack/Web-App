@@ -534,7 +534,6 @@ export default {
 		share_link_copied_to_clipboard: "Link de compartilhamento copiado para a área de transferência",
 		max_items_per_row: "Máximo de itens por linha",
 		title: "Galeria",
-		loading_message: "Carregando…",
 		error_message: {
 			texture_not_done: "Textura não concluída!",
 			user_anonymous: "Anônimo",

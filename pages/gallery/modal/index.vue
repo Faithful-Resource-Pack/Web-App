@@ -12,11 +12,9 @@
 		</template>
 		<fullscreen-preview v-model="previewOpen" :src="clickedImage" :aspect-ratio="1 / 1" texture />
 
-		<v-container v-if="loading" class="d-flex align-center justify-center flex-grow-1">
-			<div class="d-flex flex-column align-center justify-center">
-				<v-progress-circular indeterminate :size="150" :width="10" />
-				<p class="text-h6 my-5">{{ $root.lang().gallery.modal.loading }}</p>
-			</div>
+		<v-container v-if="loading" class="d-flex align-center justify-center">
+			<v-progress-circular indeterminate :size="150" :width="10" />
+			<p class="text-h6 my-5">{{ $root.lang().gallery.modal.loading }}</p>
 		</v-container>
 		<v-container v-else-if="error" class="d-flex align-center justify-center flex-grow-1">
 			<ascii-error :subtitle="error" :errorCode="errorCode" />

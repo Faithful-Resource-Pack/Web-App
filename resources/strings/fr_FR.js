@@ -399,7 +399,6 @@ export default {
 		animated_switcher: "Jouer les animations",
 		all: "Tout",
 		title: "Galerie",
-		loading_message: "Chargement…",
 		error_message: {
 			texture_not_done: "La texture n'a pas été faite !",
 			user_anonymous: "Anonyme",

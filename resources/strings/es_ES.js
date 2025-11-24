@@ -519,7 +519,6 @@ export default {
 		animated_switcher: "Mostrar animaciones",
 		share_link_copied_to_clipboard: "Enlace para compartir copiado al portapapeles",
 		title: "Galería",
-		loading_message: "Cargando…",
 		error_message: {
 			texture_not_done: "¡Falta esta textura!",
 			user_anonymous: "Anónimo",
