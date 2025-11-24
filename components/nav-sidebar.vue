@@ -64,7 +64,7 @@
 						link
 						:to="subtab.to"
 						:disabled="subtab.disabled"
-						@click="close"
+						@click="autoClose"
 					>
 						<!-- for some reason the icon has a morbillion pixels of right padding -->
 						<v-list-item-icon v-if="subtab.icon" class="mr-0">
@@ -126,8 +126,8 @@ export default {
 			this.tabsOpen[label] = !this.tabsOpen[label];
 			localStorage.setItem(OPEN_TAB_KEY, JSON.stringify(this.tabsOpen));
 		},
-		close() {
-			this.drawerOpen = false;
+		autoClose() {
+			if (this.$vuetify.breakpoint.mobile) this.drawerOpen = false;
 		},
 	},
 	computed: {
