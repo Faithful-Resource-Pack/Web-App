@@ -114,9 +114,6 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 .theme--light .card-text-shadow {
 	text-shadow: 2px 2px rgba(0,0,0,.2);
 }
-.clean-shadow {
-	text-shadow: 2px 2px #000;
-}
 
 a {
 	text-decoration: none;

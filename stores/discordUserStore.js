@@ -12,6 +12,7 @@ export const discordUserStore = defineStore("discordUser", {
 		/** @type {string} */
 		discordBanner: undefined,
 		discordName: "",
+		discordUsername: "",
 	}),
 
 	actions: {
@@ -49,6 +50,7 @@ export const discordUserStore = defineStore("discordUser", {
 									? `https://cdn.discordapp.com/banners/${json.id}/${json.banner}?size=1024`
 									: "https://database.faithfulpack.net/images/branding/backgrounds/main_background.png",
 							discordName: json.global_name,
+							discordUsername: json.username,
 						});
 					})
 					.catch((...args) => {

@@ -63,14 +63,14 @@
 									style="border-radius: 10px"
 									:aspect-ratio="16 / 9"
 									:src="header"
-									@click.stop="() => (previewOpen = true)"
+									@click.stop="openPreview"
 								/>
 								<v-card
 									class="ma-2"
 									rounded
 									style="display: inline-block; position: absolute; right: 0; top: 0"
 								>
-									<v-icon small class="ma-1" @click.stop="() => (previewOpen = true)">
+									<v-icon small class="ma-1" @click.stop="openPreview">
 										mdi-fullscreen
 									</v-icon>
 									<v-icon
@@ -640,6 +640,9 @@ export default {
 		},
 		linkRemove(downloadIndex, linkIndex) {
 			this.submittedForm.downloads[downloadIndex].links.splice(linkIndex, 1);
+		},
+		openPreview() {
+			this.previewOpen = true;
 		},
 		onDeleteCarousel(_item, index, id) {
 			this.carouselDoNotVerify = true;

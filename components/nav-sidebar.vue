@@ -1,33 +1,38 @@
 <template>
 	<v-navigation-drawer v-model="drawerOpen" app width="300">
-		<v-card :style="bannerStyles" class="rounded-t-0">
-			<div v-if="$root.isLoggedIn" class="py-2">
-				<v-card-title class="pl-2">
-					<v-avatar size="48" class="mr-2">
-						<img
-							v-if="$root.user.avatar"
-							style="line-height: 48px"
-							:alt="$root.user.username.charAt(0)"
-							:src="$root.user.avatar"
-						/>
-						<span v-else class="text-center primary font-weight-bold">
-							{{ $root.user.username[0] }}
-						</span>
+		<template v-if="$root.isLoggedIn">
+			<v-list-item dense two-line class="py-2 d-flex align-center justify-space-between">
+				<a :href="discordURL" target="_blank" rel="noopener noreferrer">
+					<v-avatar>
+						<v-img :src="$root.user?.avatar" :alt="`${$root.user.username}'s Avatar`">
+							<template #placeholder>
+								<div
+									class="d-flex align-center justify-center white--text"
+									style="height: 100%; background-color: #1c8a2e"
+								>
+									{{ $root.user.username?.[0] || "?" }}
+								</div>
+							</template>
+						</v-img>
 					</v-avatar>
-					<span class="white--text clean-shadow">{{ shortUsername }}</span>
-				</v-card-title>
-				<v-card-actions class="mt-n1">
-					<v-btn small color="red white--text" width="40%" @click="$root.logout">
-						{{ $root.lang().global.logout }}
-					</v-btn>
-				</v-card-actions>
-			</div>
-			<div v-else class="px-5 py-5">
-				<v-btn block class="blurple" :href="$root.discordAuth.discordAuthURL">
-					{{ $root.lang().global.login }}
+				</a>
+				<v-list-item-content class="mx-3">
+					<v-list-item-title class="body-2" style="text-overflow: ellipsis; white-space: nowrap">
+						{{ $root.user.username }}
+					</v-list-item-title>
+					<v-list-item-subtitle>@{{ $root.user.discordUsername }}</v-list-item-subtitle>
+				</v-list-item-content>
+				<v-btn fab x-small color="red" elevation="3" @click="$root.logout">
+					<v-icon small color="white">mdi-logout-variant</v-icon>
 				</v-btn>
-			</div>
-		</v-card>
+			</v-list-item>
+			<v-divider class="mx-2" />
+		</template>
+		<v-list-item v-else dense class="pa-2">
+			<v-btn block class="blurple" :href="$root.discordAuth.discordAuthURL">
+				{{ $root.lang().global.login }}
+			</v-btn>
+		</v-list-item>
 
 		<!--
 			can't have multiple open tab groups with v-list so we manually add the classes
@@ -59,6 +64,7 @@
 						link
 						:to="subtab.to"
 						:disabled="subtab.disabled"
+						@click="close"
 					>
 						<!-- for some reason the icon has a morbillion pixels of right padding -->
 						<v-list-item-icon v-if="subtab.icon" class="mr-0">
@@ -120,6 +126,9 @@ export default {
 			this.tabsOpen[label] = !this.tabsOpen[label];
 			localStorage.setItem(OPEN_TAB_KEY, JSON.stringify(this.tabsOpen));
 		},
+		close() {
+			this.drawerOpen = false;
+		},
 	},
 	computed: {
 		shortUsername() {
@@ -137,6 +146,9 @@ export default {
 				backgroundSize: "cover",
 			};
 		},
+		discordURL() {
+			return `https://discord.com/users/${this.$root.user.id}`;
+		},
 	},
 	watch: {
 		value: {
@@ -149,7 +161,7 @@ export default {
 			this.$emit("input", newValue);
 		},
 		tabs(nv) {
-			const keys = nv.map((obj) => obj.label);
+			const keys = nv.map((tabs) => tabs.label);
 
 			// we diff against the localstorage version since users can get logged out
 			// and their preference should be saved regardless

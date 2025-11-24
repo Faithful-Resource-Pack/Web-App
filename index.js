@@ -292,6 +292,7 @@ const app = new Vue({
 				banner: this.discordUser.discordBanner,
 				id: this.appUser.appUserId,
 				username: this.appUser.appUsername || this.discordUser.discordName,
+				discordUsername: this.discordUser.discordUsername,
 				roles: this.appUser.appUserRoles || [],
 			};
 		},
