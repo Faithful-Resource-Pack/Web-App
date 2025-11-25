@@ -1,90 +1,87 @@
 <template>
-	<v-navigation-drawer v-model="drawerOpen" app width="300">
-		<template v-if="$root.isLoggedIn">
-			<v-list-item dense two-line class="py-2 d-flex align-center justify-space-between">
-				<a :href="discordURL" target="_blank" rel="noopener noreferrer">
-					<v-avatar>
-						<v-img :src="$root.user?.avatar" :alt="`${$root.user.username}'s Avatar`">
-							<template #placeholder>
-								<div
-									class="d-flex align-center justify-center white--text"
-									style="height: 100%; background-color: #1c8a2e"
-								>
-									{{ $root.user.username?.[0] || "?" }}
-								</div>
-							</template>
-						</v-img>
-					</v-avatar>
-				</a>
-				<v-list-item-content class="mx-3">
-					<v-list-item-title class="body-2" style="text-overflow: ellipsis; white-space: nowrap">
-						{{ $root.user.username }}
-					</v-list-item-title>
-					<v-list-item-subtitle>{{ $root.user.discordUsername }}</v-list-item-subtitle>
-				</v-list-item-content>
-				<v-btn fab x-small color="red" elevation="3" @click="$root.logout">
-					<v-icon small color="white">mdi-logout-variant</v-icon>
-				</v-btn>
-			</v-list-item>
-			<v-divider class="mx-2" />
-		</template>
-		<v-list-item v-else dense class="pa-2">
-			<v-btn block class="blurple" :href="$root.discordAuth.discordAuthURL">
-				{{ $root.lang().global.login }}
+	<!--
+		can't have multiple open tab groups with v-list so we manually add the classes
+		this is absolutely horrid but there's no other way to get the same behavior nicely
+	-->
+	<v-navigation-drawer v-model="drawerOpen" app width="300" class="v-list--dense v-list--nav">
+		<v-list-item
+			v-if="$root.isLoggedIn"
+			dense
+			two-line
+			class="my-2 d-flex align-center justify-space-between"
+		>
+			<a :href="discordURL" target="_blank" rel="noopener noreferrer">
+				<v-avatar>
+					<v-img :src="$root.user?.avatar" :alt="`${$root.user.username}'s Avatar`">
+						<template #placeholder>
+							<div
+								class="d-flex align-center justify-center white--text"
+								style="height: 100%; background-color: #1c8a2e"
+							>
+								{{ $root.user.username?.[0] || "?" }}
+							</div>
+						</template>
+					</v-img>
+				</v-avatar>
+			</a>
+			<v-list-item-content class="mx-3">
+				<v-list-item-title class="body-2" style="text-overflow: ellipsis; white-space: nowrap">
+					{{ $root.user.username }}
+				</v-list-item-title>
+				<v-list-item-subtitle>{{ $root.user.discordUsername }}</v-list-item-subtitle>
+			</v-list-item-content>
+			<v-btn fab x-small color="red" elevation="3" @click="$root.logout">
+				<v-icon small color="white">mdi-logout-variant</v-icon>
 			</v-btn>
 		</v-list-item>
-
-		<!--
-			can't have multiple open tab groups with v-list so we manually add the classes
-			this is absolutely horrid but there's no other way to get the same behavior nicely
-		-->
-		<div class="v-list--dense v-list--nav mt-2">
-			<v-list-group
-				v-for="tab in tabs"
-				:key="tab.label"
-				color="inherit"
-				:value="initialTabsOpen[tab.label]"
-				@click="updateTabsOpen(tab.label)"
-			>
-				<template #activator>
-					<v-list-item-title class="uppercase-unsized">
-						{{ tab.labelText }}
-					</v-list-item-title>
-				</template>
-				<template #appendIcon>
-					<!-- regular is 24 and small is 16, both are a bit too extreme -->
-					<v-icon size="20" style="opacity: 80%">
-						{{ tabsOpen[tab.label] ? "mdi-chevron-up" : "mdi-chevron-right" }}
-					</v-icon>
-				</template>
-				<div class="v-list pb-4 pt-0">
-					<v-list-item
-						v-for="subtab in tab.subtabs"
-						:key="subtab.label"
-						link
-						:to="subtab.to"
-						:disabled="subtab.disabled"
-						@click="autoClose"
-					>
-						<!-- for some reason the icon has a morbillion pixels of right padding -->
-						<v-list-item-icon v-if="subtab.icon" class="mr-0">
-							<v-icon small>{{ subtab.icon }}</v-icon>
-						</v-list-item-icon>
-						<v-list-item-content>
-							<v-list-item-title class="body-2">
-								{{ subtab.labelText || subtab.label.toTitleCase() }}
-							</v-list-item-title>
-						</v-list-item-content>
-						<v-list-item-action v-if="subtab.badge && badges[subtab.label]" class="nav-badge">
-							<span class="nav-badge-inner error white--text font-weight-black">
-								{{ badges[subtab.label] }}
-							</span>
-						</v-list-item-action>
-					</v-list-item>
-				</div>
-			</v-list-group>
-		</div>
-
+		<v-btn v-else block class="my-2 blurple" :href="$root.discordAuth.discordAuthURL">
+			{{ $root.lang().global.login }}
+		</v-btn>
+		<v-divider class="my-2" />
+		<v-list-group
+			v-for="tab in tabs"
+			:key="tab.label"
+			color="inherit"
+			:value="initialTabsOpen[tab.label]"
+			@click="updateTabsOpen(tab.label)"
+		>
+			<template #activator>
+				<v-list-item-title class="uppercase-unsized">
+					{{ tab.labelText }}
+				</v-list-item-title>
+			</template>
+			<template #appendIcon>
+				<!-- regular is 24 and small is 16, both are a bit too extreme -->
+				<v-icon size="20" style="opacity: 80%">
+					{{ tabsOpen[tab.label] ? "mdi-chevron-up" : "mdi-chevron-right" }}
+				</v-icon>
+			</template>
+			<div class="v-list pb-4 pt-0">
+				<v-list-item
+					v-for="subtab in tab.subtabs"
+					:key="subtab.label"
+					link
+					:to="subtab.to"
+					:disabled="subtab.disabled"
+					@click="autoClose"
+				>
+					<!-- for some reason the icon has a morbillion pixels of right padding -->
+					<v-list-item-icon v-if="subtab.icon" class="mr-0">
+						<v-icon small>{{ subtab.icon }}</v-icon>
+					</v-list-item-icon>
+					<v-list-item-content>
+						<v-list-item-title class="body-2">
+							{{ subtab.labelText || subtab.label.toTitleCase() }}
+						</v-list-item-title>
+					</v-list-item-content>
+					<v-list-item-action v-if="subtab.badge && badges[subtab.label]" class="nav-badge">
+						<span class="nav-badge-inner error white--text font-weight-black">
+							{{ badges[subtab.label] }}
+						</span>
+					</v-list-item-action>
+				</v-list-item>
+			</div>
+		</v-list-group>
 		<!-- Fix problem on firefox on mobile where bar disappears and fixed elements are hidden -->
 		<div v-if="$vuetify.breakpoint.mdAndDown" class="py-5" />
 	</v-navigation-drawer>
@@ -92,7 +89,6 @@
 
 <script>
 const OPEN_TAB_KEY = "menu_open_tabs";
-const MAX_USERNAME_DISPLAY_LENGTH = 15;
 
 export default {
 	name: "nav-sidebar",
@@ -131,21 +127,6 @@ export default {
 		},
 	},
 	computed: {
-		shortUsername() {
-			const username = this.$root.user.username;
-			if (username.length < MAX_USERNAME_DISPLAY_LENGTH) return username;
-			return `${username.slice(0, MAX_USERNAME_DISPLAY_LENGTH)}…`;
-		},
-		bannerStyles() {
-			// MUST be done through css, using an image element does strange things with the padding
-			const DEFAULT_IMAGE =
-				"https://database.faithfulpack.net/images/branding/backgrounds/main_background.png?w=320";
-			return {
-				backgroundImage: `url(${this.$root.user.banner || DEFAULT_IMAGE})`,
-				backgroundPosition: "center",
-				backgroundSize: "cover",
-			};
-		},
 		discordURL() {
 			return `https://discord.com/users/${this.$root.user.id}`;
 		},
