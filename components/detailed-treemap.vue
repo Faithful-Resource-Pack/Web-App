@@ -29,7 +29,7 @@
 						class="d-flex align-stretch"
 					>
 						<div
-							class="p rounded-lg pa-2 mb-0 flex-grow-1 d-flex align-center"
+							class="dashboard-stat rounded-lg pa-2 mb-0 flex-grow-1 d-flex align-center"
 							style="min-height: 38px"
 						>
 							<v-skeleton-loader type="text" class="" width="75%" />
@@ -43,7 +43,7 @@
 						cols="6"
 						class="d-flex align-stretch"
 					>
-						<p class="rounded-lg pa-2 mb-0 flex-grow-1">
+						<div class="dashboard-stat rounded-lg pa-2 mb-0 flex-grow-1">
 							<span
 								class="mr-1 rounded d-inline-block"
 								:style="{ 'background-color': shade[index], height: '10px', width: '10px' }"
@@ -52,7 +52,7 @@
 								{{ value }}
 							</span>
 							{{ key }}
-						</p>
+						</div>
 					</v-col>
 				</template>
 			</v-row>

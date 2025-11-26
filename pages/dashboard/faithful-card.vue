@@ -25,7 +25,7 @@
 							:href="listing.href"
 							target="_blank"
 							rel="noopener noreferrer"
-							:aria-label="listing.name"
+							:title="listing.name"
 							icon
 						>
 							<v-icon>{{ listing.icon }}</v-icon>

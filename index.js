@@ -21,7 +21,7 @@ import { appUserStore } from "./stores/appUserStore.js";
 // layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
 import NavAppBar from "@components/nav-app-bar.vue";
-import NavSidebar from "@components/nav-sidebar.vue";
+import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
 import MissingPage from "./pages/404/index.vue";
 

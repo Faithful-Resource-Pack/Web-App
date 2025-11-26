@@ -23,14 +23,16 @@
 					</v-col>
 				</template>
 			</v-row>
-			<v-row v-else id="status-loader" dense class="d-flex align-stretch">
+			<v-row v-else dense class="d-flex align-stretch">
 				<v-col
 					v-for="i in skeletonCount"
 					:key="`skeleton-status-${i}`"
 					cols="12"
 					:class="['d-flex align-end', skeletonCount > 1 ? 'col-sm-3' : '']"
 				>
-					<div class="p mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader">
+					<div
+						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+					>
 						<div class="d-flex align-end">
 							<v-skeleton-loader class="loader mr-1" width="30" height="24" type="heading" />
 							<v-skeleton-loader class="loader" width="60" min-height="17" type="text" />
@@ -58,7 +60,9 @@
 					sm="3"
 					class="d-flex align-stretch"
 				>
-					<div class="p mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader">
+					<div
+						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+					>
 						<div class="d-flex align-end">
 							<v-skeleton-loader class="loader mr-1" width="30" height="24" type="heading" />
 							<v-skeleton-loader class="loader" width="60" min-height="17" type="text" />

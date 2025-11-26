@@ -14,7 +14,10 @@
 			</v-row>
 			<v-row v-else class="py-0 my-0" dense>
 				<v-col v-for="i in 4" :key="`user-stats-${i}`" cols="12" sm="3">
-					<div style="min-height: 56px" class="p mb-0 rounded-lg pa-3 d-flex align-center">
+					<div
+						style="min-height: 56px"
+						class="dashboard-stat mb-0 rounded-lg pa-3 d-flex align-center"
+					>
 						<v-skeleton-loader height="24" type="heading" width="100%" />
 					</div>
 				</v-col>

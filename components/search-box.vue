@@ -1,5 +1,5 @@
 <template>
-	<!-- these specific settings are used a lot -->
+	<!-- this specific styling/behavior is used a lot -->
 	<v-text-field
 		v-model="search"
 		:autofocus="!$vuetify.breakpoint.mobile"

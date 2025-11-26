@@ -1,10 +1,10 @@
 <template>
-	<p class="mb-0 rounded-lg pa-2">
-		<span class="v-card__title pa-0 d-inline" :class="color">
+	<div class="dashboard-stat mb-0 rounded-lg pa-2">
+		<v-card-title class="pa-0 d-inline" :class="color">
 			{{ value }}
-		</span>
+		</v-card-title>
 		{{ label }}
-	</p>
+	</div>
 </template>
 
 <script>

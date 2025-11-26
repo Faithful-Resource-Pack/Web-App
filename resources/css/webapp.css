@@ -715,8 +715,9 @@ img.texture-img {
 	align-items: stretch;
 }
 
-#dashboard-page p, #dashboard-page .p {
+.dashboard-stat {
 	background-color: rgba(0, 0, 0, 0.05);
+	width: 100%;
 }
 
 #dashboard-page .dashboard-card .v-card__title .v-btn.v-btn--icon {
@@ -726,7 +727,7 @@ img.texture-img {
 	opacity: 0.6;
 }
 
-.theme--dark #dashboard-page p, .theme--dark #dashboard-page .p {
+.theme--dark .dashboard-stat {
 	background: rgba(0, 0, 0, 0.2);
 }
 

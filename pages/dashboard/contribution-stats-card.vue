@@ -34,11 +34,11 @@
 							sm="6"
 							class="d-flex align-stretch"
 						>
-							<p class="mb-0 rounded-lg pa-2">
-								<span class="v-card__title pa-0 d-inline text--primary">
+							<div class="dashboard-stat mb-0 rounded-lg pa-2">
+								<v-card-title class="pa-0 d-inline text--primary">
 									<v-skeleton-loader height="24" type="text" />
-								</span>
-							</p>
+								</v-card-title>
+							</div>
 						</v-col>
 					</v-row>
 				</v-col>
