@@ -12,7 +12,7 @@
 		</template>
 		<fullscreen-preview v-model="previewOpen" :src="clickedImage" :aspect-ratio="1 / 1" texture />
 
-		<v-container v-if="loading" class="d-flex align-center justify-center">
+		<v-container v-if="loading" class="d-flex flex-column align-center justify-center flex-grow-1">
 			<v-progress-circular indeterminate :size="150" :width="10" />
 			<p class="text-h6 my-5">{{ $root.lang().gallery.modal.loading }}</p>
 		</v-container>
