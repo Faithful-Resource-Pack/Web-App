@@ -50,6 +50,14 @@ v-app {
 	display: none;
 }
 
+html.theme--dark {
+	background-color: #191919;
+}
+
+html.theme--light {
+	background-color: #ffffff;
+}
+
 /* force footer to bottom of page if the page isn't long enough */
 .v-main__wrap {
 	display: flex;
@@ -65,12 +73,13 @@ v-app {
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 .theme--light, .theme--light * {
-	scrollbar-color: #76C945 #ffffffbb;
+	scrollbar-color: #76C945 #ffffff;
 }
 
 .theme--dark, .theme--dark * {
 	scrollbar-width: auto;
-	scrollbar-color: #76C945 #191919bb;
+	/* same color as app bar */
+	scrollbar-color: #76C945 #272727;
 }
 
 /* Chrome, Edge, and Safari */
@@ -79,7 +88,7 @@ html::-webkit-scrollbar, html *::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-track, html *::-webkit-scrollbar-track {
-	background: #191919bb;
+	background: #272727;
 }
 
 html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {

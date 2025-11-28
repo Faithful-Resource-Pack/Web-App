@@ -41,7 +41,7 @@ export function generatePageStyles(page, pageColor) {
 		html.theme--light .v-menu__content *,
 		html.theme--light #${pageId},
 		html.theme--light #${pageId} * {
-			scrollbar-color: ${hex} #ffffffbb !important;
+			scrollbar-color: ${hex} #ffffff !important;
 		}
 
 		html.theme--dark,
@@ -51,7 +51,7 @@ export function generatePageStyles(page, pageColor) {
 		html.theme--dark .v-menu__content *,
 		html.theme--dark #${pageId},
 		html.theme--dark #${pageId} * {
-			scrollbar-color: ${hex} #000000bb !important;
+			scrollbar-color: ${hex} #272727 !important;
 		}
 	</style>`;
 }
