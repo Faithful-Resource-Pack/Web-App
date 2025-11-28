@@ -27,7 +27,7 @@
 				<v-subheader
 					class="font-weight-black text-uppercase text-center justify-center text--primary"
 				>
-					{{ $root.lang().global.snackbar_system_theme.themes.title }}
+					{{ $root.lang().global.themes.title }}
 				</v-subheader>
 				<v-list-item
 					v-for="(icon, key) in themes"
@@ -41,7 +41,26 @@
 						<v-icon>{{ icon }}</v-icon>
 					</v-list-item-icon>
 					<v-list-item-title>
-						{{ $root.lang().global.snackbar_system_theme.themes[key] }}
+						{{ $root.lang().global.themes.options[key] }}
+					</v-list-item-title>
+				</v-list-item>
+				<v-divider />
+				<v-list-item>
+					<v-list-item-icon class="me-4">
+						<!-- ripple clips into the list item margins for some reason -->
+						<v-simple-checkbox
+							:ripple="false"
+							:disabled="$root.isDark"
+							:value="darkSidebar"
+							@input="updateDarkSidebar"
+						/>
+					</v-list-item-icon>
+					<!-- make label clickable -->
+					<v-list-item-title
+						:class="$root.isDark ? 'text--secondary' : 'text--primary'"
+						@click="updateDarkSidebar"
+					>
+						{{ $root.lang().global.themes.dark_sidebar }}
 					</v-list-item-title>
 				</v-list-item>
 			</v-list>
@@ -119,6 +138,15 @@ export default {
 		languages: {
 			type: Array,
 			required: true,
+		},
+		darkSidebar: {
+			type: Boolean,
+			required: true,
+		},
+	},
+	methods: {
+		updateDarkSidebar() {
+			this.$emit("update:darkSidebar", !this.darkSidebar);
 		},
 	},
 	computed: {

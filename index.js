@@ -77,10 +77,10 @@ const _get_lang = () => {
 	return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
 };
 
-const THEME_KEY = "THEME";
 const AUTH_STORAGE_KEY = "auth";
+const THEME_KEY = "THEME";
+const DARK_SIDEBAR_KEY = "dark_sidebar";
 const MENU_KEY = "menu_key";
-const MENU_DEFAULT = false;
 
 /**
  * ROUTING
@@ -177,10 +177,11 @@ const app = new Vue({
 				system: "mdi-desktop-tower-monitor",
 				light: "mdi-white-balance-sunny",
 			},
+			darkSidebar: localStorage.getItem(DARK_SIDEBAR_KEY) === "true" || false,
 			/** sidebar stuff */
 			drawerOpen: localStorage.getItem(MENU_KEY)
 				? localStorage.getItem(MENU_KEY) === "true"
-				: MENU_DEFAULT,
+				: !this.$vuetify.breakpoint.mobile,
 			badgeData: {},
 			snackbar: {
 				show: false,
@@ -252,10 +253,6 @@ const app = new Vue({
 			if (!rawText) return "";
 			return DOMPurify.sanitize(marked(rawText));
 		},
-		addToken(data) {
-			data.token = this.user.access_token;
-			return data;
-		},
 		emitConnected() {
 			this.authListeners.forEach((cb) => cb(this.user.access_token));
 		},
@@ -270,9 +267,9 @@ const app = new Vue({
 
 			this.$vuetify.theme.dark = theme === "dark";
 
-			// nice snackbar sentence
+			const notificationString = this.lang().global.themes.notification;
 			this.showSnackBar(
-				notify.sentence.replace("%s", this.lang().global.snackbar_system_theme.themes[theme]),
+				notificationString.replace("%s", this.lang().global.themes.options[theme]),
 				"success",
 				2000,
 			);
@@ -454,6 +451,9 @@ const app = new Vue({
 				html.classList.remove(arr[1]);
 			},
 			immediate: true,
+		},
+		darkSidebar(n) {
+			localStorage.setItem(DARK_SIDEBAR_KEY, String(n));
 		},
 		drawerOpen(n) {
 			// don't set preference on small screens (pointless)

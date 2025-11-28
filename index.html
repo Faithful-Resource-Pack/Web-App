@@ -65,12 +65,18 @@
 			<nav-app-bar
 				:themes="themes"
 				:languages="availableLangs"
+				:dark-sidebar.sync="darkSidebar"
 				@drawer="drawerOpen = !drawerOpen"
 				@theme="theme = $event"
 				@lang="selectedLang = $event"
 			></nav-app-bar>
 
-			<nav-sidebar v-model="drawerOpen" :tabs="availableTabs" :badges="badgeData"></nav-sidebar>
+			<nav-sidebar
+				v-model="drawerOpen"
+				:tabs="availableTabs"
+				:badges="badgeData"
+				:force-dark="darkSidebar"
+			></nav-sidebar>
 
 			<v-main>
 				<router-view></router-view>

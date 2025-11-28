@@ -10,10 +10,10 @@ export default {
 		nyi: "Não implementado ainda.",
 		invalid_url: "Esta URL não é válida",
 		translations: "Traduções",
-		snackbar_system_theme: {
-			sentence: "Tema do sistema alterado para %s",
-			themes: {
-				title: "Tema",
+		themes: {
+			notification: "Tema do sistema alterado para %s",
+			title: "Tema",
+			options: {
 				light: "Claro",
 				dark: "Escuro",
 				system: "Sistema",

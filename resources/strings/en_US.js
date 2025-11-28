@@ -18,10 +18,11 @@ export default {
 			translations: "Toggle translations dropdown",
 			main_site: "Return to main site",
 		},
-		snackbar_system_theme: {
-			sentence: "System theme changed to %s",
-			themes: {
-				title: "Theme",
+		themes: {
+			notification: "System theme changed to %s",
+			dark_sidebar: "Dark sidebar",
+			title: "Theme",
+			options: {
 				light: "Light",
 				dark: "Dark",
 				system: "System",

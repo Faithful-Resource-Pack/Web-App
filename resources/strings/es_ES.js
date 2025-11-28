@@ -9,10 +9,10 @@ export default {
 		no_results: "No se han encontrado resultados",
 		nyi: "Aún no implementado.",
 		translations: "Traducciones",
-		snackbar_system_theme: {
-			sentence: "El tema del sistema ha cambiado a %s",
-			themes: {
-				title: "Tema",
+		themes: {
+			notification: "El tema del sistema ha cambiado a %s",
+			title: "Tema",
+			options: {
 				light: "Claro",
 				dark: "Oscuro",
 				system: "Sistema",

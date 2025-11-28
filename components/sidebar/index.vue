@@ -1,5 +1,5 @@
 <template>
-	<v-navigation-drawer v-model="drawerOpen" app width="300">
+	<v-navigation-drawer v-model="drawerOpen" app width="300" :dark="forceDark">
 		<!--
 			can't have multiple open tab groups with v-list so we manually add the css classes
 			this is absolutely horrid but there's no other way to get the same behavior nicely
@@ -64,6 +64,11 @@ export default {
 		tabs: {
 			type: Array,
 			required: true,
+		},
+		forceDark: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 		badges: {
 			type: Object,

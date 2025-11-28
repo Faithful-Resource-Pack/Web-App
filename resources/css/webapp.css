@@ -64,13 +64,13 @@ v-app {
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
-* {
-	scrollbar-width: auto;
-	scrollbar-color: #76C945 #191919bb;
-}
-
 .theme--light, .theme--light * {
 	scrollbar-color: #76C945 #ffffffbb;
+}
+
+.theme--dark, .theme--dark * {
+	scrollbar-width: auto;
+	scrollbar-color: #76C945 #191919bb;
 }
 
 /* Chrome, Edge, and Safari */
@@ -403,6 +403,16 @@ img.texture-img {
 	text-transform: uppercase;
 	letter-spacing: 0.0892857143em;
 	font-weight: 500;
+}
+
+/* used for dark sidebar on light mode */
+.theme--dark .v-list .v-list-item--active,
+.theme--dark .v-list .v-list-item--active .v-icon {
+	color: white;
+}
+
+.theme--dark .v-list-item__title {
+	color: white;
 }
 
 .nav-badge {

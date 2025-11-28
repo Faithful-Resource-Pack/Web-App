@@ -8,9 +8,9 @@ export default {
 		loading: "Načítám, prosím vyčkejte…",
 		no_results: "Žádné výsledky",
 		nyi: "Zatím neimplementováno",
-		snackbar_system_theme: {
-			sentence: "Systémový motiv změněn na %s",
-			themes: {
+		themes: {
+			notification: "Systémový motiv změněn na %s",
+			options: {
 				light: "světlý",
 				dark: "tmavý",
 			},
