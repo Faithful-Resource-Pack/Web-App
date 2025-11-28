@@ -57,8 +57,9 @@ v-app {
 	}
 }
 
-/* useful for scrollbars and other weird pseudo elements */
-html.theme--dark {
+/* for some reason vuetify only sets the background like half the time */
+html.theme--dark,
+.theme--dark.v-application {
 	background-color: #191919;
 }
 
@@ -78,16 +79,18 @@ html.theme--light {
 	flex: 1;
 }
 
+$faithful-brand: #76C945;
+
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 .theme--light, .theme--light * {
-	scrollbar-color: #76C945 #ffffff;
+	scrollbar-color: $faithful-brand #ffffff;
 }
 
 .theme--dark, .theme--dark * {
 	scrollbar-width: auto;
 	/* same color as app bar */
-	scrollbar-color: #76C945 #272727;
+	scrollbar-color: $faithful-brand #272727;
 }
 
 /* Chrome, Edge, and Safari */
@@ -100,9 +103,9 @@ html::-webkit-scrollbar-track, html *::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
-	background-color: #76C945;
+	background-color: $faithful-brand;
 	border-radius: 12px;
-	border: -1px solid #76C945;
+	border: -1px solid $faithful-brand;
 }
 
 .icon-mojang-red:before {
@@ -117,12 +120,6 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 /* vuetify 3 backported feature (really handy) */
 .cursor-pointer {
 	cursor: pointer !important;
-}
-
-/* Keep background from #app when the page is loading */
-.theme--dark.v-application {
-	background: #191919;
-	background-attachment: fixed;
 }
 
 .theme--dark .card-text-shadow {
@@ -580,20 +577,18 @@ img.texture-img {
 	gap: 8px; /* equivalent to mx-2 */
 }
 
-:root {
-	--modal-image-size: 160px;
-}
+$modal-image-size: 160px;
 
 .gallery-modal-texture {
-	height: var(--modal-image-size);
-	width: var(--modal-image-size);
+	height: $modal-image-size;
+	width: $modal-image-size;
 	position: relative;
 	background-size: cover;
 	background-position: center;
 }
 
 .gallery-modal-image-caption {
-	max-width: var(--modal-image-size);
+	max-width: $modal-image-size;
 	height: 48px;
 	font-size: 1em;
 }
@@ -604,8 +599,8 @@ img.texture-img {
 
 .gallery-modal-texture > * {
 	position: absolute;
-	height: var(--modal-image-size);
-	width: var(--modal-image-size);
+	height: $modal-image-size;
+	width: $modal-image-size;
 }
 
 #info-tabs .v-slide-group__prev {
@@ -707,12 +702,6 @@ img.texture-img {
 	color: rgba(255, 255, 255, 0.87);
 }
 
-#app.theme--light {
-	background: #ffffff;
-}
-.theme--light .v-btn.v-btn--icon {
-	background: #ffffff;
-}
 .theme--light .v-app-bar__nav-icon.v-btn.v-btn.v-btn--icon {
 	background: transparent;
 }
