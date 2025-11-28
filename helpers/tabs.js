@@ -7,7 +7,7 @@ import GalleryPage from "../pages/gallery/index.vue";
 import AddonSubmissionsPage from "../pages/addon/addon-submissions.vue";
 import NewAddonPage from "../pages/addon/new-addon-form.vue";
 import EditAddonPage from "../pages/addon/edit-addon-form.vue";
-import ReviewAddonsPage from "../pages/review/index.vue";
+import ReviewAddonsPage from "../pages/addon/review/index.vue";
 import PostListPage from "../pages/post/post-grid.vue";
 import EditPostPage from "../pages/post/edit-post.vue";
 import NewPostPage from "../pages/post/new-post.vue";
@@ -38,6 +38,7 @@ export default [
 				label: "gallery",
 				icon: "mdi-image-multiple",
 				public: true,
+				// note: first route will be matched by the sidebar
 				routes: [
 					{
 						path: "/gallery",
@@ -80,7 +81,11 @@ export default [
 				icon: "mdi-puzzle",
 				badge: (app) =>
 					axios.get(`${app.apiURL}/addons/pending`, app.apiOptions).then((r) => r.data.length || 0),
-				routes: [{ path: "/review/addons", component: ReviewAddonsPage, name: "Add-on Review" }],
+				routes: [
+					{ path: "/addons/review", component: ReviewAddonsPage, name: "Add-on Review" },
+					// legacy compatibility
+					{ path: "/review/addons", redirect: "/addons/review" },
+				],
 			},
 		],
 	},

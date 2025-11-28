@@ -143,7 +143,7 @@
 import axios from "axios";
 
 import FullscreenPreview from "@components/fullscreen-preview.vue";
-import ImagePreviewer from "../addon/image-previewer.vue";
+import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 
 export default {
