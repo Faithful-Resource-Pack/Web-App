@@ -854,11 +854,15 @@ img.texture-img {
 	background: #f0f0f0;
 }
 
-.theme--light #review-preview #edit-btn::before, .theme--light #review-preview #edit-btn.v-btn.v-btn--icon {
+.theme--light #review-preview #edit-btn::before,
+.theme--light #review-preview #edit-btn.v-btn.v-btn--icon {
 	background: transparent;
 }
 
-.theme--light.v-application .yellow.darken-3, .v-application .yellow.darken-3, .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled).yellow.darken-3 {
+.theme--light.v-application .yellow.darken-3,
+.v-application .yellow.darken-3,
+.theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled).yellow.darken-3,
+.theme--dark .yellow.darken-3 .v-list-item__title {
   color: rgba(0,0,0,0.87);
 }
 .theme--dark.v-list-item:not(.v-list-item--disabled).yellow.darken-3 .v-list-item__subtitle {
