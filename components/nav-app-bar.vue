@@ -1,5 +1,5 @@
 <template>
-	<v-app-bar app dense elevation="2">
+	<v-app-bar app dense>
 		<span class="d-flex noselect">
 			<v-app-bar-nav-icon
 				small
