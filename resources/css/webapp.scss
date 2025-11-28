@@ -50,14 +50,14 @@ v-app {
 	display: none;
 }
 
-/* prevents white screen flashbang on dark themed browsers */
+// prevents white screen flashbang on dark themed browsers
 @media (prefers-color-scheme: dark) {
 	html {
 		background-color: #191919;
 	}
 }
 
-/* for some reason vuetify only sets the background like half the time */
+// for some reason vuetify only sets the background like half the time
 html.theme--dark,
 .theme--dark.v-application {
 	background-color: #191919;
@@ -67,14 +67,14 @@ html.theme--light {
 	background-color: #ffffff;
 }
 
-/* force footer to bottom of page if the page isn't long enough */
+// force footer to bottom of page if the page isn't long enough
 .v-main__wrap {
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: space-between;
 }
 
-/* grow main content to fill available space */
+// grow main content to fill available space
 .v-main__wrap:first-child {
 	flex: 1;
 }
@@ -82,18 +82,23 @@ html.theme--light {
 $faithful-brand: #76C945;
 
 /* ===== Scrollbar CSS ===== */
-/* Firefox */
+// Firefox
 .theme--light, .theme--light * {
 	scrollbar-color: $faithful-brand #ffffff;
 }
 
 .theme--dark, .theme--dark * {
 	scrollbar-width: auto;
-	/* same color as app bar */
+	// same color as app bar
 	scrollbar-color: $faithful-brand #272727;
 }
 
-/* Chrome, Edge, and Safari */
+.v-navigation-drawer.theme--dark * {
+	// same color as the thingy
+	scrollbar-color: $faithful-brand #363636 !important;
+}
+
+// Chrome, Edge, and Safari
 html::-webkit-scrollbar, html *::-webkit-scrollbar {
 	width: 12px;
 }
@@ -117,7 +122,7 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 	color: #fff;
 }
 
-/* vuetify 3 backported feature (really handy) */
+// vuetify 3 backported feature (really handy)
 .cursor-pointer {
 	cursor: pointer !important;
 }
@@ -172,7 +177,7 @@ a {
 }
 
 .gallery-tooltip i {
-	/* icons really hate being white for some reason */
+	// tooltip icons really hate being white for some reason
 	color: white !important;
 }
 
@@ -194,9 +199,9 @@ a {
 	padding: 8px 0 8px 8px;
 }
 
+// since the color can change we just lighten it directly
 .theme--dark .snackbar-accent,
 .theme--dark .snackbar-accent .v-icon::before {
-	/* since the color can change we just lighten it directly */
 	filter: brightness(2.25) saturate(0.7);
 }
 
@@ -206,17 +211,17 @@ a {
 }
 
 .snackbar-status .v-snack__wrapper {
-	/* accent color, same width as discord embed accent */
+	// accent color, same width as discord embed accent
     border-left: 4px solid hsla(0, 0%, 100%, .12);
 }
 
 .snackbar-status .v-snack__content {
-	/* 16px horizontal padding - 4px left border */
+	// 16px horizontal padding - 4px left border
 	padding-right: 12px;
 }
 
 .snackbar-status .v-snack__wrapper.theme--dark {
-	/* makes text more legible in dark mode */
+	// makes text more legible in dark mode
 	background-color: rgb(25, 25, 25);
 }
 
@@ -367,18 +372,17 @@ img.texture-img {
 	opacity: 0;
 }
 
-/* required class */
+// required class
 .json-editor {
-	/* you must provide font-family font-size line-height. Example: */
 	font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
 	font-size: 12px;
 	line-height: 1.5;
 	padding: 5px;
 }
 
-/* we don't use `language-` classes anymore so we need to add the background/text color manually */
+// we don't use `language-` classes anymore so we need to add the background/text color manually
 .theme--dark .json-editor {
-	/* same colors as main container */
+	// same colors as main container
 	background: #272727;
 	color: rgba(255, 255, 255, 0.87);
 }
@@ -396,7 +400,7 @@ img.texture-img {
 	border-radius: 4px;
 }
 
-/* optional class for removing the outline */
+// optional class for removing the outline
 .prism-editor__textarea:focus {
 	outline: none;
 }
@@ -419,7 +423,7 @@ img.texture-img {
 	font-weight: 500;
 }
 
-/* used for dark sidebar on light mode */
+// needed for dark sidebar on light mode
 .theme--dark .v-list .v-list-item--active,
 .theme--dark .v-list .v-list-item--active .v-icon {
 	color: white;
@@ -532,7 +536,7 @@ img.texture-img {
 }
 
 .not-done {
-	/* text as centered columns */
+	// text as centered columns
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
@@ -545,7 +549,7 @@ img.texture-img {
 	word-break: break-word;
 }
 
-/* makes sure content is actually centered */
+// makes sure content is actually centered
 .not-done :last-child {
 	margin-bottom: 0;
 }
@@ -574,7 +578,7 @@ img.texture-img {
 	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: flex-start;
-	gap: 8px; /* equivalent to mx-2 */
+	gap: 8px; // equivalent to mx-2
 }
 
 $modal-image-size: 160px;
@@ -645,7 +649,7 @@ $modal-image-size: 160px;
 	min-width: 64px !important;
 }
 
-/* stylized pill button paths */
+// stylized pill button paths
 .v-list-item__action.merged {
 	margin-top: 4px;
 	margin-bottom: 4px;
@@ -692,9 +696,13 @@ $modal-image-size: 160px;
 	width: fit-content !important;
 }
 
+.theme--light .database-list-avatar {
+	background: white;
+}
+
 .theme--dark .main-container,
 .theme--dark #dashboard-page .dashboard-card {
-	/* same color as navbar */
+	// same color as navbar
 	background-color: #272727;
 }
 
@@ -707,9 +715,6 @@ $modal-image-size: 160px;
 }
 .theme--light .main-container {
 	background: #f5f5f5;
-}
-.theme--light .database-list-avatar {
-	background: white;
 }
 .theme--light .gallery-modal-texture, .theme--light .gallery-texture-in-container {
 	background-image: url(/resources/transparency-light.png);
@@ -808,7 +813,7 @@ $modal-image-size: 160px;
 	min-height: 100px;
 }
 
-/* NEW REVIEW LAYOUT */
+/** NEW REVIEW LAYOUT */
 #review-content {
 	margin: -4px;
 }
@@ -884,7 +889,7 @@ $modal-image-size: 160px;
 }
 
 .contribution-form-list {
-	/* height of the modal minus padding rounded to nearest 64 (height of one contribution) */
+	// height of the modal minus padding rounded to nearest 64 (height of one contribution)
 	max-height: 512px;
 	overflow-y: scroll;
 }
@@ -902,9 +907,7 @@ $modal-image-size: 160px;
 	width: 100%;
 }
 
-/**
- * Quick date picker
- */
+/** Quick date picker */
 
 .qd-month {
 	text-transform: none !important;
@@ -932,7 +935,7 @@ $modal-image-size: 160px;
 }
 
 .v-slide-group__prev--disabled {
-	/* fix weird left margin on mobile tabs */
+	// fix weird left margin on mobile tabs
 	display: none !important;
 }
 
@@ -941,13 +944,13 @@ $modal-image-size: 160px;
 }
 
 .timeline-left.v-timeline::before {
-	/* (38px item / 2) + 1 padding */
+	// (38px item / 2) + 1 padding
 	left: 18px !important;
 }
 
 .timeline-left .v-timeline-item__divider {
 	justify-content: flex-start;
-	/* 38px item + 24px padding */
+	// 38px item + 24px padding
 	min-width: 62px;
 }
 
