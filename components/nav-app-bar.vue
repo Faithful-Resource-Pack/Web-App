@@ -57,7 +57,7 @@
 					</v-list-item-icon>
 					<!-- make label clickable -->
 					<v-list-item-title
-						:class="$root.isDark ? 'text--secondary' : 'text--primary'"
+						:class="$root.isDark ? 'text--secondary' : 'text--primary cursor-pointer'"
 						@click="updateDarkSidebar"
 					>
 						{{ $root.lang().global.themes.dark_sidebar }}
@@ -146,7 +146,7 @@ export default {
 	},
 	methods: {
 		updateDarkSidebar() {
-			this.$emit("update:darkSidebar", !this.darkSidebar);
+			if (!this.$root.isDark) this.$emit("update:darkSidebar", !this.darkSidebar);
 		},
 	},
 	computed: {

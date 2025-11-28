@@ -20,8 +20,8 @@
 			</v-list-item-title>
 			<v-list-item-subtitle>{{ $root.user.discordUsername }}</v-list-item-subtitle>
 		</v-list-item-content>
-		<v-btn fab x-small color="red" elevation="3" @click="$root.logout">
-			<v-icon small color="white">mdi-logout-variant</v-icon>
+		<v-btn icon color="red lighten-1" style="background: transparent" @click="$root.logout">
+			<v-icon>mdi-logout-variant</v-icon>
 		</v-btn>
 	</v-list-item>
 </template>
