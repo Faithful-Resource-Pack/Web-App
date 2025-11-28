@@ -1,10 +1,10 @@
 <template>
 	<v-sheet rounded>
 		<v-tabs v-model="tab" dense :color="activeColor">
-			<v-tab style="text-transform: uppercase">
+			<v-tab>
 				{{ $root.lang().global.text_field_tabs.write }}
 			</v-tab>
-			<v-tab style="text-transform: uppercase">
+			<v-tab>
 				{{ $root.lang().global.text_field_tabs.preview }}
 			</v-tab>
 		</v-tabs>

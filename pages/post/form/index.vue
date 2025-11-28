@@ -6,15 +6,9 @@
 		</div>
 		<template v-else>
 			<v-tabs v-model="selectedTab" grow :class="[{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
-				<v-tab style="text-transform: uppercase">
-					{{ $root.lang().posts.general.heading }}
-				</v-tab>
-				<v-tab style="text-transform: uppercase">
-					{{ $root.lang().posts.download.heading }}
-				</v-tab>
-				<v-tab style="text-transform: uppercase">
-					{{ $root.lang().posts.changelog.heading }}
-				</v-tab>
+				<v-tab>{{ $root.lang().posts.general.heading }}</v-tab>
+				<v-tab>{{ $root.lang().posts.download.heading }}</v-tab>
+				<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
 			</v-tabs>
 			<v-list
 				:class="['main-container', 'mb-2 pa-4', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]"

@@ -46,12 +46,8 @@
 			<div class="flex-grow-1 pa-2">
 				<v-tabs id="info-tabs" v-model="selectedTab" :show-arrows="false">
 					<v-tabs-slider />
-
-					<v-tab v-for="tab in displayedTabs" :key="tab" style="text-transform: uppercase">
-						{{ tab }}
-					</v-tab>
+					<v-tab v-for="tab in displayedTabs" :key="tab">{{ tab }}</v-tab>
 				</v-tabs>
-
 				<v-tabs-items v-model="selectedTab">
 					<v-tab-item v-for="tab in displayedTabs" :key="tab">
 						<texture-tab v-if="tab === displayedTabs.information" :textureObj="textureObj" />
@@ -230,7 +226,7 @@ export default {
 						this.textureObj = res.data;
 					})
 					.catch((err) => {
-						this.errorCode = err.response.status;
+						this.errorCode = err.response?.status;
 						console.error(err);
 						this.error =
 							err.response?.data?.message || this.$root.lang().gallery.error_message.search_failed;

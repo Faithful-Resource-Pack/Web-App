@@ -1,3 +1,6 @@
+// easier to inline them all right here
+@use "./scrollbar.scss" as *;
+
 @import url(https://database.faithfulpack.net/fonts/FaithfulFont/stylesheet.css);
 
 @font-face {
@@ -79,40 +82,6 @@ html.theme--light {
 	flex: 1;
 }
 
-$faithful-brand: #76C945;
-
-/* ===== Scrollbar CSS ===== */
-// Firefox
-.theme--light, .theme--light * {
-	scrollbar-color: $faithful-brand #ffffff;
-}
-
-.theme--dark, .theme--dark * {
-	scrollbar-width: auto;
-	// same color as app bar
-	scrollbar-color: $faithful-brand #272727;
-}
-
-.v-navigation-drawer.theme--dark * {
-	// same color as the thingy
-	scrollbar-color: $faithful-brand #363636 !important;
-}
-
-// Chrome, Edge, and Safari
-html::-webkit-scrollbar, html *::-webkit-scrollbar {
-	width: 12px;
-}
-
-html::-webkit-scrollbar-track, html *::-webkit-scrollbar-track {
-	background: #272727;
-}
-
-html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
-	background-color: $faithful-brand;
-	border-radius: 12px;
-	border: -1px solid $faithful-brand;
-}
-
 .icon-mojang-red:before {
 	content: "\e900";
 	color: #ec343c;
@@ -125,13 +94,6 @@ html::-webkit-scrollbar-thumb, html *::-webkit-scrollbar-thumb {
 // vuetify 3 backported feature (really handy)
 .cursor-pointer {
 	cursor: pointer !important;
-}
-
-.theme--dark .card-text-shadow {
-	text-shadow: 2px 2px rgba(0,0,0,.7);
-}
-.theme--light .card-text-shadow {
-	text-shadow: 2px 2px rgba(0,0,0,.2);
 }
 
 a {
@@ -160,7 +122,6 @@ a {
 #app .v-tab {
 	height: 100%;
 	line-height: 48px;
-	text-transform: none;
 }
 
 .container {
@@ -171,7 +132,7 @@ a {
 	background: transparent;
 }
 
-
+// since it gets mounted outside the vuetify part we need to reapply some styles
 .gallery-tooltip {
 	font-family: "Roboto", sans-serif;
 }
@@ -281,7 +242,8 @@ img.texture-img {
 	list-style: none;
 }
 
-.encased, .gallery-tooltip-texture .gallery-tooltip-id {
+.gallery-tooltip-texture .gallery-tooltip-id,
+.encased {
 	background-color: #272727;
 
 	-webkit-box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.4);
@@ -471,7 +433,6 @@ img.texture-img {
 	left: 0;
 	right: 0;
 	bottom: 0;
-
 	border: 1px dashed currentColor;
 	z-index: 3;
 	border-radius: 4px;
@@ -481,14 +442,17 @@ img.texture-img {
 	pointer-events: none;
 }
 
-.drop-zone.disabled .dropzone-border, .drop-zone.disabled .label {
+.drop-zone.disabled .dropzone-border,
+.drop-zone.disabled .label {
 	opacity: 0.5;
 }
-.drop-zone .dropzone-border, .drop-zone .label {
+.drop-zone .dropzone-border,
+.drop-zone .label {
 	opacity: 0.7;
 	transition: opacity 250ms ease;
 }
-.drop-zone.enabled:hover .dropzone-border, .drop-zone.enabled:hover .label {
+.drop-zone.enabled:hover .dropzone-border,
+.drop-zone.enabled:hover .label {
 	opacity: 1;
 }
 .drop-zone .hidden-input {
@@ -716,7 +680,8 @@ $modal-image-size: 160px;
 .theme--light .main-container {
 	background: #f5f5f5;
 }
-.theme--light .gallery-modal-texture, .theme--light .gallery-texture-in-container {
+.theme--light .gallery-modal-texture,
+.theme--light .gallery-texture-in-container {
 	background-image: url(/resources/transparency-light.png);
 }
 
@@ -744,9 +709,6 @@ $modal-image-size: 160px;
 #dashboard-page .dashboard-card .v-card__title .v-btn.v-btn--icon {
 	background-color: transparent;
 }
-#dashboard-page .dashboard-card .v-card__title .v-btn.v-btn--icon.v-btn--disabled {
-	opacity: 0.6;
-}
 
 .theme--dark .dashboard-stat {
 	background: rgba(0, 0, 0, 0.2);
@@ -764,7 +726,8 @@ $modal-image-size: 160px;
 	bottom: 4px;
 }
 
-.treemap-graph #graph-loader > *, .treemap-graph #graph-loader > *::after {
+.treemap-graph #graph-loader > *,
+.treemap-graph #graph-loader > *::after {
 	height: 100%;
 	bottom: 0;
 }
@@ -847,7 +810,9 @@ $modal-image-size: 160px;
 	height: 100%;
 }
 
-#review-list > .v-card, #review-preview > *, #empty > * {
+#review-list > .v-card,
+#review-preview > *,
+#empty > * {
 	background: rgba(255, 255, 255, 0.05);
 }
 
