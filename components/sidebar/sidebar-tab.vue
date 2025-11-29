@@ -6,12 +6,12 @@
 		</v-list-item-icon>
 		<v-list-item-content>
 			<v-list-item-title class="body-2">
-				{{ subtab.labelText || subtab.label.toTitleCase() }}
+				{{ subtab.label || subtab.id.toTitleCase() }}
 			</v-list-item-title>
 		</v-list-item-content>
-		<v-list-item-action v-if="subtab.badge && badges[subtab.label]" class="nav-badge">
+		<v-list-item-action v-if="subtab.badge && badges[subtab.id]" class="nav-badge">
 			<span class="nav-badge-inner error white--text font-weight-black">
-				{{ badges[subtab.label] }}
+				{{ badges[subtab.id] }}
 			</span>
 		</v-list-item-action>
 	</v-list-item>

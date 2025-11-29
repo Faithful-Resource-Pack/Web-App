@@ -17,25 +17,25 @@ import TexturePage from "../pages/texture/index.vue";
 import PackPage from "../pages/pack/index.vue";
 import SettingsPage from "../pages/settings/index.vue";
 
-/** @type {import("resources/types.d.ts").SidebarTab[]} */
+/** @type {import("../resources/types.d.ts").SidebarTab[]} */
 export default [
 	{
-		label: "general",
+		id: "general",
 		subtabs: [
 			{
-				label: "dashboard",
+				id: "dashboard",
 				icon: "mdi-view-dashboard",
 				public: true,
 				// no name for dashboard (default page)
 				routes: [{ path: "/dashboard", component: DashboardPage }],
 			},
 			{
-				label: "profile",
+				id: "profile",
 				icon: "mdi-account",
 				routes: [{ path: "/profile", component: ProfilePage, name: "Profile" }],
 			},
 			{
-				label: "gallery",
+				id: "gallery",
 				icon: "mdi-image-multiple",
 				public: true,
 				// note: first route will be matched by the sidebar
@@ -54,10 +54,10 @@ export default [
 		],
 	},
 	{
-		label: "addons",
+		id: "addons",
 		subtabs: [
 			{
-				label: "upload",
+				id: "upload",
 				icon: "mdi-plus-thick",
 				routes: [
 					{ path: "/addons/new", component: NewAddonPage, name: "New Add-on" },
@@ -65,7 +65,7 @@ export default [
 				],
 			},
 			{
-				label: "submissions",
+				id: "submissions",
 				icon: "mdi-plus-box-multiple",
 				routes: [
 					{
@@ -76,7 +76,7 @@ export default [
 				],
 			},
 			{
-				label: "review",
+				id: "review",
 				roles: ["Administrator"],
 				icon: "mdi-puzzle",
 				badge: (app) =>
@@ -90,11 +90,11 @@ export default [
 		],
 	},
 	{
-		label: "posts",
+		id: "posts",
 		roles: ["Administrator"],
 		subtabs: [
 			{
-				label: "list",
+				id: "list",
 				icon: "mdi-format-list-bulleted-square",
 				routes: [
 					{
@@ -105,7 +105,7 @@ export default [
 				],
 			},
 			{
-				label: "create",
+				id: "create",
 				icon: "mdi-post",
 				routes: [
 					{
@@ -123,16 +123,16 @@ export default [
 		],
 	},
 	{
-		label: "database",
+		id: "database",
 		roles: ["Developer", "Administrator"],
 		subtabs: [
 			{
-				label: "contributions",
+				id: "contributions",
 				icon: "mdi-file-multiple",
 				routes: [{ path: "/contributions", component: ContributionPage, name: "Contributions" }],
 			},
 			{
-				label: "users",
+				id: "users",
 				icon: "mdi-account-multiple",
 				routes: [
 					{ path: "/users", redirect: "/users/all" },
@@ -140,7 +140,7 @@ export default [
 				],
 			},
 			{
-				label: "textures",
+				id: "textures",
 				icon: "mdi-texture",
 				routes: [
 					{ path: "/textures", redirect: "/textures/all" },
@@ -148,7 +148,7 @@ export default [
 				],
 			},
 			{
-				label: "packs",
+				id: "packs",
 				icon: "mdi-cube",
 				routes: [
 					{ path: "/packs", redirect: "/packs/all" },
@@ -156,7 +156,7 @@ export default [
 				],
 			},
 			{
-				label: "settings",
+				id: "settings",
 				icon: "mdi-cog",
 				routes: [{ path: "/settings", component: SettingsPage, name: "Settings" }],
 			},

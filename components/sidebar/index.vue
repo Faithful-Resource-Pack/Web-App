@@ -12,26 +12,26 @@
 			<v-divider class="my-2" />
 			<v-list-group
 				v-for="tab in tabs"
-				:key="tab.label"
+				:key="tab.id"
 				color="inherit"
-				:value="initialTabsOpen[tab.label]"
-				@click="updateTabsOpen(tab.label)"
+				:value="initialTabsOpen[tab.id]"
+				@click="updateTabsOpen(tab.id)"
 			>
 				<template #activator>
 					<v-list-item-title class="uppercase-unsized">
-						{{ tab.labelText }}
+						{{ tab.label }}
 					</v-list-item-title>
 				</template>
 				<template #appendIcon>
 					<!-- regular is 24 and small is 16, both are a bit too extreme -->
 					<v-icon size="20" style="opacity: 80%">
-						{{ tabsOpen[tab.label] ? "mdi-chevron-up" : "mdi-chevron-right" }}
+						{{ tabsOpen[tab.id] ? "mdi-chevron-up" : "mdi-chevron-right" }}
 					</v-icon>
 				</template>
 				<div class="v-list pb-4 pt-0">
 					<sidebar-tab
 						v-for="subtab in tab.subtabs"
-						:key="subtab.label"
+						:key="subtab.id"
 						:subtab="subtab"
 						:badges="badges"
 						@select="autoClose"
@@ -106,7 +106,7 @@ export default {
 			this.$emit("input", newValue);
 		},
 		tabs(nv) {
-			const keys = nv.map((tabs) => tabs.label);
+			const keys = nv.map((tabs) => tabs.id);
 
 			// we diff against the localstorage version since users can get logged out
 			// and their preference should be saved regardless

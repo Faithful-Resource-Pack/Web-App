@@ -83,15 +83,14 @@ declare global {
 }
 
 interface SidebarTab {
-	label: string;
+	id: string;
 	subtabs: SidebarSubtab[];
 	// defaults to all public
 	roles?: string[];
 }
 
 interface SidebarSubtab {
-	// untranslated key (not actually used in UI)
-	label: string;
+	id: string;
 	icon: string;
 	// not included when false
 	public?: true;
@@ -100,4 +99,5 @@ interface SidebarSubtab {
 	// takes a vue instance and returns what to display in the badge
 	// not done with `this` binding so arrow functions can be used
 	badge?: (app: Vue) => any;
+	roles?: string[];
 }

@@ -334,9 +334,9 @@ const app = new Vue({
 		 */
 		availableTabs() {
 			return this.availableTabObjects.map((tab) => {
-				tab.labelText = this.lang().global.tabs[tab.label]?.title;
+				tab.label = this.lang().global.tabs[tab.id]?.title;
 				tab.subtabs = tab.subtabs.map((s) => {
-					s.labelText = this.lang().global.tabs[tab.label]?.subtabs[s.label];
+					s.label = this.lang().global.tabs[tab.id]?.subtabs[s.id];
 					s.to = s.routes[0].path;
 					return s;
 				});
@@ -472,7 +472,7 @@ const app = new Vue({
 				this.availableTabObjects
 					.flatMap((t) => t.subtabs)
 					.filter((s) => s.badge)
-					.forEach((s) => this.loadBadge(s.badge, s.label));
+					.forEach((s) => this.loadBadge(s.badge, s.id));
 			});
 		},
 		availableTabObjects(n) {
