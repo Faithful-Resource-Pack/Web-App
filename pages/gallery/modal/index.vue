@@ -197,14 +197,16 @@ export default {
 			if (this.loading) return this.$root.lang().global.loading;
 			return `[#${this.textureID}] ${this.textureObj.texture.name}`;
 		},
-		displayedTabs() {
-			if (this.loading) return [];
+		tabs() {
 			const availableTabs = ["information", "authors"];
+			if (this.loading) return availableTabs;
 
 			// only show animation tab if there's an mcmeta
 			if (Object.keys(this.textureObj.mcmeta || {}).length) availableTabs.push("animation");
-
-			return availableTabs.reduce((acc, cur) => {
+			return availableTabs;
+		},
+		displayedTabs() {
+			return this.tabs.reduce((acc, cur) => {
 				acc[cur] = this.$root.lang().gallery.modal.tabs[cur];
 				return acc;
 			}, {});
@@ -233,6 +235,16 @@ export default {
 					});
 			},
 			immediate: true,
+		},
+		loading(nv) {
+			// not loading and there is a hash
+			if (!nv && location.hash) {
+				this.selectedTab = this.tabs.indexOf(location.hash.slice(1));
+			}
+		},
+		selectedTab(nv) {
+			if (this.loading) return;
+			location.hash = this.tabs[nv];
 		},
 		value: {
 			handler(n) {
