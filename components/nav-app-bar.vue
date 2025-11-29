@@ -1,5 +1,5 @@
 <template>
-	<v-app-bar app dense>
+	<v-app-bar app hide-on-scroll dense>
 		<span class="d-flex noselect">
 			<v-app-bar-nav-icon
 				small
