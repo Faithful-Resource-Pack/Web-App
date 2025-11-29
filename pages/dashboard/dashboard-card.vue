@@ -33,3 +33,9 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.dashboard-card {
+	width: 100%;
+}
+</style>

@@ -158,3 +158,19 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+#addon-card .loader > * {
+	width: 100%;
+	min-height: 17px;
+	margin-bottom: 0;
+}
+
+#addon-card .loader .v-skeleton-loader__heading {
+	border-radius: 8px;
+}
+
+#addon-card .paragraph-loader {
+	min-height: 48px;
+}
+</style>

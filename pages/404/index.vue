@@ -1,5 +1,5 @@
 <template>
-	<div id="background-404" class="white--text text-center">
+	<div class="background-404 white--text text-center">
 		<h4 class="text-h4 pt-10">{{ $root.lang().missing_page.title }}</h4>
 		<p class="text-body-1 mb-0 mt-7">{{ $root.lang().missing_page.description }}</p>
 		<p class="text-body-1 mt-0">
@@ -19,3 +19,14 @@ export default {
 	name: "missing-page",
 };
 </script>
+
+<style lang="scss">
+.background-404 {
+	background-image: url(https://faithfulpack.net/image/background/the_end.jpg);
+	background-position: center;
+	z-index: 1;
+	background-size: cover;
+	min-height: 100vh;
+	width: 100%;
+}
+</style>

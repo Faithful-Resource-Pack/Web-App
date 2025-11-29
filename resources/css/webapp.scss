@@ -128,20 +128,6 @@ a {
 	max-width: 1080px;
 }
 
-.tippy-backdrop {
-	background: transparent;
-}
-
-// since it gets mounted outside the vuetify part we need to reapply some styles
-.gallery-tooltip {
-	font-family: "Roboto", sans-serif;
-}
-
-.gallery-tooltip i {
-	// tooltip icons really hate being white for some reason
-	color: white !important;
-}
-
 .v-text-field {
 	margin-bottom: 12px;
 }
@@ -160,30 +146,18 @@ a {
 	padding: 8px 0 8px 8px;
 }
 
-// since the color can change we just lighten it directly
-.theme--dark .snackbar-accent,
-.theme--dark .snackbar-accent .v-icon::before {
-	filter: brightness(2.25) saturate(0.7);
+.tippy-backdrop {
+	background: transparent;
 }
 
-.theme--light .snackbar-accent,
-.theme--light .snackbar-accent .v-icon::before {
-	filter: brightness(0.7);
+// since it gets mounted outside the vuetify part we need to reapply some styles
+.gallery-tooltip {
+	font-family: "Roboto", sans-serif;
 }
 
-.snackbar-status .v-snack__wrapper {
-	// accent color, same width as discord embed accent
-    border-left: 4px solid hsla(0, 0%, 100%, .12);
-}
-
-.snackbar-status .v-snack__content {
-	// 16px horizontal padding - 4px left border
-	padding-right: 12px;
-}
-
-.snackbar-status .v-snack__wrapper.theme--dark {
-	// makes text more legible in dark mode
-	background-color: rgb(25, 25, 25);
+.gallery-tooltip i {
+	// tooltip icons really hate being white for some reason
+	color: white !important;
 }
 
 .texture-img {
@@ -245,7 +219,6 @@ img.texture-img {
 .gallery-tooltip-texture .gallery-tooltip-id,
 .encased {
 	background-color: #272727;
-
 	-webkit-box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.4);
 	box-shadow: 2px 2px 8px 2px rgba(0, 0, 0, 0.4);
 }
@@ -291,6 +264,7 @@ img.texture-img {
 	height: auto;
 	white-space: normal;
 }
+
 .blurple > *:first-child::before {
 	content: url(/resources/icons/discord_white.svg);
 	width: 1em;
@@ -302,15 +276,6 @@ img.texture-img {
 .blurple .v-btn__content {
 	flex: auto;
 	color: white;
-}
-
-.router-link {
-	padding: 8px 16px;
-	width: 100%;
-}
-
-.router-link:hover {
-	background-color: rgba(255, 255, 255, 0.3);
 }
 
 .v-input__control {
@@ -358,10 +323,6 @@ img.texture-img {
 	min-height: 20em;
 }
 
-.snackbar-json {
-	border-radius: 4px;
-}
-
 // optional class for removing the outline
 .prism-editor__textarea:focus {
 	outline: none;
@@ -395,180 +356,13 @@ img.texture-img {
 	color: white;
 }
 
-.nav-badge {
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-.nav-badge-inner {
-	height: 24px;
-	width: 24px;
-	font-size: 12px;
-	border-radius: 50%;
-	line-height: 24px;
-	text-align: center;
-}
-
 .thin-text {
 	font-weight: 300;
 	opacity: 0.7;
 }
 
-.drop-zone {
-	display: flex;
-	flex-grow: 1;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	text-align: center;
-	padding: 0 10px;
-}
-.drop-zone, .drop-zone * {
-	cursor: pointer;
-}
-
-.drop-zone .dropzone-border {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	border: 1px dashed currentColor;
-	z-index: 3;
-	border-radius: 4px;
-}
-
-.drop-zone.disabled {
-	pointer-events: none;
-}
-
-.drop-zone.disabled .dropzone-border,
-.drop-zone.disabled .label {
-	opacity: 0.5;
-}
-.drop-zone .dropzone-border,
-.drop-zone .label {
-	opacity: 0.7;
-	transition: opacity 250ms ease;
-}
-.drop-zone.enabled:hover .dropzone-border,
-.drop-zone.enabled:hover .label {
-	opacity: 1;
-}
-.drop-zone .hidden-input {
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	width: 1px;
-	height: 1px;
-}
-.drop-zone .label {
-	font-size: 16px;
-	display: block;
-}
-
 .v-image__image--preload {
 	filter: none !important;
-}
-
-.gallery-textures-container {
-	display: grid;
-}
-
-.gallery-texture-in-container {
-	text-align: center;
-	position: relative;
-	background-size: cover;
-	background-position: center;
-	aspect-ratio: 1 !important;
-}
-
-.gallery-texture-in-container .gallery-share {
-	top: 0;
-	right: 0;
-	opacity: 0;
-	transition: all .25s ease;
-}
-
-.gallery-texture-in-container:hover .gallery-share {
-	opacity: 1;
-}
-
-.theme--dark .gallery-texture-in-container {
-	background-size: cover !important;
-	background: url(/resources/transparency.png);
-}
-
-.not-done {
-	// text as centered columns
-	display: flex;
-	flex-flow: column nowrap;
-	justify-content: center;
-	align-items: center;
-	padding: 0.25rem;
-	text-align: center;
-	aspect-ratio: 1;
-	word-wrap: break-word;
-	white-space: pre-wrap;
-	word-break: break-word;
-}
-
-// makes sure content is actually centered
-.not-done :last-child {
-	margin-bottom: 0;
-}
-
-.gallery-texture-image {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	object-fit: contain;
-	image-rendering: pixelated;
-}
-
-.gallery-texture-image:hover,
-.gallery-texture-image:active {
-	cursor: pointer;
-}
-
-.gallery-animated-image {
-	aspect-ratio: 1;
-}
-
-.gallery-modal-container {
-	display: flex;
-	flex-flow: row wrap;
-	justify-content: space-between;
-	align-items: flex-start;
-	gap: 8px; // equivalent to mx-2
-}
-
-$modal-image-size: 160px;
-
-.gallery-modal-texture {
-	height: $modal-image-size;
-	width: $modal-image-size;
-	position: relative;
-	background-size: cover;
-	background-position: center;
-}
-
-.gallery-modal-image-caption {
-	max-width: $modal-image-size;
-	height: 48px;
-	font-size: 1em;
-}
-
-.theme--dark .gallery-modal-texture {
-	background: url(/resources/transparency.png) center;
-}
-
-.gallery-modal-texture > * {
-	position: absolute;
-	height: $modal-image-size;
-	width: $modal-image-size;
 }
 
 #info-tabs .v-slide-group__prev {
@@ -586,13 +380,6 @@ $modal-image-size: 160px;
 .hover-underline:hover {
 	text-decoration: underline;
 	cursor: pointer;
-}
-
-.go-up-btn {
-	position: fixed;
-	bottom: 64px;
-	right: 64px;
-	z-index: 202;
 }
 
 .v-list-item__title,
@@ -636,13 +423,6 @@ $modal-image-size: 160px;
 .theme--dark .v-list-item__action.merged .v-btn {
 	background: #272727;
 }
-
-.btn-square-icon {
-	min-width: 36px !important;
-	width: 36px;
-	height: 36px;
-}
-
 .v-dialog {
 	margin: 10px;
 }
@@ -692,88 +472,18 @@ $modal-image-size: 160px;
 	color: rgba(255, 255, 255, 0.54);
 }
 
-.dashboard-card {
-	width: 100%;
-}
-
-#dashboard-page #dashboard-row > * {
-	display: flex;
-	align-items: stretch;
-}
-
 .dashboard-stat {
 	background-color: rgba(0, 0, 0, 0.05);
 	width: 100%;
-}
-
-#dashboard-page .dashboard-card .v-card__title .v-btn.v-btn--icon {
-	background-color: transparent;
 }
 
 .theme--dark .dashboard-stat {
 	background: rgba(0, 0, 0, 0.2);
 }
 
-.treemap-graph #treemap-graph-cell {
-	position: relative;
-}
-
-.treemap-graph #graph-loader {
-	position: absolute;
-	top: 4px;
-	left: 4px;
-	right: 4px;
-	bottom: 4px;
-}
-
-.treemap-graph #graph-loader > *,
-.treemap-graph #graph-loader > *::after {
-	height: 100%;
-	bottom: 0;
-}
-
-.treemap-graph .v-skeleton-loader__text {
-	margin-bottom: 0;
-}
-
-.treemap-graph svg {
-	background: transparent !important;
-	overflow: visible;
-	width: 100%;
-}
-
 #dashboard-page #addon-card .v-card__text p,
 #dashboard-page #contribution-stats-card .v-card__text p {
 	width: 100%;
-}
-
-#addon-card .loader > * {
-	width: 100%;
-	min-height: 17px;
-	margin-bottom: 0;
-}
-
-#addon-card .loader .v-skeleton-loader__heading {
-	border-radius: 8px;
-}
-
-#addon-card .paragraph-loader {
-	min-height: 48px;
-}
-
-.heatmap-wrapper {
-	min-height: 100px;
-	overflow: hidden;
-	scrollbar-gutter: stable;
-}
-
-.heatmap-wrapper:hover,
-.heatmap-wrapper:active {
-	overflow-x: auto;
-}
-
-.heatmap-wrapper svg {
-	min-height: 100px;
 }
 
 /** NEW REVIEW LAYOUT */
@@ -853,45 +563,8 @@ $modal-image-size: 160px;
 	padding: 16px;
 }
 
-.contribution-form-list {
-	// height of the modal minus padding rounded to nearest 64 (height of one contribution)
-	max-height: 512px;
-	overflow-y: scroll;
-}
-
 .v-autocomplete:not(.v-input--is-focused).v-select--chips input {
 	max-height: none !important;
-}
-
-#background-404 {
-	background-image: url(https://faithfulpack.net/image/background/the_end.jpg);
-	background-position: center;
-	z-index: 1;
-	background-size: cover;
-	min-height: 100vh;
-	width: 100%;
-}
-
-/** Quick date picker */
-
-.qd-month {
-	text-transform: none !important;
-}
-
-.qd-days {
-	display: grid;
-	grid-template-columns: repeat(7, 1fr);
-	grid-gap: 4px;
-}
-
-.qd-days > * {
-	aspect-ratio: 1;
-	max-height: 32px;
-}
-.qd-day {
-	min-width: auto !important;
-	width: 100% !important;
-	height: 100% !important;
 }
 
 .v-timeline-item__dot,

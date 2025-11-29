@@ -247,3 +247,39 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.gallery-modal-container {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+	align-items: flex-start;
+	gap: 8px; // equivalent to mx-2
+}
+
+$modal-image-size: 160px;
+
+.gallery-modal-texture {
+	height: $modal-image-size;
+	width: $modal-image-size;
+	position: relative;
+	background-size: cover;
+	background-position: center;
+}
+
+.gallery-modal-image-caption {
+	max-width: $modal-image-size;
+	height: 48px;
+	font-size: 1em;
+}
+
+.theme--dark .gallery-modal-texture {
+	background: url(/resources/transparency.png) center;
+}
+
+.gallery-modal-texture > * {
+	position: absolute;
+	height: $modal-image-size;
+	width: $modal-image-size;
+}
+</style>

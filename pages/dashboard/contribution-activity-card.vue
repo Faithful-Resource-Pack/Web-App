@@ -112,3 +112,20 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.heatmap-wrapper {
+	min-height: 100px;
+	overflow: hidden;
+	scrollbar-gutter: stable;
+}
+
+.heatmap-wrapper:hover,
+.heatmap-wrapper:active {
+	overflow-x: auto;
+}
+
+.heatmap-wrapper svg {
+	min-height: 100px;
+}
+</style>

@@ -33,3 +33,19 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.nav-badge {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.nav-badge-inner {
+	height: 24px;
+	width: 24px;
+	font-size: 12px;
+	border-radius: 50%;
+	line-height: 24px;
+	text-align: center;
+}
+</style>

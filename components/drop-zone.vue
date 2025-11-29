@@ -101,3 +101,59 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.drop-zone {
+	display: flex;
+	flex-grow: 1;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	text-align: center;
+	padding: 0 10px;
+}
+.drop-zone,
+.drop-zone * {
+	cursor: pointer;
+}
+
+.drop-zone .dropzone-border {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border: 1px dashed currentColor;
+	z-index: 3;
+	border-radius: 4px;
+}
+
+.drop-zone.disabled {
+	pointer-events: none;
+}
+
+.drop-zone.disabled .dropzone-border,
+.drop-zone.disabled .label {
+	opacity: 0.5;
+}
+.drop-zone .dropzone-border,
+.drop-zone .label {
+	opacity: 0.7;
+	transition: opacity 250ms ease;
+}
+.drop-zone.enabled:hover .dropzone-border,
+.drop-zone.enabled:hover .label {
+	opacity: 1;
+}
+.drop-zone .hidden-input {
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+	height: 1px;
+}
+.drop-zone .label {
+	font-size: 16px;
+	display: block;
+}
+</style>

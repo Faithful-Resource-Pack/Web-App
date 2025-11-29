@@ -242,3 +242,40 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.gallery-textures-container {
+	display: grid;
+}
+
+.gallery-texture-in-container {
+	text-align: center;
+	position: relative;
+	background-size: cover;
+	background-position: center;
+	aspect-ratio: 1 !important;
+}
+
+.gallery-texture-in-container .gallery-share {
+	top: 0;
+	right: 0;
+	opacity: 0;
+	transition: all 0.25s ease;
+}
+
+.gallery-texture-in-container:hover .gallery-share {
+	opacity: 1;
+}
+
+.theme--dark .gallery-texture-in-container {
+	background-size: cover !important;
+	background: url(/resources/transparency.png);
+}
+
+.go-up-btn {
+	position: fixed;
+	bottom: 64px;
+	right: 64px;
+	z-index: 202;
+}
+</style>

@@ -161,3 +161,25 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.qd-month {
+	text-transform: none !important;
+}
+
+.qd-days {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-gap: 4px;
+}
+
+.qd-days > * {
+	aspect-ratio: 1;
+	max-height: 32px;
+}
+.qd-day {
+	min-width: auto !important;
+	width: 100% !important;
+	height: 100% !important;
+}
+</style>

@@ -174,3 +174,33 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.treemap-graph #treemap-graph-cell {
+	position: relative;
+}
+
+.treemap-graph #graph-loader {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	right: 4px;
+	bottom: 4px;
+}
+
+.treemap-graph #graph-loader > *,
+.treemap-graph #graph-loader > *::after {
+	height: 100%;
+	bottom: 0;
+}
+
+.treemap-graph .v-skeleton-loader__text {
+	margin-bottom: 0;
+}
+
+.treemap-graph svg {
+	background: transparent !important;
+	overflow: visible;
+	width: 100%;
+}
+</style>

@@ -130,3 +130,41 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.snackbar-status .v-snack__wrapper {
+	// accent color, same width as discord embed accent
+	border-left: 4px solid hsla(0, 0%, 100%, 0.12);
+}
+
+.snackbar-status .v-snack__content {
+	// 16px horizontal padding - 4px left border
+	padding-right: 12px;
+}
+
+.snackbar-status .v-snack__wrapper.theme--dark {
+	// makes text more legible in dark mode
+	background-color: rgb(25, 25, 25);
+}
+
+// since the color can change we just lighten it directly
+.theme--dark .snackbar-accent,
+.theme--dark .snackbar-accent .v-icon::before {
+	filter: brightness(2.25) saturate(0.7);
+}
+
+.theme--light .snackbar-accent,
+.theme--light .snackbar-accent .v-icon::before {
+	filter: brightness(0.7);
+}
+
+.snackbar-json {
+	border-radius: 4px;
+}
+
+.btn-square-icon {
+	min-width: 36px !important;
+	width: 36px;
+	height: 36px;
+}
+</style>

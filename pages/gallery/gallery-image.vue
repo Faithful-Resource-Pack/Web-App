@@ -153,3 +153,43 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.gallery-texture-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+	image-rendering: pixelated;
+}
+
+.gallery-texture-image:hover,
+.gallery-texture-image:active {
+	cursor: pointer;
+}
+
+.gallery-animated-image {
+	aspect-ratio: 1;
+}
+
+.not-done {
+	// text as centered columns
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+	padding: 0.25rem;
+	text-align: center;
+	aspect-ratio: 1;
+	word-wrap: break-word;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+// makes sure content is actually centered
+.not-done :last-child {
+	margin-bottom: 0;
+}
+</style>
