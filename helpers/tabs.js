@@ -27,12 +27,23 @@ export default [
 				icon: "mdi-view-dashboard",
 				public: true,
 				// no name for dashboard (default page)
-				routes: [{ path: "/dashboard", component: DashboardPage }],
+				routes: [
+					{
+						path: "/dashboard",
+						component: DashboardPage,
+					},
+				],
 			},
 			{
 				id: "profile",
 				icon: "mdi-account",
-				routes: [{ path: "/profile", component: ProfilePage, name: "Profile" }],
+				routes: [
+					{
+						path: "/profile",
+						component: ProfilePage,
+						name: "Profile",
+					},
+				],
 			},
 			{
 				id: "gallery",
@@ -60,8 +71,16 @@ export default [
 				id: "upload",
 				icon: "mdi-plus-thick",
 				routes: [
-					{ path: "/addons/new", component: NewAddonPage, name: "New Add-on" },
-					{ path: "/addons/edit/:id", component: EditAddonPage, name: "Edit Add-on" },
+					{
+						path: "/addons/new",
+						component: NewAddonPage,
+						name: "Submit a new add-on",
+					},
+					{
+						path: "/addons/edit/:id",
+						component: EditAddonPage,
+						name: "Edit add-on",
+					},
 				],
 			},
 			{
@@ -71,7 +90,7 @@ export default [
 					{
 						path: "/addons/submissions",
 						component: AddonSubmissionsPage,
-						name: "Add-on Submissions",
+						name: "Add-on submissions",
 					},
 				],
 			},
@@ -82,9 +101,16 @@ export default [
 				badge: (app) =>
 					axios.get(`${app.apiURL}/addons/pending`, app.apiOptions).then((r) => r.data.length || 0),
 				routes: [
-					{ path: "/addons/review", component: ReviewAddonsPage, name: "Add-on Review" },
+					{
+						path: "/addons/review",
+						component: ReviewAddonsPage,
+						name: "Review add-ons",
+					},
 					// legacy compatibility
-					{ path: "/review/addons", redirect: "/addons/review" },
+					{
+						path: "/review/addons",
+						redirect: "/addons/review",
+					},
 				],
 			},
 		],
@@ -111,7 +137,7 @@ export default [
 					{
 						path: "/posts/new",
 						component: NewPostPage,
-						name: "New post",
+						name: "Create new post",
 					},
 					{
 						path: "/posts/edit/:id",
@@ -129,36 +155,69 @@ export default [
 			{
 				id: "contributions",
 				icon: "mdi-file-multiple",
-				routes: [{ path: "/contributions", component: ContributionPage, name: "Contributions" }],
+				routes: [
+					{
+						path: "/contributions",
+						component: ContributionPage,
+						name: "Contributions",
+					},
+				],
 			},
 			{
 				id: "users",
 				icon: "mdi-account-multiple",
 				routes: [
-					{ path: "/users", redirect: "/users/all" },
-					{ path: "/users/:role?/:name*", component: UsersPage, name: "Users" },
+					{
+						path: "/users",
+						redirect: "/users/all",
+					},
+					{
+						path: "/users/:role?/:name*",
+						component: UsersPage,
+						name: "Users",
+					},
 				],
 			},
 			{
 				id: "textures",
 				icon: "mdi-texture",
 				routes: [
-					{ path: "/textures", redirect: "/textures/all" },
-					{ path: "/textures/:tag?/:name*", component: TexturePage, name: "Textures" },
+					{
+						path: "/textures",
+						redirect: "/textures/all",
+					},
+					{
+						path: "/textures/:tag?/:name*",
+						component: TexturePage,
+						name: "Textures",
+					},
 				],
 			},
 			{
 				id: "packs",
 				icon: "mdi-cube",
 				routes: [
-					{ path: "/packs", redirect: "/packs/all" },
-					{ path: "/packs/:tag?/", component: PackPage, name: "Packs" },
+					{
+						path: "/packs",
+						redirect: "/packs/all",
+					},
+					{
+						path: "/packs/:tag?/",
+						component: PackPage,
+						name: "Packs",
+					},
 				],
 			},
 			{
 				id: "settings",
 				icon: "mdi-cog",
-				routes: [{ path: "/settings", component: SettingsPage, name: "Settings" }],
+				routes: [
+					{
+						path: "/settings",
+						component: SettingsPage,
+						name: "Settings",
+					},
+				],
 			},
 		],
 	},

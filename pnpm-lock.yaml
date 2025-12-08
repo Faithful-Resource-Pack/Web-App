@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@vitejs/plugin-vue2':
         specifier: ^2.3.4
-        version: 2.3.4(vite@7.2.4(sass@1.94.2))(vue@2.7.16)
+        version: 2.3.4(vite@7.2.6(sass@1.94.2))(vue@2.7.16)
       axios:
         specifier: ^1.13.2
         version: 1.13.2
@@ -27,8 +27,8 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(vue@2.7.16)
       prettier:
-        specifier: ^3.7.1
-        version: 3.7.1
+        specifier: ^3.7.4
+        version: 3.7.4
       prismjs:
         specifier: ^1.30.0
         version: 1.30.0
@@ -36,8 +36,8 @@ importers:
         specifier: ^1.94.2
         version: 1.94.2
       vite:
-        specifier: ^7.2.4
-        version: 7.2.4(sass@1.94.2)
+        specifier: ^7.2.6
+        version: 7.2.6(sass@1.94.2)
       vue:
         specifier: ^2.7.16
         version: 2.7.16
@@ -1120,8 +1120,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.7.1:
-    resolution: {integrity: sha512-RWKXE4qB3u5Z6yz7omJkjWwmTfLdcbv44jUVHC5NpfXwFGzvpQM798FGv/6WNK879tc+Cn0AAyherCl1KjbyZQ==}
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -1229,8 +1229,8 @@ packages:
   v-tooltip@2.1.3:
     resolution: {integrity: sha512-xXngyxLQTOx/yUEy50thb8te7Qo4XU6h4LZB6cvEfVd9mnysUxLEoYwGWDdqR+l69liKsy3IPkdYff3J1gAJ5w==}
 
-  vite@7.2.4:
-    resolution: {integrity: sha512-NL8jTlbo0Tn4dUEXEsUg8KeyG/Lkmc4Fnzb8JXN/Ykm9G4HNImjtABMJgkQoVjOBN/j2WAwDTRytdqJbZsah7w==}
+  vite@7.2.6:
+    resolution: {integrity: sha512-tI2l/nFHC5rLh7+5+o7QjKjSR04ivXDF4jcgV0f/bTQ+OJiITy5S6gaynVsEM+7RqzufMnVbIon6Sr5x1SDYaQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -1747,9 +1747,9 @@ snapshots:
   '@types/trusted-types@2.0.7':
     optional: true
 
-  '@vitejs/plugin-vue2@2.3.4(vite@7.2.4(sass@1.94.2))(vue@2.7.16)':
+  '@vitejs/plugin-vue2@2.3.4(vite@7.2.6(sass@1.94.2))(vue@2.7.16)':
     dependencies:
-      vite: 7.2.4(sass@1.94.2)
+      vite: 7.2.6(sass@1.94.2)
       vue: 2.7.16
 
   '@vue/compiler-sfc@2.7.16':
@@ -2265,7 +2265,7 @@ snapshots:
   prettier@2.8.8:
     optional: true
 
-  prettier@3.7.1: {}
+  prettier@3.7.4: {}
 
   prismjs@1.30.0: {}
 
@@ -2381,7 +2381,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  vite@7.2.4(sass@1.94.2):
+  vite@7.2.6(sass@1.94.2):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.3)

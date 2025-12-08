@@ -1,12 +1,9 @@
 <template>
 	<v-app-bar app hide-on-scroll dense>
-		<span class="d-flex noselect">
-			<v-app-bar-nav-icon
-				small
-				:title="$root.lang().global.navbar_labels.sidebar"
-				@click="$emit('drawer')"
-			/>
-		</span>
+		<v-app-bar-nav-icon
+			:title="$root.lang().global.navbar_labels.sidebar"
+			@click="$emit('drawer')"
+		/>
 
 		<v-spacer />
 		<v-menu left offset-y open-on-hover transition="slide-y-transition">
@@ -114,16 +111,14 @@
 			</v-list>
 		</v-menu>
 
-		<span class="monochrome-logo mx-2 d-flex noselect">
-			<v-btn
-				icon
-				small
-				href="https://faithfulpack.net"
-				:title="$root.lang().global.navbar_labels.main_site"
-			>
-				<img :src="monochromeLogo" width="30" alt="logo" />
-			</v-btn>
-		</span>
+		<v-btn
+			icon
+			href="https://faithfulpack.net"
+			class="mx-1"
+			:title="$root.lang().global.navbar_labels.main_site"
+		>
+			<img :src="monochromeLogo" width="30" alt="logo" />
+		</v-btn>
 	</v-app-bar>
 </template>
 
