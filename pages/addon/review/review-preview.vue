@@ -1,23 +1,30 @@
 <template>
-	<div id="review-preview" class="d-flex flex-column">
-		<v-card flat style="height: 100%" class="rounded-lg pa-2 overflow-x-hidden">
+	<div class="review-preview d-flex flex-column">
+		<v-card
+			style="height: 100%"
+			class="rounded-lg pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
+		>
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
-			<template v-if="addonInPanelLoading === true">
-				<p>{{ $root.lang().global.loading }}</p>
-			</template>
+			<div
+				v-if="addonInPanelLoading === true"
+				class="d-flex flex-column align-center justify-center"
+				style="height: 100%"
+			>
+				<v-progress-circular indeterminate :size="150" :width="10" />
+				<p class="text-h6 my-5">{{ $root.lang().global.loading }}</p>
+			</div>
 			<template v-else>
 				<div class="pb-2 d-flex align-center">
 					<div>
 						<h2 class="h6" style="line-height: 24px">
 							<a
 								v-if="addonInPanel.approval.status === 'approved'"
+								class="text--primary hover-underline"
 								:href="`https://www.faithfulpack.net/addons/${addonInPanel.slug}`"
 								target="blank"
 								rel="noopener noreferrer"
 							>
-								<span class="text--primary hover-underline">
-									{{ addonInPanel.name }}
-								</span>
+								{{ addonInPanel.name }}
 							</a>
 							<span v-else>
 								{{ addonInPanel.name }}
@@ -32,18 +39,17 @@
 							}}
 						</div>
 					</div>
-					<v-btn id="edit-btn" icon class="ml-auto" :href="`/addons/edit/${addonInPanel.id}`">
+					<v-btn icon class="ml-auto" :href="`/addons/edit/${addonInPanel.id}`">
 						<v-icon>mdi-pencil</v-icon>
 					</v-btn>
 				</div>
-				<v-row id="review-general">
+				<v-row>
 					<v-col cols="12" sm="7" style="position: relative">
 						<v-img
 							:src="addonInPanelHeaderURL"
 							:aspect-ratio="16 / 9"
-							style="border-radius: 5px"
 							alt="Header not found!"
-							class="cursor-pointer"
+							class="rounded cursor-pointer"
 							@click.stop="openHeader"
 						>
 							<template #placeholder>
@@ -62,9 +68,9 @@
 								</v-row>
 							</template>
 						</v-img>
-
 						<v-card
 							class="ma-2"
+							dark
 							rounded
 							style="display: inline-block; position: absolute; right: 10px; top: 10px"
 						>
@@ -97,7 +103,7 @@
 			</v-list-item-title>
 			<div>{{ addonInPanel.approval.reason }}</div>
 		</div>
-		<div v-if="addonInPanelLoading === false" id="review-actions" class="mt-2 rounded-lg pa-2">
+		<v-card v-if="addonInPanelLoading === false" class="mt-2 rounded-lg pa-2">
 			<div class="d-flex align-center">
 				<div class="mr-auto">
 					<div v-if="status === 'approved'">
@@ -107,35 +113,35 @@
 						<v-list-item-title class="uppercase">
 							{{ $root.lang().review.addon.labels.denied_by.replace("%s", approvalAuthor) }}:
 						</v-list-item-title>
-						<p class="text--secondary">{{ addonInPanel.approval.reason }}</p>
+						<p class="text--secondary mb-0">{{ addonInPanel.approval.reason }}</p>
 					</div>
 				</div>
 				<v-btn
 					text
-					color="green"
+					:color="colors['approved']"
 					:disabled="status === 'approved'"
-					@click="reviewAddon(addonId, 'approved')"
+					@click="$emit('reviewAddon', addonId, 'approved')"
 				>
 					{{ $root.lang().global.btn.approve }}
 				</v-btn>
 				<v-btn
 					text
-					color="red"
+					:color="colors['denied']"
 					:disabled="status === 'denied'"
-					@click="openDenyPopup(addonInPanel)"
+					@click="$emit('openDenyPopup', addonInPanel)"
 				>
 					{{ $root.lang().global.btn.deny }}
 				</v-btn>
 				<v-btn
 					text
-					color="gray"
+					:color="colors['archived']"
 					:disabled="status === 'archived'"
-					@click="openDenyPopup(addonInPanel, 'archive')"
+					@click="$emit('openDenyPopup', addonInPanel, 'archive')"
 				>
 					{{ $root.lang().global.btn.archive }}
 				</v-btn>
 			</div>
-		</div>
+		</v-card>
 	</div>
 </template>
 
@@ -158,6 +164,11 @@ export default {
 			type: String,
 			required: false,
 			default: undefined,
+		},
+		colors: {
+			type: Object,
+			required: false,
+			default: () => ({}),
 		},
 	},
 	data() {
@@ -210,12 +221,6 @@ export default {
 		},
 		openHeader() {
 			this.previewOpen = true;
-		},
-		openDenyPopup(...args) {
-			this.$root.$emit("openDenyPopup", args);
-		},
-		reviewAddon(...args) {
-			this.$root.$emit("reviewAddon", args);
 		},
 	},
 	computed: {

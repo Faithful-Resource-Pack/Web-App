@@ -1,29 +1,19 @@
 <template>
-	<v-container id="review-expanders">
+	<v-container class="px-0">
 		<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
-
 		<v-expansion-panel
 			v-for="addon in addons"
 			:key="addon.id"
 			:ref="addon.id"
+			class="review-expansion-panel"
 			rounded
-			style="background-color: rgba(255, 255, 255, 0.05)"
-			class="addon-expansion-panel"
 			@click="getAddon(addon.id)"
 		>
-			<v-expansion-panel-header
-				expand-icon="mdi-menu-down"
-				class="pa-4"
-				style="height: auto !important"
-			>
-				<v-row no-gutters>
-					<v-col cols="12" class="addon-name">
-						{{ addon.name }}
-					</v-col>
-					<v-col cols="12" class="addon-tags" style="margin-top: 2.5px">
-						{{ addon.options.tags.join(" • ") }}
-					</v-col>
-				</v-row>
+			<v-expansion-panel-header expand-icon="mdi-menu-down">
+				<v-list-item class="flex-column align-start px-0" style="min-height: 0px">
+					<v-list-item-title class="align-self-start">{{ addon.name }}</v-list-item-title>
+					<v-list-item-subtitle>{{ addon.options.tags.join(" • ") }}</v-list-item-subtitle>
+				</v-list-item>
 			</v-expansion-panel-header>
 
 			<v-expansion-panel-content>
@@ -58,6 +48,7 @@
 						<v-card
 							class="ma-2"
 							rounded
+							dark
 							style="display: inline-block; position: absolute; right: 0; top: 0"
 						>
 							<v-icon small class="ma-1" @click.stop="openHeader">mdi-fullscreen</v-icon>
@@ -80,19 +71,13 @@
 					<!-- eslint-disable-next-line vue/no-v-html -->
 					<div v-html="$root.compileMarkdown(addonInPanel.description)" />
 
-					<div v-if="addonInPanel.approval.status === 'approved'" class="my-2">
+					<div v-if="status === 'approved'" class="my-2">
 						<v-list-item-title class="uppercase my-2">
 							{{ $root.lang().review.addon.labels.approved_by.replace("%s", approvalAuthor) }}
 						</v-list-item-title>
 					</div>
 
-					<div
-						v-if="
-							addonInPanel.approval.status === 'denied' ||
-							addonInPanel.approval.status === 'archived'
-						"
-						class="my-2"
-					>
+					<div v-if="status === 'denied' || status === 'archived'" class="my-2">
 						<v-list-item-title class="uppercase mt-2">
 							{{ $root.lang().review.addon.labels.denied_by.replace("%s", approvalAuthor) }}
 						</v-list-item-title>
@@ -104,7 +89,7 @@
 							v-show="status !== 'approved'"
 							text
 							color="green"
-							@click="reviewAddon(addon, 'approved')"
+							@click="$emit('reviewAddon', addon, 'approved')"
 						>
 							{{ $root.lang().global.btn.approve }}
 						</v-btn>
@@ -112,7 +97,7 @@
 							v-show="status !== 'denied'"
 							text
 							color="red"
-							@click="openDenyPopup(addonInPanel)"
+							@click="$emit('openDenyPopup', addonInPanel)"
 						>
 							{{ $root.lang().global.btn.deny }}
 						</v-btn>
@@ -120,7 +105,7 @@
 							v-show="status !== 'archived'"
 							text
 							color="gray"
-							@click="openDenyPopup(addonInPanel, 'archive')"
+							@click="$emit('openDenyPopup', addonInPanel, 'archive')"
 						>
 							{{ $root.lang().global.btn.archive }}
 						</v-btn>
@@ -142,7 +127,7 @@ import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 
 export default {
-	name: "expansion-panel",
+	name: "expansion-panels",
 	components: {
 		ImagePreviewer,
 		FullscreenPreview,
@@ -153,20 +138,8 @@ export default {
 			type: Array,
 			required: true,
 		},
-		reviewAddon: {
-			type: Function,
-			required: true,
-		},
-		openDenyPopup: {
-			type: Function,
-			required: true,
-		},
 		contributors: {
 			type: Array,
-			required: true,
-		},
-		update: {
-			type: Function,
 			required: true,
 		},
 		status: {
@@ -230,7 +203,7 @@ export default {
 		closeModal() {
 			this.modalOpen = false;
 			this.modalData = {};
-			this.update();
+			this.$emit("close");
 		},
 		getUsername(id) {
 			if (id === null || id === undefined) return "Herobrine";

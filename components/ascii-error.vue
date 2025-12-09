@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex flex-column align-center justify-center">
+	<div class="d-flex flex-column align-center justify-center" style="height: 100%">
 		<!-- eslint-disable vue/html-closing-bracket-newline -->
 		<span v-if="$vuetify.breakpoint.mdAndUp" class="my-5">
 			<!-- use https://www.asciiart.eu/text-to-ascii-art with the "Colossal" font -->

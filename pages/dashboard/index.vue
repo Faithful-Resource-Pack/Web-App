@@ -1,5 +1,5 @@
 <template>
-	<div id="dashboard-page" class="pa-2 py-sm-4 px-sm-6">
+	<div class="dashboard-page pa-2 py-sm-4 px-sm-6">
 		<div class="text-h4 py-4">
 			{{
 				$root.user.username
@@ -8,7 +8,7 @@
 			}}
 		</div>
 
-		<v-row id="dashboard-row">
+		<v-row class="dashboard-card-container">
 			<v-col cols="12" sm="3">
 				<profile-card v-if="$root.isLoggedIn" />
 				<faithful-card v-else />
@@ -59,8 +59,22 @@ export default {
 </script>
 
 <style lang="scss">
-#dashboard-row > * {
+.dashboard-card-container > * {
 	display: flex;
 	align-items: stretch;
+}
+
+.dashboard-stat {
+	background-color: rgba(0, 0, 0, 0.05);
+	width: 100%;
+}
+
+.theme--dark .dashboard-stat {
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-page #addon-card .v-card__text p,
+.dashboard-page #contribution-stats-card .v-card__text p {
+	width: 100%;
 }
 </style>

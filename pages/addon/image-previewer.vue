@@ -19,6 +19,7 @@
 					/>
 					<v-card
 						class="ma-2"
+						dark
 						rounded
 						style="display: inline-block; position: absolute; right: 0; top: 0"
 					>

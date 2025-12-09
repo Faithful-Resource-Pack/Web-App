@@ -8,8 +8,8 @@
 			:lg="12 / (categories.length || 1)"
 		>
 			<v-card
-				:class="['py-2 px-4 d-flex align-center rounded-lg overflow-hidden', classes[cat_i]]"
-				elevation="2"
+				class="py-2 px-4 d-flex align-center rounded-lg overflow-hidden review-category"
+				:class="classes[cat_i]"
 				@click="$emit('input', cat.value)"
 			>
 				<v-badge inline dot left :color="cat.color" style="margin-left: -4px">

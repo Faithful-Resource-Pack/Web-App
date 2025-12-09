@@ -1,5 +1,5 @@
 <template>
-	<v-container id="review-addons">
+	<v-container id="addonReviewPage">
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
 		<div class="text-h4 py-4">
@@ -8,51 +8,47 @@
 
 		<deny-popup v-model="showDenyPopup" :archive="archive" @close="closeDenyPopup" />
 
-		<review-categories
-			v-model="status"
-			:categories="categories"
-			:activeColor="pageColor"
-			:empty="empty"
-		/>
+		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
 
-		<div id="review-content" :class="['mt-1 mb-2', { desktop: $vuetify.breakpoint.mdAndUp }]">
-			<div v-if="selectedItems.length === 0" id="empty">
-				<ascii-error :subtitle="empty" />
+		<!-- wraps both mobile and desktop layouts -->
+		<div class="review-content-container my-2">
+			<!-- empty layout is shared across both mobile and desktop -->
+			<v-card v-if="selectedListItems.length === 0" class="review-empty rounded-lg">
+				<ascii-error :subtitle="$root.lang().review.labels[status]" />
+			</v-card>
+			<!-- desktop layout -->
+			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="review-content">
+				<review-list
+					v-model="selectedAddonId"
+					:items="selectedListItems"
+					:activeColor="pageColor"
+				/>
+				<review-preview
+					:addonId="selectedAddonId"
+					:colors="colors"
+					@reviewAddon="reviewAddon"
+					@openDenyPopup="openDenyPopup"
+				/>
 			</div>
 			<template v-else>
-				<template v-if="$vuetify.breakpoint.mdAndUp">
-					<div id="review-list">
-						<review-list
-							v-model="selectedAddonId"
-							:items="selectedItems"
-							:activeColor="pageColor"
-							:empty="empty"
-						/>
-					</div>
-					<div id="review-preview-container">
-						<review-preview :addonId="selectedAddonId" />
-					</div>
-				</template>
-				<template v-else>
-					<v-expansion-panels v-if="addons[status].length > 0" class="mt-1">
-						<expansion-panel
-							v-model="selectedAddonId"
-							:contributors="contributors"
-							:color="pageColor"
-							:addons="addons[status]"
-							:reviewAddon="reviewAddon"
-							:openDenyPopup="openDenyPopup"
-							:update="update"
-							:status="status"
-						/>
-					</v-expansion-panels>
-					<v-container v-else-if="loading[status] === true">
-						{{ $root.lang().global.loading }}
-					</v-container>
-					<v-container v-else>
-						{{ $root.lang().review.labels[status] }}
-					</v-container>
-				</template>
+				<v-expansion-panels v-if="addons[status].length > 0">
+					<expansion-panels
+						v-model="selectedAddonId"
+						:addons="addons[status]"
+						:color="pageColor"
+						:contributors="contributors"
+						:status="status"
+						@close="update"
+						@reviewAddon="reviewAddon"
+						@openDenyPopup="openDenyPopup"
+					/>
+				</v-expansion-panels>
+				<v-container v-else-if="loading[status] === true">
+					{{ $root.lang().global.loading }}
+				</v-container>
+				<v-container v-else>
+					{{ $root.lang().review.labels[status] }}
+				</v-container>
 			</template>
 		</div>
 	</v-container>
@@ -62,7 +58,7 @@
 import axios from "axios";
 
 import AsciiError from "@components/ascii-error.vue";
-import ExpansionPanel from "./expansion-panel.vue";
+import ExpansionPanels from "./expansion-panels.vue";
 import DenyPopup from "./deny-popup.vue";
 import ReviewCategories from "./review-categories.vue";
 import ReviewList from "./review-list.vue";
@@ -101,7 +97,7 @@ export default {
 	name: "review-addons-page",
 	components: {
 		AsciiError,
-		ExpansionPanel,
+		ExpansionPanels,
 		DenyPopup,
 		ReviewCategories,
 		ReviewList,
@@ -117,7 +113,7 @@ export default {
 				approved: "green",
 				pending: "yellow",
 				denied: "red",
-				archived: "grey",
+				archived: "white",
 			},
 			addons: {
 				pending: [],
@@ -164,17 +160,17 @@ export default {
 		closeDenyPopup(send = false, reason) {
 			if (send) this.reviewAddon(this.denyAddon, this.archive ? "archived" : "denied", reason);
 		},
-		openDenyPopup(addon, archive = undefined) {
+		openDenyPopup(addon, archive = false) {
 			this.archive = !!archive;
 			this.showDenyPopup = true;
 			this.denyAddon = addon;
 		},
-		getAddonsByStatus(status) {
+		// adds results to this.addons, doesn't actually return it
+		fetchAddonsByStatus(status) {
 			return axios
 				.get(`${this.$root.apiURL}/addons/${status}`, this.$root.apiOptions)
 				.then((res) => {
 					this.addons[status] = res.data;
-					this.addons[status].forEach((addon) => (addon.options.tags = addon.options.tags.sort()));
 					this.loading[status] = false;
 					this.$forceUpdate();
 				})
@@ -197,13 +193,13 @@ export default {
 		update() {
 			Promise.all([
 				this.getContributors(),
-				this.getAddonsByStatus("pending"),
-				this.getAddonsByStatus("denied"),
-				this.getAddonsByStatus("approved"),
-				this.getAddonsByStatus("archived"),
+				this.fetchAddonsByStatus("pending"),
+				this.fetchAddonsByStatus("denied"),
+				this.fetchAddonsByStatus("approved"),
+				this.fetchAddonsByStatus("archived"),
 			])
 				.then(() => {
-					this.selectedAddonId ||= (this.selectedItems[0] || {}).key;
+					this.selectedAddonId ||= (this.selectedListItems[0] || {}).key;
 				})
 				.catch((err) => {
 					this.$root.showSnackBar(err, "error");
@@ -228,7 +224,7 @@ export default {
 				count: this.stats[i] !== undefined ? String(this.stats[i]) : "",
 			}));
 		},
-		items() {
+		allListItems() {
 			return Object.entries(this.addons)
 				.map(([category, addons]) => ({
 					category,
@@ -243,11 +239,8 @@ export default {
 					return acc;
 				}, {});
 		},
-		selectedItems() {
-			return this.items[this.status];
-		},
-		empty() {
-			return this.$root.lang().review.labels[this.status];
+		selectedListItems() {
+			return this.allListItems[this.status];
 		},
 	},
 	watch: {
@@ -275,14 +268,47 @@ export default {
 	mounted() {
 		this.update();
 		this.pageStyles = generatePageStyles(this, this.pageColor);
-
-		this.$root.$on("openDenyPopup", (args) => {
-			this.openDenyPopup(...args);
-		});
-
-		this.$root.$on("reviewAddon", (args) => {
-			this.reviewAddon(...args);
-		});
 	},
 };
 </script>
+
+<style lang="scss">
+$list-width: 40%;
+$preview-width: 60%;
+
+/** NEW REVIEW LAYOUT */
+.review-content-container {
+	height: 70vh;
+}
+
+.review-content {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: stretch;
+	// ma-2
+	gap: 8px;
+}
+
+// make sure all children take up the same space
+.review-content-container > * {
+	width: 100%;
+	height: 100%;
+}
+
+.review-list {
+	width: $list-width;
+}
+.review-preview {
+	width: $preview-width;
+}
+
+// white text on yellow background is completely illegible
+.theme--dark .yellow.darken-3,
+.theme--dark .yellow.darken-3 .v-list-item__title {
+	color: rgba(0, 0, 0, 0.87);
+}
+.theme--dark .yellow.darken-3 .v-list-item__subtitle {
+	color: rgba(0, 0, 0, 0.6);
+}
+</style>

@@ -105,7 +105,7 @@
 					<v-list-item-subtitle>{{ (item.tags || []).join(", ") }}</v-list-item-subtitle>
 				</v-list-item-content>
 
-				<v-list-item-action class="merged">
+				<v-list-item-action class="merged-actions">
 					<v-btn icon @click="openTextureModal(item)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>

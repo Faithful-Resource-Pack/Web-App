@@ -106,16 +106,20 @@ export default {
 	data() {
 		return {
 			data: undefined,
-			statusColor: {
-				approved: "success--text",
-				pending: "warning--text",
-				denied: "error--text",
-				archived: "grey--text",
-			},
 			loading: true,
 		};
 	},
 	computed: {
+		statusColor() {
+			// bit janky but it does work
+			const archivedModifier = this.$root.isDark ? "lighten-2" : "darken-2";
+			return {
+				approved: "success--text",
+				pending: "warning--text",
+				denied: "error--text",
+				archived: `grey--text text--${archivedModifier}`,
+			};
+		},
 		adminResults() {
 			return this.data && Object.keys(this.data).length > 2;
 		},

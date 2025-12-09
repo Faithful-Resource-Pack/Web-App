@@ -125,7 +125,7 @@
 					</div>
 				</v-list-item-content>
 
-				<v-list-item-action class="merged">
+				<v-list-item-action class="merged-actions">
 					<v-btn icon @click="editContribution(item)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>

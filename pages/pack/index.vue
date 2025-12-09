@@ -75,7 +75,7 @@
 				</v-list-item-content>
 
 				<!-- action buttons -->
-				<v-list-item-action class="merged">
+				<v-list-item-action class="merged-actions">
 					<v-btn icon @click="openModal(item)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
