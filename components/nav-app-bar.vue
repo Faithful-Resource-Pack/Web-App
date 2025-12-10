@@ -29,8 +29,8 @@
 				<v-list-item
 					v-for="(icon, key) in themes"
 					:key="key"
-					:class="{ 'v-list-item--active': $root.theme === key, 'text-left': true }"
-					style="cursor: pointer"
+					class="cursor-pointer text-left"
+					:class="{ 'v-list-item--active': $root.theme === key }"
 					dense
 					@click="$emit('theme', key)"
 				>
@@ -85,8 +85,8 @@
 				<v-list-item
 					v-for="lang in languages"
 					:key="lang.bcp47"
-					:class="{ 'v-list-item--active': lang.id === $root.selectedLang, 'text-center': true }"
-					style="cursor: pointer"
+					class="cursor-pointer text-left"
+					:class="{ 'v-list-item--active': lang.id === $root.selectedLang }"
 					dense
 					@click="$emit('lang', lang.id)"
 				>

@@ -176,6 +176,7 @@ export default {
 			tag_filter: "Filter by tag",
 			search_texture: "Search texture name",
 			add_success: "Added texture(s) successfully",
+			version_exists: "Version name already exists",
 			delete_modal: {
 				deleting_use_will_delete_paths: "Deleting a use will also delete all its paths",
 				load_paths: "Load affected paths",
@@ -213,7 +214,7 @@ export default {
 				no_path_found: "No paths found for this use",
 				id_hint: "Changing the path ID can break everything!",
 				id: "Path ID",
-				name_hint: "The path should start from the root directory (ex: assets/…)",
+				name_hint: "The path should start from the root directory (e.g. assets/…)",
 				name_prefill: "Enter this first to generate most fields!",
 				name: "Path",
 				versions: "Versions",

@@ -2,7 +2,7 @@
 	<modal-form
 		v-model="modalOpened"
 		:title="$root.lang().database.textures.add_version.title"
-		:disabled="!form.newVersion"
+		:disabled="!isValid"
 		danger
 		@close="$emit('close')"
 		@submit="send"
@@ -29,6 +29,7 @@
 				:color="color"
 				:autofocus="!$vuetify.breakpoint.mobile"
 				:label="$root.lang().database.textures.add_version.new_version"
+				:rules="rules"
 			/>
 		</v-form>
 	</modal-form>
@@ -59,6 +60,12 @@ export default {
 		return {
 			modalOpened: false,
 			settings,
+			rules: [
+				(input) => {
+					if (Object.values(settings.versions).flat().includes(input))
+						return this.$root.lang().database.textures.version_exists;
+				},
+			],
 			form: {
 				edition: defaultEdition,
 				version: settings.versions[defaultEdition][0] || "",
@@ -82,6 +89,14 @@ export default {
 					console.error(err);
 					this.$root.showSnackBar(err, "error");
 				});
+		},
+	},
+	computed: {
+		isValid() {
+			if (!this.form.newVersion) return false;
+			// cannot rename to an existing version, completely bricks the db (lol)
+			if (Object.values(settings.versions).flat().includes(this.form.newVersion)) return false;
+			return true;
 		},
 	},
 	watch: {
