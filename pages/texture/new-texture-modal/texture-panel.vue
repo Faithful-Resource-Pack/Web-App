@@ -54,7 +54,7 @@
 					</v-col>
 					<v-col cols="2" sm="1">
 						<v-btn color="red lighten-1" icon @click="deleteUse(ui)">
-							<v-icon>mdi-trash-can</v-icon>
+							<v-icon>mdi-delete</v-icon>
 						</v-btn>
 					</v-col>
 				</v-row>
