@@ -1,15 +1,15 @@
 <template>
 	<div>
 		<v-list-item class="pl-2" @click.stop.prevent="$emit('select')">
-			<v-list-item-content :class="selected ? 'primary--text' : ''">
-				<v-list-item-title>{{ title }}</v-list-item-title>
+			<v-list-item-content>
+				<v-list-item-title :class="selected && 'primary--text'">
+					{{ title }}
+				</v-list-item-title>
 				<v-list-item-subtitle class="text-truncate">
-					<span v-if="contrib.authors && contrib.authors.length">
-						{{ subtitle }}
-					</span>
+					<span v-if="contrib.authors?.length">{{ subtitle }}</span>
 					<i v-else>{{ $root.lang().database.contributions.no_contributor_yet }}</i>
 				</v-list-item-subtitle>
-				<v-list-item-subtitle v-if="contrib.texture && contrib.texture.length">
+				<v-list-item-subtitle v-if="contrib.texture?.length">
 					<v-chip
 						v-for="range in contrib.texture"
 						:key="formatRange(range)"
