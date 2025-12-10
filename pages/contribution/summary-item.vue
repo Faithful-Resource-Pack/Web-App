@@ -60,7 +60,7 @@ export default {
 	},
 	computed: {
 		title() {
-			return `${this.packToName[this.contrib.pack]} • ${moment(new Date(this.contrib.date)).format("ll")}`;
+			return `${this.packToName[this.contrib.pack] || this.contrib.pack} • ${moment(new Date(this.contrib.date)).format("ll")}`;
 		},
 		subtitle() {
 			const groupedContributors = this.contributors.reduce((acc, cur) => {
