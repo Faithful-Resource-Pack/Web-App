@@ -254,6 +254,6 @@ export default {
 .contribution-form-list {
 	// height of the modal minus padding rounded to nearest 64 (height of one contribution)
 	max-height: 512px;
-	overflow-y: scroll;
+	overflow-y: auto;
 }
 </style>
