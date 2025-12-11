@@ -134,7 +134,6 @@
 				</v-btn>
 				<v-btn
 					text
-					:color="colors['archived']"
 					:disabled="status === 'archived'"
 					@click="$emit('openDenyPopup', addonInPanel, 'archive')"
 				>
