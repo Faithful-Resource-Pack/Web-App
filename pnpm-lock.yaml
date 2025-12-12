@@ -57,8 +57,8 @@ importers:
         specifier: 4.16.1
         version: 4.16.1(vue@2.7.16)
       vuetify:
-        specifier: ^2.7.2
-        version: 2.7.2(vue@2.7.16)
+        specifier: ^3.0.0
+        version: 3.0.0(vue@2.7.16)
     devDependencies:
       '@types/d3':
         specifier: ^7.4.3
@@ -1317,11 +1317,21 @@ packages:
     resolution: {integrity: sha512-4gCtFXaAA3zYZdTp5s4Hl2sozuySsgz4jy1EnpBHNfpMa9dK1ZCG7viqBPCwXtmgc8nHqUsAu3G4gtmXkkY3Sw==}
     deprecated: Vue 2 has reached EOL and is no longer actively maintained. See https://v2.vuejs.org/eol/ for more details.
 
-  vuetify@2.7.2:
-    resolution: {integrity: sha512-qr04ww7uzAPQbpk751x4fSdjsJ+zREzjQ/rBlcQGuWS6MIMFMXcXcwvp4+/tnGsULZxPMWfQ0kmZmg5Yc/XzgQ==}
-    deprecated: This version is deprecated
+  vuetify@3.0.0:
+    resolution: {integrity: sha512-0olLmKWb+oTaebGTM02+1fWaAgnGDuIt86K3jDv2LnALQ2atSzhDS1SSASJsJCZ2PgFBdDAeJVLcNWWavRYAlQ==}
+    engines: {node: ^12.20 || >=14.13}
     peerDependencies:
-      vue: ^2.6.4
+      vite-plugin-vuetify: ^1.0.0-alpha.12
+      vue: ^3.2.0
+      vue-i18n: ^9.0.0
+      webpack-plugin-vuetify: ^2.0.0-alpha.11
+    peerDependenciesMeta:
+      vite-plugin-vuetify:
+        optional: true
+      vue-i18n:
+        optional: true
+      webpack-plugin-vuetify:
+        optional: true
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -2445,7 +2455,7 @@ snapshots:
       '@vue/compiler-sfc': 2.7.16
       csstype: 3.2.3
 
-  vuetify@2.7.2(vue@2.7.16):
+  vuetify@3.0.0(vue@2.7.16):
     dependencies:
       vue: 2.7.16
 
