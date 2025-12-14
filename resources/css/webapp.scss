@@ -394,12 +394,6 @@ img.texture-img {
 	padding-right: 24px;
 }
 
-.texture-preview, .texture-preview > a {
-	height: 64px !important;
-	width: 64px !important;
-	min-width: 64px !important;
-}
-
 // stylized pill button paths
 .v-list-item__action.merged-actions {
 	margin-top: 4px;
@@ -432,16 +426,27 @@ img.texture-img {
 
 .database-list-avatar {
 	height: 64px !important;
-	min-width: 64px !important;
-	background: rgba(39, 39, 39, 0.8);
-	padding: 0 10px 0 10px;
-	border-radius: 4px !important;
-	width: -moz-fit-content !important;
-	width: fit-content !important;
+	width: 64px !important;
+	background-color: rgba(255, 255, 255, 0.05);
+	border-radius: 4px;
+	transition: all 0.2s ease;
+}
+
+a:hover .database-list-avatar {
+	background-color: rgba(255, 255, 255, 0.2);
 }
 
 .theme--light .database-list-avatar {
-	background: white;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.theme--light a:hover .database-list-avatar {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.database-list-sprite, .database-list-sprite > * {
+	height: 64px !important;
+	width: 64px !important;
 }
 
 .theme--dark .main-container,

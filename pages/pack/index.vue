@@ -56,15 +56,7 @@
 			track="id"
 		>
 			<template #default="{ item }">
-				<!-- for some reason .database-list-avatar isn't working here -->
-				<v-list-item-avatar
-					:style="{
-						height: '64px',
-						width: '64px',
-						'min-width': '64px',
-						'border-radius': '5px',
-					}"
-				>
+				<v-list-item-avatar class="database-list-avatar">
 					<v-img :src="item.logo" />
 				</v-list-item-avatar>
 				<v-list-item-content>

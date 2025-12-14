@@ -20,11 +20,11 @@
 		<div class="my-2 text-h5">{{ $root.lang().database.users.role_filter }}</div>
 		<div class="selector">
 			<v-btn
-				v-for="userRole in usersRoles"
+				v-for="userRole in userRoles"
 				:key="userRole"
 				:class="['my-1 mr-2', activeRole(userRole)]"
 				:to="userURL(userRole)"
-				:exact="userRole == 'all'"
+				:exact="userRole === 'all'"
 			>
 				{{ userRole }}
 			</v-btn>
@@ -42,8 +42,8 @@
 		/>
 
 		<!-- main buttons -->
-		<v-btn block :color="pageColor" :class="[textColorOnPage, 'my-6']" @click="openModal()">
-			{{ $root.lang().database.users.modal.add_user }}<v-icon right dark>mdi-plus</v-icon>
+		<v-btn block :color="pageColor" :class="[textColorOnPage, 'my-6']" @click="openModal">
+			{{ $root.lang().database.users.modal.add_user }}<v-icon right>mdi-plus</v-icon>
 		</v-btn>
 
 		<!-- results -->
@@ -56,17 +56,32 @@
 			:items="users"
 			:pageColor="pageColor"
 			:textColor="textColorOnPage"
+			:maxColumns="2"
 			track="id"
 		>
 			<template #default="{ item }">
-				<v-list-item-avatar tile class="database-list-avatar">
-					<v-img v-if="item.uuid" :src="`https://vzge.me/head/48/${item.uuid}`" />
-					<v-icon v-else large class="darken-1">mdi-account</v-icon>
+				<v-list-item-avatar v-if="item.uuid" class="database-list-sprite" tile>
+					<v-img :src="`https://vzge.me/face/96/${item.uuid}`" />
+				</v-list-item-avatar>
+				<v-list-item-avatar v-else class="database-list-avatar">
+					<v-icon large>mdi-account</v-icon>
 				</v-list-item-avatar>
 
 				<v-list-item-content>
-					<v-list-item-title>{{ item.username }}</v-list-item-title>
-					<v-list-item-subtitle>{{ (item.roles || []).join(", ") }}</v-list-item-subtitle>
+					<v-list-item-title class="mb-1">{{ item.username }}</v-list-item-title>
+					<v-list-item-subtitle>{{ item.id }}</v-list-item-subtitle>
+					<v-chip-group column>
+						<!-- remove padding on top and re-add on bottom for nicer wrapping -->
+						<v-chip
+							v-for="userRole in item.roles"
+							:key="userRole"
+							class="mt-0 mb-2"
+							x-small
+							:to="userURL(userRole)"
+						>
+							{{ userRole }}
+						</v-chip>
+					</v-chip-group>
 				</v-list-item-content>
 
 				<!-- action buttons -->
@@ -110,10 +125,8 @@ export default {
 			pageColor: "indigo accent-2",
 			textColorOnPage: "white--text",
 			pageStyles: "",
-			recompute: false,
 			roles: [],
 			search: "",
-			searchPromise: undefined,
 			users: [],
 			loading: false,
 			modalOpen: false,
@@ -214,17 +227,22 @@ export default {
 		},
 	},
 	computed: {
-		usersRoles() {
+		userRoles() {
 			return ["all", ...this.roles];
 		},
 		role() {
-			if (this.$route.params.role && this.usersRoles.includes(this.$route.params.role))
+			if (this.$route.params.role && this.userRoles.includes(this.$route.params.role))
 				return this.$route.params.role;
 			return undefined;
 		},
 		name() {
 			if (this.role !== undefined) return this.$route.params.name;
 			return this.$route.params.role;
+		},
+	},
+	watch: {
+		"$route.params.role"() {
+			this.startSearch();
 		},
 	},
 	mounted() {
