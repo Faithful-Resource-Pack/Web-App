@@ -22,17 +22,14 @@
 				v-bind="data.attrs"
 				@click:close="remove(data.item.id)"
 			>
-				<v-avatar :class="{ accent: data.item.uuid == undefined, 'text--white': true }" left>
-					<template v-if="data.item.uuid != undefined">
-						<v-img
-							eager
-							:src="`https://vzge.me/face/24/${data.item.uuid}`"
-							:alt="(data.item.username || '' + data.item.id).slice(0, 1)"
-						/>
-					</template>
-					<template v-else>
-						{{ (data.item.username || "" + data.item.id).slice(0, 1) }}
-					</template>
+				<v-avatar class="white--text" :class="{ primary: !data.item.uuid }" left>
+					<v-img
+						v-if="data.item.uuid"
+						eager
+						:src="`https://vzge.me/face/24/${data.item.uuid}`"
+						:alt="getAvatarLetter(data.item)"
+					/>
+					<template v-else>{{ getAvatarLetter(data.item) }}</template>
 				</v-avatar>
 				{{ data.item.username || data.item.id }}
 			</v-chip>
@@ -42,25 +39,21 @@
 		</template>
 		<!-- LIST ITEM PART -->
 		<template #item="data">
-			<template
-				v-if="data.item && data.item.constructor && data.item.constructor.name === 'String'"
-			>
-				<v-list-item-content>{{ data.item }}</v-list-item-content>
-			</template>
+			<v-list-item-content v-if="typeof data.item === 'string'">
+				{{ data.item }}
+			</v-list-item-content>
 			<template v-else>
 				<v-list-item-content>
-					<v-list-item-title>
-						{{ data.item.username || $root.lang().database.anonymous + ` (${data.item.id})` }}
-					</v-list-item-title>
+					<v-list-item-title>{{ formatTitle(data.item) }}</v-list-item-title>
 					<v-list-item-subtitle v-if="data.item.contributions">
-						{{ `${data.item.contributions} contribution${data.item.contributions > 1 ? "s" : ""}` }}
+						{{ formatSubtitle(data.item) }}
 					</v-list-item-subtitle>
 				</v-list-item-content>
 				<v-list-item-avatar :style="{ background: data.item.uuid ? 'transparent' : '#4e4e4e' }">
 					<template v-if="data.item.uuid">
 						<v-img eager :src="`https://vzge.me/head/48/${data.item.uuid}`" />
 					</template>
-					<div v-else>{{ (data.item.username || "" + data.item.id).slice(0, 1) }}</div>
+					<span v-else class="white--text">{{ getAvatarLetter(data.item) }}</span>
 				</v-list-item-avatar>
 			</template>
 		</template>
@@ -99,11 +92,6 @@ export default {
 			default: () => 0,
 		},
 	},
-	computed: {
-		userList() {
-			return [...this.users, ...Object.values(this.loadedUsers)];
-		},
-	},
 	data() {
 		return {
 			content: this.value,
@@ -114,44 +102,7 @@ export default {
 			loadedUsers: {},
 		};
 	},
-	watch: {
-		value: {
-			handler(n, o) {
-				if (JSON.stringify(n) !== JSON.stringify(o)) this.content = n;
-			},
-			immediate: true,
-			deep: true,
-		},
-		content: {
-			handler(n) {
-				this.$emit("input", n);
-			},
-			deep: true,
-		},
-		search(val) {
-			if (!val) return;
-
-			if (this.searchTimeout) {
-				clearTimeout(this.searchTimeout);
-			}
-
-			this.searchTimeout = setTimeout(() => {
-				this.searchTimeout = undefined;
-				this.startSearch(val);
-			}, SEARCH_DELAY);
-		},
-		loadedUsers: {
-			handler(n) {
-				this.$emit("newUser", this.userList);
-			},
-			deep: true,
-		},
-	},
 	methods: {
-		remove(id) {
-			const index = this.content.indexOf(id);
-			if (index >= 0) this.content.splice(index, 1);
-		},
 		startSearch(val) {
 			val = val.trim();
 
@@ -198,6 +149,63 @@ export default {
 				.finally(() => {
 					this.isSearching = false;
 				});
+		},
+		remove(id) {
+			const index = this.content.indexOf(id);
+			if (index >= 0) this.content.splice(index, 1);
+		},
+		formatTitle(item) {
+			return item.username || `${this.$root.lang().database.anonymous} (${item.id})`;
+		},
+		formatSubtitle(item) {
+			const baseString = this.$root.lang().database.contributions;
+			const rawString =
+				item.contributions === 1
+					? baseString.contribution_count_singular
+					: baseString.contribution_count_plural;
+			return rawString.replace("%d", item.contributions);
+		},
+		getAvatarLetter(item) {
+			const text = item.username || String(item.id);
+			return text[0];
+		},
+	},
+	computed: {
+		userList() {
+			return [...this.users, ...Object.values(this.loadedUsers)];
+		},
+	},
+	watch: {
+		value: {
+			handler(n, o) {
+				if (JSON.stringify(n) !== JSON.stringify(o)) this.content = n;
+			},
+			immediate: true,
+			deep: true,
+		},
+		content: {
+			handler(n) {
+				this.$emit("input", n);
+			},
+			deep: true,
+		},
+		search(val) {
+			if (!val) return;
+
+			if (this.searchTimeout) {
+				clearTimeout(this.searchTimeout);
+			}
+
+			this.searchTimeout = setTimeout(() => {
+				this.searchTimeout = undefined;
+				this.startSearch(val);
+			}, SEARCH_DELAY);
+		},
+		loadedUsers: {
+			handler(n) {
+				this.$emit("newUser", this.userList);
+			},
+			deep: true,
 		},
 	},
 };

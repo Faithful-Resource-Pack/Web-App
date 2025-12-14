@@ -136,6 +136,8 @@ export default {
 			user_filter: "Users",
 			texture_filter: "Textures",
 			select_user: "Select user(s)",
+			contribution_count_singular: "%d contribution",
+			contribution_count_plural: "%d contributions",
 			no_contributor_yet: "No contributor yet",
 			contribution_result: "Contribution results",
 			search_contributions: "Search contributions",
