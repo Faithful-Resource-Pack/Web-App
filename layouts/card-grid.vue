@@ -33,12 +33,12 @@
 					</template>
 				</v-img>
 				<!-- use scoped slots for more customizable layouts -->
-				<slot name="title" v-bind="item" />
+				<slot v-bind="item" name="title" />
 				<v-card-text style="flex-grow: 1">
-					<slot name="text" v-bind="item" />
+					<slot v-bind="item" name="text" />
 				</v-card-text>
 				<v-card-actions style="justify-content: flex-end">
-					<slot name="btns" v-bind="item" />
+					<slot v-bind="item" name="btns" />
 				</v-card-actions>
 			</v-card>
 		</v-col>

@@ -7,7 +7,7 @@
 	>
 		<v-card-text v-if="user" class="d-flex flex-column justify-space-between flex-grow-1">
 			<div class="text-center">
-				<v-list-item-avatar
+				<v-list-item avatar
 					tile
 					class="rounded-lg mb-5 mt-3"
 					:class="user.avatar ? 'transparent' : 'primary'"
@@ -17,7 +17,7 @@
 					<div v-else class="text-h5 text-center text--primary font-weight-medium">
 						{{ user.username[0] }}
 					</div>
-				</v-list-item-avatar>
+				</v-list-item avatar>
 				<h5 class="text-h5 text--primary mb-2">
 					{{ user.username }}
 				</h5>

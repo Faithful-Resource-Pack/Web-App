@@ -1,6 +1,7 @@
 <template>
 	<!-- this specific styling/behavior is used a lot -->
 	<v-text-field
+		v-bind="$attrs"
 		v-model="search"
 		:autofocus="!$vuetify.breakpoint.mobile"
 		filled
@@ -8,7 +9,6 @@
 		clearable
 		clear-icon="mdi-close"
 		append-icon="mdi-send"
-		v-bind="$attrs"
 		@keyup.enter="$emit('search')"
 		@click:append="$emit('search')"
 		@click:clear="$emit('clear')"

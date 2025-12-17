@@ -1,6 +1,7 @@
 <template>
 	<v-form ref="form" lazy-validation>
 		<v-combobox
+			v-bind="$attrs"
 			v-model="ranges"
 			:items="undefined"
 			:rules="getRules()"
@@ -12,7 +13,6 @@
 			append-icon=""
 			small-chips
 			deletable-chips
-			v-bind="$attrs"
 			@keydown="onInput"
 		/>
 	</v-form>

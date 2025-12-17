@@ -7,9 +7,9 @@
 		<div :class="['my-2 text-h5', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
 			<v-list :rounded="$vuetify.breakpoint.mdAndUp" class="main-container">
 				<v-list-item two-line>
-					<v-list-item-avatar>
+					<v-list-item avatar>
 						<v-img :src="$root.user.avatar" />
-					</v-list-item-avatar>
+					</v-list-item avatar>
 
 					<v-list-item-content>
 						<v-list-item-title>

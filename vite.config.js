@@ -1,12 +1,27 @@
-import vue from "@vitejs/plugin-vue2";
 import { fileURLToPath } from "url";
 import { defineConfig, loadEnv } from "vite";
+import vue from '@vitejs/plugin-vue'
+import vuetify, {transformAssetUrls} from "vite-plugin-vuetify";
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), "");
 	/** @type {import('vite').UserConfig} */
 	return {
-		plugins: [vue()],
+		plugins: [
+			vue({
+			template: {
+				compilerOptions: {
+				compatConfig: {
+					MODE: 2
+				}
+				},
+                transformAssetUrls,
+			}
+			}),
+      		vuetify({ autoImport: true }),
+    		vueDevTools(),
+		],
 		// custom port instead of 5173 always
 		preview: {
 			port: env.PORT,
@@ -42,7 +57,7 @@ export default defineConfig(({ mode }) => {
 		resolve: {
 			alias: {
 				// stupid fix for vite/vue interop
-				vue: "vue/dist/vue.esm.js",
+            	vue: "vue/dist/vue.esm-bundler.js",
 				// https://github.com/julienr114/vue-calendar-heatmap/issues/18
 				"vue-calendar-heatmap": "vue-calendar-heatmap/dist/vue-calendar-heatmap.browser.js",
 				"@helpers": fileURLToPath(new URL("./helpers", import.meta.url)),
@@ -50,5 +65,8 @@ export default defineConfig(({ mode }) => {
 				"@layouts": fileURLToPath(new URL("./layouts", import.meta.url)),
 			},
 		},
+		define: {
+			__VUE_PROD_HYDRATION_MISMATCH_DETAILS__: true
+		}
 	};
 });

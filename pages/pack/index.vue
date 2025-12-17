@@ -56,9 +56,9 @@
 			track="id"
 		>
 			<template #default="{ item }">
-				<v-list-item-avatar class="database-list-avatar">
+				<v-list-item avatar class="database-list-avatar">
 					<v-img :src="item.logo" />
-				</v-list-item-avatar>
+				</v-list-item avatar>
 				<v-list-item-content>
 					<v-list-item-title>{{ item.name }}</v-list-item-title>
 					<v-list-item-subtitle>

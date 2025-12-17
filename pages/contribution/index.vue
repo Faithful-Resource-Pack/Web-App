@@ -97,11 +97,11 @@
 
 		<smart-grid v-if="searchResults.length" :items="searchResults" track="id">
 			<template #default="{ item }">
-				<v-list-item-avatar tile class="database-list-sprite">
+				<v-list-item avatar tile class="database-list-sprite">
 					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
 						<v-img class="texture-img" :src="item.url" :lazy-src="logos[item.pack]" />
 					</a>
-				</v-list-item-avatar>
+				</v-list-item avatar>
 
 				<v-list-item-content>
 					<v-list-item-title>

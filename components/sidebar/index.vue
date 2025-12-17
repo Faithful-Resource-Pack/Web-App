@@ -1,5 +1,5 @@
 <template>
-	<v-navigation-drawer v-model="drawerOpen" app width="300" :dark="forceDark">
+	<v-layout><v-navigation-drawer v-model="drawerOpen" app width="300" :dark="forceDark">
 		<!--
 			can't have multiple open tab groups with v-list so we manually add the css classes
 			this is absolutely horrid but there's no other way to get the same behavior nicely
@@ -39,9 +39,9 @@
 				</div>
 			</v-list-group>
 			<!-- Fix problem on firefox on mobile where bar disappears and fixed elements are hidden -->
-			<div v-if="$vuetify.breakpoint.mdAndDown" class="py-5" />
+			<div v-if="$vuetify.display.mdAndDown" class="py-5" />
 		</div>
-	</v-navigation-drawer>
+	</v-navigation-drawer></v-layout>
 </template>
 
 <script>

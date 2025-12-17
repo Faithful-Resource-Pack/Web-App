@@ -176,7 +176,7 @@ export default {
 			if (this.loading) return [];
 
 			// don't display duplicates on mobile
-			if (this.$vuetify.breakpoint.mdAndDown)
+			if (this.$vuetify.display.mdAndDown)
 				return [
 					PACK_SLIDER_ORDER.map((pack) => ({ name: pack, image: this.textureObj.urls[pack] })),
 				];

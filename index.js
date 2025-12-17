@@ -2,9 +2,12 @@
 import "@helpers/utilityMethods.js";
 
 // frameworks
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Vuetify from "vuetify";
+import { createApp, nextTick } from 'vue'
+import { createWebHistory, createRouter } from "vue-router";
+import 'vuetify/styles';
+import { createVuetify } from "vuetify";
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
 // general dependencies
 import axios from "axios";
@@ -24,13 +27,6 @@ import NavAppBar from "@components/nav-app-bar.vue";
 import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
 import MissingPage from "./pages/404/index.vue";
-
-Vue.config.devtools = import.meta.env.MODE === "development";
-Vue.use(Vuetify);
-Vue.use(VueRouter);
-
-const pinia = createPinia();
-Vue.use(pinia);
 
 // dynamic import because vite, used for fallback translation
 const { default: en_US } = await import("./resources/strings/en_US.js");
@@ -86,12 +82,13 @@ const MENU_KEY = "menu_key";
  * ROUTING
  */
 
-const router = new VueRouter({
-	mode: "history",
+const router = createRouter({
+	history: createWebHistory(),
+	routes: []
 });
 
 router.beforeEach((to, _from, next) => {
-	Vue.nextTick(() => {
+	nextTick(() => {
 		if (to.name) document.title = `${to.name} - Faithful Web Application`;
 		else document.title = "Faithful Web Application";
 	});
@@ -130,7 +127,7 @@ syncRoutes(
 );
 
 // add missing route last (prevents some weird fallback shenanigans)
-router.addRoute({ path: "*", name: "404", component: MissingPage });
+router.addRoute({ path: "/.*", name: "404", component: MissingPage });
 
 async function loadSettings() {
 	// set as global
@@ -151,8 +148,7 @@ await loadSettings();
  * VUE INITIALIZATION
  */
 
-const app = new Vue({
-	el: "#app",
+const app = createApp({
 	components: {
 		NavAppBar,
 		NavSidebar,
@@ -295,7 +291,7 @@ const app = new Vue({
 		},
 		apiURL() {
 			if (
-				Vue.config.devtools &&
+				window.__VUE_DEVTOOLS_GLOBAL_HOOK__ &&
 				window.apiURL &&
 				window.apiURL.includes("localhost") &&
 				location.host !== "localhost"
@@ -482,7 +478,7 @@ const app = new Vue({
 	created() {
 		moment.locale(this.langToBCP47(_get_lang()));
 
-		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
+		if (this.$vuetify.display.mdAndDown) this.drawerOpen = false;
 
 		this.discordAuth.apiURL = window.apiURL;
 		this.discordAuth
@@ -532,7 +528,9 @@ const app = new Vue({
 	},
 	// plugins
 	router,
-	vuetify: new Vuetify({
+});
+
+const vuetify = createVuetify({
 		theme: {
 			dark: true,
 			themes: {
@@ -548,7 +546,15 @@ const app = new Vue({
 				},
 			},
 		},
-	}),
-});
+		components,
+		directives,
+	});
+app.use(vuetify);
+app.use(router);
 
-if (Vue.config.devtools) window.app = app;
+const pinia = createPinia();
+app.use(pinia);
+
+if (window.__VUE_DEVTOOLS_GLOBAL_HOOK__) window.app = app;
+
+app.mount('#app')

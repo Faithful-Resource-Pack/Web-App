@@ -1,11 +1,11 @@
 <template>
 	<v-card
+		v-bind="$attrs"
 		:disabled="disabled"
 		:color="flat ? '' : 'rgba(0,0,0,0.165)'"
 		:flat="flat"
 		:class="['qd-datepicker', flat ? '' : 'pt-2 px-4 pb-4']"
 		:style="style"
-		v-bind="$attrs"
 	>
 		<div class="font-weight-medium text--secondary mt-3">{{ labels.year }}</div>
 		<v-text-field

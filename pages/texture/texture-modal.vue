@@ -49,7 +49,7 @@
 			<h2 class="title">{{ $root.lang().database.textures.uses.title }}</h2>
 			<v-list v-if="Object.keys(formData.uses).length">
 				<v-list-item v-for="(use, index) in formData.uses" :key="index" class="px-0">
-					<v-list-item-avatar
+					<v-list-item avatar
 						tile
 						:class="[color, 'white--text']"
 						:style="{
@@ -59,7 +59,7 @@
 						}"
 					>
 						#{{ index }}
-					</v-list-item-avatar>
+					</v-list-item avatar>
 
 					<v-list-item-content>
 						<v-list-item-title>

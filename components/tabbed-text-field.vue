@@ -11,7 +11,7 @@
 		<div class="ma-2">
 			<v-tabs-items v-model="tab">
 				<v-tab-item>
-					<v-textarea v-model="text" auto-grow v-bind="textareaProps" />
+					<v-textarea v-bind="textareaProps" v-model="text" auto-grow />
 				</v-tab-item>
 				<v-tab-item>
 					<!-- 120px textarea + 18px word count text -->

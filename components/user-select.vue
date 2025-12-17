@@ -1,25 +1,25 @@
 <template>
 	<v-autocomplete
+		v-bind="$attrs"
 		v-model="content"
 		:items="userList"
 		:loading="users.length == 0 || isSearching"
-		:search-input.sync="search"
+		@update:search-input="search"
 		item-text="username"
 		item-value="id"
 		multiple
 		:dense="dense"
 		chips
-		v-bind="$attrs"
 	>
 		<!-- SELECTED THINGY -->
 		<template #selection="data">
 			<v-chip
+				v-bind="data.attrs"
 				v-if="!limit || data.index < limit"
 				:key="data.item.id"
 				:input-value="data.selected"
 				:disabled="data.disabled"
 				close
-				v-bind="data.attrs"
 				@click:close="remove(data.item.id)"
 			>
 				<v-avatar class="white--text" :class="{ primary: !data.item.uuid }" left>
@@ -49,12 +49,12 @@
 						{{ formatSubtitle(data.item) }}
 					</v-list-item-subtitle>
 				</v-list-item-content>
-				<v-list-item-avatar :style="{ background: data.item.uuid ? 'transparent' : '#4e4e4e' }">
+				<v-list-item avatar :style="{ background: data.item.uuid ? 'transparent' : '#4e4e4e' }">
 					<template v-if="data.item.uuid">
 						<v-img eager :src="`https://vzge.me/head/48/${data.item.uuid}`" />
 					</template>
 					<span v-else class="white--text">{{ getAvatarLetter(data.item) }}</span>
-				</v-list-item-avatar>
+				</v-list-item avatar>
 			</template>
 		</template>
 		<template #no-data>

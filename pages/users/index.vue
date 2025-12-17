@@ -60,12 +60,12 @@
 			track="id"
 		>
 			<template #default="{ item }">
-				<v-list-item-avatar v-if="item.uuid" class="database-list-sprite" tile>
+				<v-list-item avatar v-if="item.uuid" class="database-list-sprite" tile>
 					<v-img :src="`https://vzge.me/face/96/${item.uuid}`" />
-				</v-list-item-avatar>
-				<v-list-item-avatar v-else class="database-list-avatar">
+				</v-list-item avatar>
+				<v-list-item avatar v-else class="database-list-avatar">
 					<v-icon large>mdi-account</v-icon>
-				</v-list-item-avatar>
+				</v-list-item avatar>
 
 				<v-list-item-content>
 					<v-list-item-title class="mb-1">{{ item.username }}</v-list-item-title>
