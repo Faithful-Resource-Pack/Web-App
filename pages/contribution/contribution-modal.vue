@@ -29,8 +29,12 @@
 				<div class="font-weight-medium text--secondary mb-2">
 					{{ $root.lang().database.summary }}: [{{ contribs.length }}]
 				</div>
-				<v-list two-line class="pt-0 mb-4">
-					<div :class="$vuetify.breakpoint.mdAndUp ? 'contribution-form-list' : ''">
+				<v-list
+					two-line
+					class="mb-5"
+					:class="$vuetify.breakpoint.mdAndUp ? 'contribution-form-list' : ''"
+				>
+					<v-list-item-group v-model="selectedContrib" mandatory color="primary">
 						<summary-item
 							v-for="(contrib, i) in contribs"
 							:key="contrib.key"
@@ -38,10 +42,9 @@
 							:selected="selectedContrib === i"
 							:packToName="packToName"
 							:contributors="allContributors"
-							@select="changeOpenedForm(i)"
 							@delete="deleteContrib(i)"
 						/>
-					</div>
+					</v-list-item-group>
 				</v-list>
 				<v-btn color="secondary" elevation="0" block @click.stop.prevent="cloneContribution">
 					{{ $root.lang().database.contributions.modal.clone_contribution }}

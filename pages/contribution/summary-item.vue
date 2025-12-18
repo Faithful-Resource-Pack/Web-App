@@ -1,31 +1,26 @@
 <template>
-	<div>
-		<v-list-item class="pl-2" @click.stop.prevent="$emit('select')">
-			<v-list-item-content>
-				<v-list-item-title :class="selected && 'primary--text'">
-					{{ title }}
-				</v-list-item-title>
-				<v-list-item-subtitle class="text-truncate">
-					<span v-if="contrib.authors?.length">{{ subtitle }}</span>
-					<i v-else>{{ $root.lang().database.contributions.no_contributor_yet }}</i>
-				</v-list-item-subtitle>
-				<v-list-item-subtitle v-if="contrib.texture?.length">
-					<v-chip
-						v-for="range in contrib.texture"
-						:key="formatRange(range)"
-						class="mr-1 px-2"
-						x-small
-					>
-						{{ formatRange(range) }}
-					</v-chip>
-				</v-list-item-subtitle>
-			</v-list-item-content>
-			<v-list-item-action>
-				<v-icon color="red lighten-1" @click="$emit('delete')">mdi-delete</v-icon>
-			</v-list-item-action>
-		</v-list-item>
-		<v-divider />
-	</div>
+	<v-list-item class="contribution-summary-item mb-1">
+		<v-list-item-content>
+			<v-list-item-title>{{ title }}</v-list-item-title>
+			<v-list-item-subtitle class="text-truncate">
+				<span v-if="contrib.authors?.length">{{ subtitle }}</span>
+				<i v-else>{{ $root.lang().database.contributions.no_contributor_yet }}</i>
+			</v-list-item-subtitle>
+			<v-list-item-subtitle v-if="contrib.texture?.length">
+				<v-chip
+					v-for="range in contrib.texture"
+					:key="formatRange(range)"
+					class="mr-1 px-2"
+					x-small
+				>
+					{{ formatRange(range) }}
+				</v-chip>
+			</v-list-item-subtitle>
+		</v-list-item-content>
+		<v-list-item-action>
+			<v-icon :color="!selected && 'red lighten-1'" @click="$emit('delete')">mdi-delete</v-icon>
+		</v-list-item-action>
+	</v-list-item>
 </template>
 
 <script>
@@ -60,7 +55,9 @@ export default {
 	},
 	computed: {
 		title() {
-			return `${this.packToName[this.contrib.pack] || this.contrib.pack} • ${moment(new Date(this.contrib.date)).format("ll")}`;
+			const pack = this.packToName[this.contrib.pack] || this.contrib.pack;
+			const formattedDate = moment(new Date(this.contrib.date)).format("ll");
+			return `${pack} • ${formattedDate}`;
 		},
 		subtitle() {
 			const groupedContributors = this.contributors.reduce((acc, cur) => {
@@ -85,3 +82,10 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+// for some reason this style type only applies to navigation-level selectable list elements
+.contribution-summary-item::before {
+	border-radius: 4px;
+}
+</style>

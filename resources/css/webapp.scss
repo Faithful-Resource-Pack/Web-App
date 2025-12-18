@@ -347,8 +347,8 @@ img.texture-img {
 }
 
 // needed for dark sidebar on light mode
-.theme--dark .v-list .v-list-item--active,
-.theme--dark .v-list .v-list-item--active .v-icon {
+.theme--dark .v-navigation-drawer .v-list-item--active,
+.theme--dark .v-navigation-drawer .v-list-item--active .v-icon {
 	color: white;
 }
 
