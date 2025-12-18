@@ -12,6 +12,7 @@
 		<json-modal v-model="jsonModalOpened" :color="color" initialValue="[]" @data="parseJSON" />
 		<div class="px-10 py-5">
 			<v-row>
+				<!-- texture form part -->
 				<v-col cols="12" :md="$vuetify.breakpoint.lgAndUp ? 9 : 8">
 					<v-tabs v-model="selectedTab" :color="color" :show-arrows="false">
 						<v-tab v-for="(texture, i) in textures" :key="texture.key" append>
@@ -39,6 +40,7 @@
 				<v-col v-else cols="12">
 					<v-divider class="mx-5 my-0" />
 				</v-col>
+				<!-- summary panel part -->
 				<v-col>
 					<v-list>
 						<div class="font-weight-medium text--secondary my-2">
@@ -52,27 +54,24 @@
 							@delete="deleteTexture(i)"
 						/>
 					</v-list>
-					<v-divider class="ma-5" />
-					<v-row no-gutters>
-						<v-col cols="8" md="6">
-							<v-checkbox
-								v-model="clearOnSave"
-								:color="color"
-								hide-details
-								:label="$root.lang().database.textures.modal.clear_on_save"
-							/>
-						</v-col>
-						<v-col cols="2" md="3">
+					<v-divider class="mt-2 mb-5" />
+					<div class="d-flex align-center justify-space-between">
+						<v-checkbox
+							v-model="clearOnSave"
+							:color="color"
+							hide-details
+							:label="$root.lang().database.textures.modal.clear_on_save"
+						/>
+						<v-card-actions>
+							<v-spacer />
 							<v-btn class="px-1" color="red darken-1" text @click="resetModal">
 								{{ $root.lang().global.btn.discard }}
 							</v-btn>
-						</v-col>
-						<v-col cols="2" md="3">
 							<v-btn class="px-1" color="darken-1" text @click="send">
 								{{ $root.lang().global.btn.save }}
 							</v-btn>
-						</v-col>
-					</v-row>
+						</v-card-actions>
+					</div>
 				</v-col>
 			</v-row>
 		</div>

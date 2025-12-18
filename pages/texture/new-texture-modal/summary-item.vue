@@ -1,5 +1,5 @@
 <template>
-	<v-list-item class="pl-0">
+	<v-list-item class="pl-0 mb-1">
 		<v-list-item-content>
 			<v-list-item-title :class="textColor">
 				<template v-if="texture.name">{{ texture.name }}</template>
