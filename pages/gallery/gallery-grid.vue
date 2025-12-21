@@ -61,7 +61,8 @@ import GalleryTooltip from "./gallery-tooltip.vue";
 import GalleryImage from "./gallery-image.vue";
 import { TippyComponent } from "vue-tippy";
 
-const MIN_ROW_DISPLAYED = 5;
+// how many rows to add on scroll
+const ROW_INCREMENT = 5;
 
 export default {
 	name: "gallery-grid",
@@ -161,7 +162,7 @@ export default {
 		},
 		// how much to increment shown results by when scrolling
 		pageLength() {
-			return this.shownColumns * MIN_ROW_DISPLAYED;
+			return this.shownColumns * ROW_INCREMENT;
 		},
 		gridStyles() {
 			// bigger images -> smaller gaps
@@ -212,7 +213,8 @@ export default {
 			}, {});
 		});
 
-		this.displayedResults = this.pageLength;
+		// start off with more results
+		this.displayedResults = this.pageLength * 3;
 	},
 	mounted() {
 		// initialize callback references (they need to be the same for unmounting)

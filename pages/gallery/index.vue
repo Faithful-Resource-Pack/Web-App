@@ -15,8 +15,7 @@
 		<gallery-options v-model="current" :packToName="packToName" @updateRoute="updateRoute" />
 
 		<v-row class="my-2">
-			<!-- no point showing column slider on mobile -->
-			<v-col v-if="maxColumns > 1" cols="12" sm="6">
+			<v-col cols="12" sm="6">
 				<v-slider
 					v-model="columns"
 					:label="$root.lang().gallery.max_items_per_row"
@@ -319,11 +318,11 @@ export default {
 
 			// mostly arbitrary values, feel free to change these
 			// based on https://v2.vuetifyjs.com/en/features/breakpoints/
-			if (xs) return 1; // one for mobile
-			if (sm) return 4;
-			if (md) return 8;
-			if (lg) return 12;
-			return 16;
+			if (xs) return 4; // mobile
+			if (sm) return 8;
+			if (md) return 12;
+			if (lg) return 16;
+			return 20;
 		},
 		shownColumns() {
 			return Math.min(this.columns, this.maxColumns);
