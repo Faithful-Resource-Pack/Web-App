@@ -3,22 +3,24 @@
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-select
+					:label="$root.lang().gallery.category.pack"
+					:hide-details="$vuetify.breakpoint.mobile"
 					:items="packList"
 					item-text="label"
 					item-value="value"
 					:value="current.pack"
-					:label="$root.lang().gallery.category.pack"
 					@change="updateRoute($event, 'pack')"
 				/>
 			</v-col>
 
 			<v-col cols="12" sm="6">
 				<v-select
+					:label="$root.lang().gallery.category.edition"
+					:hide-details="$vuetify.breakpoint.mobile"
 					:items="editionList"
 					item-text="label"
 					item-value="value"
 					:value="current.edition"
-					:label="$root.lang().gallery.category.edition"
 					@change="updateRoute($event, 'edition')"
 				/>
 			</v-col>
@@ -27,22 +29,24 @@
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-select
+					:label="$root.lang().gallery.category.mc_version"
+					:hide-details="$vuetify.breakpoint.mobile"
 					:items="versionList"
-					:value="current.version"
 					item-text="label"
 					item-value="value"
-					:label="$root.lang().gallery.category.mc_version"
+					:value="current.version"
 					@change="updateRoute($event, 'version')"
 				/>
 			</v-col>
 
 			<v-col cols="12" sm="6">
 				<v-select
+					:label="$root.lang().gallery.category.tag"
+					:hide-details="$vuetify.breakpoint.mobile"
 					:items="tagList"
 					item-text="label"
 					item-value="value"
 					:value="current.tag"
-					:label="$root.lang().gallery.category.tag"
 					@change="updateRoute($event, 'tag')"
 				/>
 			</v-col>
