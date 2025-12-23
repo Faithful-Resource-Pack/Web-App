@@ -1,11 +1,14 @@
 <template>
 	<dashboard-card :title="$root.lang().dashboard.titles.textures" to="/gallery" clickable>
 		<v-card-text class="pb-3">
-			<v-row v-if="totalTextures" class="py-0 my-0" dense>
+			<v-row v-if="data.total_textures" class="py-0 my-0" dense>
 				<v-col cols="6" sm="3">
-					<dashboard-stat :label="$root.lang().dashboard.textures.total" :value="totalTextures" />
+					<dashboard-stat
+						:label="$root.lang().dashboard.textures.total"
+						:value="data.total_textures"
+					/>
 				</v-col>
-				<v-col v-for="(count, edition) in texturesByEdition" :key="edition" cols="6" sm="3">
+				<v-col v-for="(count, edition) in data.textures_by_edition" :key="edition" cols="6" sm="3">
 					<dashboard-stat :label="edition" :value="count" />
 				</v-col>
 				<v-col cols="6" sm="3">
@@ -23,7 +26,7 @@
 				</v-col>
 			</v-row>
 			<detailed-treemap
-				:loading="totalTextures === 0"
+				:loading="!Object.keys(data).length"
 				:series="series"
 				:labels="labels"
 				:colors="colors"
@@ -54,15 +57,14 @@ export default {
 	},
 	data() {
 		return {
-			totalTextures: 0,
+			data: {},
+			// faster to use existing versions since it's already cached
 			versions: Object.values(settings.versions || {}).flat().length,
-			texturesByEdition: {},
-			texturesByTags: {},
 		};
 	},
 	computed: {
 		sortedEntries() {
-			return Object.entries(this.texturesByTags).sort((a, b) => b[1] - a[1]);
+			return Object.entries(this.data.textures_by_tags || {}).sort((a, b) => b[1] - a[1]);
 		},
 		series() {
 			return this.sortedEntries.map((tagRecord) => tagRecord[1]);
@@ -73,26 +75,8 @@ export default {
 	},
 	created() {
 		// todo: probably make this api-side
-		axios.get(`${this.$root.apiURL}/textures/raw`).then((res) => {
-			const data = Object.values(res.data);
-			this.totalTextures = data.length;
-			const { byEditions, byTags } = data
-				.flatMap((texture) => texture.tags)
-				.reduce(
-					(acc, cur) => {
-						if (["Java", "Bedrock"].includes(cur)) {
-							acc.byEditions[cur] ||= 0;
-							++acc.byEditions[cur];
-						} else {
-							acc.byTags[cur] ||= 0;
-							++acc.byTags[cur];
-						}
-						return acc;
-					},
-					{ byEditions: {}, byTags: {} },
-				);
-			this.texturesByEdition = byEditions;
-			this.texturesByTags = byTags;
+		axios.get(`${this.$root.apiURL}/textures/stats`).then((res) => {
+			this.data = res.data;
 		});
 	},
 };
