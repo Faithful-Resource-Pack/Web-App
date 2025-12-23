@@ -33,7 +33,7 @@
 		<div class="py-3">
 			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.paths }}</h2>
 			<div v-for="edition in editions" :key="edition">
-				<p class="title text-button text--secondary mb-0">
+				<p class="title text-button text--secondary mb-0 mt-3">
 					{{ edition.toTitleCase() }}
 				</p>
 				<v-data-table
