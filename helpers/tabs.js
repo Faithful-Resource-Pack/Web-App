@@ -96,7 +96,7 @@ export default [
 			},
 			{
 				id: "review",
-				roles: ["Administrator"],
+				roles: ["Administrator", "Art Director Council"],
 				icon: "mdi-puzzle",
 				badge: (app) =>
 					axios.get(`${app.apiURL}/addons/pending`, app.apiOptions).then((r) => r.data.length || 0),
