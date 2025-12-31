@@ -295,6 +295,11 @@ img.texture-img {
 	margin-top: 16px !important;
 }
 
+// fix v-alert icons not centering with text nicely
+.v-alert__icon.v-icon {
+	align-self: center;
+}
+
 .selector .v-btn--active::before {
 	opacity: 0;
 }

@@ -7,43 +7,35 @@
 			</v-card-title>
 			<v-card-text>
 				<v-alert type="warning" outlined dense>
+					<h3 v-if="categorize" class="font-weight-black mb-1">
+						{{ $root.lang().posts.changelog_generator.categorize_warning }}
+					</h3>
 					{{ $root.lang().posts.changelog_generator.warning }}
 				</v-alert>
-				<v-row>
-					<v-col>
-						<v-text-field
-							v-model="date"
-							:label="$root.lang().posts.changelog_generator.date"
-							:placeholder="$root.lang().posts.general.date.placeholder"
-							:autofocus="!$vuetify.breakpoint.mobile"
-							persistent-placeholder
-							hide-details
-						/>
-					</v-col>
-					<v-col>
-						<v-select
-							v-model="selectedPack"
-							:label="$root.lang().posts.changelog_generator.pack"
-							:items="packs"
-							hide-details
-							item-text="name"
-							item-value="id"
-						/>
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-btn
-							block
-							color="secondary"
-							:disabled="formInvalid"
-							:loading="loading"
-							@click="generate"
-						>
-							{{ $root.lang().posts.changelog_generator.heading }}<v-icon right>mdi-pencil</v-icon>
-						</v-btn>
-					</v-col>
-				</v-row>
+				<v-form>
+					<v-text-field
+						v-model="date"
+						:label="$root.lang().posts.changelog_generator.date"
+						:placeholder="$root.lang().posts.general.date.placeholder"
+						:autofocus="!$vuetify.breakpoint.mobile"
+						persistent-placeholder
+					/>
+					<v-select
+						v-model="selectedPack"
+						:label="$root.lang().posts.changelog_generator.pack"
+						:items="packs"
+						item-text="name"
+						item-value="id"
+					/>
+					<v-switch
+						v-model="categorize"
+						:label="$root.lang().posts.changelog_generator.categorize"
+					/>
+				</v-form>
+				<v-btn block color="secondary" :disabled="formInvalid" :loading="loading" @click="generate">
+					{{ $root.lang().posts.changelog_generator.heading }}
+					<v-icon right>mdi-pencil</v-icon>
+				</v-btn>
 				<template v-if="outputData">
 					<v-divider class="my-5" />
 					<v-row>
@@ -96,6 +88,7 @@ export default {
 			modalOpened: false,
 			packs: [],
 			loading: false,
+			categorize: false,
 			outputData: "",
 			fileURL: "",
 			idToUsername: {},
@@ -109,11 +102,12 @@ export default {
 			navigator.clipboard.writeText(this.outputData);
 			this.$root.showSnackBar(this.$root.lang().database.textures.modal.copy_json_data, "success");
 		},
-		getContributions() {
+		getData() {
 			return Promise.all([
 				axios
-					.get(`${this.$root.apiURL}/contributions/after/${new Date(this.date).getTime()}`)
-					.then((res) => res.data),
+					.get(`${this.$root.apiURL}/contributions/search?packs=${this.selectedPack}`)
+					.then((res) => Object.values(res.data)),
+				// keep keys for fast retrieval (optimization)
 				axios.get(`${this.$root.apiURL}/textures/raw`).then((res) => res.data),
 			]).catch((err) => {
 				this.loading = false;
@@ -145,15 +139,34 @@ export default {
 				return acc;
 			}, {});
 		},
+		categorizeAndFormat(allContributions, changelogContributions) {
+			if (this.categorize) {
+				const categorized = changelogContributions.reduce(
+					(acc, cur) => {
+						const hasExisting = allContributions.filter((c) => c.texture === cur.id).length > 1;
+						acc[hasExisting ? "Changed" : "Added"].push(cur);
+						return acc;
+					},
+					{ Added: [], Changed: [] },
+				);
+				// this should probably be done programmatically but whatever
+				return {
+					Added: this.formatContributions(categorized.Added),
+					Changed: this.formatContributions(categorized.Changed),
+				};
+			}
+
+			return this.formatContributions(changelogContributions);
+		},
 		async generate() {
 			this.loading = true;
-			const [allContributions, textures] = await this.getContributions();
+			const [allContributions, textures] = await this.getData();
 
 			if (allContributions === null) return;
 
 			const finalData = allContributions
-				// get correct pack (there's no endpoint for both date and pack)
-				.filter((contribution) => contribution.pack === this.selectedPack)
+				// get correct date
+				.filter((contribution) => contribution.date > this.numericDate)
 				// merge the two objects by id
 				.map((contribution) => this.mergeContribution(textures[contribution.texture], contribution))
 				// remove duplicates
@@ -164,7 +177,8 @@ export default {
 					return acc;
 				}, {});
 
-			this.outputData = JSON.stringify(this.formatContributions(Object.values(finalData)), null, 2);
+			const formatted = this.categorizeAndFormat(allContributions, Object.values(finalData));
+			this.outputData = JSON.stringify(formatted, null, 2);
 			this.loading = false;
 			this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 		},
@@ -172,6 +186,9 @@ export default {
 	computed: {
 		formInvalid() {
 			return !this.date || !this.selectedPack;
+		},
+		numericDate() {
+			return new Date(this.date).getTime();
 		},
 		fileBlob() {
 			return new Blob([this.outputData], { type: "text/json" });

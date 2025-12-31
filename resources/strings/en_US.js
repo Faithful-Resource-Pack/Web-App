@@ -515,6 +515,9 @@ export default {
 			date: "Date since last changelog",
 			pack: "Changelog pack",
 			copy: "Copy to clipboard",
+			categorize: "Automatically categorize changelog by type (experimental)",
+			categorize_warning:
+				"Type categorization may be inaccurate due to how contributions are tracked!",
 			download: "Download changelog",
 			warning: "Please manually review the changelog before importing it!",
 		},
