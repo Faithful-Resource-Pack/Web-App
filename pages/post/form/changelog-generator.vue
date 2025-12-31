@@ -112,9 +112,7 @@ export default {
 		getContributions() {
 			return Promise.all([
 				axios
-					.get(
-						`${this.$root.apiURL}/contributions/between/${new Date(this.date).getTime()}/${Date.now()}`,
-					)
+					.get(`${this.$root.apiURL}/contributions/after/${new Date(this.date).getTime()}`)
 					.then((res) => res.data),
 				axios.get(`${this.$root.apiURL}/textures/raw`).then((res) => res.data),
 			]).catch((err) => {
