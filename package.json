@@ -8,20 +8,9 @@
 		"dev": "vite --host",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prettier": "prettier \"{,!(node_modules)/**/}*.{js,vue,html,ts}\" --config .prettierrc --write",
+		"prettier": "prettier \"{,!(node_modules)/**/}*.{js,vue,html,ts}\" --write",
 		"lint": "eslint ."
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Faithful-Resource-Pack/App.git"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/Faithful-Resource-Pack/App/issues"
-	},
-	"homepage": "https://github.com/Faithful-Resource-Pack/App#readme",
 	"dependencies": {
 		"@vitejs/plugin-vue2": "^2.3.4",
 		"axios": "^1.13.2",
@@ -31,7 +20,7 @@
 		"pinia": "^2.3.1",
 		"prettier": "^3.7.4",
 		"prismjs": "^1.30.0",
-		"sass": "^1.97.1",
+		"sass": "^1.97.2",
 		"vite": "^7.3.0",
 		"vue": "^2.7.16",
 		"vue-calendar-heatmap": "0.8.4",
