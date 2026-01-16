@@ -74,7 +74,6 @@ export default {
 		},
 	},
 	created() {
-		// todo: probably make this api-side
 		axios.get(`${this.$root.apiURL}/textures/stats`).then((res) => {
 			this.data = res.data;
 		});

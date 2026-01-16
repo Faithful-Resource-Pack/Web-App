@@ -105,7 +105,7 @@ export default {
 	},
 	data() {
 		return {
-			data: undefined,
+			data: {},
 			loading: true,
 		};
 	},
