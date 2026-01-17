@@ -162,11 +162,11 @@ export default {
 			handler(newValue) {
 				this.options.versions =
 					newValue === "all"
-						? ["latest", ...settings.versions.java, ...settings.versions.bedrock]
+						? ["latest", ...Object.values(settings.versions).flat()]
 						: settings.versions[newValue] || settings.versions.java;
 
-				// no need to update current version if the edition supports it
-				if (this.options.versions.includes(this.current.version)) return;
+				// going from all to something else, keep existing value
+				if (newValue !== "all" && this.options.versions.includes(this.current.version)) return;
 
 				// version needs updating to match edition, update route too
 				this.current.version = this.options.versions[0];
