@@ -22,9 +22,16 @@
 		/>
 
 		<label for="fileInput" class="label">
-			<div v-if="isDragging">Release to drop files here.</div>
-			<div v-else>
+			<div v-if="isDragging">
+				<v-icon small>mdi-upload</v-icon>
+				{{ labels.dragging }}
+			</div>
+			<div v-else-if="$slots.default">
 				<slot />
+			</div>
+			<div v-else>
+				<v-icon small>mdi-plus</v-icon>
+				{{ labels.standby }}
 			</div>
 		</label>
 	</div>
@@ -85,7 +92,10 @@ export default {
 			e.preventDefault();
 			const files = e.dataTransfer.files;
 			if (!Array.from(files).every((file) => this.accept.includes(file.type))) {
-				this.$root.showSnackBar(this.$root.lang().addons.images.header.rules.jpeg, "error");
+				this.$root.showSnackBar(
+					`${this.$root.lang().addons.images.header.rules.jpeg}\n${this.$root.lang().addons.images.header.rules.compress}`,
+					"error",
+				);
 				this.isDragging = false;
 				return;
 			}
@@ -97,6 +107,15 @@ export default {
 			if (this.disabled) return;
 			this.$refs.file.click();
 			this.$refs.file.blur();
+		},
+	},
+	computed: {
+		labels() {
+			const labels = this.$root.lang().global.drop_zone;
+			return {
+				standby: this.multiple ? labels.standby_plural : labels.standby_singular,
+				dragging: this.multiple ? labels.dragging_plural : labels.dragging_singular,
+			};
 		},
 	},
 };

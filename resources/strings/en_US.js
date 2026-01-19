@@ -120,6 +120,12 @@ export default {
 			write: "Write",
 			preview: "Preview",
 		},
+		drop_zone: {
+			standby_singular: "Drop file or click to select",
+			standby_plural: "Drop files or click to select",
+			dragging_singular: "Release to upload file",
+			dragging_plural: "Release to upload files",
+		},
 	},
 	database: {
 		search: "Search",
@@ -393,21 +399,21 @@ export default {
 			title: "Screenshots",
 			header: {
 				labels: {
-					drop: "Drag and drop header image or click to upload",
+					drop: "Drop header image or click to select",
 					normal: "Header image",
 					replace: "Replace header image",
 				},
 				rules: {
-					image_size:
-						"Image size should be less than %s KB! Use https://compressor.io/ to compress it",
-					image_ratio: "Wrong ratio: The provided image doesn't have a 16:9 side ratio",
+					image_size: "Image size should be less than %s KB!",
+					image_ratio: "Wrong ratio: The provided image doesn't have a 16:9 aspect ratio",
 					image_required: "A header image is required",
 					jpeg: "Image must be a lossy JPEG",
+					compress: "You can compress images using https://compressor.io/",
 				},
 			},
 			carousel: {
 				labels: {
-					drop: "Drag or click to select additional images",
+					drop: "Drop additional images or click to select",
 					normal: "Additional image(s)",
 					replace: "Replace additional image(s)",
 				},
