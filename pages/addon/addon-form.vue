@@ -202,7 +202,7 @@
 				<div class="text-h5">{{ $root.lang().addons.downloads.title }}</div>
 
 				<!-- cannot use obj.key as index since it rerenders the form on change otherwise -->
-				<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-0">
+				<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-1">
 					<v-col cols="12" sm="3">
 						<v-text-field
 							v-model="obj.key"
@@ -214,12 +214,10 @@
 					</v-col>
 					<v-col cols="12" sm="9">
 						<v-row
-							v-for="(link, indexLinks) in obj.links"
-							:key="link"
-							:style="{
-								'align-items': 'baseline',
-								'margin-top': indexLinks != 0 ? '-32px' : '-12px',
-							}"
+							v-for="(_link, indexLinks) in obj.links"
+							:key="indexLinks"
+							class="align-baseline"
+							dense
 						>
 							<v-col>
 								<v-text-field
