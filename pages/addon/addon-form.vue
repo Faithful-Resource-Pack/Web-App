@@ -87,10 +87,8 @@
 									style="height: 100%"
 									@change="headerChange"
 								>
-									<span>
-										<v-icon small>mdi-image</v-icon>
-										{{ $root.lang().addons.images.header.labels.drop }}
-									</span>
+									<v-icon small>mdi-image</v-icon>
+									{{ $root.lang().addons.images.header.labels.drop }}
 								</drop-zone>
 							</v-responsive>
 						</div>
@@ -110,10 +108,8 @@
 						style="height: 70px"
 						@change="carouselChange"
 					>
-						<span>
-							<v-icon small>mdi-image</v-icon>
-							{{ $root.lang().addons.images.carousel.labels.drop }}
-						</span>
+						<v-icon small>mdi-image</v-icon>
+						{{ $root.lang().addons.images.carousel.labels.drop }}
 					</drop-zone>
 				</div>
 				<image-previewer
