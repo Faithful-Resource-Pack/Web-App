@@ -12,15 +12,15 @@
 				v-model="form.edition"
 				:color="color"
 				:item-color="color"
-				:items="settings.editions"
+				:items="editions"
 				:label="$root.lang().database.textures.add_version.new_edition"
-				@change="form.version = settings.versions[form.edition][0]"
+				@change="(e) => onEditionChange(e)"
 			/>
 			<v-select
 				v-model="form.version"
 				:color="color"
 				:item-color="color"
-				:items="settings.versions[form.edition] || []"
+				:items="availableTemplateVersions"
 				:disabled="!form.edition"
 				:label="$root.lang().database.textures.add_version.template_version"
 			/>
@@ -59,12 +59,9 @@ export default {
 		const defaultEdition = settings.editions[0];
 		return {
 			modalOpened: false,
-			settings,
+			editions: settings.editions,
 			rules: [
-				(input) => {
-					if (Object.values(settings.versions).flat().includes(input))
-						return this.$root.lang().database.textures.version_exists;
-				},
+				(input) => !this.versionExists(input) || this.$root.lang().database.textures.version_exists,
 			],
 			form: {
 				edition: defaultEdition,
@@ -74,6 +71,12 @@ export default {
 		};
 	},
 	methods: {
+		onEditionChange(edition) {
+			this.form.version = settings.versions[edition][0];
+		},
+		versionExists(version) {
+			return Object.values(settings.versions).flat().includes(version);
+		},
 		send() {
 			axios
 				.post(`${this.$root.apiURL}/paths/versions/add`, this.form, this.$root.apiOptions)
@@ -92,10 +95,13 @@ export default {
 		},
 	},
 	computed: {
+		availableTemplateVersions() {
+			return settings.versions[this.form.edition] || [];
+		},
 		isValid() {
 			if (!this.form.newVersion) return false;
 			// cannot rename to an existing version, completely bricks the db (lol)
-			if (Object.values(settings.versions).flat().includes(this.form.newVersion)) return false;
+			if (this.versionExists(this.form.newVersion)) return false;
 			return true;
 		},
 	},

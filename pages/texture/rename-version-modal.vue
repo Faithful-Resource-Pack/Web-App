@@ -54,23 +54,24 @@ export default {
 		},
 	},
 	data() {
+		const defaultEdition = settings.editions[0];
 		return {
 			modalOpened: false,
 			versions: Object.values(settings.versions).flat(),
 			rules: [
-				(input) => {
-					if (this.versions.includes(input))
-						return this.$root.lang().database.textures.version_exists;
-				},
+				(input) => !this.versionExists(input) || this.$root.lang().database.textures.version_exists,
 			],
 			form: {
 				// convenience feature
-				old: settings.versions?.java?.[0] || "",
+				old: settings.versions[defaultEdition][0] || "",
 				new: "",
 			},
 		};
 	},
 	methods: {
+		versionExists(version) {
+			return this.versions.includes(version);
+		},
 		send() {
 			axios
 				.put(
@@ -93,7 +94,7 @@ export default {
 		isValid() {
 			if (!this.form.new) return false;
 			// cannot rename to an existing version, completely bricks the db (lol)
-			if (this.versions.includes(this.form.new)) return false;
+			if (this.versionExists(this.form.new)) return false;
 			return true;
 		},
 	},

@@ -47,7 +47,7 @@
 							v-model="use.edition"
 							:color="color"
 							:item-color="color"
-							:items="settings.editions"
+							:items="editions"
 							:label="$root.lang().database.textures.uses.edition"
 							@change="(e) => onEditionChange(e, use)"
 						/>
@@ -153,7 +153,7 @@ export default {
 	data() {
 		return {
 			texture: {},
-			settings,
+			editions: settings.editions,
 		};
 	},
 	methods: {
