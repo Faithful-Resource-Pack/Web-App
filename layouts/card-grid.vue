@@ -72,7 +72,7 @@ export default {
 	methods: {
 		onImageFail(item) {
 			this.failed[item[this.track]] = true;
-			$forceUpdate();
+			this.$forceUpdate();
 			return false;
 		},
 	},
