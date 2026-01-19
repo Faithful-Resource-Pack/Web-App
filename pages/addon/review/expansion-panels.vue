@@ -21,39 +21,11 @@
 					<p>{{ $root.lang().global.loading }}</p>
 				</template>
 				<template v-else>
-					<div style="position: relative">
-						<v-img
-							:src="addonInPanelHeaderURL"
-							:aspect-ratio="16 / 9"
-							style="border-radius: 5px"
-							alt="Header not found!"
-							@click.stop="openHeader"
-						>
-							<template #placeholder>
-								<v-row
-									class="fill-height ma-0"
-									align="center"
-									justify="center"
-									style="background-color: rgba(255, 255, 255, 0.1)"
-								>
-									<v-progress-circular
-										v-if="addonInPanelHeaderURL != null"
-										indeterminate
-										color="grey lighten-5"
-									/>
-									<v-icon v-else x-large>mdi-image-off</v-icon>
-								</v-row>
-							</template>
-						</v-img>
-						<v-card
-							class="ma-2"
-							rounded
-							dark
-							style="display: inline-block; position: absolute; right: 0; top: 0"
-						>
-							<v-icon small class="ma-1" @click.stop="openHeader">mdi-fullscreen</v-icon>
-						</v-card>
-					</div>
+					<emitting-image
+						:src="addonInPanelHeaderURL"
+						:aspect-ratio="16 / 9"
+						@fullscreen="openHeader"
+					/>
 
 					<addon-info class="pt-4" :addonInPanel="addonInPanel" :getUsername="getUsername" />
 
@@ -61,7 +33,7 @@
 						<v-list-item-title class="uppercase my-2">
 							{{ $root.lang().addons.images.title }}
 						</v-list-item-title>
-						<image-previewer :sources="addonSources" :deletable="false" />
+						<image-previewer :sources="addonSources" />
 					</template>
 
 					<v-list-item-title class="uppercase my-2">
@@ -125,6 +97,7 @@ import axios from "axios";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
+import EmittingImage from "@components/emitting-image.vue";
 
 export default {
 	name: "expansion-panels",
@@ -132,6 +105,7 @@ export default {
 		ImagePreviewer,
 		FullscreenPreview,
 		AddonInfo,
+		EmittingImage,
 	},
 	props: {
 		addons: {

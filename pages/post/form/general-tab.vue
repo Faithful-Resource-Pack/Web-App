@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<fullscreen-preview v-model="previewOpen" :src="formData.header_img" />
+
 		<div class="row">
 			<div class="col pb-0">
 				<v-text-field
@@ -22,7 +24,7 @@
 			</div>
 			<div v-if="formData.header_img" class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
 				<div class="col">
-					<v-img class="rounded" :src="formData.header_img" />
+					<emitting-image :src="formData.header_img" @fullscreen="openPreview" />
 				</div>
 			</div>
 		</div>
@@ -71,12 +73,16 @@
 </template>
 
 <script>
+import EmittingImage from "@components/emitting-image.vue";
+import FullscreenPreview from "@components/fullscreen-preview.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
 
 export default {
 	name: "general-tab",
 	components: {
 		TabbedTextField,
+		EmittingImage,
+		FullscreenPreview,
 	},
 	props: {
 		value: {
@@ -87,7 +93,13 @@ export default {
 	data() {
 		return {
 			formData: {},
+			previewOpen: false,
 		};
+	},
+	methods: {
+		openPreview() {
+			this.previewOpen = true;
+		},
 	},
 	watch: {
 		value: {

@@ -58,22 +58,13 @@
 					<!-- RIGHT PART: HEADER IMAGE PREVIEW -->
 					<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
 						<div class="col">
-							<div v-if="header !== undefined" style="position: relative" class="mt-3">
-								<v-img
-									class="rounded cursor-pointer"
-									:aspect-ratio="16 / 9"
-									:src="header"
-									@click.stop="openPreview"
-								/>
-								<v-card
-									class="d-inline-block ma-2"
-									rounded
-									style="position: absolute; right: 0; top: 0"
-								>
-									<v-icon small class="ma-1" @click.stop="openPreview">mdi-fullscreen</v-icon>
-									<v-icon small class="ma-1" @click="removeHeader"> mdi-delete </v-icon>
-								</v-card>
-							</div>
+							<emitting-image
+								v-if="header !== undefined"
+								deletable
+								:src="header"
+								@fullscreen="openPreview"
+								@delete="removeHeader"
+							/>
 							<v-responsive
 								v-else
 								:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
@@ -112,7 +103,13 @@
 						{{ $root.lang().addons.images.carousel.labels.drop }}
 					</drop-zone>
 				</div>
-				<image-previewer :sources="carouselSources" :ids="screenIds" @delete="removeCarouselItem" />
+
+				<image-previewer
+					deletable
+					:sources="carouselSources"
+					:ids="screenIds"
+					@delete="removeCarouselItem"
+				/>
 
 				<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
 
@@ -275,21 +272,23 @@
 <script>
 import axios from "axios";
 
-import UserSelect from "@components/user-select.vue";
 import ImagePreviewer from "./image-previewer.vue";
+import EmittingImage from "@components/emitting-image.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import DropZone from "@components/drop-zone.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
+import UserSelect from "@components/user-select.vue";
 import { is16x9, verifyImage } from "@helpers/images";
 
 export default {
 	name: "addon-form",
 	components: {
-		UserSelect,
+		EmittingImage,
 		ImagePreviewer,
 		FullscreenPreview,
 		DropZone,
 		TabbedTextField,
+		UserSelect,
 	},
 	props: {
 		addonNew: {

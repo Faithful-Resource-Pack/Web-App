@@ -44,38 +44,12 @@
 					</v-btn>
 				</div>
 				<v-row>
-					<v-col cols="12" sm="7" style="position: relative">
-						<v-img
+					<v-col cols="12" sm="7">
+						<emitting-image
 							:src="addonInPanelHeaderURL"
 							:aspect-ratio="16 / 9"
-							alt="Header not found!"
-							class="rounded cursor-pointer"
-							@click.stop="openHeader"
-						>
-							<template #placeholder>
-								<v-row
-									class="fill-height ma-0"
-									align="center"
-									justify="center"
-									style="background-color: rgba(255, 255, 255, 0.1)"
-								>
-									<v-progress-circular
-										v-if="addonInPanelHeaderURL !== null"
-										indeterminate
-										color="grey lighten-5"
-									/>
-									<v-icon v-else x-large>mdi-image-off</v-icon>
-								</v-row>
-							</template>
-						</v-img>
-						<v-card
-							class="ma-2"
-							dark
-							rounded
-							style="display: inline-block; position: absolute; right: 10px; top: 10px"
-						>
-							<v-icon small class="ma-1" @click.stop="openHeader">mdi-fullscreen</v-icon>
-						</v-card>
+							@fullscreen="openHeader"
+						/>
 					</v-col>
 					<v-col cols="12" sm="5">
 						<addon-info :addonInPanel="addonInPanel" :getUsername="getUsername" />
@@ -86,7 +60,7 @@
 					<v-list-item-title class="uppercase my-2">
 						{{ $root.lang().addons.images.title }}
 					</v-list-item-title>
-					<image-previewer :sources="addonSources" :deletable="false" />
+					<image-previewer :sources="addonSources" />
 				</template>
 
 				<v-list-item-title class="uppercase pb-2 py-4">
@@ -150,6 +124,7 @@ import axios from "axios";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
+import EmittingImage from "@components/emitting-image.vue";
 
 export default {
 	name: "review-preview",
@@ -157,6 +132,7 @@ export default {
 		FullscreenPreview,
 		ImagePreviewer,
 		AddonInfo,
+		EmittingImage,
 	},
 	props: {
 		addonId: {
