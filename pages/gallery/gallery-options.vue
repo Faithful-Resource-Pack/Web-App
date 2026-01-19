@@ -75,7 +75,7 @@ export default {
 			options: {
 				packs: [],
 				tags: [],
-				versions: ["latest", ...settings.versions.java, ...settings.versions.bedrock],
+				versions: ["latest", ...Object.values(settings.versions).flat()],
 				editions: ["all", ...settings.editions],
 			},
 			current: {},

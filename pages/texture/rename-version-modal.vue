@@ -65,7 +65,7 @@ export default {
 			],
 			form: {
 				// convenience feature
-				old: settings.versions.java[0],
+				old: settings.versions?.java?.[0] || "",
 				new: "",
 			},
 		};
