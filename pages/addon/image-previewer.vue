@@ -1,5 +1,5 @@
 <template>
-	<v-container :class="[empty ? 'pa-0' : 'px-0 pt-0']">
+	<v-container :class="[sources.length ? 'px-0 pt-0' : 'pa-0']">
 		<div class="scroller" style="overflow: auto; white-space: nowrap">
 			<div class="scroller-content">
 				<v-card
@@ -79,15 +79,13 @@ export default {
 			return this.sources[this.fullscreenIndex];
 		},
 		empty() {
-			return !this.sources || !this.sources.length;
+			return !this.sources.length;
 		},
 	},
 	methods: {
 		onDelete(item, index, e) {
 			if (e) e.target.blur();
-
-			if (this.ids !== undefined) this.$emit("item-delete", item, index, this.ids[index]);
-			else this.$emit("item-delete", item, index, undefined);
+			this.$emit("delete", item, index, this.ids === undefined ? undefined : this.ids[index]);
 		},
 		onFullscreen(index, e) {
 			if (e) e.target.blur();

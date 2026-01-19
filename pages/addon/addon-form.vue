@@ -58,7 +58,7 @@
 					<!-- RIGHT PART: HEADER IMAGE PREVIEW -->
 					<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
 						<div class="col">
-							<div v-if="hasHeader" style="position: relative" class="mt-3">
+							<div v-if="header !== undefined" style="position: relative" class="mt-3">
 								<v-img
 									style="border-radius: 10px"
 									:aspect-ratio="16 / 9"
@@ -71,7 +71,7 @@
 									style="position: absolute; right: 0; top: 0"
 								>
 									<v-icon small class="ma-1" @click.stop="openPreview">mdi-fullscreen</v-icon>
-									<v-icon small class="ma-1" @click="headerRemove"> mdi-delete </v-icon>
+									<v-icon small class="ma-1" @click="removeHeader"> mdi-delete </v-icon>
 								</v-card>
 							</div>
 							<v-responsive
@@ -85,7 +85,7 @@
 									:disabled="disabledHeaderInput"
 									accept="image/jpg, image/jpeg"
 									style="height: 100%"
-									@change="headerChange"
+									@change="updateHeader"
 								>
 									<v-icon small>mdi-image</v-icon>
 									{{ $root.lang().addons.images.header.labels.drop }}
@@ -106,17 +106,13 @@
 						multiple
 						accept="image/jpg, image/jpeg"
 						style="height: 70px"
-						@change="carouselChange"
+						@change="onCarouselChange"
 					>
 						<v-icon small>mdi-image</v-icon>
 						{{ $root.lang().addons.images.carousel.labels.drop }}
 					</drop-zone>
 				</div>
-				<image-previewer
-					:sources="carouselSources"
-					:ids="screenIds"
-					@item-delete="onDeleteCarousel"
-				/>
+				<image-previewer :sources="carouselSources" :ids="screenIds" @delete="removeCarouselItem" />
 
 				<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
 
@@ -235,17 +231,17 @@
 								/>
 							</v-col>
 							<v-col v-if="indexLinks == 0" class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="linkAdd(index)">
+								<v-btn icon @click="addDownloadLink(index)">
 									<v-icon color="lighten-1">mdi-plus</v-icon>
 								</v-btn>
 							</v-col>
 							<v-col v-else class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="linkRemove(index, indexLinks)">
+								<v-btn icon @click="removeDownloadLink(index, indexLinks)">
 									<v-icon color="red lighten-1">mdi-minus</v-icon>
 								</v-btn>
 							</v-col>
 							<v-col v-if="index != 0 && indexLinks == 0" class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="downloadRemove(index)">
+								<v-btn icon @click="removeDownloadGroup(index)">
 									<v-icon color="red lighten-1">mdi-delete</v-icon>
 								</v-btn>
 							</v-col>
@@ -253,7 +249,7 @@
 					</v-col>
 				</v-row>
 				<div class="pb-3">
-					<v-btn block color="secondary" @click="downloadAdd">
+					<v-btn block color="secondary" @click="addDownloadGroup">
 						{{ $root.lang().global.btn.add_download }}
 						<v-icon right>mdi-plus</v-icon>
 					</v-btn>
@@ -286,6 +282,7 @@ import ImagePreviewer from "./image-previewer.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import DropZone from "@components/drop-zone.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
+import { is16x9, verifyImage } from "@helpers/images";
 
 export default {
 	name: "addon-form",
@@ -488,7 +485,9 @@ export default {
 				(u) => !!u || this.$root.lang().addons.downloads.name.rules.name_required,
 				(u) => u !== " " || this.$root.lang().addons.downloads.name.rules.name_cannot_be_empty,
 			],
-			downloadLinkRules: [(u) => this.validURL(u) || this.$root.lang().addons.downloads.link.rule],
+			downloadLinkRules: [
+				(u) => String.urlRegex.test(u) || this.$root.lang().addons.downloads.link.rule,
+			],
 			validForm: false,
 			// todo: move this to pack API when all packs are supported
 			packs: [
@@ -504,41 +503,16 @@ export default {
 		};
 	},
 	computed: {
-		hasHeader() {
-			return this.header || this.headerURL;
-		},
 		header() {
-			return this.addonNew
-				? this.headerValidating == false && this.headerValid && this.submittedForm.headerFile
-					? URL.createObjectURL(this.submittedForm.headerFile)
-					: undefined
-				: this.headerSource;
+			if (!this.addonNew) return this.headerSource;
+			if (this.headerValidating || !this.headerValid || !this.submittedForm.headerFile) return;
+			return URL.createObjectURL(this.submittedForm.headerFile);
 		},
 		carouselSources() {
 			return this.screenSources ? this.screenSources : [];
 		},
-		headerValidSentence() {
-			if (this.headerValidating) return "Header being verified...";
-			if (this.headerValid) return true;
-			return this.headerError;
-		},
-		headerRules() {
-			if (!this.addonNew) return [];
-			return [...this.form.files.header.rules, this.headerValidSentence];
-		},
-		headerFile() {
-			return this.submittedForm.headerFile;
-		},
 		carouselFiles() {
 			return this.submittedForm.carouselFiles;
-		},
-		carouselRules() {
-			return [...this.form.files.carousel.rules, this.carouselValidSentence];
-		},
-		carouselValidSentence() {
-			if (this.carouselValidating) return "Carousel being verified...";
-			if (this.carouselValid) return true;
-			return this.carouselError;
 		},
 		submittedData() {
 			const data = Object.merge({}, this.submittedForm);
@@ -558,30 +532,7 @@ export default {
 		},
 	},
 	methods: {
-		carouselChange() {
-			if (this.carouselDoNotVerify) return;
-
-			const files = this.submittedForm.carouselFiles;
-			if (!files || files.length == 0) return;
-
-			this.carouselValidating = true;
-			Promise.all(files.map((f) => this.verifyImage(f, this.is16x9)))
-				.then(() => {
-					this.carouselValid = true;
-					this.$emit("screenshot", files);
-					this.submittedForm.carouselFiles = [];
-				})
-				.catch((error) => {
-					console.error(error);
-					this.carouselValid = false;
-					this.carouselError = error.message;
-					this.$root.showSnackBar(error, "error");
-				})
-				.finally(() => {
-					this.carouselValidating = false;
-				});
-		},
-		headerChange(file) {
+		updateHeader(file) {
 			// delete not uploaded file
 			if (!file) {
 				if (this.addonNew) this.$emit("header", undefined, true);
@@ -591,7 +542,7 @@ export default {
 			// activate validation loading
 			this.headerValidating = true;
 
-			this.verifyImage(file, this.is16x9)
+			verifyImage(file, is16x9, this.$root.lang().addons.images.header.rules.image_ratio)
 				.then(() => {
 					this.headerValid = true;
 					this.$emit("header", file);
@@ -612,26 +563,40 @@ export default {
 					this.headerValidating = false;
 				});
 		},
-		headerRemove() {
+		removeHeader() {
 			this.$emit("header", undefined, true);
 			this.submittedForm.headerFile = undefined;
 		},
-		downloadAdd() {
-			this.submittedForm.downloads.push({ key: "", links: [""] });
+		// submittedForm.carouselFiles has already been updated, not param
+		onCarouselChange() {
+			if (this.carouselDoNotVerify) return;
+
+			const files = this.submittedForm.carouselFiles;
+			if (!files || files.length == 0) return;
+
+			this.carouselValidating = true;
+			Promise.all(
+				files.map((f) =>
+					verifyImage(f, is16x9, this.$root.lang().addons.images.header.rules.image_ratio),
+				),
+			)
+				.then(() => {
+					this.carouselValid = true;
+					this.$emit("screenshot", files);
+					this.submittedForm.carouselFiles = [];
+				})
+				.catch((error) => {
+					console.error(error);
+					this.carouselValid = false;
+					this.carouselError = error.message;
+					this.$root.showSnackBar(error, "error");
+				})
+				.finally(() => {
+					this.carouselValidating = false;
+				});
 		},
-		downloadRemove(downloadIndex) {
-			this.submittedForm.downloads.splice(downloadIndex, 1);
-		},
-		linkAdd(downloadIndex) {
-			this.submittedForm.downloads[downloadIndex].links.push("");
-		},
-		linkRemove(downloadIndex, linkIndex) {
-			this.submittedForm.downloads[downloadIndex].links.splice(linkIndex, 1);
-		},
-		openPreview() {
-			this.previewOpen = true;
-		},
-		onDeleteCarousel(_item, index, id) {
+		removeCarouselItem(_item, index, id) {
+			console.log(id);
 			this.carouselDoNotVerify = true;
 			this.submittedForm.carouselFiles.splice(index, 1);
 			this.$emit("screenshot", undefined, index, true, id);
@@ -639,43 +604,26 @@ export default {
 				this.carouselDoNotVerify = false;
 			});
 		},
+		addDownloadGroup() {
+			this.submittedForm.downloads.push({ key: "", links: [""] });
+		},
+		removeDownloadGroup(downloadIndex) {
+			this.submittedForm.downloads.splice(downloadIndex, 1);
+		},
+		addDownloadLink(downloadIndex) {
+			this.submittedForm.downloads[downloadIndex].links.push("");
+		},
+		removeDownloadLink(downloadIndex, linkIndex) {
+			this.submittedForm.downloads[downloadIndex].links.splice(linkIndex, 1);
+		},
+		openPreview() {
+			this.previewOpen = true;
+		},
 		onSubmit(approve = false) {
 			const valid = this.$refs.form.validate();
 			if (!valid) return;
 
 			this.$emit("submit", this.submittedData, approve);
-		},
-		is16x9(img) {
-			return (img.width / img.height).toFixed(2) == 1.78;
-		},
-		validURL(str) {
-			return String.urlRegex.test(str);
-		},
-		/** @param {(image: HTMLImageElement) => boolean} validateImage */
-		verifyImage(file, validateImage) {
-			if (validateImage === undefined) validateImage = this.is16x9;
-
-			return new Promise((resolve, reject) => {
-				// start reader
-				const reader = new FileReader();
-
-				const self = this;
-				reader.onload = (e) => {
-					const image = new Image();
-					image.src = e.target.result;
-					image.onload = function () {
-						// do not use arrow fn
-						const isValidImage = validateImage(this); // this is image now
-						if (isValidImage) resolve();
-						else reject(new Error(self.$root.lang().addons.images.header.rules.image_ratio));
-					};
-					image.onerror = () => reject(e);
-				};
-				reader.onerror = () => reject();
-
-				// set file to be read
-				reader.readAsDataURL(file);
-			});
 		},
 		getUsers() {
 			axios
@@ -695,16 +643,17 @@ export default {
 	watch: {
 		addonData: {
 			handler(data) {
-				if (!this.addonNew && data) {
-					data = JSON.parse(JSON.stringify(data));
-					data.headerFile = undefined;
-					data.carouselFiles = [];
-					data.selectedPacks = data.options.tags.filter((e) => this.resolutions.includes(e));
-					data.selectedEditions = data.options.tags.filter((e) =>
-						this.editions.some((ed) => ed.value === e),
-					);
-					this.submittedForm = data;
-				}
+				if (this.addonNew || !data) return;
+
+				// deep copy
+				data = structuredClone(data);
+				data.headerFile = undefined;
+				data.carouselFiles = [];
+				data.selectedPacks = data.options.tags.filter((e) => this.resolutions.includes(e));
+				data.selectedEditions = data.options.tags.filter((e) =>
+					this.editions.some((ed) => ed.value === e),
+				);
+				this.submittedForm = data;
 			},
 			immediate: true,
 			deep: true,
