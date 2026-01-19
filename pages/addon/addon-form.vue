@@ -60,7 +60,7 @@
 						<div class="col">
 							<div v-if="header !== undefined" style="position: relative" class="mt-3">
 								<v-img
-									style="border-radius: 10px"
+									class="rounded cursor-pointer"
 									:aspect-ratio="16 / 9"
 									:src="header"
 									@click.stop="openPreview"

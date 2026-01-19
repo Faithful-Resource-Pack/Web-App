@@ -22,7 +22,7 @@
 			</div>
 			<div v-if="formData.header_img" class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
 				<div class="col">
-					<v-img style="border-radius: 10px" :src="formData.header_img" />
+					<v-img class="rounded" :src="formData.header_img" />
 				</div>
 			</div>
 		</div>
