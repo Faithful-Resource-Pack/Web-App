@@ -279,9 +279,9 @@ export default {
 	},
 	computed: {
 		apiRoute() {
-			// /gallery/{pack}/{mc_version}/{tag}
+			// /gallery/search/{pack}/{mc_version}/{tag}
 			const { pack, version, tag, search } = this.current;
-			let url = `${this.$root.apiURL}/gallery/${pack}/${version}/${tag}`;
+			let url = `${this.$root.apiURL}/gallery/search/${pack}/${version}/${tag}`;
 			if (search) url += `?search=${search}`;
 			return url;
 		},
