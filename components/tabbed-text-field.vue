@@ -60,11 +60,11 @@ export default {
 	computed: {
 		rendered() {
 			switch (this.type) {
-				case "md":
-					return this.$root.compileMarkdown(this.text);
 				case "html":
-				default:
 					return DOMPurify.sanitize(this.text);
+				case "md":
+				default:
+					return this.$root.compileMarkdown(this.text);
 			}
 		},
 	},
