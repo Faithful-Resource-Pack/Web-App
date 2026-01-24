@@ -3,9 +3,9 @@
 		<h4 class="text-h4 py-4">{{ $root.lang().profile.title }}</h4>
 
 		<v-list
-			:rounded="$vuetify.breakpoint.mdAndUp"
 			class="main-container mb-2 pa-4"
 			:class="{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }"
+			rounded
 		>
 			<v-list-item two-line>
 				<v-list-item-avatar>

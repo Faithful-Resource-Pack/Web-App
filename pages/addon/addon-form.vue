@@ -1,5 +1,5 @@
 <template>
-	<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" two-line>
+	<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" rounded>
 		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
 			<span />
 			<v-progress-circular :size="150" :width="10" indeterminate />

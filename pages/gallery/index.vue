@@ -63,7 +63,11 @@
 				/>
 			</v-col>
 		</v-row>
-		<v-list class="main-container pa-2 text-center" :class="{ 'mx-n3': $vuetify.breakpoint.xs }">
+		<v-list
+			class="main-container pa-2 text-center"
+			:class="{ 'mx-n3': $vuetify.breakpoint.xs }"
+			rounded
+		>
 			<div v-if="loading" class="my-5">
 				<v-progress-circular :size="150" :width="10" indeterminate />
 				<div class="text-h6 my-5">{{ $root.lang().gallery.loading_message }}</div>

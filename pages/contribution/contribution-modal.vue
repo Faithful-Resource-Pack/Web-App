@@ -30,9 +30,9 @@
 					{{ $root.lang().database.summary }}: [{{ contribs.length }}]
 				</div>
 				<v-list
-					two-line
 					class="mb-5"
 					:class="$vuetify.breakpoint.mdAndUp ? 'contribution-form-list' : ''"
+					two-line
 				>
 					<v-list-item-group v-model="selectedContrib" mandatory color="primary">
 						<summary-item
