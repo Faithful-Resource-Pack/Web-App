@@ -1,20 +1,16 @@
 <template>
-	<v-container>
-		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
-			<v-progress-circular :size="150" :width="10" indeterminate />
-			<p class="text-h6 my-5">{{ $root.lang().posts.loading }}</p>
-		</div>
-		<template v-else>
-			<v-tabs v-model="selectedTab" grow :class="[{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
-				<v-tab>{{ $root.lang().posts.general.heading }}</v-tab>
-				<v-tab>{{ $root.lang().posts.download.heading }}</v-tab>
-				<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
-			</v-tabs>
-			<v-list
-				:class="['main-container', 'mb-2 pa-4', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]"
-				:rounded="$vuetify.breakpoint.mdAndUp"
-				two-line
-			>
+	<div>
+		<v-tabs v-model="selectedTab" grow :class="[{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
+			<v-tab>{{ $root.lang().posts.general.heading }}</v-tab>
+			<v-tab>{{ $root.lang().posts.download.heading }}</v-tab>
+			<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
+		</v-tabs>
+		<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" two-line>
+			<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
+				<v-progress-circular :size="150" :width="10" indeterminate />
+				<p class="text-h6 my-5">{{ $root.lang().posts.loading }}</p>
+			</div>
+			<template v-else>
 				<v-tabs-items v-model="selectedTab" style="background-color: transparent" class="pb-3">
 					<v-tab-item><general-tab v-model="formData" /></v-tab-item>
 					<v-tab-item><download-tab v-model="downloads" /></v-tab-item>
@@ -31,9 +27,9 @@
 						{{ $root.lang().global.btn.publish }}
 					</v-btn>
 				</div>
-			</v-list>
-		</template>
-	</v-container>
+			</template>
+		</v-list>
+	</div>
 </template>
 
 <script>

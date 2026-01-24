@@ -1,172 +1,165 @@
 <template>
 	<v-container>
-		<div class="text-h4 py-4">
-			{{ $root.lang().profile.title }}
-		</div>
+		<h4 class="text-h4 py-4">{{ $root.lang().profile.title }}</h4>
 
-		<div :class="['my-2 text-h5', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
-			<v-list :rounded="$vuetify.breakpoint.mdAndUp" class="main-container">
-				<v-list-item two-line>
-					<v-list-item-avatar>
-						<v-img :src="$root.user.avatar" />
-					</v-list-item-avatar>
+		<v-list
+			:rounded="$vuetify.breakpoint.mdAndUp"
+			class="main-container mb-2 pa-4"
+			:class="{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }"
+		>
+			<v-list-item two-line>
+				<v-list-item-avatar>
+					<v-img :src="$root.user.avatar" />
+				</v-list-item-avatar>
 
-					<v-list-item-content>
-						<v-list-item-title>
-							{{ $root.discordUser.discordName || $root.user.username }}
-							<span class="text--secondary">• {{ $root.user.id }}</span>
-						</v-list-item-title>
-						<v-list-item-subtitle>
-							<v-chip
-								v-for="role in $root.user.roles || []"
-								:key="role"
-								class="mr-1 px-2 my-1"
-								x-small
-							>
-								{{ role }}
-							</v-chip>
-						</v-list-item-subtitle>
-					</v-list-item-content>
-				</v-list-item>
-
-				<!-- ================ GENERAL SETTINGS ================ -->
-				<v-list-item>
-					<v-row
-						class="mt-5 justify-space-between"
-						:style="{
-							alignItems: $vuetify.breakpoint.mdAndUp ? 'flex-start' : 'center',
-							flexDirection: $vuetify.breakpoint.mdAndUp ? 'row' : 'column',
-						}"
-					>
-						<v-col
-							v-if="localUser.uuid && localUser.uuid.length == uuidMaxLength"
-							cols="2"
-							:sm="$vuetify.breakpoint.mdAndUp ? 3 : 2"
-							style="max-width: 250px"
+				<v-list-item-content>
+					<v-list-item-title>
+						{{ $root.discordUser.discordName || $root.user.username }}
+						<span class="text--secondary">• {{ $root.user.id }}</span>
+					</v-list-item-title>
+					<v-list-item-subtitle>
+						<v-chip
+							v-for="role in $root.user.roles || []"
+							:key="role"
+							class="mr-1 px-2 my-1"
+							x-small
 						>
-							<img
-								alt="avatar"
-								:style="{
-									display: 'block',
-									'margin-left': 'auto',
-									'margin-right': $vuetify.breakpoint.mdAndUp ? 'inherit' : 'auto',
-									height: '100%',
-								}"
-								:src="
-									($vuetify.breakpoint.mdAndUp
-										? 'https://vzge.me/full/256/'
-										: 'https://vzge.me/head/128/') + localUser.uuid
-								"
-							/>
-						</v-col>
-						<v-col
-							:cols="hasUUID ? 10 : 12"
-							:sm="hasUUID ? ($vuetify.breakpoint.mdAndUp ? 9 : 10) : 12"
-							style="max-width: 100%"
-						>
-							<v-form ref="form" lazy-validation>
-								<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
-								<v-row>
-									<v-col>
-										<v-text-field
-											v-model="localUser.username"
-											required
-											:rules="usernameRules"
-											:counter="usernameMaxLength"
-											clearable
-											:label="$root.lang().profile.general.username.label"
-											:hint="$root.lang().profile.general.username.hint"
-										/>
-									</v-col>
-								</v-row>
-								<v-row>
-									<v-col cols="12" sm="9">
-										<v-text-field
-											v-model="localUser.uuid"
-											placeholder="aaabbbcc-ddee-1122-3344-zzz555aadd33"
-											:rules="uuidRules"
-											:counter="uuidMaxLength"
-											clearable
-											:label="$root.lang().profile.general.uuid.label"
-											:hint="$root.lang().profile.general.uuid.hint"
-										/>
-									</v-col>
-									<v-col cols="12" sm="3">
-										<v-tooltip
-											:left="$vuetify.breakpoint.mdAndUp"
-											:right="!$vuetify.breakpoint.mdAndUp"
-											max-width="400px"
-											min-width="250px"
-										>
-											<template #activator="{ on, attrs }">
-												<!-- https://github.com/vuetifyjs/vuetify/issues/11345 -->
-												<span v-bind="attrs" v-on="on">
-													<v-checkbox
-														v-model="localUser.anonymous"
-														:label="$root.lang().profile.general.anonymous.label"
-													/>
-												</span>
-											</template>
-											<span>{{ $root.lang().profile.general.anonymous.hint }}</span>
-										</v-tooltip>
-									</v-col>
-								</v-row>
-							</v-form>
-						</v-col>
-					</v-row>
-				</v-list-item>
+							{{ role }}
+						</v-chip>
+					</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
 
-				<br />
+			<!-- ================ GENERAL SETTINGS ================ -->
+			<div
+				class="mt-5 d-flex justify-space-between"
+				:style="{
+					alignItems: $vuetify.breakpoint.mdAndUp ? 'flex-start' : 'center',
+					flexDirection: $vuetify.breakpoint.mdAndUp ? 'row' : 'column',
+				}"
+			>
+				<v-col
+					v-if="localUser.uuid && localUser.uuid.length == uuidMaxLength"
+					cols="2"
+					:sm="$vuetify.breakpoint.mdAndUp ? 3 : 2"
+					class="d-flex justify-center"
+					style="max-width: 200px"
+				>
+					<img
+						alt="avatar"
+						:src="
+							($vuetify.breakpoint.mdAndUp
+								? 'https://vzge.me/full/256/'
+								: 'https://vzge.me/head/128/') + localUser.uuid
+						"
+					/>
+				</v-col>
+				<v-col
+					:cols="hasUUID ? 10 : 12"
+					:sm="hasUUID ? ($vuetify.breakpoint.mdAndUp ? 9 : 10) : 12"
+					class="flex-grow-1 mx-0 px-0"
+					style="max-width: 100%"
+				>
+					<v-form lazy-validation>
+						<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
+						<v-row>
+							<v-col>
+								<v-text-field
+									v-model="localUser.username"
+									required
+									:rules="usernameRules"
+									:counter="usernameMaxLength"
+									clearable
+									:label="$root.lang().profile.general.username.label"
+									:hint="$root.lang().profile.general.username.hint"
+								/>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12" sm="9">
+								<v-text-field
+									v-model="localUser.uuid"
+									placeholder="aaabbbcc-ddee-1122-3344-zzz555aadd33"
+									:rules="uuidRules"
+									:counter="uuidMaxLength"
+									clearable
+									:label="$root.lang().profile.general.uuid.label"
+									:hint="$root.lang().profile.general.uuid.hint"
+								/>
+							</v-col>
+							<v-col cols="12" sm="3">
+								<v-tooltip
+									:left="$vuetify.breakpoint.mdAndUp"
+									:right="!$vuetify.breakpoint.mdAndUp"
+									max-width="400px"
+									min-width="250px"
+								>
+									<template #activator="{ on, attrs }">
+										<!-- https://github.com/vuetifyjs/vuetify/issues/11345 -->
+										<span v-bind="attrs" v-on="on">
+											<v-checkbox
+												v-model="localUser.anonymous"
+												:label="$root.lang().profile.general.anonymous.label"
+											/>
+										</span>
+									</template>
+									<span>{{ $root.lang().profile.general.anonymous.hint }}</span>
+								</v-tooltip>
+							</v-col>
+						</v-row>
+					</v-form>
+				</v-col>
+			</div>
 
-				<!-- ================ SOCIAL SETTINGS ================ -->
-				<v-list-item>
-					<v-row class="mb-2">
-						<v-col>
-							<v-form lazy-validation>
-								<div class="text-h6 mb-5">{{ $root.lang().profile.social.title }}</div>
-								<v-row v-for="(socialMedia, i) in localUser.media" :key="socialMedia.key">
-									<v-col cols="12" sm="8">
-										<v-text-field
-											v-model="socialMedia.link"
-											clearable
-											:placeholder="$root.lang().profile.social.placeholder"
-											:label="$root.lang().profile.social.link_label"
-											:rules="urlRules"
-										/>
-									</v-col>
-									<v-col cols="11" sm="3">
-										<v-select
-											v-model="socialMedia.type"
-											:items="mediaTypes"
-											:label="$root.lang().profile.social.type_label"
-											:rules="mediaTypeRules"
-										/>
-									</v-col>
-									<v-col cols="1">
-										<v-btn icon @click="removeSocialMedia(i)">
-											<v-icon color="red darken-1">mdi-minus</v-icon>
-										</v-btn>
-									</v-col>
-								</v-row>
-								<v-btn block class="my-5" color="secondary" @click="addSocialMedia">
-									{{ $root.lang().profile.social.add }}
-									<v-icon right>mdi-plus</v-icon>
+			<br />
+
+			<!-- ================ SOCIAL SETTINGS ================ -->
+			<v-row class="mb-2">
+				<v-col>
+					<v-form lazy-validation>
+						<div class="text-h6 mb-5">{{ $root.lang().profile.social.title }}</div>
+						<v-row v-for="(socialMedia, i) in localUser.media" :key="socialMedia.key">
+							<v-col cols="12" sm="8">
+								<v-text-field
+									v-model="socialMedia.link"
+									clearable
+									:placeholder="$root.lang().profile.social.placeholder"
+									:label="$root.lang().profile.social.link_label"
+									:rules="urlRules"
+								/>
+							</v-col>
+							<v-col cols="11" sm="3">
+								<v-select
+									v-model="socialMedia.type"
+									:items="mediaTypes"
+									:label="$root.lang().profile.social.type_label"
+									:rules="mediaTypeRules"
+								/>
+							</v-col>
+							<v-col cols="1">
+								<v-btn icon @click="removeSocialMedia(i)">
+									<v-icon color="red darken-1">mdi-minus</v-icon>
 								</v-btn>
-							</v-form>
-						</v-col>
-					</v-row>
-				</v-list-item>
+							</v-col>
+						</v-row>
+						<v-btn block class="my-5" color="secondary" @click="addSocialMedia">
+							{{ $root.lang().profile.social.add }}
+							<v-icon right>mdi-plus</v-icon>
+						</v-btn>
+					</v-form>
+				</v-col>
+			</v-row>
 
-				<div class="d-flex justify-end ma-2">
-					<v-btn text color="error darken-1" @click="openDeleteModal">
-						{{ $root.lang().profile.delete.btn }}
-					</v-btn>
-					<v-btn text color="darken-1" :disabled="!canSubmit" @click="send">
-						{{ $root.lang().profile.save_changes }}
-					</v-btn>
-				</div>
-			</v-list>
-		</div>
+			<div class="d-flex justify-end ma-2">
+				<v-btn text color="error darken-1" @click="openDeleteModal">
+					{{ $root.lang().profile.delete.btn }}
+				</v-btn>
+				<v-btn text color="darken-1" :disabled="!canSubmit" @click="send">
+					{{ $root.lang().profile.save_changes }}
+				</v-btn>
+			</div>
+		</v-list>
+
 		<user-remove-confirm
 			v-model="deleteModalOpened"
 			:data="localUser"

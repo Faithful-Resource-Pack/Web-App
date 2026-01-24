@@ -1,10 +1,8 @@
 <template>
-	<div class="container">
-		<h4 class="text-h4 py-4">
-			{{ $root.lang().posts.titles.new }}
-		</h4>
+	<v-container>
+		<h4 class="text-h4 py-4">{{ $root.lang().posts.titles.new }}</h4>
 		<post-form v-model="post" add />
-	</div>
+	</v-container>
 </template>
 
 <script>

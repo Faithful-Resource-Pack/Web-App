@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<v-container>
 		<h4 class="text-h4 py-4">{{ $root.lang().addons.titles.submit }}</h4>
 		<addon-form
 			addon-new
@@ -9,7 +9,7 @@
 			@header="handleHeader"
 			@screenshot="handleScreenshot"
 		/>
-	</div>
+	</v-container>
 </template>
 
 <script>

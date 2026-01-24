@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<v-container>
 		<h4 class="text-h4 py-4">
 			<v-btn large icon class="ml-4" to="/addons/submissions">
 				<v-icon>mdi-chevron-left</v-icon>
@@ -37,7 +37,7 @@
 				/>
 			</v-form>
 		</modal-form>
-	</div>
+	</v-container>
 </template>
 
 <script>

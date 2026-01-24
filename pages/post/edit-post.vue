@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<v-container>
 		<h4 class="text-h4 py-4">
 			<v-btn large icon class="ml-4" to="/posts/list">
 				<v-icon>mdi-chevron-left</v-icon>
@@ -7,7 +7,7 @@
 			{{ $root.lang().posts.titles.edit }} <span class="thin-text">#{{ id }}</span>
 		</h4>
 		<post-form v-model="post" :loading="loading" />
-	</div>
+	</v-container>
 </template>
 
 <script>

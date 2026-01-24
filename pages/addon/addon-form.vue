@@ -1,272 +1,265 @@
 <template>
-	<v-container>
-		<fullscreen-preview v-model="previewOpen" :src="header" />
-
+	<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" two-line>
 		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
 			<span />
 			<v-progress-circular :size="150" :width="10" indeterminate />
 			<p class="text-h6 my-5">{{ $root.lang().addons.general.loading_addon }}</p>
 		</div>
-		<v-list
-			v-else
-			:class="['main-container', 'mb-2 pa-4', { 'mx-n3': !$vuetify.breakpoint.mdAndUp }]"
-			:rounded="$vuetify.breakpoint.mdAndUp"
-			two-line
-		>
-			<v-form ref="form" v-model="validForm" lazy-validation>
-				<a
-					href="https://docs.faithfulpack.net/pages/manuals/add-on-rules"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<v-alert type="warning" class="pb-4" color="orange darken-3">
-						<span style="color: inherit; text-decoration: underline">
-							{{ $root.lang().addons.general.rules }}
-						</span>
-						<v-icon small>mdi-open-in-new</v-icon>
-					</v-alert>
-				</a>
+		<v-form v-else ref="form" v-model="validForm" lazy-validation>
+			<a
+				href="https://docs.faithfulpack.net/pages/manuals/add-on-rules"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<v-alert type="warning" class="pb-4" color="orange darken-3">
+					<span style="color: inherit; text-decoration: underline">
+						{{ $root.lang().addons.general.rules }}
+					</span>
+					<v-icon small>mdi-open-in-new</v-icon>
+				</v-alert>
+			</a>
 
-				<div class="row">
-					<!-- LEFT PART : INPUT -->
-					<div class="col pb-0">
-						<div class="text-h5">{{ $root.lang().addons.general.title }}</div>
+			<div class="row">
+				<!-- LEFT PART : INPUT -->
+				<div class="col pb-0">
+					<div class="text-h5">{{ $root.lang().addons.general.title }}</div>
 
-						<!-- Addon name -->
-						<v-text-field
-							v-model="submittedForm.name"
-							required
-							clearable
-							:rules="form.name.rules"
-							:counter="form.name.counter.max"
-							:label="$root.lang().addons.general.name.label"
-							:hint="$root.lang().addons.general.name.hint"
-						/>
+					<!-- Addon name -->
+					<v-text-field
+						v-model="submittedForm.name"
+						required
+						clearable
+						:rules="form.name.rules"
+						:counter="form.name.counter.max"
+						:label="$root.lang().addons.general.name.label"
+						:hint="$root.lang().addons.general.name.hint"
+					/>
 
-						<!-- Addon authors selection -->
-						<user-select
-							v-model="submittedForm.authors"
-							:users="users"
-							:label="$root.lang().addons.general.authors.label"
-							:hint="$root.lang().addons.general.authors.hint"
-						/>
+					<!-- Addon authors selection -->
+					<user-select
+						v-model="submittedForm.authors"
+						:users="users"
+						:label="$root.lang().addons.general.authors.label"
+						:hint="$root.lang().addons.general.authors.hint"
+					/>
 
-						<div v-if="!$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
-							{{ $root.lang().addons.images.title }}
-						</div>
-					</div>
-					<!-- RIGHT PART: HEADER IMAGE PREVIEW -->
-					<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
-						<div class="col">
-							<emitting-image
-								v-if="header !== undefined"
-								deletable
-								:src="header"
-								@fullscreen="openPreview"
-								@delete="removeHeader"
-							/>
-							<v-responsive
-								v-else
-								:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
-								min-height="100px"
-								class="mt-3"
-							>
-								<drop-zone
-									v-model="submittedForm.headerFile"
-									:disabled="disabledHeaderInput"
-									accept="image/jpg, image/jpeg"
-									style="height: 100%"
-									@change="updateHeader"
-								>
-									<v-icon small>mdi-image</v-icon>
-									{{ $root.lang().addons.images.header.labels.drop }}
-								</drop-zone>
-							</v-responsive>
-						</div>
+					<div v-if="!$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
+						{{ $root.lang().addons.images.title }}
 					</div>
 				</div>
-
-				<div v-if="$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
-					{{ $root.lang().addons.images.title }}
-				</div>
-
-				<!-- upload field for images -->
-				<div class="py-5">
-					<drop-zone
-						v-model="submittedForm.carouselFiles"
-						multiple
-						accept="image/jpg, image/jpeg"
-						style="height: 70px"
-						@change="onCarouselChange"
-					>
-						<v-icon small>mdi-image</v-icon>
-						{{ $root.lang().addons.images.carousel.labels.drop }}
-					</drop-zone>
-				</div>
-
-				<image-previewer
-					deletable
-					:sources="carouselSources"
-					:ids="screenIds"
-					@delete="removeCarouselItem"
-				/>
-
-				<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
-
-				<!-- Addon description -->
-				<tabbed-text-field
-					v-model="submittedForm.description"
-					:textareaProps="{
-						clearable: true,
-						rules: form.description.rules,
-						counter: form.description.counter.max,
-						hint: $root.lang().addons.info.description.hint,
-						placeholder: $root.lang().addons.info.description.placeholder,
-					}"
-				/>
-
-				<!-- Embed description -->
-				<v-text-field
-					v-model="submittedForm.embed_description"
-					clearable
-					:label="$root.lang().addons.info.embed_description.label"
-					:hint="$root.lang().addons.info.embed_description.hint"
-					:counter="form.embed_description.counter.max"
-					persistent-hint
-				/>
-
-				<!-- only visible to admins on already-existing addons -->
-				<v-text-field
-					v-if="$root.isAdmin && !addonNew"
-					v-model="submittedForm.slug"
-					clearable
-					:label="$root.lang().addons.general.slug.label"
-					:hint="$root.lang().addons.general.slug.hint"
-					:rules="form.slug.rules"
-					:counter="form.slug.counter"
-				/>
-
-				<div class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</div>
-
-				<v-chip-group
-					v-model="submittedForm.selectedPacks"
-					multiple
-					mandatory
-					class="d-flex flex-row align-center"
-				>
-					<span class="subtitle-1 text--secondary mt-1">
-						{{ $root.lang().addons.compatibility.packs.label }}
-					</span>
-					<div class="px-2" />
-					<v-chip
-						v-for="pack in packs"
-						:key="pack.value"
-						filter
-						:value="pack.value"
-						:style="{ color: pack.color }"
-					>
-						{{ pack.label }}
-					</v-chip>
-				</v-chip-group>
-
-				<v-chip-group
-					v-model="submittedForm.selectedEditions"
-					multiple
-					mandatory
-					class="d-flex flex-row align-center"
-				>
-					<span class="subtitle-1 text--secondary mt-1">
-						{{ $root.lang().addons.compatibility.editions.label }}
-					</span>
-					<div class="px-2" />
-					<v-chip
-						v-for="edition in editions"
-						:key="edition.value"
-						filter
-						:value="edition.value"
-						:style="{ color: edition.color }"
-					>
-						{{ edition.value }}
-					</v-chip>
-				</v-chip-group>
-
-				<v-checkbox
-					v-model="submittedForm.options.optifine"
-					class="pt-5"
-					:label="$root.lang().addons.compatibility.optifine.label"
-				/>
-
-				<div class="text-h5">{{ $root.lang().addons.downloads.title }}</div>
-
-				<!-- cannot use obj.key as index since it rerenders the form on change otherwise -->
-				<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-1">
-					<v-col cols="12" sm="3">
-						<v-text-field
-							v-model="obj.key"
-							clearable
-							:placeholder="$root.lang().addons.downloads.name.placeholder"
-							:label="$root.lang().addons.downloads.name.label"
-							:rules="downloadTitleRules"
+				<!-- RIGHT PART: HEADER IMAGE PREVIEW -->
+				<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
+					<div class="col">
+						<emitting-image
+							v-if="header !== undefined"
+							deletable
+							:src="header"
+							@fullscreen="openPreview"
+							@delete="removeHeader"
 						/>
-					</v-col>
-					<v-col cols="12" sm="9">
-						<v-row
-							v-for="(_link, indexLinks) in obj.links"
-							:key="indexLinks"
-							class="align-baseline"
-							dense
+						<v-responsive
+							v-else
+							:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
+							min-height="100px"
+							class="mt-3"
 						>
-							<v-col>
-								<v-text-field
-									v-model="obj.links[indexLinks]"
-									clearable
-									:placeholder="$root.lang().addons.downloads.link.placeholder"
-									:label="$root.lang().addons.downloads.link.label"
-									:rules="downloadLinkRules"
-								/>
-							</v-col>
-							<v-col v-if="indexLinks == 0" class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="addDownloadLink(index)">
-									<v-icon color="lighten-1">mdi-plus</v-icon>
-								</v-btn>
-							</v-col>
-							<v-col v-else class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="removeDownloadLink(index, indexLinks)">
-									<v-icon color="red lighten-1">mdi-minus</v-icon>
-								</v-btn>
-							</v-col>
-							<v-col v-if="index != 0 && indexLinks == 0" class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="removeDownloadGroup(index)">
-									<v-icon color="red lighten-1">mdi-delete</v-icon>
-								</v-btn>
-							</v-col>
-						</v-row>
-					</v-col>
-				</v-row>
-				<div class="pb-3">
-					<v-btn block color="secondary" @click="addDownloadGroup">
-						{{ $root.lang().global.btn.add_download }}
-						<v-icon right>mdi-plus</v-icon>
-					</v-btn>
+							<drop-zone
+								v-model="submittedForm.headerFile"
+								:disabled="disabledHeaderInput"
+								accept="image/jpg, image/jpeg"
+								style="height: 100%"
+								@change="updateHeader"
+							>
+								<v-icon small>mdi-image</v-icon>
+								{{ $root.lang().addons.images.header.labels.drop }}
+							</drop-zone>
+						</v-responsive>
+					</div>
 				</div>
+			</div>
 
-				<div class="d-flex justify-end ma-2">
-					<v-btn
-						v-if="$root.isAdmin"
-						:disabled="!validForm"
-						color="primary"
-						text
-						@click="onSubmit(true)"
+			<div v-if="$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
+				{{ $root.lang().addons.images.title }}
+			</div>
+
+			<!-- upload field for images -->
+			<div class="py-5">
+				<drop-zone
+					v-model="submittedForm.carouselFiles"
+					multiple
+					accept="image/jpg, image/jpeg"
+					style="height: 70px"
+					@change="onCarouselChange"
+				>
+					<v-icon small>mdi-image</v-icon>
+					{{ $root.lang().addons.images.carousel.labels.drop }}
+				</drop-zone>
+			</div>
+
+			<image-previewer
+				deletable
+				:sources="carouselSources"
+				:ids="screenIds"
+				@delete="removeCarouselItem"
+			/>
+
+			<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
+
+			<!-- Addon description -->
+			<tabbed-text-field
+				v-model="submittedForm.description"
+				:textareaProps="{
+					clearable: true,
+					rules: form.description.rules,
+					counter: form.description.counter.max,
+					hint: $root.lang().addons.info.description.hint,
+					placeholder: $root.lang().addons.info.description.placeholder,
+				}"
+			/>
+
+			<!-- Embed description -->
+			<v-text-field
+				v-model="submittedForm.embed_description"
+				clearable
+				:label="$root.lang().addons.info.embed_description.label"
+				:hint="$root.lang().addons.info.embed_description.hint"
+				:counter="form.embed_description.counter.max"
+				persistent-hint
+			/>
+
+			<!-- only visible to admins on already-existing addons -->
+			<v-text-field
+				v-if="$root.isAdmin && !addonNew"
+				v-model="submittedForm.slug"
+				clearable
+				:label="$root.lang().addons.general.slug.label"
+				:hint="$root.lang().addons.general.slug.hint"
+				:rules="form.slug.rules"
+				:counter="form.slug.counter"
+			/>
+
+			<div class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</div>
+
+			<v-chip-group
+				v-model="submittedForm.selectedPacks"
+				multiple
+				mandatory
+				class="d-flex flex-row align-center"
+			>
+				<span class="subtitle-1 text--secondary mt-1">
+					{{ $root.lang().addons.compatibility.packs.label }}
+				</span>
+				<div class="px-2" />
+				<v-chip
+					v-for="pack in packs"
+					:key="pack.value"
+					filter
+					:value="pack.value"
+					:style="{ color: pack.color }"
+				>
+					{{ pack.label }}
+				</v-chip>
+			</v-chip-group>
+
+			<v-chip-group
+				v-model="submittedForm.selectedEditions"
+				multiple
+				mandatory
+				class="d-flex flex-row align-center"
+			>
+				<span class="subtitle-1 text--secondary mt-1">
+					{{ $root.lang().addons.compatibility.editions.label }}
+				</span>
+				<div class="px-2" />
+				<v-chip
+					v-for="edition in editions"
+					:key="edition.value"
+					filter
+					:value="edition.value"
+					:style="{ color: edition.color }"
+				>
+					{{ edition.value }}
+				</v-chip>
+			</v-chip-group>
+
+			<v-checkbox
+				v-model="submittedForm.options.optifine"
+				class="pt-5"
+				:label="$root.lang().addons.compatibility.optifine.label"
+			/>
+
+			<div class="text-h5">{{ $root.lang().addons.downloads.title }}</div>
+
+			<!-- cannot use obj.key as index since it rerenders the form on change otherwise -->
+			<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-1">
+				<v-col cols="12" sm="3">
+					<v-text-field
+						v-model="obj.key"
+						clearable
+						:placeholder="$root.lang().addons.downloads.name.placeholder"
+						:label="$root.lang().addons.downloads.name.label"
+						:rules="downloadTitleRules"
+					/>
+				</v-col>
+				<v-col cols="12" sm="9">
+					<v-row
+						v-for="(_link, indexLinks) in obj.links"
+						:key="indexLinks"
+						class="align-baseline"
+						dense
 					>
-						{{ $root.lang().global.btn.submit_and_approve }}
-					</v-btn>
-					<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
-						{{ $root.lang().global.btn.submit_for_review }}
-					</v-btn>
-				</div>
-			</v-form>
-		</v-list>
-	</v-container>
+						<v-col>
+							<v-text-field
+								v-model="obj.links[indexLinks]"
+								clearable
+								:placeholder="$root.lang().addons.downloads.link.placeholder"
+								:label="$root.lang().addons.downloads.link.label"
+								:rules="downloadLinkRules"
+							/>
+						</v-col>
+						<v-col v-if="indexLinks == 0" class="flex-grow-0 flex-shrink-0">
+							<v-btn icon @click="addDownloadLink(index)">
+								<v-icon color="lighten-1">mdi-plus</v-icon>
+							</v-btn>
+						</v-col>
+						<v-col v-else class="flex-grow-0 flex-shrink-0">
+							<v-btn icon @click="removeDownloadLink(index, indexLinks)">
+								<v-icon color="red lighten-1">mdi-minus</v-icon>
+							</v-btn>
+						</v-col>
+						<v-col v-if="index != 0 && indexLinks == 0" class="flex-grow-0 flex-shrink-0">
+							<v-btn icon @click="removeDownloadGroup(index)">
+								<v-icon color="red lighten-1">mdi-delete</v-icon>
+							</v-btn>
+						</v-col>
+					</v-row>
+				</v-col>
+			</v-row>
+			<div class="pb-3">
+				<v-btn block color="secondary" @click="addDownloadGroup">
+					{{ $root.lang().global.btn.add_download }}
+					<v-icon right>mdi-plus</v-icon>
+				</v-btn>
+			</div>
+
+			<div class="d-flex justify-end ma-2">
+				<v-btn
+					v-if="$root.isAdmin"
+					:disabled="!validForm"
+					color="primary"
+					text
+					@click="onSubmit(true)"
+				>
+					{{ $root.lang().global.btn.submit_and_approve }}
+				</v-btn>
+				<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
+					{{ $root.lang().global.btn.submit_for_review }}
+				</v-btn>
+			</div>
+		</v-form>
+
+		<fullscreen-preview v-model="previewOpen" :src="header" />
+	</v-list>
 </template>
 
 <script>
