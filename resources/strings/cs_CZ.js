@@ -320,28 +320,6 @@ export default {
 			placeholder: "https://www.příklad.cz/",
 		},
 	},
-	files: {
-		general: {
-			name: {
-				label: "Název souboru",
-				hint: "Název by měl soubor stručně popisovat.",
-				rules: {
-					name_required: "Název je vyžadován.",
-					name_too_big: "Název souboru musí být kratší než %s znaků.",
-					name_too_small: "Název souboru musí být alespoň %s znaků dlouhý.",
-				},
-			},
-			use: {
-				label: "Název užití souboru",
-				hint: "Stručně popisuje, jak je soubor využit",
-				rules: {
-					name_required: "Toto pole nelze zanechat prázdné.",
-					name_too_big: "Název užití souboru musí být kratší než %s znaků.",
-					name_too_small: "Název užití souboru musí být alespoň %s znaků dlouhý.",
-				},
-			},
-		},
-	},
 	gallery: {
 		title: "Galerie",
 		error_message: {

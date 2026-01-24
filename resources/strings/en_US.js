@@ -566,28 +566,6 @@ export default {
 			},
 		},
 	},
-	files: {
-		general: {
-			name: {
-				label: "File name",
-				hint: "Name describes shortly the file",
-				rules: {
-					name_required: "A name is required",
-					name_too_big: "File name must be less than %s characters",
-					name_too_small: "File name must be at least %s characters long",
-				},
-			},
-			use: {
-				label: "File use",
-				hint: "Describes short use",
-				rules: {
-					name_required: "A value is required",
-					name_too_big: "File use must be less than %s characters",
-					name_too_small: "File use must be at least %s characters long",
-				},
-			},
-		},
-	},
 	gallery: {
 		max_items_per_row: "Max items per row",
 		stretched_switcher: "Full width view",

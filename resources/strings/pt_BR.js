@@ -507,28 +507,6 @@ export default {
 			warning: "Este processo é irreversível!",
 		},
 	},
-	files: {
-		general: {
-			name: {
-				label: "Nome do arquivo",
-				hint: "O nome descreve brevemente o arquivo",
-				rules: {
-					name_required: "É necessário um nome.",
-					name_too_big: "O nome do arquivo deve ter menos de %s caracteres.",
-					name_too_small: "O nome do arquivo deve ter pelo menos %s caracteres.",
-				},
-			},
-			use: {
-				label: "Uso do arquivo",
-				hint: "Descreva brevemente o uso",
-				rules: {
-					name_required: "É necessário um valor.",
-					name_too_big: "O uso do arquivo deve ter menos de %s caracteres.",
-					name_too_small: "Uso do arquivo deve ter pelo menos %s caracteres.",
-				},
-			},
-		},
-	},
 	gallery: {
 		stretched_switcher: "Visualização completa de largura",
 		share_link_copied_to_clipboard: "Link de compartilhamento copiado para a área de transferência",

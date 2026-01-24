@@ -491,28 +491,6 @@ export default {
 			warning: "Este proceso es irreversible!",
 		},
 	},
-	files: {
-		general: {
-			name: {
-				label: "Nombre del archivo",
-				hint: "El nombre describe en breve al archivo",
-				rules: {
-					name_required: "Se requiere un nombre.",
-					name_too_big: "El nombre del archivo debe tener menos de %s caracteres.",
-					name_too_small: "El nombre del archivo debe tener al menos %s caracteres.",
-				},
-			},
-			use: {
-				label: "Uso del archivo",
-				hint: "Describe el uso corto",
-				rules: {
-					name_required: "Se requiere un valor.",
-					name_too_big: "El uso del archivo debe tener menos de %s caracteres.",
-					name_too_small: "El uso del archivo debe tener al menos %s caracteres.",
-				},
-			},
-		},
-	},
 	gallery: {
 		max_items_per_row: "Máximo de artículos por fila",
 		stretched_switcher: "Vista de ancho completo",
