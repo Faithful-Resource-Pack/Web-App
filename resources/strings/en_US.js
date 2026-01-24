@@ -356,7 +356,7 @@ export default {
 				hint: "A shorter name is preferred",
 				rules: {
 					name_required: "A name is required",
-					name_too_big: "Add-on name must be less than %s characters",
+					name_too_big: "Add-on name must be fewer than %s characters",
 					name_too_small: "Add-on name must be at least %s characters long",
 					name_unavailable: "This name is already taken!",
 				},
@@ -380,10 +380,10 @@ export default {
 			title: "Information",
 			description: {
 				placeholder: "Add-on description",
-				hint: "You can use Markdown formatting to improve your description!",
+				hint: "You can use Markdown formatting to style your description!",
 				rules: {
 					description_required: "The description is required",
-					description_too_big: "Description must be less than %s characters",
+					description_too_big: "Description must be fewer than %s characters",
 					description_too_small: "Description must be at least %s characters long",
 				},
 			},
@@ -391,7 +391,7 @@ export default {
 				label: "Embed description",
 				hint: "Description seen when sharing the add-on on social media",
 				rules: {
-					too_big: "Embed description must be less than %s characters",
+					too_big: "Embed description must be fewer than %s characters",
 				},
 			},
 		},
@@ -492,7 +492,7 @@ export default {
 			},
 			description: {
 				placeholder: "Post description",
-				hint: "You can use Markdown formatting to improve your description!",
+				hint: "You can use Markdown formatting to style your description!",
 			},
 		},
 		download: {
