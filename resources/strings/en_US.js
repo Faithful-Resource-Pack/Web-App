@@ -532,13 +532,27 @@ export default {
 		title: "Profile",
 		general: {
 			title: "General",
-			uuid: {
-				label: "Minecraft profile UUID",
-				hint: "Your skin will be displayed on your created or credited add-ons",
-			},
 			username: {
 				label: "Username",
 				hint: "Your username will be displayed on Faithful services for contributions, add-ons, etc",
+				rules: {
+					min: "Username must be longer than %d characters",
+					max: "Username must be fewer than %d characters",
+				},
+			},
+			uuid: {
+				label: "Minecraft profile UUID",
+				hint: "Your skin will be displayed on your created or credited add-ons",
+				rules: {
+					length: "UUID must be exactly 36 characters long",
+				},
+			},
+			bio: {
+				label: "Bio",
+				hint: "You can use Markdown formatting to style your bio!",
+				rules: {
+					length: "Bio must be fewer than %d characters",
+				},
 			},
 			anonymous: {
 				label: "Anonymous",
@@ -547,10 +561,21 @@ export default {
 		},
 		social: {
 			title: "Social links",
-			link_label: "Edit link",
-			type_label: "Select media type",
-			placeholder: "https://www.example.com/",
 			add: "Add social media",
+			type: {
+				label: "Select media type",
+				rules: {
+					exists: "Social type is required",
+					valid: "Social type must be valid",
+				},
+			},
+			link: {
+				label: "Edit link",
+				placeholder: "https://www.example.com/",
+				rules: {
+					valid: "URL must be valid",
+				},
+			},
 		},
 		save_changes: "Save changes",
 		delete: {

@@ -32,7 +32,7 @@
 
 			<!-- ================ GENERAL SETTINGS ================ -->
 			<div
-				class="mt-5 d-flex justify-space-between"
+				class="my-5 d-flex justify-space-between"
 				:style="{
 					alignItems: $vuetify.breakpoint.mdAndUp ? 'flex-start' : 'center',
 					flexDirection: $vuetify.breakpoint.mdAndUp ? 'row' : 'column',
@@ -60,8 +60,8 @@
 					class="flex-grow-1 mx-0 px-0"
 					style="max-width: 100%"
 				>
+					<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
 					<v-form lazy-validation>
-						<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
 						<v-row>
 							<v-col>
 								<v-text-field
@@ -111,29 +111,38 @@
 				</v-col>
 			</div>
 
-			<br />
+			<div class="text-h6 mb-5">{{ $root.lang().profile.general.bio.label }}</div>
 
-			<!-- ================ SOCIAL SETTINGS ================ -->
+			<tabbed-text-field
+				v-model="localUser.bio"
+				:textareaProps="{
+					rules: bioRules,
+					counter: bioMaxLength,
+					placeholder: $root.lang().profile.general.bio.label,
+					hint: $root.lang().profile.general.bio.hint,
+				}"
+			/>
+
+			<div class="text-h6 my-5">{{ $root.lang().profile.social.title }}</div>
 			<v-row class="mb-2">
 				<v-col>
 					<v-form lazy-validation>
-						<div class="text-h6 mb-5">{{ $root.lang().profile.social.title }}</div>
 						<v-row v-for="(socialMedia, i) in localUser.media" :key="socialMedia.key">
-							<v-col cols="12" sm="8">
-								<v-text-field
-									v-model="socialMedia.link"
-									clearable
-									:placeholder="$root.lang().profile.social.placeholder"
-									:label="$root.lang().profile.social.link_label"
-									:rules="urlRules"
-								/>
-							</v-col>
-							<v-col cols="11" sm="3">
+							<v-col cols="12" sm="3">
 								<v-select
 									v-model="socialMedia.type"
 									:items="mediaTypes"
-									:label="$root.lang().profile.social.type_label"
+									:label="$root.lang().profile.social.type.label"
 									:rules="mediaTypeRules"
+								/>
+							</v-col>
+							<v-col cols="11" sm="8">
+								<v-text-field
+									v-model="socialMedia.link"
+									clearable
+									:placeholder="$root.lang().profile.social.link.placeholder"
+									:label="$root.lang().profile.social.link.label"
+									:rules="urlRules"
 								/>
 							</v-col>
 							<v-col cols="1">
@@ -173,6 +182,7 @@
 import axios from "axios";
 
 import UserRemoveConfirm from "../users/user-remove-confirm.vue";
+import TabbedTextField from "@components/tabbed-text-field.vue";
 
 const emptySocial = () => ({
 	key: crypto.randomUUID(),
@@ -184,46 +194,72 @@ export default {
 	name: "profile-page",
 	components: {
 		UserRemoveConfirm,
+		TabbedTextField,
 	},
 	data() {
 		return {
 			localUser: {},
-			uuidMaxLength: 36,
+			usernameMinLength: 3,
 			usernameMaxLength: 24,
+			uuidMaxLength: 36,
+			bioMaxLength: 300,
 			mediaTypes: settings.socials,
 			validationObject: {},
-			urlRules: [(u) => this.validate("social:exists", this.validURL(u), "URL must be valid.")],
-			mediaTypeRules: [
+			usernameRules: [
 				(u) =>
 					this.validate(
-						"social:exists",
-						u && typeof u === "string" && u.trim().length > 0,
-						"Social type is required.",
+						"username:exists",
+						u && typeof u === "string" && u.trim().length > this.usernameMinLength,
+						this.$root
+							.lang()
+							.profile.general.username.rules.min.replace("%d", this.usernameMinLength),
 					),
 				(u) =>
-					this.validate("social:valid", this.mediaTypes.includes(u), "Social type must be valid."),
+					this.validate(
+						"username:length",
+						u && u.length <= this.usernameMaxLength,
+						this.$root
+							.lang()
+							.profile.general.username.rules.max.replace("%d", this.usernameMaxLength),
+					),
 			],
 			uuidRules: [
 				(u) =>
 					this.validate(
 						"uuid:length",
 						(u && u.length === this.uuidMaxLength) || !u,
-						"UUID needs to be 36 characters long.",
+						this.$root.lang().profile.general.uuid.rules.length,
 					),
 			],
-			usernameRules: [
-				(u) => this.validate("username:exists", !!u, "Username is required."),
-				(u) =>
+			bioRules: [
+				(b) =>
 					this.validate(
-						"username:content",
-						u && typeof u === "string" && u.trim().length > 0,
-						`Username cannot be empty`,
+						"bio:length",
+						b.length <= this.bioMaxLength,
+						this.$root.lang().profile.general.bio.rules.length.replace("%d", this.bioMaxLength),
 					),
+			],
+			urlRules: [
 				(u) =>
 					this.validate(
-						"username:length",
-						u && u.length <= this.usernameMaxLength,
-						`Username must be less than ${this.usernameMaxLength} characters.`,
+						"social:valid",
+						this.validURL(u),
+						this.$root.lang().profile.social.link.rules.valid,
+					),
+			],
+			mediaTypeRules: [
+				(u) =>
+					this.validate(
+						"social:exists",
+						u && typeof u === "string" && u.trim().length > 0,
+						this.$root.lang().profile.social.type.rules.exists,
+					),
+				// this should be impossible under normal circumstances
+				(u) =>
+					this.validate(
+						"social:valid",
+						this.mediaTypes.includes(u),
+						this.$root.lang().profile.social.type.rules.valid,
 					),
 			],
 			deleteModalOpened: false,
@@ -242,7 +278,9 @@ export default {
 			this.localUser.media.splice(index, 1);
 		},
 		validate(scope, value, msg) {
-			if (scope.startsWith("username:") || scope.startsWith("uuid:")) {
+			const nonSocialScopes = ["username:", "uuid:", "bio:"];
+
+			if (nonSocialScopes.some((tag) => scope.startsWith(tag))) {
 				// socials are validated separately since there's multiple of them
 				this.$set(this.validationObject, scope, value);
 			}
@@ -257,6 +295,7 @@ export default {
 			const data = {
 				uuid: this.localUser.uuid || "",
 				username: this.localUser.username || "",
+				bio: this.localUser.bio || "",
 				anonymous: this.localUser.anonymous || false,
 				media: this.cleanedMedia,
 			};
@@ -292,6 +331,7 @@ export default {
 					// fix if new user or empty user
 					this.localUser.uuid ||= "";
 					this.localUser.username ||= "";
+					this.localUser.bio ||= "";
 					this.localUser.media ||= [];
 				})
 				.catch((err) => {
