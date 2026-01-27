@@ -342,11 +342,15 @@ export default {
 				// if query changed but not params
 				if (JSON.stringify(params) === JSON.stringify(prev)) return;
 
-				// done first so any routing updates also update the version/edition
+				// done first so any routing updates also set everything else
 				this.current.version = params.version;
-				this.current.edition = params.edition;
 				this.current.tag = params.tag;
 				this.current.search = params.search;
+
+				if (!["all", ...settings.editions].includes(params.edition)) {
+					this.current.edition = "java";
+					this.updateRoute();
+				} else this.current.edition = params.edition;
 
 				// convert legacy urls to modern format
 				if (Object.keys(this.legacyPackIDs).includes(params.pack)) {
