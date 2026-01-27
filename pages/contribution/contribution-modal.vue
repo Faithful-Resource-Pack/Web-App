@@ -185,7 +185,7 @@ export default {
 						date: new Date(contrib.date).getTime(),
 						pack: contrib.pack,
 						authors: contrib.authors,
-						texture: String(textureID),
+						texture: Number(textureID),
 					})),
 				);
 			}
@@ -214,7 +214,7 @@ export default {
 						date: new Date(contrib.date).getTime(),
 						pack: contrib.pack,
 						authors: contrib.authors,
-						texture: String(contrib.texture),
+						texture: Number(contrib.texture),
 					},
 					this.$root.apiOptions,
 				)

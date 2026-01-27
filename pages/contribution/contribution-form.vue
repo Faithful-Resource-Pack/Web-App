@@ -26,8 +26,8 @@
 					v-if="add"
 					:value="Array.isArray(contrib.texture) ? contrib.texture : []"
 					:label="$root.lang().database.contributions.modal.texture_ids"
-					hide-details
 					:errors="$root.lang().database.contributions.modal.id_field_errors"
+					hide-details
 					@input="
 						(value) => {
 							contrib.texture = value;
@@ -36,10 +36,9 @@
 				/>
 				<div v-else class="d-flex align-center">
 					<v-text-field
-						v-model="contrib.texture"
+						v-model.number="contrib.texture"
 						:label="$root.lang().database.contributions.modal.texture_id"
 						required
-						type="number"
 						hide-details
 						class="mr-2"
 						min="0"
@@ -110,13 +109,12 @@ export default {
 	},
 	methods: {
 		incrementTextureID() {
-			const incremented = Number(this.contrib.texture) + 1;
-			this.contrib.texture = String(incremented);
+			++this.contrib.texture;
 		},
 		decrementTextureID() {
-			const decremented = Number(this.contrib.texture) - 1;
-			// min zero
-			this.contrib.texture = String(Math.max(decremented, 0));
+			--this.contrib.texture;
+			// clamp
+			if (this.contrib.texture < 0) this.contrib.texture = 0;
 		},
 	},
 	computed: {
