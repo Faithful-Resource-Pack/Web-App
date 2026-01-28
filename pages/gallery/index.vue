@@ -84,7 +84,7 @@
 				:ignoreList="ignoreList"
 				:discordIDtoName="discordIDtoName"
 				:shownColumns="shownColumns"
-				@open="newShareURL"
+				@open="openModal"
 				@openNewTab="openModalInNewTab"
 				@share="copyShareURL"
 			/>
@@ -181,30 +181,29 @@ export default {
 		};
 	},
 	methods: {
-		newShareURL(id, update = true) {
-			if (update && id !== undefined) this.$router.push({ query: { show: id } });
-
-			// need location api to get base url to share
+		// used for both opening in a new tab and copying
+		// todo: probably use URLSearchParams for this
+		makeShareURL(id) {
+			// vue router doesn't track base url so we need location api
 			const showIndex = location.href.indexOf("?show=");
 			let changedURL = location.href;
 			// trim off show portion if already exists
 			if (showIndex !== -1 && id !== undefined) changedURL = changedURL.slice(0, showIndex);
-			// add new url
 			if (id !== undefined) changedURL += `?show=${id}`;
 			return changedURL;
 		},
 		copyShareURL(id) {
-			const url = this.newShareURL(id, false);
+			const url = this.makeShareURL(id);
 			navigator.clipboard.writeText(url);
 			this.$root.showSnackBar(this.$root.lang().gallery.share_link_copied_to_clipboard, "success");
 		},
 		openModalInNewTab(id) {
-			const url = this.newShareURL(id, false);
+			const url = this.makeShareURL(id);
 			window.open(url, "_blank");
 		},
-		openModal() {
-			// router has already been triggered at this point
-			this.modalOpened = true;
+		openModal(id) {
+			// router watchers handle the rest
+			this.$router.push({ query: { show: id } });
 		},
 		closeModal() {
 			this.$router.push({ query: null });
@@ -367,8 +366,7 @@ export default {
 		"$route.query.show": {
 			handler(params, prev) {
 				if (!params || JSON.stringify(params) === JSON.stringify(prev)) return;
-				// modal texture id is computed so we don't need to pass anything
-				this.openModal();
+				this.modalOpened = true;
 			},
 			immediate: true,
 		},
