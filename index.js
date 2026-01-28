@@ -24,6 +24,7 @@ import NavAppBar from "@components/nav-app-bar.vue";
 import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
 import MissingPage from "./pages/404/index.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 Vue.config.devtools = import.meta.env.MODE === "development";
 Vue.use(Vuetify);
@@ -132,20 +133,8 @@ syncRoutes(
 // add missing route last (prevents some weird fallback shenanigans)
 router.addRoute({ path: "*", name: "404", component: MissingPage });
 
-async function loadSettings() {
-	// set as global
-	window.settings = await axios
-		.get(`${window.apiURL}/settings/raw`)
-		.then((res) => res.data)
-		.catch((err) => {
-			console.error(err);
-			// don't completely break the webapp if settings can't be fetched
-			return {};
-		});
-}
-
-// start loading immediately (needed for some pages)
-await loadSettings();
+// needed for some pages to not completely die
+window.settings = {};
 
 /**
  * VUE INITIALIZATION
@@ -157,6 +146,7 @@ const app = new Vue({
 		NavAppBar,
 		NavSidebar,
 		SnackbarStatus,
+		LoadingPage,
 	},
 	data() {
 		return {
@@ -183,6 +173,7 @@ const app = new Vue({
 				? localStorage.getItem(MENU_KEY) === "true"
 				: !this.$vuetify.breakpoint.mobile,
 			badgeData: {},
+			settingsLoaded: false,
 			snackbar: {
 				show: false,
 				message: "",
@@ -277,8 +268,17 @@ const app = new Vue({
 		syncRoutes(tabs) {
 			return syncRoutes(tabs.flatMap((r) => r.subtabs).flatMap((s) => s.routes));
 		},
-		reloadSettings() {
-			return loadSettings();
+		async reloadSettings() {
+			try {
+				window.settings = await axios.get(`${window.apiURL}/settings/raw`).then((res) => res.data);
+			} catch (err) {
+				console.error(err);
+			} finally {
+				// even if settings failed to load some pages work anyways, at least we tried
+				this.$nextTick(() => {
+					this.settingsLoaded = true;
+				});
+			}
 		},
 	},
 	computed: {
@@ -480,6 +480,7 @@ const app = new Vue({
 		},
 	},
 	created() {
+		this.reloadSettings();
 		moment.locale(this.langToBCP47(_get_lang()));
 
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;

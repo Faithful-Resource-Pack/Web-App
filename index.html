@@ -79,7 +79,8 @@
 			></nav-sidebar>
 
 			<v-main>
-				<router-view></router-view>
+				<loading-page v-if="!settingsLoaded"></loading-page>
+				<router-view v-else></router-view>
 				<span class="my-3 d-flex justify-center">
 					&copy; {{ new Date().getFullYear() }} Faithful Resource Pack
 				</span>
