@@ -12,18 +12,21 @@ export const appUserStore = defineStore("appUser", {
 		appUserRoles: undefined,
 	}),
 	actions: {
-		getOrCreateUser(rootApiURL, accessToken) {
-			return axios
-				.get(`${rootApiURL}/users/newprofile`, {
-					headers: {
-						discord: accessToken,
-					},
-				})
-				.then((res) => res.data);
+		async getOrCreateUser(rootApiURL, accessToken) {
+			const res = await axios.get(`${rootApiURL}/users/newprofile`, {
+				headers: {
+					discord: accessToken,
+				},
+			});
+			return res.data;
 		},
+		/**
+		 * @author TheRolf
+		 * @param {import("pinia").Store} authStore
+		 */
 		watchDiscordAuth(authStore, rootApiURL, onError) {
 			// https://pinia.vuejs.org/core-concepts/state.html#Subscribing-to-the-state
-			authStore.$subscribe((mutation) => {
+			authStore.$subscribe(async (mutation) => {
 				if (mutation.type === "patch function") return;
 
 				const auth = authStore.$state;
@@ -31,23 +34,20 @@ export const appUserStore = defineStore("appUser", {
 				// logged out
 				if (auth.access_token === undefined) {
 					this.$reset();
-					this.$patch({
-						appUserId: this.$state.appUserId,
-					});
+					this.$patch({ appUserId: this.$state.appUserId });
 					return;
 				}
 
-				return this.getOrCreateUser(rootApiURL, auth.access_token)
-					.then((data) => {
-						return this.$patch({
-							appUserId: data.id,
-							appUsername: data.username,
-							appUserRoles: data.roles,
-						});
-					})
-					.catch((...args) => {
-						onError(...args);
+				try {
+					const user = await this.getOrCreateUser(rootApiURL, auth.access_token);
+					this.$patch({
+						appUserId: user.id,
+						appUsername: user.username,
+						appUserRoles: user.roles,
 					});
+				} catch (args) {
+					onError(args);
+				}
 			});
 		},
 	},
