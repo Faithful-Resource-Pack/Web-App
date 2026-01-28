@@ -14,7 +14,7 @@
 		</v-alert>
 		<v-form ref="form" class="pt-2">
 			<v-select
-				v-model="form.old"
+				v-model="form.oldVersion"
 				:color="color"
 				:item-color="color"
 				:items="versions"
@@ -22,7 +22,7 @@
 				:label="$root.lang().database.textures.rename_version.current_version"
 			/>
 			<v-text-field
-				v-model="form.new"
+				v-model="form.newVersion"
 				:color="color"
 				:autofocus="!$vuetify.breakpoint.mobile"
 				required
@@ -63,8 +63,8 @@ export default {
 			],
 			form: {
 				// convenience feature
-				old: settings.versions[defaultEdition][0] || "",
-				new: "",
+				oldVersion: settings.versions[defaultEdition][0] || "",
+				newVersion: "",
 			},
 		};
 	},
@@ -75,7 +75,7 @@ export default {
 		send() {
 			axios
 				.put(
-					`${this.$root.apiURL}/paths/versions/rename/${this.form.old}/${this.form.new}`,
+					`${this.$root.apiURL}/paths/versions/rename/${this.form.oldVersion}/${this.form.newVersion}`,
 					null,
 					this.$root.apiOptions,
 				)
@@ -92,9 +92,9 @@ export default {
 	},
 	computed: {
 		isValid() {
-			if (!this.form.new) return false;
+			if (!this.form.newVersion) return false;
 			// cannot rename to an existing version, completely bricks the db (lol)
-			if (this.versionExists(this.form.new)) return false;
+			if (this.versionExists(this.form.newVersion)) return false;
 			return true;
 		},
 	},
