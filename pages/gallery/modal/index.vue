@@ -12,10 +12,9 @@
 		</template>
 		<fullscreen-preview v-model="previewOpen" :src="clickedImage" :aspect-ratio="1 / 1" texture />
 
-		<v-container v-if="loading" class="d-flex flex-column align-center justify-center flex-grow-1">
-			<v-progress-circular indeterminate :size="150" :width="10" />
-			<p class="text-h6 my-5">{{ $root.lang().gallery.modal.loading }}</p>
-		</v-container>
+		<loading-page v-if="loading">
+			{{ $root.lang().gallery.modal.loading }}
+		</loading-page>
 		<v-container v-else-if="error" class="d-flex align-center justify-center flex-grow-1">
 			<ascii-error :subtitle="error" :errorCode="errorCode" />
 		</v-container>
@@ -74,6 +73,7 @@ import AnimationTab from "./animation-tab.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import FullscreenModal from "@layouts/fullscreen-modal.vue";
 import AsciiError from "@components/ascii-error.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 const PACK_GRID_ORDER = [
 	["default", "faithful_32x", "faithful_64x"],
@@ -102,6 +102,7 @@ export default {
 		TextureTab,
 		AnimationTab,
 		AuthorTab,
+		LoadingPage,
 	},
 	props: {
 		value: {

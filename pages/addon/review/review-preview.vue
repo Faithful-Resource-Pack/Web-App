@@ -5,14 +5,7 @@
 			class="rounded-lg pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
 		>
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
-			<div
-				v-if="addonInPanelLoading === true"
-				class="d-flex flex-column align-center justify-center"
-				style="height: 100%"
-			>
-				<v-progress-circular indeterminate :size="150" :width="10" />
-				<p class="text-h6 my-5">{{ $root.lang().global.loading }}</p>
-			</div>
+			<loading-page v-if="addonInPanelLoading" />
 			<template v-else>
 				<div class="pb-2 d-flex align-center">
 					<div>
@@ -125,6 +118,7 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 import EmittingImage from "@components/emitting-image.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 export default {
 	name: "review-preview",
@@ -133,6 +127,7 @@ export default {
 		ImagePreviewer,
 		AddonInfo,
 		EmittingImage,
+		LoadingPage,
 	},
 	props: {
 		addonId: {

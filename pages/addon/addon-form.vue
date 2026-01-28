@@ -1,10 +1,8 @@
 <template>
 	<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" rounded>
-		<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
-			<span />
-			<v-progress-circular :size="150" :width="10" indeterminate />
-			<p class="text-h6 my-5">{{ $root.lang().addons.general.loading_addon }}</p>
-		</div>
+		<loading-page v-if="loading" class="my-10">
+			{{ $root.lang().addons.general.loading_addon }}
+		</loading-page>
 		<v-form v-else ref="form" v-model="validForm" lazy-validation>
 			<a
 				href="https://docs.faithfulpack.net/pages/manuals/add-on-rules"
@@ -271,6 +269,7 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import DropZone from "@components/drop-zone.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
 import UserSelect from "@components/user-select.vue";
+import LoadingPage from "@components/loading-page.vue";
 import { is16x9, verifyImage } from "@helpers/images";
 
 export default {
@@ -282,6 +281,7 @@ export default {
 		DropZone,
 		TabbedTextField,
 		UserSelect,
+		LoadingPage,
 	},
 	props: {
 		addonNew: {

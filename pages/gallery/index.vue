@@ -68,10 +68,9 @@
 			:class="{ 'mx-n3': $vuetify.breakpoint.xs }"
 			rounded
 		>
-			<div v-if="loading" class="my-5">
-				<v-progress-circular :size="150" :width="10" indeterminate />
-				<div class="text-h6 my-5">{{ $root.lang().gallery.loading_message }}</div>
-			</div>
+			<loading-page v-if="loading">
+				{{ $root.lang().gallery.loading_message }}
+			</loading-page>
 			<div v-else-if="textures.length === 0" class="text-h6 my-2">
 				{{ error || $root.lang().global.no_results }}
 			</div>
@@ -111,6 +110,7 @@ import GalleryOptions from "./gallery-options.vue";
 import GalleryGrid from "./gallery-grid.vue";
 import GalleryModal from "./modal/index.vue";
 import SearchBox from "@components/search-box.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 const COLUMN_KEY = "gallery_columns";
 const STRETCHED_KEY = "gallery_stretched";
@@ -124,6 +124,7 @@ export default {
 		GalleryGrid,
 		GalleryModal,
 		SearchBox,
+		LoadingPage,
 	},
 	data() {
 		const sortStrings = this.$root.lang().gallery.sort;

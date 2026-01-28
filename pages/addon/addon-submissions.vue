@@ -3,10 +3,9 @@
 		<div class="text-h4 py-4">
 			{{ $root.lang().addons.titles.submissions }}
 		</div>
-		<div v-if="loading" class="d-flex flex-column justify-center align-center my-10">
-			<v-progress-circular indeterminate :size="150" :width="10" />
-			<p class="text-h6 my-5">{{ $root.lang().addons.general.loading_addons }}</p>
-		</div>
+		<loading-page v-if="loading" class="my-10">
+			{{ $root.lang().addons.general.loading_addons }}
+		</loading-page>
 		<div v-else-if="addons.length === 0">
 			{{ error || $root.lang().addons.general.no_submissions }}
 		</div>
@@ -54,12 +53,14 @@ import axios from "axios";
 
 import AddonRemoveConfirm from "./addon-remove-confirm.vue";
 import CardGrid from "@layouts/card-grid.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 export default {
 	name: "addon-submissions",
 	components: {
 		AddonRemoveConfirm,
 		CardGrid,
+		LoadingPage,
 	},
 	data() {
 		return {

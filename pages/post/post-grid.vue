@@ -3,10 +3,9 @@
 		<div class="text-h4 py-4">
 			{{ $root.lang().posts.titles.list }}
 		</div>
-		<div v-if="loading" class="d-flex flex-column justify-center align-center my-10">
-			<v-progress-circular indeterminate :size="150" :width="10" />
-			<p class="text-h6 my-5">{{ $root.lang().posts.loading_list }}</p>
-		</div>
+		<loading-page v-if="loading" class="my-10">
+			{{ $root.lang().posts.loading_list }}
+		</loading-page>
 		<div v-else-if="posts.length === 0">
 			{{ error || $root.lang().global.no_results }}
 		</div>
@@ -57,12 +56,14 @@
 import axios from "axios";
 import PostRemoveConfirm from "./post-remove-confirm.vue";
 import CardGrid from "@layouts/card-grid.vue";
+import LoadingPage from "@components/loading-page.vue";
 
 export default {
 	name: "post-grid",
 	components: {
 		CardGrid,
 		PostRemoveConfirm,
+		LoadingPage,
 	},
 	data() {
 		return {

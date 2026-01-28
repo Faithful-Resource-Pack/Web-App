@@ -6,10 +6,9 @@
 			<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
 		</v-tabs>
 		<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" rounded>
-			<div v-if="loading" class="d-flex flex-column align-center justify-center my-10">
-				<v-progress-circular :size="150" :width="10" indeterminate />
-				<p class="text-h6 my-5">{{ $root.lang().posts.loading }}</p>
-			</div>
+			<loading-page v-if="loading" class="my-10">
+				{{ $root.lang().posts.loading }}
+			</loading-page>
 			<template v-else>
 				<v-tabs-items v-model="selectedTab" style="background-color: transparent" class="pb-3">
 					<v-tab-item><general-tab v-model="formData" /></v-tab-item>
@@ -34,13 +33,15 @@
 
 <script>
 import axios from "axios";
-import ChangelogTab from "./changelog-tab.vue";
-import DownloadTab from "./download-tab.vue";
+import LoadingPage from "@components/loading-page.vue";
 import GeneralTab from "./general-tab.vue";
+import DownloadTab from "./download-tab.vue";
+import ChangelogTab from "./changelog-tab.vue";
 
 export default {
 	name: "post-form",
 	components: {
+		LoadingPage,
 		GeneralTab,
 		DownloadTab,
 		ChangelogTab,
