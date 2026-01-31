@@ -1,16 +1,15 @@
 <template>
 	<v-container>
-		<div class="text-h4 py-4">
+		<div class="text-h4 py-4 d-flex flex-row align-center">
 			{{ $root.lang().addons.titles.submissions }}
+			<v-progress-circular v-if="loading" indeterminate class="ml-2" />
 		</div>
-		<loading-page v-if="loading" class="my-10">
-			{{ $root.lang().addons.general.loading_addons }}
-		</loading-page>
-		<div v-else-if="addons.length === 0">
+
+		<div v-if="!loading && addons.length === 0">
 			{{ error || $root.lang().addons.general.no_submissions }}
 		</div>
 		<div v-else class="my-2 text-h5">
-			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)">
+			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)" :loading="loading">
 				<template #title="{ name, options }">
 					<v-card-title>{{ name }}</v-card-title>
 					<v-card-subtitle>{{ options.tags.join(", ") }}</v-card-subtitle>
@@ -53,14 +52,12 @@ import axios from "axios";
 
 import AddonRemoveConfirm from "./addon-remove-confirm.vue";
 import CardGrid from "@layouts/card-grid.vue";
-import LoadingPage from "@components/loading-page.vue";
 
 export default {
 	name: "addon-submissions",
 	components: {
 		AddonRemoveConfirm,
 		CardGrid,
-		LoadingPage,
 	},
 	data() {
 		return {

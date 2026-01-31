@@ -347,7 +347,6 @@ export default {
 		},
 		general: {
 			loading_addon: "Loading add-on…",
-			loading_addons: "Loading add-on submissions…",
 			no_submissions: "You don't have any submitted add-ons!",
 			rules: "Make sure to read the add-on rules before submitting",
 			title: "General",
@@ -466,7 +465,6 @@ export default {
 			pending: "Pending",
 		},
 		loading: "Loading post…",
-		loading_list: "Loading post list…",
 		general: {
 			heading: "General",
 			title: {

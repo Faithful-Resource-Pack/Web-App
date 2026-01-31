@@ -1,18 +1,16 @@
 <template>
 	<v-row>
 		<v-col
-			v-for="item in items"
+			v-for="item in loading ? skeletonCount : items"
 			:key="item[track]"
 			:cols="$vuetify.breakpoint.mdAndUp ? 4 : $vuetify.breakpoint.smAndUp ? 6 : 12"
 			class="d-flex align-stretch"
 		>
+			<v-skeleton-loader v-if="loading" type="image, article" style="width: 100%" />
 			<v-card
-				style="
-					background-color: rgba(255, 255, 255, 0.05);
-					width: 100%;
-					display: flex;
-					flex-direction: column;
-				"
+				v-else
+				class="d-flex flex-column"
+				style="background-color: rgba(255, 255, 255, 0.05); width: 100%"
 			>
 				<v-img
 					style="border-radius: 5px"
@@ -62,6 +60,16 @@ export default {
 		getImage: {
 			type: Function,
 			required: true,
+		},
+		loading: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
+		skeletonCount: {
+			type: Number,
+			required: false,
+			default: 5,
 		},
 	},
 	data() {
