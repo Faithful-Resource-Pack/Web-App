@@ -1,5 +1,5 @@
 <template>
-	<v-app-bar app hide-on-scroll dense>
+	<v-app-bar app dense>
 		<v-app-bar-nav-icon
 			:title="$root.lang().global.navbar_labels.sidebar"
 			@click="$emit('drawer')"
