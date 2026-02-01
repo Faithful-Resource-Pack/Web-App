@@ -528,6 +528,7 @@ export default {
 	},
 	profile: {
 		title: "Profile",
+		public_profile: "Public profile",
 		general: {
 			title: "General",
 			username: {
@@ -554,7 +555,7 @@ export default {
 			},
 			anonymous: {
 				label: "Anonymous",
-				hint: "Hides username and Minecraft skin in the texture gallery and submitted add-ons. Username will still be accessible in texture submissions for crediting purposes, but won't appear anywhere else.",
+				hint: "Disables profile page and hides username and Minecraft skin in the texture gallery. Username will still be accessible in texture submissions for crediting purposes, but won't appear anywhere else.",
 			},
 		},
 		social: {

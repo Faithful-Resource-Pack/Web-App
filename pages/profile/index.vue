@@ -28,6 +28,18 @@
 						</v-chip>
 					</v-list-item-subtitle>
 				</v-list-item-content>
+				<v-list-item-action>
+					<v-btn
+						color="secondary"
+						:href="`https://faithfulpack.net/user/${$root.user.id}`"
+						:disabled="localUser.anonymous"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{{ $root.lang().profile.public_profile }}
+						<v-icon right>mdi-open-in-new</v-icon>
+					</v-btn>
+				</v-list-item-action>
 			</v-list-item>
 
 			<!-- ================ GENERAL SETTINGS ================ -->
