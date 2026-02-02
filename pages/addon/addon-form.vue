@@ -49,7 +49,7 @@
 				<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
 					<div class="col">
 						<emitting-image
-							v-if="header !== undefined"
+							v-if="header"
 							deletable
 							:src="header"
 							@fullscreen="openPreview"
