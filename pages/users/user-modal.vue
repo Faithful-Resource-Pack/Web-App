@@ -42,12 +42,18 @@
 					/>
 					<v-checkbox
 						v-model="formData.anonymous"
+						class="extended-checkbox"
 						:color="color"
 						required
 						clearable
-						:label="$root.lang().database.users.modal.anonymous"
-					/>
-					<p v-if="formData.anonymous">{{ $root.lang().profile.general.anonymous.hint }}</p>
+					>
+						<template #label>
+							<p class="text--primary mb-2">
+								{{ $root.lang().database.users.modal.anonymous }}
+							</p>
+							<p>{{ $root.lang().profile.general.anonymous.hint }}</p>
+						</template>
+					</v-checkbox>
 				</v-form>
 			</v-col>
 		</v-row>
