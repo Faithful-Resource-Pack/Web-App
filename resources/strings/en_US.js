@@ -560,17 +560,17 @@ export default {
 			},
 		},
 		social: {
-			title: "Social links",
+			title: "Social media",
 			add: "Add social media",
 			type: {
-				label: "Select media type",
+				label: "Social type",
 				rules: {
 					exists: "Social type is required",
 					valid: "Social type must be valid",
 				},
 			},
 			link: {
-				label: "Edit link",
+				label: "Link to social profile",
 				placeholder: "https://www.example.com/",
 				rules: {
 					valid: "URL must be valid",
