@@ -14,6 +14,7 @@ import NewPostPage from "../pages/post/new-post.vue";
 import ContributionPage from "../pages/contribution/index.vue";
 import UsersPage from "../pages/users/index.vue";
 import TexturePage from "../pages/texture/index.vue";
+import VersionPage from "../pages/version/index.vue";
 import PackPage from "../pages/pack/index.vue";
 import SettingsPage from "../pages/settings/index.vue";
 
@@ -190,6 +191,21 @@ export default [
 						path: "/textures/:tag?/:name*",
 						component: TexturePage,
 						name: "Textures",
+					},
+				],
+			},
+			{
+				id: "versions",
+				icon: "mdi-tag-multiple",
+				routes: [
+					{
+						path: "/versions",
+						redirect: "/versions/all",
+					},
+					{
+						path: "/versions/:edition?/",
+						component: VersionPage,
+						name: "Versions",
 					},
 				],
 			},

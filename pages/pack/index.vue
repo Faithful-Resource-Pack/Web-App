@@ -39,7 +39,7 @@
 				:key="packTag"
 				:class="['my-1 mr-2', activeTag(packTag)]"
 				:to="packURL(packTag)"
-				:exact="packTag == 'all'"
+				:exact="packTag === 'all'"
 			>
 				{{ formatTags(packTag) }}
 			</v-btn>
@@ -66,7 +66,6 @@
 					</v-list-item-subtitle>
 				</v-list-item-content>
 
-				<!-- action buttons -->
 				<v-list-item-action class="merged-actions">
 					<v-btn icon @click="openModal(item)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>

@@ -184,7 +184,6 @@ export default {
 			tag_filter: "Filter by tag",
 			search_texture: "Search texture name",
 			add_success: "Added texture(s) successfully",
-			version_exists: "Version name already exists",
 			delete_modal: {
 				deleting_use_will_delete_paths: "Deleting a use will also delete all its paths",
 				load_paths: "Load affected paths",
@@ -228,27 +227,40 @@ export default {
 				versions: "Versions",
 				mcmeta: "Animated",
 			},
-			add_version: {
-				title: "Add new Minecraft version",
-				success: "Added version successfully",
-				new_edition: "New version edition",
-				template_version: "Template version",
-				new_version: "New version name",
-			},
-			rename_version: {
-				title: "Rename Minecraft version",
-				current_version: "Current version name",
-				new_version: "New version name",
-				example:
-					"Renames all instances of a Minecraft version in the database (e.g. 1.17 → 1.17.1)",
-				warning: "Please don't forget to update all GitHub branch names!",
-			},
 			merge_textures: {
 				title: "Merge textures",
 				warning: "This will delete the source texture and cannot be undone!",
 				source: "Source texture ID",
 				destination: "Destination texture ID",
 				invalid_id: "Invalid texture ID",
+			},
+		},
+		versions: {
+			title: "Versions",
+			edition_filter: "Filter by edition",
+			version_result: "Version results",
+			exists: "Version name already exists",
+			path_count_singular: "%d path",
+			path_count_plural: "%d paths",
+			no_paths: "No associated paths",
+			modal: {
+				title: "Edit Minecraft version",
+				name: "Minecraft version name",
+				edition: "Minecraft edition",
+				warning: "Please don't forget to update all GitHub branch names!",
+			},
+			add: {
+				title: "Add new Minecraft version",
+				success: "Added version successfully",
+				new_edition: "New version edition",
+				template_version: "Template version",
+				new_version: "New version name",
+			},
+			delete: {
+				description: "Do you want to delete version %VERSION% for %EDITION% Edition?",
+				no_affected_paths: "No paths will be affected",
+				affected_paths_singular: "%d path will be affected.",
+				affected_paths_plural: "%d paths will be affected.",
 			},
 		},
 		packs: {
