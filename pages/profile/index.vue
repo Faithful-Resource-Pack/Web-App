@@ -1,25 +1,25 @@
 <template>
 	<v-container>
-		<h4 class="text-h4 py-4">{{ $root.lang().profile.title }}</h4>
+		<div class="d-flex flex-wrap align-center justify-space-between">
+			<h4 class="text-h4 my-4">{{ $root.lang().profile.title }}</h4>
+			<v-btn
+				class="my-4"
+				color="secondary"
+				:href="`https://faithfulpack.net/user/${$root.user.id}`"
+				:disabled="localUser.anonymous"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				{{ $root.lang().profile.public_profile }}
+				<v-icon right>mdi-open-in-new</v-icon>
+			</v-btn>
+		</div>
 		<v-list
 			class="main-container mb-2 pa-4"
 			:class="{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }"
 			rounded
 		>
-			<div class="d-flex flex-wrap align-center justify-space-between">
-				<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
-				<v-btn
-					class="mb-5"
-					color="secondary"
-					:href="`https://faithfulpack.net/user/${$root.user.id}`"
-					:disabled="localUser.anonymous"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					{{ $root.lang().profile.public_profile }}
-					<v-icon right>mdi-open-in-new</v-icon>
-				</v-btn>
-			</div>
+			<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
 			<div
 				class="d-flex flex-row justify-center align-center"
 				:class="$vuetify.breakpoint.xs && 'flex-wrap'"
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 
-			<div class="text-h5 my-5">{{ $root.lang().profile.general.bio.label }}</div>
+			<div class="text-h5 mb-5">{{ $root.lang().profile.general.bio.label }}</div>
 
 			<tabbed-text-field
 				v-model="localUser.bio"
@@ -74,7 +74,7 @@
 				}"
 			/>
 
-			<div class="text-h5 my-5">{{ $root.lang().profile.social.title }}</div>
+			<div class="text-h5 mb-5">{{ $root.lang().profile.social.title }}</div>
 			<v-form lazy-validation>
 				<v-row
 					v-for="(socialMedia, i) in localUser.media"
