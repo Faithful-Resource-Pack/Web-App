@@ -1,5 +1,5 @@
 <template>
-	<v-container id="texturePage">
+	<v-container>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
 

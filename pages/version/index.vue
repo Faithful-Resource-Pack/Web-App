@@ -1,5 +1,8 @@
 <template>
-	<v-container>
+	<v-container id="versionPage">
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<div class="styles" v-html="pageStyles" />
+
 		<new-version-modal v-model="newVersionModalOpen" :color="pageColor" />
 
 		<version-modal v-model="editModal.open" :data="editModal.data" :color="pageColor" />
@@ -83,6 +86,7 @@ import SmartGrid from "@layouts/smart-grid.vue";
 import NewVersionModal from "./new-version-modal.vue";
 import VersionModal from "./version-modal.vue";
 import VersionRemoveConfirm from "./version-remove-confirm.vue";
+import { generatePageStyles } from "@helpers/colors";
 
 export default {
 	name: "version-page",
@@ -96,6 +100,7 @@ export default {
 		return {
 			pageColor: "pink lighten-1",
 			textColorOnPage: "white--text",
+			pageStyles: "",
 			paths: {},
 			newVersionModalOpen: false,
 			editModal: {
@@ -178,6 +183,9 @@ export default {
 					return acc;
 				}, {});
 		});
+	},
+	mounted() {
+		this.pageStyles = generatePageStyles(this, this.pageColor);
 	},
 };
 </script>
