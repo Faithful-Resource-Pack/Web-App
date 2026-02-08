@@ -1,177 +1,116 @@
 <template>
 	<v-container>
 		<h4 class="text-h4 py-4">{{ $root.lang().profile.title }}</h4>
-
 		<v-list
 			class="main-container mb-2 pa-4"
 			:class="{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }"
 			rounded
 		>
-			<v-list-item two-line>
-				<v-list-item-avatar>
-					<v-img :src="$root.user.avatar" />
-				</v-list-item-avatar>
-
-				<v-list-item-content>
-					<v-list-item-title>
-						{{ $root.discordUser.discordName || $root.user.username }}
-						<span class="text--secondary">• {{ $root.user.id }}</span>
-					</v-list-item-title>
-					<v-list-item-subtitle>
-						<v-chip
-							v-for="role in $root.user.roles || []"
-							:key="role"
-							class="mr-1 px-2 my-1"
-							x-small
-						>
-							{{ role }}
-						</v-chip>
-					</v-list-item-subtitle>
-				</v-list-item-content>
-				<v-list-item-action>
-					<v-btn
-						color="secondary"
-						:href="`https://faithfulpack.net/user/${$root.user.id}`"
-						:disabled="localUser.anonymous"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						{{ $root.lang().profile.public_profile }}
-						<v-icon right>mdi-open-in-new</v-icon>
-					</v-btn>
-				</v-list-item-action>
-			</v-list-item>
-
-			<!-- ================ GENERAL SETTINGS ================ -->
+			<div class="d-flex flex-wrap align-center justify-space-between">
+				<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
+				<v-btn
+					class="mb-5"
+					color="secondary"
+					:href="`https://faithfulpack.net/user/${$root.user.id}`"
+					:disabled="localUser.anonymous"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					{{ $root.lang().profile.public_profile }}
+					<v-icon right>mdi-open-in-new</v-icon>
+				</v-btn>
+			</div>
 			<div
-				class="my-5 d-flex justify-space-between"
-				:style="{
-					alignItems: $vuetify.breakpoint.mdAndUp ? 'flex-start' : 'center',
-					flexDirection: $vuetify.breakpoint.mdAndUp ? 'row' : 'column',
-				}"
+				class="d-flex flex-row justify-center align-center"
+				:class="$vuetify.breakpoint.xs && 'flex-wrap'"
 			>
-				<v-col
-					v-if="localUser.uuid && localUser.uuid.length == uuidMaxLength"
-					cols="2"
-					:sm="$vuetify.breakpoint.mdAndUp ? 3 : 2"
-					class="d-flex justify-center"
-					style="max-width: 200px"
-				>
-					<img
-						alt="avatar"
-						:src="
-							($vuetify.breakpoint.mdAndUp
-								? 'https://vzge.me/full/256/'
-								: 'https://vzge.me/head/128/') + localUser.uuid
-						"
-					/>
-				</v-col>
-				<v-col
-					:cols="hasUUID ? 10 : 12"
-					:sm="hasUUID ? ($vuetify.breakpoint.mdAndUp ? 9 : 10) : 12"
-					class="flex-grow-1 mx-0 px-0"
-					style="max-width: 100%"
-				>
-					<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
+				<img
+					v-if="localUser.uuid && localUser.uuid.length === uuidMaxLength"
+					class="mx-5"
+					:src="avatar"
+					alt="Minecraft skin"
+				/>
+				<div class="flex-grow-1">
 					<v-form lazy-validation>
-						<v-row>
-							<v-col>
-								<v-text-field
-									v-model="localUser.username"
-									required
-									:rules="usernameRules"
-									:counter="usernameMaxLength"
-									clearable
-									:label="$root.lang().profile.general.username.label"
-									:hint="$root.lang().profile.general.username.hint"
-								/>
-							</v-col>
-						</v-row>
-						<v-row>
-							<v-col cols="12" sm="9">
-								<v-text-field
-									v-model="localUser.uuid"
-									placeholder="aaabbbcc-ddee-1122-3344-zzz555aadd33"
-									:rules="uuidRules"
-									:counter="uuidMaxLength"
-									clearable
-									:label="$root.lang().profile.general.uuid.label"
-									:hint="$root.lang().profile.general.uuid.hint"
-								/>
-							</v-col>
-							<v-col cols="12" sm="3">
-								<v-tooltip
-									:left="$vuetify.breakpoint.mdAndUp"
-									:right="!$vuetify.breakpoint.mdAndUp"
-									max-width="400px"
-									min-width="250px"
-								>
-									<template #activator="{ on, attrs }">
-										<!-- https://github.com/vuetifyjs/vuetify/issues/11345 -->
-										<span v-bind="attrs" v-on="on">
-											<v-checkbox
-												v-model="localUser.anonymous"
-												:label="$root.lang().profile.general.anonymous.label"
-											/>
-										</span>
-									</template>
-									<span>{{ $root.lang().profile.general.anonymous.hint }}</span>
-								</v-tooltip>
-							</v-col>
-						</v-row>
+						<v-text-field
+							v-model="localUser.username"
+							required
+							:rules="usernameRules"
+							:counter="usernameMaxLength"
+							clearable
+							:label="$root.lang().profile.general.username.label"
+							:hint="$root.lang().profile.general.username.hint"
+						/>
+						<v-text-field
+							v-model="localUser.uuid"
+							placeholder="aaabbbcc-ddee-1122-3344-zzz555aadd33"
+							:rules="uuidRules"
+							:counter="uuidMaxLength"
+							clearable
+							:label="$root.lang().profile.general.uuid.label"
+							:hint="$root.lang().profile.general.uuid.hint"
+						/>
+						<v-checkbox v-model="localUser.anonymous" class="extended-checkbox">
+							<template #label>
+								<p class="text--primary mb-2">
+									{{ $root.lang().profile.general.anonymous.label }}
+								</p>
+								<p class="my-0">{{ $root.lang().profile.general.anonymous.hint }}</p>
+							</template>
+						</v-checkbox>
 					</v-form>
-				</v-col>
+				</div>
 			</div>
 
-			<div class="text-h6 mb-5">{{ $root.lang().profile.general.bio.label }}</div>
+			<div class="text-h6 my-5">{{ $root.lang().profile.general.bio.label }}</div>
 
 			<tabbed-text-field
 				v-model="localUser.bio"
 				:textareaProps="{
 					rules: bioRules,
 					counter: bioMaxLength,
-					placeholder: $root.lang().profile.general.bio.label,
+					placeholder: $root.lang().profile.general.bio.placeholder,
 					hint: $root.lang().profile.general.bio.hint,
 				}"
 			/>
 
 			<div class="text-h6 my-5">{{ $root.lang().profile.social.title }}</div>
-			<v-row class="mb-2">
-				<v-col>
-					<v-form lazy-validation>
-						<v-row v-for="(socialMedia, i) in localUser.media" :key="socialMedia.key">
-							<v-col cols="12" sm="3">
-								<v-select
-									v-model="socialMedia.type"
-									:items="mediaTypes"
-									:label="$root.lang().profile.social.type.label"
-									:rules="mediaTypeRules"
-								/>
-							</v-col>
-							<v-col cols="11" sm="8">
-								<v-text-field
-									v-model="socialMedia.link"
-									clearable
-									:placeholder="$root.lang().profile.social.link.placeholder"
-									:label="$root.lang().profile.social.link.label"
-									:rules="urlRules"
-								/>
-							</v-col>
-							<v-col cols="1">
-								<v-btn icon @click="removeSocialMedia(i)">
-									<v-icon color="red darken-1">mdi-minus</v-icon>
-								</v-btn>
-							</v-col>
-						</v-row>
-						<v-btn block class="my-5" color="secondary" @click="addSocialMedia">
-							{{ $root.lang().profile.social.add }}
-							<v-icon right>mdi-plus</v-icon>
+			<v-form lazy-validation>
+				<v-row
+					v-for="(socialMedia, i) in localUser.media"
+					:key="socialMedia.key"
+					class="align-baseline"
+				>
+					<v-col cols="12" sm="3">
+						<v-select
+							v-model="socialMedia.type"
+							:items="mediaTypes"
+							:label="$root.lang().profile.social.type.label"
+							:rules="mediaTypeRules"
+						/>
+					</v-col>
+					<v-col cols="11" sm="8">
+						<v-text-field
+							v-model="socialMedia.link"
+							clearable
+							:placeholder="$root.lang().profile.social.link.placeholder"
+							:label="$root.lang().profile.social.link.label"
+							:rules="urlRules"
+						/>
+					</v-col>
+					<v-col cols="1">
+						<v-btn icon @click="removeSocialMedia(i)">
+							<v-icon color="red darken-1">mdi-minus</v-icon>
 						</v-btn>
-					</v-form>
-				</v-col>
-			</v-row>
+					</v-col>
+				</v-row>
+				<v-btn block color="secondary" @click="addSocialMedia">
+					{{ $root.lang().profile.social.add }}
+					<v-icon right>mdi-plus</v-icon>
+				</v-btn>
+			</v-form>
 
-			<div class="d-flex justify-end ma-2">
+			<div class="d-flex justify-end ma-2 pt-7">
 				<v-btn text color="error darken-1" @click="openDeleteModal">
 					{{ $root.lang().profile.delete.btn }}
 				</v-btn>
@@ -357,6 +296,12 @@ export default {
 		},
 	},
 	computed: {
+		avatar() {
+			const base = this.$vuetify.breakpoint.xs
+				? "https://vzge.me/head/128"
+				: "https://vzge.me/full/256";
+			return `${base}/${this.localUser.uuid}`;
+		},
 		cleanedMedia() {
 			return (this.localUser.media || [])
 				.filter((m) => m.link && m.type)

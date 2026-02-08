@@ -451,6 +451,14 @@ a:hover .database-list-avatar {
 	width: 64px !important;
 }
 
+.extended-checkbox .v-input__slot {
+	align-items: flex-start;
+}
+.extended-checkbox .v-label {
+	align-items: flex-start !important;
+	flex-direction: column;
+}
+
 .theme--dark .main-container,
 .theme--dark .dashboard-card,
 .theme--dark .grid-card,

@@ -527,8 +527,8 @@ export default {
 		},
 	},
 	profile: {
-		title: "Profile",
-		public_profile: "Public profile",
+		title: "Customize your profile",
+		public_profile: "Go to public profile",
 		general: {
 			title: "General",
 			username: {
@@ -548,6 +548,7 @@ export default {
 			},
 			bio: {
 				label: "Bio",
+				placeholder: "Bio",
 				hint: "You can use Markdown formatting to style your bio!",
 				rules: {
 					length: "Bio must be fewer than %d characters",
