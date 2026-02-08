@@ -7,7 +7,7 @@
 			rounded
 		>
 			<div class="d-flex flex-wrap align-center justify-space-between">
-				<div class="text-h6 mb-5">{{ $root.lang().profile.general.title }}</div>
+				<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
 				<v-btn
 					class="mb-5"
 					color="secondary"
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 
-			<div class="text-h6 my-5">{{ $root.lang().profile.general.bio.label }}</div>
+			<div class="text-h5 my-5">{{ $root.lang().profile.general.bio.label }}</div>
 
 			<tabbed-text-field
 				v-model="localUser.bio"
@@ -74,7 +74,7 @@
 				}"
 			/>
 
-			<div class="text-h6 my-5">{{ $root.lang().profile.social.title }}</div>
+			<div class="text-h5 my-5">{{ $root.lang().profile.social.title }}</div>
 			<v-form lazy-validation>
 				<v-row
 					v-for="(socialMedia, i) in localUser.media"
