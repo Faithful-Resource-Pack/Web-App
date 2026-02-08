@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-row v-for="(download, i) in downloads" :key="download.key" dense>
+		<v-row v-for="(download, i) in downloads" :key="download.key" dense class="align-baseline">
 			<template v-if="download.category !== undefined">
 				<v-col cols="12" sm="3">
 					<v-text-field
@@ -10,7 +10,7 @@
 					/>
 				</v-col>
 				<v-col cols="12" sm="9">
-					<v-row v-for="(item, j) in download.items" :key="item.key" dense>
+					<v-row v-for="(item, j) in download.items" :key="item.key" dense class="align-baseline">
 						<v-col cols="12" sm="3">
 							<v-text-field
 								v-model="item.name"

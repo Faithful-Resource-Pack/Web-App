@@ -1,12 +1,6 @@
 <template>
 	<div class="dashboard-page pa-2 py-sm-4 px-sm-6">
-		<div class="text-h4 py-4">
-			{{
-				$root.user.username
-					? $root.lang().dashboard.welcome_user.replace("%USER%", $root.user.username)
-					: $root.lang().dashboard.welcome
-			}}
-		</div>
+		<div class="text-h4 py-4">{{ greeting }}</div>
 
 		<v-row class="dashboard-card-container">
 			<v-col cols="12" sm="3">
@@ -48,6 +42,11 @@ export default {
 		FaithfulCard,
 	},
 	computed: {
+		greeting() {
+			return this.$root.user.username
+				? this.$root.lang().dashboard.welcome_user.replace("%USER%", this.$root.user.username)
+				: this.$root.lang().dashboard.welcome;
+		},
 		colors() {
 			// https://colordesigner.io/gradient-generator
 			if (this.$root.isDark)
