@@ -1,32 +1,30 @@
 <template>
 	<modal-form
 		v-model="modalOpened"
-		:title="$root.lang().database.textures.rename_version.title"
-		:disabled="!isValid"
+		:title="$root.lang().database.versions.modal.title"
+		:disabled="!isValid || data.version === formData.version"
 		danger
 		button-type="confirm"
 		@close="$emit('close')"
 		@submit="send"
 	>
-		<p>{{ $root.lang().database.textures.rename_version.example }}</p>
+		<p>{{ $root.lang().database.versions.modal.example }}</p>
 		<v-alert type="warning" outlined dense>
-			{{ $root.lang().database.textures.rename_version.warning }}
+			{{ $root.lang().database.versions.modal.warning }}
 		</v-alert>
 		<v-form ref="form" class="pt-2">
-			<v-select
-				v-model="form.oldVersion"
+			<v-text-field
+				v-model="formData.edition"
 				:color="color"
-				:item-color="color"
-				:items="versions"
-				required
-				:label="$root.lang().database.textures.rename_version.current_version"
+				disabled
+				:label="$root.lang().database.versions.modal.edition"
 			/>
 			<v-text-field
-				v-model="form.newVersion"
+				v-model="formData.version"
 				:color="color"
 				:autofocus="!$vuetify.breakpoint.mobile"
 				required
-				:label="$root.lang().database.textures.rename_version.new_version"
+				:label="$root.lang().database.versions.modal.name"
 				:rules="rules"
 			/>
 		</v-form>
@@ -38,13 +36,17 @@ import ModalForm from "@layouts/modal-form.vue";
 import axios from "axios";
 
 export default {
-	name: "rename-version-modal",
+	name: "version-modal",
 	components: {
 		ModalForm,
 	},
 	props: {
 		value: {
 			type: Boolean,
+			required: true,
+		},
+		data: {
+			type: Object,
 			required: true,
 		},
 		color: {
@@ -54,28 +56,21 @@ export default {
 		},
 	},
 	data() {
-		const defaultEdition = settings.editions[0];
 		return {
 			modalOpened: false,
 			versions: Object.values(settings.versions).flat(),
-			rules: [
-				(input) => !this.versionExists(input) || this.$root.lang().database.textures.version_exists,
-			],
-			form: {
-				// convenience feature
-				oldVersion: settings.versions[defaultEdition][0] || "",
-				newVersion: "",
-			},
+			rules: [(input) => !this.versionExists(input) || this.$root.lang().database.versions.exists],
+			formData: {},
 		};
 	},
 	methods: {
 		versionExists(version) {
-			return this.versions.includes(version);
+			return this.versions.includes(version) && this.data.version !== version;
 		},
 		send() {
 			axios
 				.put(
-					`${this.$root.apiURL}/paths/versions/rename/${this.form.oldVersion}/${this.form.newVersion}`,
+					`${this.$root.apiURL}/versions/rename/${this.data.version}/${this.formData.version}`,
 					null,
 					this.$root.apiOptions,
 				)
@@ -92,9 +87,9 @@ export default {
 	},
 	computed: {
 		isValid() {
-			if (!this.form.newVersion) return false;
+			if (this.formData.version === "") return false;
 			// cannot rename to an existing version, completely bricks the db (lol)
-			if (this.versionExists(this.form.newVersion)) return false;
+			if (this.versionExists(this.formData.version)) return false;
 			return true;
 		},
 	},
@@ -103,6 +98,9 @@ export default {
 			this.modalOpened = newValue;
 		},
 		modalOpened(newValue) {
+			this.$nextTick(() => {
+				this.formData = JSON.parse(JSON.stringify(this.data));
+			});
 			this.$emit("input", newValue);
 		},
 	},

@@ -269,6 +269,7 @@ const app = new Vue({
 			return syncRoutes(tabs.flatMap((r) => r.subtabs).flatMap((s) => s.routes));
 		},
 		async reloadSettings() {
+			this.settingsLoaded = false;
 			try {
 				window.settings = await axios.get(`${window.apiURL}/settings/raw`).then((res) => res.data);
 			} catch (err) {
