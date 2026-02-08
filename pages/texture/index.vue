@@ -5,8 +5,6 @@
 
 		<!-- main button modals -->
 		<new-texture-modal v-model="newTextureModalOpen" :color="pageColor" :tags="tags" />
-		<rename-version-modal v-model="renameVersionModalOpen" :color="pageColor" />
-		<add-version-modal v-model="addVersionModalOpen" :color="pageColor" />
 		<merge-texture-modal v-model="mergeModalOpen" :color="pageColor" />
 
 		<!-- per-texture edit/delete modals -->
@@ -56,21 +54,6 @@
 					<v-btn block :color="pageColor" :class="textColorOnPage" @click="openNewTextureModal">
 						{{ $root.lang().database.textures.add_multiple }}
 						<v-icon right>mdi-plus</v-icon>
-					</v-btn>
-				</v-col>
-			</v-row>
-			<br />
-			<v-row>
-				<v-col>
-					<v-btn block :color="pageColor" :class="textColorOnPage" @click="openAddVersionModal">
-						{{ $root.lang().database.textures.add_version.title }}
-						<v-icon right>mdi-pencil-plus</v-icon>
-					</v-btn>
-				</v-col>
-				<v-col>
-					<v-btn block :color="pageColor" :class="textColorOnPage" @click="openRenameVersionModal">
-						{{ $root.lang().database.textures.rename_version.title }}
-						<v-icon right>mdi-pencil</v-icon>
 					</v-btn>
 				</v-col>
 				<v-col>
@@ -130,8 +113,6 @@ import SearchBox from "@components/search-box.vue";
 
 import TextureModal from "./texture-modal.vue";
 import NewTextureModal from "./new-texture-modal/index.vue";
-import RenameVersionModal from "./rename-version-modal.vue";
-import AddVersionModal from "./add-version-modal.vue";
 import MergeTextureModal from "./merge-texture-modal.vue";
 import TextureRemoveConfirm from "./texture-remove-confirm.vue";
 
@@ -143,9 +124,7 @@ export default {
 		SmartGrid,
 		SearchBox,
 		TextureModal,
-		RenameVersionModal,
 		NewTextureModal,
-		AddVersionModal,
 		MergeTextureModal,
 		TextureRemoveConfirm,
 	},
@@ -159,8 +138,6 @@ export default {
 			search: "",
 			loading: false,
 			newTextureModalOpen: false,
-			addVersionModalOpen: false,
-			renameVersionModalOpen: false,
 			mergeModalOpen: false,
 			editModal: {
 				open: false,
@@ -210,12 +187,6 @@ export default {
 				this.getTags();
 				this.getTextures();
 			}
-		},
-		openAddVersionModal() {
-			this.addVersionModalOpen = true;
-		},
-		openRenameVersionModal() {
-			this.renameVersionModalOpen = true;
 		},
 		openNewTextureModal() {
 			this.newTextureModalOpen = true;

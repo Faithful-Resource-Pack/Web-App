@@ -1,7 +1,7 @@
 <template>
 	<modal-form
 		v-model="modalOpened"
-		:title="$root.lang().database.textures.add_version.title"
+		:title="$root.lang().database.versions.add.title"
 		:disabled="!isValid"
 		danger
 		@close="$emit('close')"
@@ -13,22 +13,22 @@
 				:color="color"
 				:item-color="color"
 				:items="editions"
-				:label="$root.lang().database.textures.add_version.new_edition"
+				:label="$root.lang().database.versions.add.new_edition"
 				@change="(e) => onEditionChange(e)"
 			/>
 			<v-select
-				v-model="form.version"
+				v-model="form.template"
 				:color="color"
 				:item-color="color"
 				:items="availableTemplateVersions"
 				:disabled="!form.edition"
-				:label="$root.lang().database.textures.add_version.template_version"
+				:label="$root.lang().database.versions.add.template_version"
 			/>
 			<v-text-field
-				v-model="form.newVersion"
+				v-model="form.version"
 				:color="color"
 				:autofocus="!$vuetify.breakpoint.mobile"
-				:label="$root.lang().database.textures.add_version.new_version"
+				:label="$root.lang().database.versions.add.new_version"
 				:rules="rules"
 			/>
 		</v-form>
@@ -60,31 +60,32 @@ export default {
 		return {
 			modalOpened: false,
 			editions: settings.editions,
-			rules: [
-				(input) => !this.versionExists(input) || this.$root.lang().database.textures.version_exists,
-			],
+			rules: [(input) => !this.versionExists(input) || this.$root.lang().database.versions.exists],
 			form: {
 				edition: defaultEdition,
-				version: settings.versions[defaultEdition][0] || "",
-				newVersion: "",
+				template: settings.versions[defaultEdition][0] || "",
+				version: "",
 			},
 		};
 	},
 	methods: {
 		onEditionChange(edition) {
-			this.form.version = settings.versions[edition][0];
+			this.form.template = settings.versions[edition][0];
 		},
 		versionExists(version) {
 			return Object.values(settings.versions).flat().includes(version);
 		},
 		send() {
+			const data = {
+				edition: this.form.edition,
+				version: this.form.version,
+			};
+
+			if (this.form.template !== "None") data.template = this.form.template;
 			axios
-				.post(`${this.$root.apiURL}/paths/versions/add`, this.form, this.$root.apiOptions)
+				.post(`${this.$root.apiURL}/versions`, data, this.$root.apiOptions)
 				.then(() => {
-					this.$root.showSnackBar(
-						this.$root.lang().database.textures.add_version.success,
-						"success",
-					);
+					this.$root.showSnackBar(this.$root.lang().database.versions.add.success, "success");
 					this.$root.reloadSettings();
 					this.$emit("close");
 				})
@@ -96,12 +97,12 @@ export default {
 	},
 	computed: {
 		availableTemplateVersions() {
-			return settings.versions[this.form.edition] || [];
+			return ["None", ...settings.versions[this.form.edition]];
 		},
 		isValid() {
-			if (!this.form.newVersion) return false;
+			if (!this.form.version) return false;
 			// cannot rename to an existing version, completely bricks the db (lol)
-			if (this.versionExists(this.form.newVersion)) return false;
+			if (this.versionExists(this.form.version)) return false;
 			return true;
 		},
 	},

@@ -60,7 +60,11 @@
 			track="id"
 		>
 			<template #default="{ item }">
-				<a :href="`https://faithfulpack.net/user/${item.id}`" target="_blank" rel="noopener noreferrer">
+				<a
+					:href="`https://faithfulpack.net/user/${item.id}`"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					<v-list-item-avatar v-if="item.uuid" class="database-list-sprite" tile>
 						<v-img :src="`https://vzge.me/face/96/${item.uuid}`" />
 					</v-list-item-avatar>
