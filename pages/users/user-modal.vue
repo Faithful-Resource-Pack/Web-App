@@ -1,5 +1,11 @@
 <template>
-	<modal-form v-model="modalOpened" :title="modalTitle" @close="$emit('close')" @submit="send">
+	<modal-form
+		v-model="modalOpened"
+		max-width="800"
+		:title="modalTitle"
+		@close="$emit('close')"
+		@submit="send"
+	>
 		<v-row>
 			<v-col v-if="formData.uuid" class="col-2" :sm="$vuetify.breakpoint.mdAndUp ? 3 : 2">
 				<img alt="avatar" style="width: 100%; max-width: 250" :src="avatarSrc" />
@@ -13,7 +19,7 @@
 						v-model="formData.id"
 						:color="color"
 						required
-						:readonly="!add"
+						:disabled="!add"
 						:label="$root.lang().database.users.modal.id"
 					/>
 					<v-text-field
@@ -22,6 +28,12 @@
 						required
 						clearable
 						:label="$root.lang().database.users.modal.username"
+					/>
+					<v-text-field
+						v-model="formData.uuid"
+						:color="color"
+						clearable
+						:label="$root.lang().database.users.modal.uuid"
 					/>
 					<v-select
 						v-model="formData.roles"
@@ -33,12 +45,6 @@
 						deletable-chips
 						:items="roles"
 						:label="$root.lang().database.users.modal.roles"
-					/>
-					<v-text-field
-						v-model="formData.uuid"
-						:color="color"
-						clearable
-						:label="$root.lang().database.users.modal.uuid"
 					/>
 					<v-checkbox
 						v-model="formData.anonymous"
