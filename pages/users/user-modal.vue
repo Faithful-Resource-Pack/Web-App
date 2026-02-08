@@ -7,13 +7,7 @@
 		@submit="send"
 	>
 		<v-row>
-			<v-col v-if="formData.uuid" class="col-2" :sm="$vuetify.breakpoint.mdAndUp ? 3 : 2">
-				<img alt="avatar" style="width: 100%; max-width: 250" :src="avatarSrc" />
-			</v-col>
-			<v-col
-				:class="`col-${formData.uuid ? '10' : '12'}`"
-				:sm="formData.uuid ? ($vuetify.breakpoint.mdAndUp ? 9 : 10) : 12"
-			>
+			<v-col cols="12" sm="9">
 				<v-form ref="form" lazy-validation>
 					<v-text-field
 						v-model="formData.id"
@@ -61,6 +55,13 @@
 						</template>
 					</v-checkbox>
 				</v-form>
+			</v-col>
+			<v-col v-if="formData.uuid && $vuetify.breakpoint.smAndUp" cols="3">
+				<img
+					:src="`https://vzge.me/full/256/${formData.uuid}`"
+					alt="Minecraft skin"
+					style="width: 100%; max-width: 250"
+				/>
 			</v-col>
 		</v-row>
 	</modal-form>
@@ -125,12 +126,6 @@ export default {
 				? this.$root.lang().database.users.modal.add_user
 				: this.$root.lang().database.users.modal.change_user;
 		},
-		avatarSrc() {
-			const baseURL = this.$vuetify.breakpoint.mdAndUp
-				? "https://vzge.me/full/256/"
-				: "https://vzge.me/head/128/";
-			return baseURL + this.formData.uuid;
-		},
 	},
 	methods: {
 		send() {
@@ -162,11 +157,11 @@ export default {
 			this.$nextTick(() => {
 				if (this.add)
 					this.formData = {
+						id: "",
 						username: "",
 						roles: [],
 						uuid: "",
 						anonymous: false,
-						id: "",
 					};
 				else
 					Object.keys(this.data).forEach((key) => {
