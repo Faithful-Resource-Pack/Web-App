@@ -4,7 +4,8 @@
 			<v-btn large icon class="ml-4" to="/posts/list">
 				<v-icon>mdi-chevron-left</v-icon>
 			</v-btn>
-			{{ $root.lang().posts.titles.edit }} <span class="thin-text">#{{ id }}</span>
+			{{ $root.lang().posts.titles.edit }}
+			<span class="font-weight-light text--secondary">#{{ id }}</span>
 		</h4>
 		<post-form v-model="post" :loading="loading" />
 	</v-container>
