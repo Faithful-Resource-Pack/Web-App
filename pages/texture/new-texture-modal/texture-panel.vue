@@ -276,3 +276,37 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+.v-timeline-item__dot,
+.v-timeline-item__inner-dot {
+	// align to the form start instead of the very top of the box
+	margin-top: 12px;
+	// circle by default
+	border-radius: 4px;
+}
+
+// remove completely useless timeline padding (this is annoyingly complicated)
+.timeline-left.v-timeline::before {
+	// (38px item / 2) + 1 padding
+	left: 18px !important;
+}
+
+.timeline-left .v-timeline-item__divider {
+	justify-content: flex-start;
+	// 38px item + 24px padding
+	min-width: 62px;
+}
+
+.timeline-left .v-timeline-item__body {
+	max-width: calc(100% - 62px);
+}
+
+// genuinely why are these so spaced out it doesn't even look good lol
+.v-timeline {
+	padding-top: 0;
+}
+.v-timeline-item {
+	padding-bottom: 0;
+}
+</style>

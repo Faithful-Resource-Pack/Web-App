@@ -489,11 +489,6 @@ a:hover .database-list-avatar {
 	max-height: none !important;
 }
 
-.v-timeline-item__dot,
-.v-timeline-item__inner-dot {
-	border-radius: 4px;
-}
-
 .v-slide-group__prev--disabled {
 	// fix weird left margin on mobile tabs
 	display: none !important;
@@ -501,19 +496,4 @@ a:hover .database-list-avatar {
 
 .v-color-picker__controls {
 	flex: 1;
-}
-
-.timeline-left.v-timeline::before {
-	// (38px item / 2) + 1 padding
-	left: 18px !important;
-}
-
-.timeline-left .v-timeline-item__divider {
-	justify-content: flex-start;
-	// 38px item + 24px padding
-	min-width: 62px;
-}
-
-.timeline-left .v-timeline-item__body {
-    max-width: calc(100% - 62px);
 }
