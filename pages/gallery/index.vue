@@ -28,26 +28,13 @@
 			@clear="clearSearch"
 		/>
 
-		<v-row class="mt-0 mb-1 align-baseline">
-			<v-col cols="12" sm="9">
-				<p class="text--secondary mb-0">
-					<template v-if="requestTime > 0 && textures.length">{{ resultMessage }}</template>
-					<template v-else-if="loading">{{ $root.lang().global.loading }}</template>
-					<template v-else>{{ $root.lang().global.no_results }}</template>
-				</p>
-			</v-col>
-			<v-col cols="12" sm="3">
-				<v-select
-					v-model="sort"
-					color="text--secondary"
-					dense
-					hide-details
-					:items="sortMethods"
-					item-text="label"
-					item-value="value"
-				/>
-			</v-col>
-		</v-row>
+		<gallery-status-bar
+			v-model="sort"
+			:timer="timer"
+			:length="textures.length"
+			:loading="loading"
+		/>
+
 		<v-list
 			class="main-container pa-2 text-center"
 			:class="{ 'mx-n3': $vuetify.breakpoint.xs }"
@@ -92,6 +79,7 @@
 import axios from "axios";
 
 import GalleryOptions from "./gallery-options.vue";
+import GalleryStatusBar from "./gallery-status-bar.vue";
 import GalleryGrid from "./gallery-grid.vue";
 import GalleryModal from "./modal/index.vue";
 import SearchBox from "@components/search-box.vue";
@@ -102,17 +90,20 @@ const STRETCHED_KEY = "gallery_stretched";
 const ANIMATED_KEY = "gallery_animated";
 const SORT_KEY = "gallery_sort";
 
+const IGNORED_TEXTURES_URL =
+	"https://raw.githubusercontent.com/Faithful-Resource-Pack/CompliBot/main/json/ignored_textures.json";
+
 export default {
 	name: "gallery-page",
 	components: {
 		GalleryOptions,
 		GalleryGrid,
 		GalleryModal,
+		GalleryStatusBar,
 		SearchBox,
 		LoadingPage,
 	},
 	data() {
-		const sortStrings = this.$root.lang().gallery.sort;
 		return {
 			// whether search is loading
 			loading: false,
@@ -134,13 +125,6 @@ export default {
 				edition: "java",
 				search: null,
 			},
-			sortMethods: [
-				{ label: sortStrings.name_asc, value: "nameAsc" },
-				{ label: sortStrings.name_desc, value: "nameDesc" },
-				{ label: sortStrings.id_asc, value: "idAsc" },
-				{ label: sortStrings.id_desc, value: "idDesc" },
-				{ label: sortStrings.contrib_desc, value: "contribDesc" },
-			],
 			sort: localStorage.getItem(SORT_KEY) || "nameAsc",
 			// how long a request took
 			timer: {
@@ -200,6 +184,7 @@ export default {
 			return this.authors[d]?.username || this.$root.lang().gallery.error_message.user_anonymous;
 		},
 		startSearch() {
+			// the real search gets triggered from routing updates so we just start the route update
 			this.updateRoute();
 		},
 		clearSearch() {
@@ -275,20 +260,6 @@ export default {
 			let url = `${this.$root.apiURL}/gallery/search/${pack}/${version}/${tag}`;
 			if (search) url += `?search=${search}`;
 			return url;
-		},
-		requestTime() {
-			if (!this.timer.end || !this.timer.start) return;
-			const seconds = (this.timer.end - this.timer.start) / 1000;
-			// cast to number again to remove unnecessary zeros
-			return Number(seconds.toFixed(2));
-		},
-		resultMessage() {
-			const str =
-				this.textures.length === 1
-					? this.$root.lang().gallery.result_stats_singular
-					: this.$root.lang().gallery.result_stats_plural;
-
-			return str.replace("%COUNT%", this.textures.length).replace("%SECONDS%", this.requestTime);
 		},
 		ignoreList() {
 			// not loaded yet
@@ -368,13 +339,9 @@ export default {
 		},
 	},
 	created() {
-		axios
-			.get(
-				"https://raw.githubusercontent.com/Faithful-Resource-Pack/CompliBot/main/json/ignored_textures.json",
-			)
-			.then((res) => {
-				this.ignoredTextures = res.data;
-			});
+		axios.get(IGNORED_TEXTURES_URL).then((res) => {
+			this.ignoredTextures = res.data;
+		});
 
 		axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
 			this.packToName = Object.values(res.data).reduce((acc, cur) => {
