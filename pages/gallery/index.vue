@@ -48,12 +48,13 @@
 			@clear="clearSearch"
 		/>
 
-		<v-row class="pt-3">
-			<v-col v-if="requestTime > 0 && textures.length" cols="12" sm="9">
-				<p class="text--secondary">{{ resultMessage }}</p>
-			</v-col>
-			<v-col v-else cols="12" sm="9">
-				<br />
+		<v-row class="mt-0 mb-1 align-baseline">
+			<v-col cols="12" sm="9">
+				<p class="text--secondary mb-0">
+					<template v-if="requestTime > 0 && textures.length">{{ resultMessage }}</template>
+					<template v-else-if="loading">{{ $root.lang().global.loading }}</template>
+					<template v-else>{{ $root.lang().global.no_results }}</template>
+				</p>
 			</v-col>
 			<v-col cols="12" sm="3">
 				<v-select
