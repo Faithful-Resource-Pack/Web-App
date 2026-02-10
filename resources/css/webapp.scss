@@ -116,20 +116,13 @@ a {
 	outline: none;
 }
 
-#app .v-tabs {
-	width: auto;
-}
-#app .v-tab {
-	height: 100%;
-	line-height: 48px;
-}
-
 .container {
 	max-width: 1080px;
 }
 
-.v-text-field {
-	margin-bottom: 12px;
+// clears space under hint text (creates some nasty text clipping otherwise)
+.v-text-field__details {
+	margin-bottom: 8px;
 }
 
 .v-messages,
@@ -244,11 +237,6 @@ img.texture-img {
 // optional class for removing the outline
 .prism-editor__textarea:focus {
 	outline: none;
-}
-
-.prism-editor-wrapper.fixed-height {
-	height: 200px;
-	border-radius: 4px;
 }
 
 .uppercase {

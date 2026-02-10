@@ -3,8 +3,8 @@
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-select
+					hide-details
 					:label="$root.lang().gallery.category.pack"
-					:hide-details="$vuetify.breakpoint.mobile"
 					:items="packList"
 					item-text="label"
 					item-value="value"
@@ -15,8 +15,8 @@
 
 			<v-col cols="12" sm="6">
 				<v-select
+					hide-details
 					:label="$root.lang().gallery.category.edition"
-					:hide-details="$vuetify.breakpoint.mobile"
 					:items="editionList"
 					item-text="label"
 					item-value="value"
@@ -29,8 +29,8 @@
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-select
+					hide-details
 					:label="$root.lang().gallery.category.mc_version"
-					:hide-details="$vuetify.breakpoint.mobile"
 					:items="versionList"
 					item-text="label"
 					item-value="value"
@@ -41,8 +41,8 @@
 
 			<v-col cols="12" sm="6">
 				<v-select
+					hide-details
 					:label="$root.lang().gallery.category.tag"
-					:hide-details="$vuetify.breakpoint.mobile"
 					:items="tagList"
 					item-text="label"
 					item-value="value"

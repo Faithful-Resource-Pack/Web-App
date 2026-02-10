@@ -29,10 +29,14 @@
 				/>
 			</v-col>
 			<v-col v-if="stretchable" cols="12" sm="3">
-				<v-switch v-model="stretched" :label="$root.lang().gallery.stretched_switcher" />
+				<v-switch
+					v-model="stretched"
+					:label="$root.lang().gallery.stretched_switcher"
+					hide-details
+				/>
 			</v-col>
 			<v-col cols="12" :sm="stretchable ? 3 : 6">
-				<v-switch v-model="animated" :label="$root.lang().gallery.animated_switcher" />
+				<v-switch v-model="animated" :label="$root.lang().gallery.animated_switcher" hide-details />
 			</v-col>
 		</v-row>
 
