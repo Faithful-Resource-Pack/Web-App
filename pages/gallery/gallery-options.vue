@@ -8,7 +8,7 @@
 					:items="packList"
 					item-text="label"
 					item-value="value"
-					:value="current.pack"
+					:value="currentSearch.pack"
 					@change="updateRoute($event, 'pack')"
 				/>
 			</v-col>
@@ -20,7 +20,7 @@
 					:items="editionList"
 					item-text="label"
 					item-value="value"
-					:value="current.edition"
+					:value="currentSearch.edition"
 					@change="updateRoute($event, 'edition')"
 				/>
 			</v-col>
@@ -34,7 +34,7 @@
 					:items="versionList"
 					item-text="label"
 					item-value="value"
-					:value="current.version"
+					:value="currentSearch.version"
 					@change="updateRoute($event, 'version')"
 				/>
 			</v-col>
@@ -46,8 +46,38 @@
 					:items="tagList"
 					item-text="label"
 					item-value="value"
-					:value="current.tag"
+					:value="currentSearch.tag"
 					@change="updateRoute($event, 'tag')"
+				/>
+			</v-col>
+		</v-row>
+
+		<v-row class="my-2">
+			<v-col cols="12" sm="6">
+				<v-slider
+					v-model="currentDisplay.columns"
+					:label="$root.lang().gallery.max_items_per_row"
+					step="1"
+					thumb-label
+					ticks="always"
+					tick-size="3"
+					hide-details
+					min="1"
+					:max="maxColumns"
+				/>
+			</v-col>
+			<v-col v-if="stretchable" cols="12" sm="3">
+				<v-switch
+					v-model="currentDisplay.stretched"
+					:label="$root.lang().gallery.stretched_switcher"
+					hide-details
+				/>
+			</v-col>
+			<v-col cols="12" :sm="stretchable ? 3 : 6">
+				<v-switch
+					v-model="currentDisplay.animated"
+					:label="$root.lang().gallery.animated_switcher"
+					hide-details
 				/>
 			</v-col>
 		</v-row>
@@ -60,13 +90,22 @@ import axios from "axios";
 export default {
 	name: "gallery-options",
 	props: {
-		value: {
+		search: {
+			type: Object,
+			required: true,
+		},
+		display: {
 			type: Object,
 			required: true,
 		},
 		packToName: {
 			type: Object,
 			required: true,
+		},
+		maxColumns: {
+			type: Number,
+			required: false,
+			default: 16,
 		},
 	},
 	data() {
@@ -78,17 +117,19 @@ export default {
 				versions: ["latest", ...Object.values(settings.versions).flat()],
 				editions: ["all", ...settings.editions],
 			},
-			current: {},
+			currentSearch: {},
+			currentDisplay: {},
 		};
 	},
 	methods: {
 		updateRoute(data, type) {
-			if (this.current[type] === data) return; // avoid redundant redirection
+			if (this.currentSearch[type] === data) return; // avoid redundant redirection
 
-			this.current[type] = data;
+			this.currentSearch[type] = data;
 
 			// check if pack exist
-			if (!Object.keys(this.packToName).includes(this.current.pack)) this.current.pack = "default";
+			if (!Object.keys(this.packToName).includes(this.currentSearch.pack))
+				this.currentSearch.pack = "default";
 
 			// actual updating is handled from main page
 			this.$emit("updateRoute");
@@ -134,6 +175,10 @@ export default {
 					}))
 			);
 		},
+		// hide the stretched switcher when the screen is smaller than the size when not stretched
+		stretchable() {
+			return this.$vuetify.breakpoint.lgAndUp;
+		},
 	},
 	created() {
 		// saves a request
@@ -144,16 +189,29 @@ export default {
 		});
 	},
 	watch: {
-		value: {
+		search: {
 			handler(newValue) {
-				this.current = newValue;
+				this.currentSearch = newValue;
 			},
 			deep: true,
 			immediate: true,
 		},
-		current: {
+		currentSearch: {
 			handler(newValue) {
-				this.$emit("input", newValue);
+				this.$emit("update:search", newValue);
+			},
+			deep: true,
+		},
+		display: {
+			handler(newValue) {
+				this.currentDisplay = newValue;
+			},
+			deep: true,
+			immediate: true,
+		},
+		currentDisplay: {
+			handler(newValue) {
+				this.$emit("update:display", newValue);
 			},
 			deep: true,
 		},
@@ -166,13 +224,18 @@ export default {
 						: settings.versions[newValue] || settings.versions.java;
 
 				// going from all to something else, keep existing value
-				if (newValue !== "all" && this.options.versions.includes(this.current.version)) return;
+				if (newValue !== "all" && this.options.versions.includes(this.currentSearch.version))
+					return;
 
 				// version needs updating to match edition, update route too
-				this.current.version = this.options.versions[0];
+				this.currentSearch.version = this.options.versions[0];
 				this.$emit("updateRoute");
 			},
 			immediate: true,
+		},
+		stretchable(n) {
+			// turn off stretching if screen doesn't support it
+			if (!n) this.stretched = false;
 		},
 	},
 };

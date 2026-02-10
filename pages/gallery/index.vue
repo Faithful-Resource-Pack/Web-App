@@ -1,5 +1,5 @@
 <template>
-	<v-container :style="stretched ? 'max-width: 100% !important' : ''">
+	<v-container :style="display.stretched ? 'max-width: 100% !important' : ''">
 		<v-row no-gutters>
 			<v-col cols="12" sm="6" class="text-h4 my-4">
 				{{ $root.lang().gallery.title }}
@@ -12,37 +12,17 @@
 			</v-col>
 		</v-row>
 
-		<gallery-options v-model="current" :packToName="packToName" @updateRoute="updateRoute" />
-
-		<v-row class="my-2">
-			<v-col cols="12" sm="6">
-				<v-slider
-					v-model="columns"
-					:label="$root.lang().gallery.max_items_per_row"
-					step="1"
-					thumb-label
-					ticks="always"
-					tick-size="3"
-					hide-details
-					min="1"
-					:max="maxColumns"
-				/>
-			</v-col>
-			<v-col v-if="stretchable" cols="12" sm="3">
-				<v-switch
-					v-model="stretched"
-					:label="$root.lang().gallery.stretched_switcher"
-					hide-details
-				/>
-			</v-col>
-			<v-col cols="12" :sm="stretchable ? 3 : 6">
-				<v-switch v-model="animated" :label="$root.lang().gallery.animated_switcher" hide-details />
-			</v-col>
-		</v-row>
+		<gallery-options
+			:search.sync="search"
+			:display.sync="display"
+			:packToName="packToName"
+			:maxColumns="maxColumns"
+			@updateRoute="updateRoute"
+		/>
 
 		<div class="my-2 text-h5">{{ $root.lang().gallery.category.search }}</div>
 		<search-box
-			v-model="current.search"
+			v-model="search.search"
 			:placeholder="$root.lang().database.textures.search_texture"
 			@search="startSearch"
 			@clear="clearSearch"
@@ -82,8 +62,8 @@
 			<gallery-grid
 				v-else
 				:textures="textures"
-				:pack="current.pack"
-				:animated="animated"
+				:pack="search.pack"
+				:animated="display.animated"
 				:sort="sort"
 				:ignoreList="ignoreList"
 				:discordIDtoName="discordIDtoName"
@@ -99,7 +79,7 @@
 			:textureID="modalTextureID"
 			:discordIDtoName="discordIDtoName"
 			:packToName="packToName"
-			:animated="animated"
+			:animated="display.animated"
 			:ignoreList="ignoreList"
 			@share="copyShareURL"
 			@close="closeModal"
@@ -134,18 +114,20 @@ export default {
 	data() {
 		const sortStrings = this.$root.lang().gallery.sort;
 		return {
-			// whether the page shouldn't be stretched to the full width
-			stretched: localStorage.getItem(STRETCHED_KEY) === "true",
-			// whether to show animated textures
-			animated: localStorage.getItem(ANIMATED_KEY) !== "false",
-			// number of columns you want to display
-			columns: Number(localStorage.getItem(COLUMN_KEY) || 7),
 			// whether search is loading
 			loading: false,
 			// string error extracted
 			error: undefined,
-			// search values
-			current: {
+			// pretty much all gallery state
+			display: {
+				// whether the page should be stretched to the full width
+				stretched: localStorage.getItem(STRETCHED_KEY) === "true",
+				// whether to show animated textures
+				animated: localStorage.getItem(ANIMATED_KEY) !== "false",
+				// number of columns you want to display
+				columns: Number(localStorage.getItem(COLUMN_KEY) || 7),
+			},
+			search: {
 				pack: "default",
 				tag: "all",
 				version: "latest",
@@ -222,13 +204,13 @@ export default {
 		},
 		clearSearch() {
 			// avoid restarting search if there's already nothing there
-			if (this.current.search === null) return;
-			this.current.search = null;
+			if (this.search.search === null) return;
+			this.search.search = null;
 			this.updateRoute();
 		},
 		updateRoute() {
 			// annoyingly the api endpoint and webapp route order the params differently
-			const { pack, edition, version, tag, search } = this.current;
+			const { pack, edition, version, tag, search } = this.search;
 			let route = `/gallery/${edition}/${pack}/${version}/${tag}`;
 			if (search) route += `/${search.replace(/ /g, "_")}`;
 			if (this.modalTextureID !== undefined) route += `?show=${this.modalTextureID}`;
@@ -289,7 +271,7 @@ export default {
 	computed: {
 		apiRoute() {
 			// /gallery/search/{pack}/{mc_version}/{tag}
-			const { pack, version, tag, search } = this.current;
+			const { pack, version, tag, search } = this.search;
 			let url = `${this.$root.apiURL}/gallery/search/${pack}/${version}/${tag}`;
 			if (search) url += `?search=${search}`;
 			return url;
@@ -314,9 +296,9 @@ export default {
 			// modded is always ignored
 			const ignoreList = Array.from(this.ignoredTextures.modded);
 			// add all editions to ignore list
-			if (this.current.edition === "all")
+			if (this.search.edition === "all")
 				ignoreList.push(...settings.editions.flatMap((edition) => this.ignoredTextures[edition]));
-			else ignoreList.push(...this.ignoredTextures[this.current.edition]);
+			else ignoreList.push(...this.ignoredTextures[this.search.edition]);
 			return ignoreList;
 		},
 		modalTextureID() {
@@ -334,11 +316,7 @@ export default {
 			return 20;
 		},
 		shownColumns() {
-			return Math.min(this.columns, this.maxColumns);
-		},
-		// hide the stretched switcher when the screen is smaller than the size when not stretched
-		stretchable() {
-			return this.$vuetify.breakpoint.lgAndUp;
+			return Math.min(this.display.columns, this.maxColumns);
 		},
 	},
 	watch: {
@@ -348,20 +326,20 @@ export default {
 				if (JSON.stringify(params) === JSON.stringify(prev)) return;
 
 				// done first so any routing updates also set everything else
-				this.current.version = params.version;
-				this.current.tag = params.tag;
-				this.current.search = params.search;
+				this.search.version = params.version;
+				this.search.tag = params.tag;
+				this.search.search = params.search;
 
 				if (!["all", ...settings.editions].includes(params.edition)) {
-					this.current.edition = "java";
+					this.search.edition = "java";
 					this.updateRoute();
-				} else this.current.edition = params.edition;
+				} else this.search.edition = params.edition;
 
 				// convert legacy urls to modern format
 				if (Object.keys(this.legacyPackIDs).includes(params.pack)) {
-					this.current.pack = this.legacyPackIDs[params.pack];
+					this.search.pack = this.legacyPackIDs[params.pack];
 					this.updateRoute();
-				} else this.current.pack = params.pack;
+				} else this.search.pack = params.pack;
 
 				// wait until version/edition watcher sync has been done
 				this.$nextTick(() => this.searchGallery());
@@ -376,21 +354,17 @@ export default {
 			},
 			immediate: true,
 		},
-		columns(n) {
+		"display.columns"(n) {
 			localStorage.setItem(COLUMN_KEY, String(n));
 		},
-		stretched(n) {
+		"display.stretched"(n) {
 			localStorage.setItem(STRETCHED_KEY, n);
 		},
-		animated(n) {
+		"display.animated"(n) {
 			localStorage.setItem(ANIMATED_KEY, n);
 		},
 		sort(n) {
 			localStorage.setItem(SORT_KEY, n);
-		},
-		stretchable(n) {
-			// turn off stretching if screen doesn't support it
-			if (!n) this.stretched = false;
 		},
 	},
 	created() {
