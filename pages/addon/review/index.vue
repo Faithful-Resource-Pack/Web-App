@@ -113,7 +113,7 @@ export default {
 				approved: "green",
 				pending: "yellow",
 				denied: "red",
-				archived: "white",
+				archived: "grey",
 			},
 			addons: {
 				pending: [],
