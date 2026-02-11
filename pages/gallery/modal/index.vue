@@ -12,33 +12,44 @@
 		</template>
 		<fullscreen-preview v-model="previewOpen" :src="clickedImage" :aspect-ratio="1 / 1" texture />
 
-		<loading-page v-if="loading">
-			{{ $root.lang().gallery.modal.loading }}
-		</loading-page>
-		<v-container v-else-if="error" class="d-flex align-center justify-center flex-grow-1">
+		<v-container v-if="error" class="d-flex align-center justify-center flex-grow-1">
 			<ascii-error :subtitle="error" :errorCode="errorCode" />
 		</v-container>
 		<div v-else class="gallery-modal-container pa-5">
 			<!-- image display -->
 			<div class="mx-auto overflow-auto pa-2">
-				<div v-for="(group, i) in grouped" :key="i" class="d-flex flex-row pb-2 pb-sm-0">
-					<div v-for="url in group" :key="url.name" class="px-2 pb-sm-2">
-						<gallery-image
-							:ref="`image-${url.name}`"
-							modal
-							:src="url.image"
-							:textureID="textureID"
-							:ignoreList="ignoreList"
-							:animated="animated"
-							:mcmeta="textureObj.mcmeta"
-							@click="openFullscreenPreview(url.image)"
-							@loaded="countLoaded"
-						>
-							<p>{{ $root.lang().gallery.error_message.texture_not_done }}</p>
-						</gallery-image>
-						<h2 class="text-center gallery-modal-image-caption">{{ packToName[url.name] }}</h2>
+				<template v-if="loading">
+					<div v-for="group in skeletonGroups" :key="group[0]" class="d-flex flex-row pb-2 pb-sm-0">
+						<div v-for="pack in group" :key="pack" class="px-2 pb-sm-2">
+							<v-skeleton-loader type="image" width="160" height="160" />
+							<v-skeleton-loader
+								type="heading"
+								class="d-flex justify-center pt-2 pb-4"
+								width="100%"
+							/>
+						</div>
 					</div>
-				</div>
+				</template>
+				<template v-else>
+					<div v-for="(group, i) in grouped" :key="i" class="d-flex flex-row pb-2 pb-sm-0">
+						<div v-for="url in group" :key="url.name" class="px-2 pb-sm-2">
+							<gallery-image
+								:ref="`image-${url.name}`"
+								modal
+								:src="url.image"
+								:textureID="textureID"
+								:ignoreList="ignoreList"
+								:animated="animated"
+								:mcmeta="textureObj.mcmeta"
+								@click="openFullscreenPreview(url.image)"
+								@loaded="countLoaded"
+							>
+								<p>{{ $root.lang().gallery.error_message.texture_not_done }}</p>
+							</gallery-image>
+							<h2 class="text-center gallery-modal-image-caption">{{ packToName[url.name] }}</h2>
+						</div>
+					</div>
+				</template>
 			</div>
 
 			<!-- texture details -->
@@ -49,14 +60,23 @@
 				</v-tabs>
 				<v-tabs-items v-model="selectedTab">
 					<v-tab-item v-for="tab in displayedTabs" :key="tab">
-						<texture-tab v-if="tab === displayedTabs.information" :textureObj="textureObj" />
+						<template v-if="loading">
+							<template v-for="_ in 2">
+								<v-skeleton-loader type="heading" class="pt-5 pb-2" />
+								<v-skeleton-loader type="table-row-divider@3" class="mx-2 pb-5" />
+							</template>
+						</template>
+						<texture-tab v-else-if="tab === displayedTabs.information" :textureObj="textureObj" />
 						<author-tab
-							v-if="tab === displayedTabs.authors"
+							v-else-if="tab === displayedTabs.authors"
 							:contributions="textureObj.contributions"
 							:packToName="packToName"
 							:discordIDtoName="discordIDtoName"
 						/>
-						<animation-tab v-if="tab === displayedTabs.animation" :mcmeta="textureObj.mcmeta" />
+						<animation-tab
+							v-else-if="tab === displayedTabs.animation"
+							:mcmeta="textureObj.mcmeta"
+						/>
 					</v-tab-item>
 				</v-tabs-items>
 			</div>
@@ -73,7 +93,6 @@ import AnimationTab from "./animation-tab.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import FullscreenModal from "@layouts/fullscreen-modal.vue";
 import AsciiError from "@components/ascii-error.vue";
-import LoadingPage from "@components/loading-page.vue";
 
 const PACK_GRID_ORDER = [
 	["default", "faithful_32x", "faithful_64x"],
@@ -102,7 +121,6 @@ export default {
 		TextureTab,
 		AnimationTab,
 		AuthorTab,
-		LoadingPage,
 	},
 	props: {
 		value: {
@@ -173,6 +191,9 @@ export default {
 		},
 	},
 	computed: {
+		skeletonGroups() {
+			return this.$vuetify.breakpoint.mdAndDown ? [PACK_SLIDER_ORDER] : PACK_GRID_ORDER;
+		},
 		grouped() {
 			if (this.loading) return [];
 
@@ -190,6 +211,7 @@ export default {
 			);
 		},
 		loading() {
+			return true;
 			const hasContent = Object.keys(this.textureObj).length || this.error;
 			return !hasContent;
 		},
