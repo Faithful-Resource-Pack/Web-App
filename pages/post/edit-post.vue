@@ -2,7 +2,7 @@
 	<v-container>
 		<h4 class="text-h4 py-4">
 			<v-btn large icon class="ml-4" to="/posts/list">
-				<v-icon>mdi-chevron-left</v-icon>
+				<v-icon large>mdi-chevron-left</v-icon>
 			</v-btn>
 			{{ $root.lang().posts.titles.edit }}
 			<span class="font-weight-light text--secondary">#{{ id }}</span>
