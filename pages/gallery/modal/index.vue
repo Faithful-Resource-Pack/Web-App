@@ -37,6 +37,7 @@
 								:ref="`image-${url.name}`"
 								modal
 								:src="url.image"
+								:alt="textureObj.name"
 								:textureID="textureID"
 								:ignoreList="ignoreList"
 								:animated="animated"
@@ -211,7 +212,6 @@ export default {
 			);
 		},
 		loading() {
-			return true;
 			const hasContent = Object.keys(this.textureObj).length || this.error;
 			return !hasContent;
 		},

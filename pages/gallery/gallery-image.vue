@@ -20,6 +20,7 @@
 			ref="imageRef"
 			class="gallery-texture-image gallery-animated-image"
 			:src="imageURL"
+			:alt="alt"
 			@click="$emit('click')"
 			@error="textureNotFound"
 		/>
@@ -44,6 +45,11 @@ export default {
 		src: {
 			type: String,
 			required: true,
+		},
+		alt: {
+			type: String,
+			required: false,
+			default: "",
 		},
 		textureID: {
 			type: String,

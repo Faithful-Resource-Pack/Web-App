@@ -13,6 +13,7 @@
 				<template #trigger>
 					<gallery-image
 						:src="texture.url"
+						:alt="texture.name"
 						:textureID="texture.textureID"
 						:ignoreList="ignoreList"
 						:animated="animated"
