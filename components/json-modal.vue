@@ -1,7 +1,7 @@
 <template>
 	<v-dialog v-model="modalOpened" content-class="colored" max-width="800">
 		<v-card>
-			<h2 class="title text--secondary ma-2">
+			<h2 class="title text--secondary pa-2">
 				{{ $root.lang().global.json_editor.import_data }}
 			</h2>
 			<prism-editor
