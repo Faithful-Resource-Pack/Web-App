@@ -37,7 +37,12 @@
 								:ref="`image-${url.name}`"
 								modal
 								:src="url.image"
-								:alt="textureObj.name"
+								:alt="
+									$root
+										.lang()
+										.gallery.modal.image_alt_text.replace('%NAME%', textureObj.texture.name)
+										.replace('%PACK%', url.name)
+								"
 								:textureID="textureID"
 								:ignoreList="ignoreList"
 								:animated="animated"

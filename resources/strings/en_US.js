@@ -645,6 +645,7 @@ export default {
 		result_stats_plural: "%COUNT% textures found in %SECONDS% seconds",
 		modal: {
 			no_contributions: "No contributions found",
+			image_alt_text: "Texture %NAME% for pack %PACK%",
 			loading: "Loading texture…",
 			tabs: {
 				information: "Information",
