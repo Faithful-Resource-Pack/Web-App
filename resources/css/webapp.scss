@@ -66,8 +66,9 @@ html.theme--dark,
 	background-color: #191919;
 }
 
-html.theme--light {
-	background-color: #ffffff;
+html.theme--light,
+.theme--light.v-application {
+	background-color: #fafafa;
 }
 
 // force footer to bottom of page if the page isn't long enough
@@ -226,7 +227,7 @@ img.texture-img {
 }
 
 .theme--light .json-editor {
-	background: #f5f5f5;
+	background: white;
 	color: rgba(0, 0, 0, 0.87);
 }
 
@@ -356,16 +357,14 @@ a:hover .database-list-avatar {
 }
 
 .theme--dark .main-container,
-.theme--dark .dashboard-card,
-.theme--dark .grid-card,
 .theme--dark .v-skeleton-loader__article,
-.theme--dark .review-list,
-.theme--dark .review-preview > *,
-.theme--dark .review-empty,
-.theme--dark .review-category,
 .theme--dark .review-expansion-panel > * {
 	// same color as navbar
-	background-color: #272727;
+	background-color: #272727 !important;
+}
+
+.main-container {
+	box-shadow: none !important;
 }
 
 .theme--dark .main-container {
@@ -373,7 +372,8 @@ a:hover .database-list-avatar {
 }
 
 .theme--light .main-container {
-	background: #f5f5f5;
+	background: white;
+	border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 .theme--light .gallery-modal-texture,
@@ -392,4 +392,9 @@ a:hover .database-list-avatar {
 
 .v-color-picker__controls {
 	flex: 1;
+}
+
+.transparent-tabs .v-tabs-bar,
+.transparent-tabs .v-tabs-items {
+	background-color: transparent !important;
 }

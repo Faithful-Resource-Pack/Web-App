@@ -1,5 +1,5 @@
 <template>
-	<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" rounded>
+	<v-card class="main-container mb-2 pa-4">
 		<loading-page v-if="loading" class="my-10">
 			{{ $root.lang().addons.general.loading_addon }}
 		</loading-page>
@@ -240,7 +240,7 @@
 				</v-btn>
 			</div>
 
-			<div class="d-flex justify-end ma-2">
+			<div class="d-flex justify-end pa-2">
 				<v-btn
 					v-if="$root.isAdmin"
 					:disabled="!validForm"
@@ -257,7 +257,7 @@
 		</v-form>
 
 		<fullscreen-preview v-model="previewOpen" :src="header" />
-	</v-list>
+	</v-card>
 </template>
 
 <script>

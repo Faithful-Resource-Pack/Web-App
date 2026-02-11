@@ -1,5 +1,5 @@
 <template>
-	<v-card class="dashboard-card">
+	<v-card class="main-container dashboard-card">
 		<v-card-title class="d-flex align-center pb-2">
 			<span class="text-h5">{{ title }}</span>
 			<v-spacer />

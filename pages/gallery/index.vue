@@ -35,11 +35,7 @@
 			:loading="loading"
 		/>
 
-		<v-list
-			class="main-container pa-2 text-center"
-			:class="{ 'mx-n3': $vuetify.breakpoint.xs }"
-			rounded
-		>
+		<v-card class="main-container pa-2 text-center">
 			<loading-page v-if="loading">
 				{{ $root.lang().gallery.loading_message }}
 			</loading-page>
@@ -59,7 +55,7 @@
 				@openNewTab="openModalInNewTab"
 				@share="copyShareURL"
 			/>
-		</v-list>
+		</v-card>
 
 		<gallery-modal
 			v-model="modalOpened"

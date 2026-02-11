@@ -1,5 +1,5 @@
 <template>
-	<v-card class="review-list overflow-y-auto rounded-lg">
+	<v-card class="main-container review-list overflow-y-auto">
 		<v-list-item
 			v-for="(item, i) in sortedItems"
 			:key="item.key"

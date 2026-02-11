@@ -11,13 +11,15 @@
 			{{ $root.lang().global.btn.save }} <v-icon right>mdi-content-save</v-icon>
 		</v-btn>
 
-		<prism-editor
-			v-model="jsonText"
-			class="ma-0 json-editor my-2"
-			style="height: auto"
-			:highlight="highlighter"
-			line-numbers
-		/>
+		<v-card class="main-container my-2">
+			<prism-editor
+				v-model="jsonText"
+				class="ma-0 json-editor"
+				style="height: auto"
+				:highlight="highlighter"
+				line-numbers
+			/>
+		</v-card>
 	</v-container>
 </template>
 

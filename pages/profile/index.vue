@@ -14,11 +14,7 @@
 				<v-icon right>mdi-open-in-new</v-icon>
 			</v-btn>
 		</div>
-		<v-list
-			class="main-container mb-2 pa-4"
-			:class="{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }"
-			rounded
-		>
+		<v-card class="main-container mb-2 pa-4">
 			<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
 			<div
 				class="d-flex flex-row justify-center align-center"
@@ -118,7 +114,7 @@
 					{{ $root.lang().profile.save_changes }}
 				</v-btn>
 			</div>
-		</v-list>
+		</v-card>
 
 		<user-remove-confirm
 			v-model="deleteModalOpened"

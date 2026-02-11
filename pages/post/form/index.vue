@@ -1,33 +1,35 @@
 <template>
 	<div>
-		<v-tabs v-model="selectedTab" grow :class="[{ 'mx-n3': !$vuetify.breakpoint.mdAndUp }]">
-			<v-tab>{{ $root.lang().posts.general.heading }}</v-tab>
-			<v-tab>{{ $root.lang().posts.download.heading }}</v-tab>
-			<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
-		</v-tabs>
-		<v-list class="main-container mb-2 pa-4" :class="{ 'mx-n3': $vuetify.breakpoint.xs }" rounded>
+		<v-card class="main-container mb-2">
 			<loading-page v-if="loading" class="my-10">
 				{{ $root.lang().posts.loading }}
 			</loading-page>
-			<template v-else>
-				<v-tabs-items v-model="selectedTab" style="background-color: transparent" class="pb-3">
-					<v-tab-item><general-tab v-model="formData" /></v-tab-item>
-					<v-tab-item><download-tab v-model="downloads" /></v-tab-item>
-					<v-tab-item>
-						<!-- need extra prop for the json modal (easier than tracking it here) -->
-						<changelog-tab v-model="changelog" :convert="convertChangelogToArray" />
-					</v-tab-item>
-				</v-tabs-items>
-				<div class="d-flex justify-end pa-2">
-					<v-btn color="darken-1" text @click="onSubmit(false)">
-						{{ $root.lang().global.btn.save_draft }}
-					</v-btn>
-					<v-btn color="primary" text @click="onSubmit(true)">
-						{{ $root.lang().global.btn.publish }}
-					</v-btn>
+			<div v-else class="transparent-tabs">
+				<v-tabs v-model="selectedTab" grow>
+					<v-tab>{{ $root.lang().posts.general.heading }}</v-tab>
+					<v-tab>{{ $root.lang().posts.download.heading }}</v-tab>
+					<v-tab>{{ $root.lang().posts.changelog.heading }}</v-tab>
+				</v-tabs>
+				<div class="pa-4">
+					<v-tabs-items v-model="selectedTab">
+						<v-tab-item><general-tab v-model="formData" /></v-tab-item>
+						<v-tab-item><download-tab v-model="downloads" /></v-tab-item>
+						<v-tab-item>
+							<!-- need extra prop for the json modal (easier than tracking it here) -->
+							<changelog-tab v-model="changelog" :convert="convertChangelogToArray" />
+						</v-tab-item>
+					</v-tabs-items>
+					<div class="d-flex justify-end pa-2">
+						<v-btn color="darken-1" text @click="onSubmit(false)">
+							{{ $root.lang().global.btn.save_draft }}
+						</v-btn>
+						<v-btn color="primary" text @click="onSubmit(true)">
+							{{ $root.lang().global.btn.publish }}
+						</v-btn>
+					</div>
 				</div>
-			</template>
-		</v-list>
+			</div>
+		</v-card>
 	</div>
 </template>
 

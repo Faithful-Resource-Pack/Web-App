@@ -2,7 +2,7 @@
 	<div class="review-preview d-flex flex-column">
 		<v-card
 			style="height: 100%"
-			class="rounded-lg pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
+			class="main-container pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
 		>
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
 			<loading-page v-if="addonInPanelLoading" />
@@ -64,13 +64,16 @@
 				<div v-html="$root.compileMarkdown(addonInPanel.description)" />
 			</template>
 		</v-card>
-		<div v-if="status === 'pending' && addonInPanel.approval.reason" class="mt-2 rounded-lg pa-2">
+		<v-card
+			v-if="status === 'pending' && addonInPanel.approval.reason"
+			class="main-container mt-2 pa-2"
+		>
 			<v-list-item-title class="uppercase pb-1">
 				{{ $root.lang().addons.general.reason.title }}
 			</v-list-item-title>
 			<div>{{ addonInPanel.approval.reason }}</div>
-		</div>
-		<v-card v-if="addonInPanelLoading === false" class="mt-2 rounded-lg pa-2">
+		</v-card>
+		<v-card v-if="addonInPanelLoading === false" class="main-container mt-2 pa-2">
 			<div class="d-flex align-center">
 				<div class="mr-auto">
 					<div v-if="status === 'approved'">

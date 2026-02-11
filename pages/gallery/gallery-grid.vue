@@ -174,7 +174,8 @@ export default {
 			};
 		},
 		missingTextStyles() {
-			const CONTAINER_PADDING = 20; // .container padding (12px) + .v-list.main-container padding (8px)
+			// .container padding (12px) + v-card .pa-2 padding (8px)
+			const CONTAINER_PADDING = 20;
 
 			// double padding for each side
 			const gridWidth = this.width - CONTAINER_PADDING * 2;

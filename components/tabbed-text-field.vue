@@ -1,26 +1,28 @@
 <template>
-	<v-sheet rounded>
-		<v-tabs v-model="tab" dense :color="activeColor">
-			<v-tab>
-				{{ $root.lang().global.text_field_tabs.write }}
-			</v-tab>
-			<v-tab>
-				{{ $root.lang().global.text_field_tabs.preview }}
-			</v-tab>
-		</v-tabs>
-		<div class="ma-2">
-			<v-tabs-items v-model="tab">
-				<v-tab-item>
-					<v-textarea v-model="text" auto-grow v-bind="textareaProps" />
-				</v-tab-item>
-				<v-tab-item>
-					<!-- 120px textarea + 18px word count text -->
-					<!-- eslint-disable-next-line vue/no-v-html -->
-					<div class="my-4 mx-3" style="min-height: 138px" v-html="rendered"></div>
-				</v-tab-item>
-			</v-tabs-items>
+	<v-card :outlined="!$root.isDark" class="mb-5">
+		<div class="transparent-tabs">
+			<v-tabs v-model="tab" dense :color="activeColor">
+				<v-tab>
+					{{ $root.lang().global.text_field_tabs.write }}
+				</v-tab>
+				<v-tab>
+					{{ $root.lang().global.text_field_tabs.preview }}
+				</v-tab>
+			</v-tabs>
+			<div class="mx-2">
+				<v-tabs-items v-model="tab">
+					<v-tab-item>
+						<v-textarea v-model="text" auto-grow v-bind="textareaProps" />
+					</v-tab-item>
+					<v-tab-item>
+						<!-- 120px textarea + 18px word count text -->
+						<!-- eslint-disable-next-line vue/no-v-html -->
+						<div class="my-4 mx-3" style="min-height: 138px" v-html="rendered"></div>
+					</v-tab-item>
+				</v-tabs-items>
+			</div>
 		</div>
-	</v-sheet>
+	</v-card>
 </template>
 
 <script>

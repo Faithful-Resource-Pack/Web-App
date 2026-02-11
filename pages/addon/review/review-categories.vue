@@ -8,7 +8,7 @@
 			:lg="12 / (categories.length || 1)"
 		>
 			<v-card
-				class="py-2 px-4 d-flex align-center rounded-lg overflow-hidden review-category"
+				class="py-2 px-4 d-flex align-center overflow-hidden main-container"
 				:class="classes[cat_i]"
 				@click="$emit('input', cat.value)"
 			>

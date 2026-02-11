@@ -6,7 +6,7 @@
 			:cols="$vuetify.breakpoint.mdAndUp ? 4 : $vuetify.breakpoint.smAndUp ? 6 : 12"
 			class="d-flex align-stretch"
 		>
-			<v-card class="d-flex flex-column grid-card" style="width: 100%">
+			<v-card class="d-flex flex-column main-container" style="width: 100%">
 				<v-skeleton-loader v-if="loading" type="image, article" />
 				<template v-else>
 					<v-img

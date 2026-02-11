@@ -13,7 +13,7 @@
 		<!-- wraps both mobile and desktop layouts -->
 		<div class="review-content-container my-2">
 			<!-- empty layout is shared across both mobile and desktop -->
-			<v-card v-if="selectedListItems.length === 0" class="review-empty rounded-lg">
+			<v-card v-if="selectedListItems.length === 0" class="main-container">
 				<ascii-error :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
 			<!-- desktop layout -->

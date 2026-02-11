@@ -1,5 +1,5 @@
 <template>
-	<v-list rounded two-line class="main-container">
+	<v-card class="main-container px-2 py-4">
 		<v-row>
 			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount" xs="1">
 				<v-list-item>
@@ -20,7 +20,7 @@
 			{{ $root.lang().global.btn.load_more }}
 			<v-icon right>mdi-plus</v-icon>
 		</v-btn>
-	</v-list>
+	</v-card>
 </template>
 
 <script>

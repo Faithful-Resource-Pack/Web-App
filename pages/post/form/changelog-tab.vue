@@ -21,7 +21,7 @@
 			</v-col>
 		</v-row>
 		<br />
-		<v-row>
+		<v-row class="pb-3">
 			<v-col>
 				<v-btn block color="secondary" @click="openGenerateModal">
 					{{ $root.lang().posts.changelog_generator.heading }}<v-icon right>mdi-pencil</v-icon>
