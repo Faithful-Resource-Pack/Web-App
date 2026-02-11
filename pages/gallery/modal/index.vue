@@ -62,10 +62,10 @@
 				<v-tabs-items v-model="selectedTab">
 					<v-tab-item v-for="tab in displayedTabs" :key="tab">
 						<template v-if="loading">
-							<template v-for="_ in 2">
+							<div v-for="i in 2" :key="i">
 								<v-skeleton-loader type="heading" class="pt-5 pb-2" />
 								<v-skeleton-loader type="table-row-divider@3" class="mx-2 pb-5" />
-							</template>
+							</div>
 						</template>
 						<texture-tab v-else-if="tab === displayedTabs.information" :textureObj="textureObj" />
 						<author-tab
