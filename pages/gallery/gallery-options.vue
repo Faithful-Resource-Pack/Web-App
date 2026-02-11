@@ -114,7 +114,6 @@ export default {
 			options: {
 				packs: [],
 				tags: [],
-				versions: ["latest", ...Object.values(settings.versions).flat()],
 				editions: ["all", ...settings.editions],
 			},
 			currentSearch: {},
@@ -148,8 +147,13 @@ export default {
 				value: e,
 			}));
 		},
+		availableVersions() {
+			return this.currentSearch.edition === "all"
+				? ["latest", ...Object.values(settings.versions).flat()]
+				: settings.versions[this.currentSearch.edition];
+		},
 		versionList() {
-			return this.options.versions.map((v) => {
+			return this.availableVersions.map((v) => {
 				// nested ternary is really ugly
 				if (v === "latest")
 					return {
@@ -215,21 +219,19 @@ export default {
 			},
 			deep: true,
 		},
-		// always keep versions in sync with edition
-		"current.edition": {
+		// always keep current version in sync with edition
+		availableVersions: {
 			handler(newValue) {
-				this.options.versions =
-					newValue === "all"
-						? ["latest", ...Object.values(settings.versions).flat()]
-						: settings.versions[newValue] || settings.versions.java;
+				let update;
+				// always prioritize latest if all is selected (probably wanted)
+				if (this.currentSearch.edition === "all") update = "latest";
+				else if (!newValue.includes(this.currentSearch.version)) update = newValue[0];
 
-				// going from all to something else, keep existing value
-				if (newValue !== "all" && this.options.versions.includes(this.currentSearch.version))
-					return;
-
-				// version needs updating to match edition, update route too
-				this.currentSearch.version = this.options.versions[0];
-				this.$emit("updateRoute");
+				if (update !== undefined) {
+					this.currentSearch.version = update;
+					// avoid redundant navigation if nothing changed
+					this.$nextTick(() => this.$emit("updateRoute"));
+				}
 			},
 			immediate: true,
 		},
