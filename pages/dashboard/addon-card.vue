@@ -2,7 +2,7 @@
 	<dashboard-card
 		id="addon-card"
 		:title="$root.lang().dashboard.titles.addons"
-		to="/review/addons"
+		to="/addons/review"
 		:clickable="$root.isAdmin"
 		class="d-flex flex-column justify-space-between"
 	>
