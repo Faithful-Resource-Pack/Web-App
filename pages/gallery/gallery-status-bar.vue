@@ -79,7 +79,7 @@ export default {
 			},
 			immediate: true,
 		},
-		sort() {
+		sort(newValue) {
 			this.$emit("input", newValue);
 		},
 	},
