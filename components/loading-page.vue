@@ -8,8 +8,8 @@
 </template>
 
 <script>
-// really handy since a lot of pages block on an image
-// todo: probably use skeletons more for better design
+// really handy since a lot of pages don't function until a request is processed
+// in general skeletons are used for placeholder content but this also works pretty well
 export default {
 	name: "loading-page",
 };

@@ -121,17 +121,6 @@ export default [
 		roles: ["Administrator"],
 		subtabs: [
 			{
-				id: "list",
-				icon: "mdi-format-list-bulleted-square",
-				routes: [
-					{
-						path: "/posts/list",
-						component: PostListPage,
-						name: "All posts",
-					},
-				],
-			},
-			{
 				id: "create",
 				icon: "mdi-post",
 				routes: [
@@ -144,6 +133,17 @@ export default [
 						path: "/posts/edit/:id",
 						component: EditPostPage,
 						name: "Edit post",
+					},
+				],
+			},
+			{
+				id: "list",
+				icon: "mdi-format-list-bulleted-square",
+				routes: [
+					{
+						path: "/posts/list",
+						component: PostListPage,
+						name: "All posts",
 					},
 				],
 			},
