@@ -2,6 +2,7 @@
 	<v-snackbar
 		v-model="snackbarShown"
 		class="snackbar-status"
+		:class="(split.submessage || json) && 'extended-snackbar'"
 		:timeout="snackbar.timeout"
 		:color="snackbar.color"
 		text
@@ -10,7 +11,7 @@
 	>
 		<div class="d-flex justify-space-between" :class="json ? 'align-start' : 'align-center'">
 			<div>
-				<h3 class="snackbar-accent">{{ split.message }}</h3>
+				<h3 class="snackbar-title">{{ split.message }}</h3>
 				<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
 			</div>
 			<!-- this is such a stupid workaround for showing it only on errors -->
@@ -149,12 +150,12 @@ export default {
 
 // since the color can change we just lighten it directly
 .theme--dark .snackbar-accent,
-.theme--dark .snackbar-accent .v-icon::before {
+.theme--dark .extended-snackbar .snackbar-title {
 	filter: brightness(2.25) saturate(0.7);
 }
 
 .theme--light .snackbar-accent,
-.theme--light .snackbar-accent .v-icon::before {
+.theme--light .extended-snackbar .snackbar-title {
 	filter: brightness(0.7);
 }
 
