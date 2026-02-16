@@ -22,11 +22,7 @@
 					<div v-for="group in skeletonGroups" :key="group[0]" class="d-flex flex-row pb-2 pb-sm-0">
 						<div v-for="pack in group" :key="pack" class="px-2 pb-sm-2">
 							<v-skeleton-loader type="image" width="160" height="160" />
-							<v-skeleton-loader
-								type="heading"
-								class="d-flex justify-center pt-2 pb-4"
-								width="100%"
-							/>
+							<v-skeleton-loader type="text" class="skeleton-caption d-flex justify-center mt-2" />
 						</div>
 					</div>
 				</template>
@@ -52,7 +48,9 @@
 							>
 								<p>{{ $root.lang().gallery.error_message.texture_not_done }}</p>
 							</gallery-image>
-							<h2 class="text-center gallery-modal-image-caption">{{ packToName[url.name] }}</h2>
+							<h2 class="text-center gallery-modal-caption mt-1">
+								{{ packToName[url.name] }}
+							</h2>
 						</div>
 					</div>
 				</template>
@@ -197,6 +195,10 @@ export default {
 		},
 	},
 	computed: {
+		loading() {
+			const hasContent = Object.keys(this.textureObj).length || this.error;
+			return !hasContent;
+		},
 		skeletonGroups() {
 			return this.$vuetify.breakpoint.mdAndDown ? [PACK_SLIDER_ORDER] : PACK_GRID_ORDER;
 		},
@@ -215,10 +217,6 @@ export default {
 					return { name: pack, image: url };
 				}),
 			);
-		},
-		loading() {
-			const hasContent = Object.keys(this.textureObj).length || this.error;
-			return !hasContent;
 		},
 		modalTitle() {
 			if (this.error) return this.$root.lang().gallery.error_message.search_failed;
@@ -307,10 +305,16 @@ $modal-image-size: 160px;
 	background-position: center;
 }
 
-.gallery-modal-image-caption {
+.gallery-modal-caption,
+.skeleton-caption {
 	max-width: $modal-image-size;
 	height: 48px;
 	font-size: 1em;
+}
+
+// roughly the average pack length
+.skeleton-caption .v-skeleton-loader__bone {
+	max-width: 70%;
 }
 
 .theme--dark .gallery-modal-texture {
