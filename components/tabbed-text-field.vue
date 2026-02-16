@@ -3,10 +3,10 @@
 		<div class="transparent-tabs">
 			<v-tabs v-model="tab" dense :color="activeColor">
 				<v-tab>
-					{{ $root.lang().global.text_field_tabs.write }}
+					{{ $root.lang().global.tabbed_text_field.write }}
 				</v-tab>
 				<v-tab>
-					{{ $root.lang().global.text_field_tabs.preview }}
+					{{ $root.lang().global.tabbed_text_field.preview }}
 				</v-tab>
 			</v-tabs>
 			<div class="mx-2">
@@ -61,6 +61,7 @@ export default {
 	},
 	computed: {
 		rendered() {
+			if (!this.text) return this.$root.lang().global.tabbed_text_field.empty;
 			switch (this.type) {
 				case "html":
 					return DOMPurify.sanitize(this.text);

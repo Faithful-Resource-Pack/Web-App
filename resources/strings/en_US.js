@@ -116,9 +116,10 @@ export default {
 			import_data: "Import JSON data",
 			parse_json: "Convert JSON to data",
 		},
-		text_field_tabs: {
+		tabbed_text_field: {
 			write: "Write",
 			preview: "Preview",
+			empty: "Nothing to preview",
 		},
 		drop_zone: {
 			standby_singular: "Drop file or click to select",
