@@ -23,7 +23,7 @@
 								style="background-color: rgba(255, 255, 255, 0.1)"
 							>
 								<v-icon v-if="failed[item[track]]" x-large>mdi-image-off</v-icon>
-								<v-progress-circular v-else indeterminate color="grey lighten-5" />
+								<v-progress-circular v-else indeterminate />
 							</v-row>
 						</template>
 					</v-img>
