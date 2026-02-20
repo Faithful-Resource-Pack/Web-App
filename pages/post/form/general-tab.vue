@@ -43,10 +43,10 @@
 			<div class="col pb-0">
 				<v-text-field
 					v-model="formData.date"
+					type="date"
 					required
 					clearable
 					:label="$root.lang().posts.general.date.label"
-					:placeholder="$root.lang().posts.general.date.placeholder"
 					persistent-placeholder
 				/>
 			</div>

@@ -495,7 +495,6 @@ export default {
 			},
 			date: {
 				label: "Post release date",
-				placeholder: "YYYY-MM-DD",
 			},
 			discontinued: {
 				label: "Discontinued",
