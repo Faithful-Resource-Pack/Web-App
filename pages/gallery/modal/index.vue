@@ -27,29 +27,29 @@
 					</div>
 				</template>
 				<template v-else>
-					<div v-for="(group, i) in grouped" :key="i" class="d-flex flex-row pb-2 pb-sm-0">
-						<div v-for="url in group" :key="url.name" class="px-2 pb-sm-2">
+					<div v-for="group in imageGroups" :key="group[0].id" class="d-flex flex-row pb-2 pb-sm-0">
+						<div v-for="pack in group" :key="pack.id" class="px-2 pb-sm-2">
 							<gallery-image
-								:ref="`image-${url.name}`"
+								:ref="`image-${pack.name}`"
 								modal
-								:src="url.image"
+								:src="pack.image"
 								:alt="
 									$root
 										.lang()
 										.gallery.modal.image_alt_text.replace('%NAME%', textureObj.texture.name)
-										.replace('%PACK%', url.name)
+										.replace('%PACK%', pack.name)
 								"
 								:textureID="textureID"
 								:ignoreList="ignoreList"
 								:animated="animated"
 								:mcmeta="textureObj.mcmeta"
-								@click="openFullscreenPreview(url.image)"
+								@click="openFullscreenPreview(pack.image)"
 								@loaded="countLoaded"
 							>
 								<p>{{ $root.lang().gallery.error_message.texture_not_done }}</p>
 							</gallery-image>
 							<h2 class="text-center gallery-modal-caption mt-1">
-								{{ packToName[url.name] }}
+								{{ packToName[pack.name] }}
 							</h2>
 						</div>
 					</div>
@@ -65,9 +65,10 @@
 				<v-tabs-items v-model="selectedTab">
 					<v-tab-item v-for="tab in displayedTabs" :key="tab">
 						<template v-if="loading">
-							<div v-for="i in 2" :key="i">
+							<div v-for="i in Array.from({ length: 3 }).keys()" :key="i">
 								<v-skeleton-loader type="heading" class="pt-5 pb-2" />
-								<v-skeleton-loader type="table-row-divider@3" class="mx-2 pb-5" />
+								<!-- cool trick where the texture table has 1, uses has 2, and paths has 3 -->
+								<v-skeleton-loader :type="`table-row-divider@${i + 1}`" class="mx-2 pb-5" />
 							</div>
 						</template>
 						<texture-tab v-else-if="tab === displayedTabs.information" :textureObj="textureObj" />
@@ -199,23 +200,21 @@ export default {
 			const hasContent = Object.keys(this.textureObj).length || this.error;
 			return !hasContent;
 		},
-		skeletonGroups() {
+		packs() {
 			return this.$vuetify.breakpoint.mdAndDown ? [PACK_SLIDER_ORDER] : PACK_GRID_ORDER;
 		},
-		grouped() {
+		skeletonGroups() {
+			return this.packs.map((group) => group.map(() => crypto.randomUUID()));
+		},
+		imageGroups() {
 			if (this.loading) return [];
 
-			// don't display duplicates on mobile
-			if (this.$vuetify.breakpoint.mdAndDown)
-				return [
-					PACK_SLIDER_ORDER.map((pack) => ({ name: pack, image: this.textureObj.urls[pack] })),
-				];
-
-			return PACK_GRID_ORDER.map((packSet) =>
-				packSet.map((pack) => {
-					const url = this.textureObj.urls[pack];
-					return { name: pack, image: url };
-				}),
+			return this.packs.map((group) =>
+				group.map((pack) => ({
+					name: pack,
+					image: this.textureObj.urls[pack],
+					id: crypto.randomUUID(),
+				})),
 			);
 		},
 		modalTitle() {
