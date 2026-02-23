@@ -544,7 +544,7 @@ const app = new Vue({
 					success: "#22a831",
 				},
 				light: {
-					primary: "#76c945",
+					primary: "#4ea229",
 					// lightest fully accessible color (easier to style around)
 					secondary: "#757575",
 					accent: "#00a2ff",

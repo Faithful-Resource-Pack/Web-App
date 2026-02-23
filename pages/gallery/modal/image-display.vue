@@ -31,7 +31,7 @@
 						<p>{{ $root.lang().gallery.error_message.texture_not_done }}</p>
 					</gallery-image>
 					<h2 class="text-center gallery-modal-caption mt-1">
-						{{ packToName[pack.name] }}
+						{{ pack.displayName }}
 					</h2>
 				</div>
 			</div>
@@ -129,9 +129,10 @@ export default {
 
 			return this.packs.map((group) =>
 				group.map((pack) => ({
-					name: pack,
-					image: this.textureObj.urls[pack],
 					id: crypto.randomUUID(),
+					name: pack,
+					displayName: this.packToName[pack],
+					image: this.textureObj.urls[pack],
 				})),
 			);
 		},

@@ -1,4 +1,5 @@
-$faithful-brand: #76C945;
+$faithful-dark-brand: #76C945;
+$faithful-light-brand: #4ea229;
 $light-scroller-bg: #fafafa;
 // used in form components too, needs to be more neutral than the actual page bg
 $dark-scroller-bg: #272727;
@@ -7,18 +8,18 @@ $dark-scroller-sidebar: #363636;
 /* ===== Scrollbar CSS ===== */
 // Firefox
 .theme--light, .theme--light * {
-	scrollbar-color: $faithful-brand $light-scroller-bg;
+	scrollbar-color: $faithful-light-brand $light-scroller-bg;
 }
 
 .theme--dark, .theme--dark * {
 	scrollbar-width: auto;
 	// same color as app bar
-	scrollbar-color: $faithful-brand $dark-scroller-bg;
+	scrollbar-color: $faithful-dark-brand $dark-scroller-bg;
 }
 
 // needs to be done separately so the dark sidebar in light mode works
 .v-navigation-drawer.theme--dark * {
-	scrollbar-color: $faithful-brand $dark-scroller-sidebar !important;
+	scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar !important;
 }
 
 // Chrome, Edge, and Safari
@@ -34,7 +35,7 @@ html *::-webkit-scrollbar-track {
 
 html::-webkit-scrollbar-thumb,
 html *::-webkit-scrollbar-thumb {
-	background-color: $faithful-brand;
+	background-color: $faithful-dark-brand;
 	border-radius: 12px;
-	border: -1px solid $faithful-brand;
+	border: -1px solid $faithful-dark-brand;
 }
