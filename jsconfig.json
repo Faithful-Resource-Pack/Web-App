@@ -5,7 +5,8 @@
 		"strict": true,
 		"paths": {
 			"@helpers/*": ["./helpers/*"],
-			"@components/*": ["./components/*"]
+			"@components/*": ["./components/*"],
+			"@layouts/*": ["./layouts/*"]
 		}
 	}
 }
