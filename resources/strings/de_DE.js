@@ -65,7 +65,6 @@ export default {
 			confirm_deletion: "Löschung bestätigen",
 		},
 		subtitles: {
-			add_manually: "Manuell hinzufügen",
 			resolution: "Auflösung",
 			user: "Mitwirkende/r",
 			select_user_role: "Mitwirkende/r-Typ auswählen",

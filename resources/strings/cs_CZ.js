@@ -103,7 +103,6 @@ export default {
 			confirm_deletion: "Potvrdit smazání",
 		},
 		subtitles: {
-			add_manually: "Přidat ručně",
 			resolution: "Rozlišení",
 			pack: "Resource Packy",
 			user: "Uživatel",

@@ -138,7 +138,7 @@ export default {
 		contributions: {
 			title: "Contributions",
 			contributors: "Contributors",
-			add_manually: "Add manually",
+			add_contributions: "Add new contributions",
 			pack_filter: "Filter by pack",
 			user_filter: "Users",
 			texture_filter: "Textures",

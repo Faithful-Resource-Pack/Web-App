@@ -108,7 +108,6 @@ export default {
 			confirm_deletion: "Confirmer la suppression",
 		},
 		subtitles: {
-			add_manually: "Ajouter manuellement",
 			add_new_contribution: "Ajouter une nouvelle contribution",
 			clone_contribution: "Cloner la contribution",
 			no_contributor_yet: "Pas encore de contributeurs",

@@ -118,7 +118,6 @@ export default {
 		contributions: {
 			title: "Contribuições",
 			contributors: "Contribuidores",
-			add_manually: "Adicionar manualmente",
 			pack_filter: "Filtrar por pacote",
 			user_filter: "Usuários",
 			texture_filter: "Texturas",

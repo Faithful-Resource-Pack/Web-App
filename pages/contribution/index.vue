@@ -23,7 +23,7 @@
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block color="primary" @click="addContribution">
-					{{ $root.lang().database.contributions.add_manually }}
+					{{ $root.lang().database.contributions.add_contributions }}
 					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-col>
