@@ -1,6 +1,6 @@
 <template>
 	<v-card class="main-container mb-2 pa-4">
-		<loading-page v-if="loading" class="my-10">
+		<loading-page v-if="loading" class="py-10">
 			{{ $root.lang().addons.general.loading_addon }}
 		</loading-page>
 		<v-form v-else ref="form" v-model="validForm" lazy-validation>

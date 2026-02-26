@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-card class="main-container mb-2">
-			<loading-page v-if="loading" class="my-10">
+			<loading-page v-if="loading" class="py-10">
 				{{ $root.lang().posts.loading }}
 			</loading-page>
 			<div v-else class="transparent-tabs">
