@@ -52,8 +52,8 @@
 					<v-list-item-avatar
 						tile
 						:class="[color, 'white--text']"
+						class="px-2"
 						:style="{
-							padding: '0 10px 0 10px',
 							'border-radius': '4px !important',
 							width: 'auto',
 						}"
@@ -63,16 +63,12 @@
 
 					<v-list-item-content>
 						<v-list-item-title>
-							<v-list-item style="display: inline; padding: 0 0 0 5px">
-								<template v-if="use.name">{{ use.name }}</template>
-								<template v-else>
-									<i>{{ $root.lang().database.nameless }}</i>
-								</template>
-							</v-list-item>
-							<v-list-item-subtitle style="display: block; padding: 0 0 0 5px">
-								{{ use.edition }}
-							</v-list-item-subtitle>
+							<template v-if="use.name">{{ use.name }}</template>
+							<template v-else>
+								<i>{{ $root.lang().database.nameless }}</i>
+							</template>
 						</v-list-item-title>
+						<v-list-item-subtitle>{{ use.edition.toTitleCase() }}</v-list-item-subtitle>
 					</v-list-item-content>
 
 					<v-list-item-action class="merged-actions">
