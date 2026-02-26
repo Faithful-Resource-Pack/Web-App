@@ -33,22 +33,22 @@
 					/>
 				</v-form>
 				<v-btn block color="secondary" :disabled="formInvalid" :loading="loading" @click="generate">
+					<v-icon left>mdi-pencil</v-icon>
 					{{ $root.lang().posts.changelog_generator.heading }}
-					<v-icon right>mdi-pencil</v-icon>
 				</v-btn>
 				<template v-if="outputData">
 					<v-divider class="my-5" />
 					<v-row>
 						<v-col>
 							<v-btn block color="secondary" @click="copyData">
+								<v-icon left>mdi-content-copy</v-icon>
 								{{ $root.lang().posts.changelog_generator.copy }}
-								<v-icon right>mdi-content-copy</v-icon>
 							</v-btn>
 						</v-col>
 						<v-col>
 							<v-btn block color="secondary" :href="fileURL" :download="fileName">
+								<v-icon left>mdi-download</v-icon>
 								{{ $root.lang().posts.changelog_generator.download }}
-								<v-icon right>mdi-download</v-icon>
 							</v-btn>
 						</v-col>
 					</v-row>

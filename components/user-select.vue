@@ -59,7 +59,8 @@
 		</template>
 		<template #no-data>
 			<v-btn block elevation="0" color="primary" class="mt-4" @click="startSearch(search)">
-				{{ $root.lang().database.search }} <v-icon right dark>mdi-magnify</v-icon>
+				<v-icon left dark>mdi-magnify</v-icon>
+				{{ $root.lang().database.search }}
 			</v-btn>
 		</template>
 	</v-autocomplete>

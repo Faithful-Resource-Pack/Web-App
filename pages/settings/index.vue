@@ -8,7 +8,8 @@
 		<div class="my-2 text-h5">{{ $root.lang().settings.edit_raw }}</div>
 
 		<v-btn :color="pageColor" class="white--text my-6" :disabled="invalidJson" block @click="save">
-			{{ $root.lang().global.btn.save }} <v-icon right>mdi-content-save</v-icon>
+			<v-icon left>mdi-content-save</v-icon>
+			{{ $root.lang().global.btn.save }}
 		</v-btn>
 
 		<v-card class="main-container my-2">

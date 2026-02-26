@@ -17,8 +17,8 @@
 			block
 			@click="showMore"
 		>
+			<v-icon left>mdi-plus</v-icon>
 			{{ $root.lang().global.btn.load_more }}
-			<v-icon right>mdi-plus</v-icon>
 		</v-btn>
 	</v-card>
 </template>

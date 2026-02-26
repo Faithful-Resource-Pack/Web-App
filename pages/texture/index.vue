@@ -52,14 +52,14 @@
 			<v-row>
 				<v-col>
 					<v-btn block :color="pageColor" :class="textColorOnPage" @click="openNewTextureModal">
+						<v-icon left>mdi-plus</v-icon>
 						{{ $root.lang().database.textures.add_multiple }}
-						<v-icon right>mdi-plus</v-icon>
 					</v-btn>
 				</v-col>
 				<v-col>
 					<v-btn block :color="pageColor" :class="textColorOnPage" @click="openMergeModal">
+						<v-icon left>mdi-merge</v-icon>
 						{{ $root.lang().database.textures.merge_textures.title }}
-						<v-icon right>mdi-merge</v-icon>
 					</v-btn>
 				</v-col>
 			</v-row>

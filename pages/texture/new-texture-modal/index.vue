@@ -23,7 +23,8 @@
 							</v-btn>
 						</v-tab>
 						<v-btn text large color="grey darken-1" @click="addTexture()">
-							{{ $root.lang().global.btn.add }}<v-icon right>mdi-plus</v-icon>
+							<v-icon left>mdi-plus</v-icon>
+							{{ $root.lang().global.btn.add }}
 						</v-btn>
 					</v-tabs>
 					<v-tabs-items v-model="selectedTab" fixed-tabs>

@@ -16,7 +16,8 @@
 			<!-- root level object is the only one that cannot contain string items -->
 			<v-col>
 				<v-btn block color="secondary" @click="addCategory">
-					{{ $root.lang().posts.changelog.add_category }}<v-icon right>mdi-plus</v-icon>
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().posts.changelog.add_category }}
 				</v-btn>
 			</v-col>
 		</v-row>
@@ -24,12 +25,14 @@
 		<v-row class="pb-3">
 			<v-col>
 				<v-btn block color="secondary" @click="openGenerateModal">
-					{{ $root.lang().posts.changelog_generator.heading }}<v-icon right>mdi-pencil</v-icon>
+					<v-icon left>mdi-pencil</v-icon>
+					{{ $root.lang().posts.changelog_generator.heading }}
 				</v-btn>
 			</v-col>
 			<v-col>
 				<v-btn block color="secondary" @click="openJSONModal">
-					{{ $root.lang().posts.changelog.import_json }}<v-icon right>mdi-code-json</v-icon>
+					<v-icon left>mdi-code-json</v-icon>
+					{{ $root.lang().posts.changelog.import_json }}
 				</v-btn>
 			</v-col>
 		</v-row>

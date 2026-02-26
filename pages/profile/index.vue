@@ -10,8 +10,8 @@
 				target="_blank"
 				rel="noopener noreferrer"
 			>
+				<v-icon left>mdi-open-in-new</v-icon>
 				{{ $root.lang().profile.public_profile }}
-				<v-icon right>mdi-open-in-new</v-icon>
 			</v-btn>
 		</div>
 		<v-card class="main-container mb-2 pa-4">
@@ -101,8 +101,8 @@
 					</v-col>
 				</v-row>
 				<v-btn block color="secondary" @click="addSocialMedia">
+					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().profile.social.add }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-form>
 

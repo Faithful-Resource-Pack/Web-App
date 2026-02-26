@@ -47,8 +47,8 @@
 					</v-list-item-group>
 				</v-list>
 				<v-btn color="secondary" elevation="0" block @click.stop.prevent="cloneContribution">
+					<v-icon left>mdi-content-duplicate</v-icon>
 					{{ $root.lang().database.contributions.modal.clone_contribution }}
-					<v-icon right>mdi-content-duplicate</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>

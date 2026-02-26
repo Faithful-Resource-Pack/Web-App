@@ -93,8 +93,8 @@
 			<v-row v-if="Object.keys(formData.submission).length">
 				<v-col cols="12" sm="10">
 					<v-btn block color="secondary" @click="openSubmissionModal(formData, false)">
+						<v-icon left>mdi-pencil</v-icon>
 						{{ $root.lang().database.packs.submissions.edit_submission }}
-						<v-icon right>mdi-pencil</v-icon>
 					</v-btn>
 				</v-col>
 				<v-col cols="12" sm="2">
@@ -104,8 +104,8 @@
 				</v-col>
 			</v-row>
 			<v-btn v-else block color="secondary" @click="openSubmissionModal(formData, true)">
+				<v-icon left>mdi-plus</v-icon>
 				{{ $root.lang().database.packs.submissions.add_submission }}
-				<v-icon right>mdi-plus</v-icon>
 			</v-btn>
 		</v-form>
 	</modal-form>

@@ -44,11 +44,13 @@
 				@delete="remove(i)"
 			/>
 			<div class="ml-5">
-				<v-btn class="ma-1" color="secondary" @click="addItem">
-					{{ $root.lang().posts.changelog.add_item }}<v-icon right>mdi-plus</v-icon>
+				<v-btn class="my-2 mr-1" color="secondary" @click="addItem">
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().posts.changelog.add_item }}
 				</v-btn>
-				<v-btn class="ma-1" color="secondary" @click="addCategory">
-					{{ $root.lang().posts.changelog.add_category }}<v-icon right>mdi-plus</v-icon>
+				<v-btn class="my-2 ml-1" color="secondary" @click="addCategory">
+					<v-icon left>mdi-playlist-plus</v-icon>
+					{{ $root.lang().posts.changelog.add_category }}
 				</v-btn>
 			</div>
 		</template>

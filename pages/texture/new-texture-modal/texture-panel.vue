@@ -99,13 +99,14 @@
 					</v-col>
 				</v-row>
 				<v-btn block class="my-5" color="secondary" @click="addPath(ui)">
+					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().database.textures.paths.add_path }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-timeline-item>
 		</v-timeline>
 		<v-btn block class="my-5" color="secondary" @click="addUse">
-			{{ $root.lang().database.textures.uses.add_use }} <v-icon right>mdi-plus</v-icon>
+			<v-icon left>mdi-plus</v-icon>
+			{{ $root.lang().database.textures.uses.add_use }}
 		</v-btn>
 		<!-- one use and one path are essentially guaranteed by the modal setup -->
 		<v-btn
@@ -115,8 +116,8 @@
 			:color="color"
 			@click="addEditionUse"
 		>
+			<v-icon left>mdi-plus</v-icon>
 			{{ addEditionUseLabel }}
-			<v-icon right>mdi-plus</v-icon>
 		</v-btn>
 	</v-tab-item>
 </template>

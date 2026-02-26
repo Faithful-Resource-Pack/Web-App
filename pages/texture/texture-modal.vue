@@ -88,8 +88,8 @@
 			<div v-else>{{ $root.lang().database.textures.uses.no_use_found }}</div>
 
 			<v-btn block class="mt-2" color="secondary" @click="openUseModal(null, true)">
+				<v-icon left>mdi-plus</v-icon>
 				{{ $root.lang().database.textures.uses.add_use }}
-				<v-icon right>mdi-plus</v-icon>
 			</v-btn>
 			<v-btn
 				v-if="Object.keys(formData.uses).length === 1"
@@ -98,8 +98,8 @@
 				:color="color"
 				@click="openEditionUseModal"
 			>
+				<v-icon left>mdi-plus</v-icon>
 				{{ addEditionUseLabel }}
-				<v-icon right>mdi-plus</v-icon>
 			</v-btn>
 		</v-form>
 	</modal-form>

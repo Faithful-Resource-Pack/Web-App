@@ -86,8 +86,8 @@
 			</div>
 
 			<v-btn block class="mt-2" color="secondary" @click="openPathModal()">
+				<v-icon left>mdi-plus</v-icon>
 				{{ $root.lang().database.textures.paths.add_path }}
-				<v-icon right>mdi-plus</v-icon>
 			</v-btn>
 		</v-form>
 	</modal-form>

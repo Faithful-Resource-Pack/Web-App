@@ -23,8 +23,8 @@
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block color="primary" @click="addContribution">
+					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().database.contributions.add_contributions }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>
@@ -89,8 +89,8 @@
 
 		<!-- Search button -->
 		<v-btn block color="primary" :disabled="searchDisabled" class="my-6" @click="startSearch()">
+			<v-icon left dark>mdi-magnify</v-icon>
 			{{ $root.lang().database.contributions.search_contributions }}
-			<v-icon right dark>mdi-magnify</v-icon>
 		</v-btn>
 
 		<div class="mb-2 text-h5">{{ $root.lang().database.contributions.contribution_result }}</div>

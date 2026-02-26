@@ -43,7 +43,8 @@
 
 		<!-- main buttons -->
 		<v-btn block :color="pageColor" :class="[textColorOnPage, 'my-6']" @click="openModal">
-			{{ $root.lang().database.users.modal.add_user }}<v-icon right>mdi-plus</v-icon>
+			<v-icon left>mdi-plus</v-icon>
+			{{ $root.lang().database.users.modal.add_user }}
 		</v-btn>
 
 		<!-- results -->

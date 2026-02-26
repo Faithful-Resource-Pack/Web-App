@@ -26,7 +26,8 @@
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block :color="pageColor" class="white--text" @click="openModal()">
-					{{ $root.lang().database.packs.modal.add_pack }}<v-icon right dark>mdi-plus</v-icon>
+					<v-icon left dark>mdi-plus</v-icon>
+					{{ $root.lang().database.packs.modal.add_pack }}
 				</v-btn>
 			</v-col>
 		</v-row>

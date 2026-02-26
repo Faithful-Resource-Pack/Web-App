@@ -235,8 +235,8 @@
 			</v-row>
 			<div class="pb-3">
 				<v-btn block color="secondary" @click="addDownloadGroup">
+					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().global.btn.add_download }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</div>
 

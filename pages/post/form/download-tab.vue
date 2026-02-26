@@ -73,14 +73,14 @@
 		<v-row class="pb-3">
 			<v-col>
 				<v-btn block color="secondary" @click="addSingleItem">
+					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().posts.download.add_single_item }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-col>
 			<v-col>
 				<v-btn block color="secondary" @click="addCategory">
+					<v-icon left>mdi-playlist-plus</v-icon>
 					{{ $root.lang().posts.download.add_category }}
-					<v-icon right>mdi-plus</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>

@@ -16,7 +16,8 @@
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block :color="pageColor" class="white--text" @click="openNewVersionModal">
-					{{ $root.lang().database.versions.add.title }}<v-icon right>mdi-plus</v-icon>
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().database.versions.add.title }}
 				</v-btn>
 			</v-col>
 		</v-row>
