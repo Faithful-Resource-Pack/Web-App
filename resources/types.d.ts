@@ -15,6 +15,7 @@ declare module "vue/types/vue" {
 		id: string;
 		username: string;
 		roles: string[];
+		anonymous: boolean;
 	}
 
 	type SnackBarCallback = (

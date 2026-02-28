@@ -27,9 +27,9 @@ export const discordUserStore = defineStore("discordUser", {
 			});
 			return res.data;
 		},
-		watchDiscordAuth(authStore, onError) {
+		watchDiscordAuth(authStore, app, onError) {
 			// https://pinia.vuejs.org/core-concepts/state.html#Subscribing-to-the-state
-			authStore.$subscribe((mutation) => {
+			authStore.$subscribe(async (mutation) => {
 				if (mutation.type === "patch function") return;
 
 				const auth = authStore.$state;
@@ -37,25 +37,28 @@ export const discordUserStore = defineStore("discordUser", {
 				// logged out
 				if (auth.access_token === undefined) return this.$reset();
 
-				this.getInfo(auth.access_token)
-					.then((json) => {
-						this.$patch({
-							discordId: json.id,
-							discordAvatar:
-								json.avatar !== null
-									? `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}?size=1024`
-									: null,
-							discordBanner:
-								json.banner != null
-									? `https://cdn.discordapp.com/banners/${json.id}/${json.banner}?size=1024`
-									: "https://database.faithfulpack.net/images/branding/backgrounds/main_background.png",
-							discordName: json.global_name,
-							discordUsername: json.username,
-						});
-					})
-					.catch((...args) => {
-						onError(...args);
-					});
+				let json;
+				try {
+					json = await this.getInfo(auth.access_token);
+				} catch (args) {
+					onError(args);
+				}
+
+				app.updateAccounts(json.id, auth);
+
+				this.$patch({
+					discordId: json.id,
+					discordAvatar:
+						json.avatar == null
+							? null
+							: `https://cdn.discordapp.com/avatars/${json.id}/${json.avatar}?size=1024`,
+					discordBanner:
+						json.banner == null
+							? "https://database.faithfulpack.net/images/branding/backgrounds/main_background.png"
+							: `https://cdn.discordapp.com/banners/${json.id}/${json.banner}?size=1024`,
+					discordName: json.global_name,
+					discordUsername: json.username,
+				});
 			});
 		},
 	},

@@ -4,19 +4,28 @@ export default {
 	],
 	global: {
 		name: "Faithful Web Application",
-		logout: "Log out",
 		login: "Log in with Discord",
+		logout: "Log out",
 		ends_success: "Completed successfully",
 		loading: "Loading, please wait…",
 		no_results: "No results were found",
 		nyi: "Not yet implemented",
 		invalid_url: "This URL is not valid",
 		translations: "Translations",
-		navbar_labels: {
-			sidebar: "Toggle sidebar",
-			theme: "Toggle theme dropdown",
-			translations: "Toggle translations dropdown",
-			main_site: "Return to main site",
+		navbar: {
+			labels: {
+				sidebar: "Toggle sidebar",
+				theme: "Toggle theme dropdown",
+				translations: "Toggle translations dropdown",
+				main_site: "Return to main site",
+			},
+			profile: {
+				edit: "Edit profile",
+				manage: "Manage accounts",
+				copy: "Copy user ID",
+				copied: "Copied user ID to clipboard",
+				view: "See public profile",
+			},
 		},
 		themes: {
 			notification: "System theme changed to %s",
@@ -126,6 +135,11 @@ export default {
 			standby_plural: "Drop files or click to select",
 			dragging_singular: "Release to upload file",
 			dragging_plural: "Release to upload files",
+		},
+		account_manager: {
+			title: "Account manager",
+			active_account: "Active account",
+			add_account: "Add new account",
 		},
 	},
 	database: {

@@ -5,10 +5,13 @@
 			this is absolutely horrid but there's no other way to get the same behavior nicely
 		-->
 		<div class="v-list--dense v-list--nav">
-			<sidebar-user v-if="$root.isLoggedIn" />
-			<v-btn v-else block class="my-2 blurple" :href="$root.discordAuth.discordAuthURL">
-				{{ $root.lang().global.login }}
-			</v-btn>
+			<router-link to="/">
+				<img
+					src="https://database.faithfulpack.net/images/branding/wordmarks/default/flat/main_flat_wordmark.png"
+					class="mt-2 pa-2"
+					style="width: 100%"
+				/>
+			</router-link>
 			<v-divider class="my-2" />
 			<v-list-group
 				v-for="tab in tabs"
@@ -46,14 +49,12 @@
 
 <script>
 import SidebarTab from "./sidebar-tab.vue";
-import SidebarUser from "./sidebar-user.vue";
 
 const OPEN_TAB_KEY = "menu_open_tabs";
 
 export default {
 	name: "nav-sidebar",
 	components: {
-		SidebarUser,
 		SidebarTab,
 	},
 	props: {

@@ -10,6 +10,8 @@ export const appUserStore = defineStore("appUser", {
 		appUsername: undefined,
 		/** @type {string[]} */
 		appUserRoles: undefined,
+		/** @type {boolean} */
+		appUserAnonymous: undefined,
 	}),
 	actions: {
 		async getOrCreateUser(rootApiURL, accessToken) {
@@ -44,6 +46,7 @@ export const appUserStore = defineStore("appUser", {
 						appUserId: user.id,
 						appUsername: user.username,
 						appUserRoles: user.roles,
+						appUserAnonymous: user.anonymous,
 					});
 				} catch (args) {
 					onError(args);

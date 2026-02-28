@@ -1,6 +1,10 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 
+export const LEGACY_AUTH_STORAGE_KEY = "auth";
+export const AUTH_STORAGE_KEY = "available_accounts";
+export const CURRENT_USER_KEY = "current_user_id";
+
 /** Base store to handle logins and Discord tokens */
 export const discordAuthStore = defineStore("discordAuth", {
 	state: () => ({
@@ -27,18 +31,40 @@ export const discordAuthStore = defineStore("discordAuth", {
 				expires_at: this.expiryDurationToTime(params.get("expires_in")),
 			};
 		},
-		parseLocalStorage(storedAuth) {
-			if (storedAuth === null) return null;
+		parseLocalStorage() {
+			// todo: remove this in a few months once everyone important has logged in at least once
+			const legacyAuthJSON = localStorage.getItem(LEGACY_AUTH_STORAGE_KEY);
+
+			if (legacyAuthJSON !== null) {
+				// convert to new format
+				localStorage.removeItem(LEGACY_AUTH_STORAGE_KEY);
+				let auth;
+				try {
+					auth = JSON.parse(legacyAuthJSON);
+				} catch (err) {
+					console.error(err);
+					return null;
+				}
+
+				if (!auth || !auth.expires_at) return null;
+
+				// we can't set it at this point since we have no idea what account it's for
+				return auth;
+			}
+
+			const authJSON = localStorage.getItem(AUTH_STORAGE_KEY);
+			const currentID = localStorage.getItem(CURRENT_USER_KEY);
 
 			let auth;
 			try {
-				auth = JSON.parse(storedAuth);
+				auth = JSON.parse(authJSON)?.[currentID] ?? null;
 			} catch (err) {
 				console.error(err);
 				return null;
 			}
 
 			if (!auth || !auth.expires_at) return null;
+
 			return auth;
 		},
 		isAuthExpired(auth) {
@@ -74,27 +100,22 @@ export const discordAuthStore = defineStore("discordAuth", {
 			});
 		},
 		/** @returns {Promise<boolean>} whether the user is now logged in */
-		tryLogin(search, storedAuth) {
+		async tryLogin() {
 			// api returns tokens through search params, so prioritize those for login
-			let auth = this.parseSearchParams(search);
+			let auth = this.parseSearchParams(location.search);
 
 			// nothing in search params, try localstorage
-			if (!this.isValidAuth(auth)) auth = this.parseLocalStorage(storedAuth);
+			if (!this.isValidAuth(auth)) auth = this.parseLocalStorage();
 
 			// both api and localstorage auth tried, user is definitely not logged in at this point
-			if (!this.isValidAuth(auth)) return Promise.resolve(false);
+			if (!this.isValidAuth(auth)) return false;
 
-			const lastLogin = this.isAuthExpired(auth) ? this.refreshLogin(auth) : Promise.resolve(auth);
-
-			// for some reason this doesn't work with async/await
-			return lastLogin.then((auth) => {
-				this.$patch({
-					access_token: auth.access_token,
-					refresh_token: auth.refresh_token,
-					expires_at: auth.expires_at,
-				});
-				return true;
-			});
+			return this.loginWithAuth(auth);
+		},
+		async loginWithAuth(auth) {
+			const lastLogin = this.isAuthExpired(auth) ? this.refreshLogin(auth) : auth;
+			const { access_token, refresh_token, expires_at } = await lastLogin;
+			this.$patch({ access_token, refresh_token, expires_at });
 		},
 	},
 });

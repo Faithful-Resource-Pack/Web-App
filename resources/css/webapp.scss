@@ -262,6 +262,12 @@ img.texture-img {
 	color: white;
 }
 
+// weird override issues with some navbar items
+.theme--dark .v-list-item--disabled > *,
+.theme--dark .v-list-item--disabled .v-icon {
+	color: hsla(0, 0%, 100%, 0.5) !important;
+}
+
 .v-image__image--preload {
 	filter: none !important;
 }

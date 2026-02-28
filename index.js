@@ -14,13 +14,13 @@ import { marked } from "marked";
 import { createPinia } from "pinia";
 
 // pinia stores
-import { discordAuthStore } from "./stores/discordAuthStore.js";
+import { discordAuthStore, AUTH_STORAGE_KEY, CURRENT_USER_KEY } from "./stores/discordAuthStore.js";
 import { discordUserStore } from "./stores/discordUserStore.js";
 import { appUserStore } from "./stores/appUserStore.js";
 
 // layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
-import NavAppBar from "@components/nav-app-bar.vue";
+import NavAppBar from "@components/navbar/index.vue";
 import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
 import MissingPage from "./pages/404/index.vue";
@@ -78,7 +78,6 @@ const _get_lang = () => {
 	return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
 };
 
-const AUTH_STORAGE_KEY = "auth";
 const THEME_KEY = "THEME";
 const DARK_SIDEBAR_KEY = "dark_sidebar";
 const MENU_KEY = "menu_key";
@@ -232,8 +231,28 @@ const app = new Vue({
 			this.snackbar.timeout = timeout;
 			this.snackbar.json = json;
 		},
-		logout() {
+		updateAccounts(id, payload) {
+			const cur = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "{}") || {};
+			if (payload) cur[id] = payload;
+			else delete cur[id];
+			localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(cur));
+
+			// only emit once localStorage is updated
+			this.emitConnected();
+		},
+		logout(id) {
+			const currentId = this.user.id;
+			if (id && id !== currentId) return this.updateAccounts(id);
 			this.discordAuth.logout();
+			const accounts = Object.keys(JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)));
+			const nextAccountCandidate = accounts.find((a) => a !== currentId);
+
+			// non-reactive update (can simulate being logged out until page is reloaded)
+			if (nextAccountCandidate) localStorage.setItem(CURRENT_USER_KEY, nextAccountCandidate);
+		},
+		switchAccount(id) {
+			const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY))[id];
+			this.discordAuth.loginWithAuth(auth);
 		},
 		/** For debugging in sub-components */
 		checkPermissions() {
@@ -292,6 +311,7 @@ const app = new Vue({
 				username: this.appUser.appUsername || this.discordUser.discordName,
 				discordUsername: this.discordUser.discordUsername,
 				roles: this.appUser.appUserRoles || [],
+				anonymous: this.appUser.appUserAnonymous || false,
 			};
 		},
 		apiURL() {
@@ -488,11 +508,11 @@ const app = new Vue({
 
 		this.discordAuth.apiURL = window.apiURL;
 		this.discordAuth
-			.tryLogin(location.search, localStorage.getItem(AUTH_STORAGE_KEY))
+			.tryLogin()
 			.then(() => {
 				// remove query parameters after login
 				if (new URLSearchParams(location.search).has("access_token")) {
-					location.search = "";
+					history.replaceState(null, "", window.location.pathname);
 				}
 			})
 			.catch((err) => {
@@ -500,7 +520,7 @@ const app = new Vue({
 				this.showSnackBar(err, "error", 3000);
 			});
 
-		this.discordUser.watchDiscordAuth(this.discordAuth, (err) =>
+		this.discordUser.watchDiscordAuth(this.discordAuth, this, (err) =>
 			this.showSnackBar(err, "error", 3000),
 		);
 		this.appUser.watchDiscordAuth(this.discordAuth, this.apiURL, (err) =>
@@ -508,19 +528,21 @@ const app = new Vue({
 		);
 
 		this.discordAuth.$subscribe(() => {
-			if (this.discordAuth.access_token === undefined) {
-				// remove
-				localStorage.removeItem(AUTH_STORAGE_KEY);
-				this.emitConnected();
-			} else {
+			// remove query parameters after login
+			const id = localStorage.getItem(CURRENT_USER_KEY);
+			if (this.discordAuth.access_token === undefined) this.updateAccounts(id);
+			else {
 				if (Vue.config.devtools) console.log(`Discord Token: ${this.discordAuth.access_token}`);
-				// persist
-				localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(this.discordAuth.$state));
+				// defer localStorage write to userStore mutation (has access to discord id)
 				setTimeout(
 					() => this.discordAuth.refreshLogin(),
 					new Date(this.discordAuth.expires_at).getTime() - new Date().getTime(),
 				);
 			}
+		});
+
+		this.discordUser.$subscribe(() => {
+			localStorage.setItem(CURRENT_USER_KEY, this.discordUser.discordId);
 		});
 	},
 	mounted() {
