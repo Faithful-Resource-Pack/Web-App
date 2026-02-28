@@ -484,7 +484,6 @@ export default {
 			title: "Geral",
 			uuid: {
 				label: "UUID do perfil do Minecraft",
-				hint: "Sua skin será exibida com os addons que você fez.",
 			},
 			username: {
 				label: "Nome de usuário",

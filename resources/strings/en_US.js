@@ -567,7 +567,7 @@ export default {
 			},
 			uuid: {
 				label: "Minecraft profile UUID",
-				hint: "Your skin will be displayed on your created or credited add-ons",
+				hint: "Your skin will be displayed on your profile page and add-ons",
 				rules: {
 					length: "UUID must be exactly 36 characters long",
 				},

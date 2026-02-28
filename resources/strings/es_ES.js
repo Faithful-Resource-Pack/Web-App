@@ -468,7 +468,6 @@ export default {
 			title: "General",
 			uuid: {
 				label: "UUID del perfil de Minecraft",
-				hint: "Tu skin se mostrará con los complementos que hayas creado.",
 			},
 			username: {
 				label: "Nombre de usuario",
