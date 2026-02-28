@@ -35,18 +35,18 @@
 							<v-btn
 								icon
 								:disabled="profile.id === $root.user.id"
-								@click="$root.switchAccount(profile.id)"
+								@click="$root.auth.switchAccount(profile.id)"
 							>
 								<v-icon color="lighten-1">mdi-swap-horizontal</v-icon>
 							</v-btn>
-							<v-btn icon @click="$root.logout(profile.id)">
+							<v-btn icon @click="$root.auth.logout(profile.id)">
 								<v-icon color="red lighten-1">mdi-logout</v-icon>
 							</v-btn>
 						</v-list-item-action>
 					</v-list-item>
 				</v-list>
 
-				<v-btn block class="mt-2" color="secondary" :href="$root.discordAuth.discordAuthURL">
+				<v-btn block class="mt-2" color="secondary" :href="$root.loginURL">
 					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().global.account_manager.add_account }}
 				</v-btn>
@@ -101,9 +101,7 @@ export default {
 		},
 	},
 	created() {
-		this.$root.addAccessTokenListener(() => {
-			this.computeAccounts();
-		});
+		this.$root.auth.addChangeListener(() => this.computeAccounts());
 		this.computeAccounts();
 	},
 };

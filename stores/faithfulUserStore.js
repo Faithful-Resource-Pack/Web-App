@@ -2,20 +2,22 @@ import axios from "axios";
 import { defineStore } from "pinia";
 
 /** Handle Faithful API/database integration using tokens from the auth store */
-export const appUserStore = defineStore("appUser", {
+export const faithfulUserStore = defineStore("faithfulUser", {
 	state: () => ({
 		/** @type {string} */
-		appUserId: undefined,
+		id: undefined,
 		/** @type {string} */
-		appUsername: undefined,
+		username: undefined,
+		/** @type {string} */
+		uuid: undefined,
 		/** @type {string[]} */
-		appUserRoles: undefined,
+		roles: undefined,
 		/** @type {boolean} */
-		appUserAnonymous: undefined,
+		anonymous: false,
 	}),
 	actions: {
-		async getOrCreateUser(rootApiURL, accessToken) {
-			const res = await axios.get(`${rootApiURL}/users/newprofile`, {
+		async getOrCreateUser(accessToken) {
+			const res = await axios.get(`${window.apiURL}/users/newprofile`, {
 				headers: {
 					discord: accessToken,
 				},
@@ -26,7 +28,7 @@ export const appUserStore = defineStore("appUser", {
 		 * @author TheRolf
 		 * @param {import("pinia").Store} authStore
 		 */
-		watchDiscordAuth(authStore, rootApiURL, onError) {
+		watchDiscordAuth(authStore, onError) {
 			// https://pinia.vuejs.org/core-concepts/state.html#Subscribing-to-the-state
 			authStore.$subscribe(async (mutation) => {
 				if (mutation.type === "patch function") return;
@@ -36,17 +38,18 @@ export const appUserStore = defineStore("appUser", {
 				// logged out
 				if (auth.access_token === undefined) {
 					this.$reset();
-					this.$patch({ appUserId: this.$state.appUserId });
+					this.$patch({ id: this.$state.id });
 					return;
 				}
 
 				try {
-					const user = await this.getOrCreateUser(rootApiURL, auth.access_token);
+					const user = await this.getOrCreateUser(auth.access_token);
 					this.$patch({
-						appUserId: user.id,
-						appUsername: user.username,
-						appUserRoles: user.roles,
-						appUserAnonymous: user.anonymous,
+						id: user.id,
+						username: user.username,
+						uuid: user.uuid,
+						roles: user.roles,
+						anonymous: user.anonymous,
 					});
 				} catch (args) {
 					onError(args);

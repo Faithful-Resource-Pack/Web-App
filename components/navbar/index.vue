@@ -63,7 +63,7 @@
 			</template>
 			<user-menu @open-accounts="openAccountManager" />
 		</v-menu>
-		<v-btn v-else small color="primary" class="mx-1 ms-2" :href="$root.discordAuth.discordAuthURL">
+		<v-btn v-else small color="primary" class="mx-1 ms-2" :href="$root.loginURL">
 			<v-icon left>mdi-login</v-icon>
 			Log in
 		</v-btn>

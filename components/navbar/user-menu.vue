@@ -50,7 +50,11 @@
 			</v-list-item-icon>
 			<v-list-item-title>{{ $root.lang().global.navbar.profile.copy }}</v-list-item-title>
 		</v-list-item>
-		<v-list-item class="red--text lighten-1" color="red lighten-1" @click="() => $root.logout()">
+		<v-list-item
+			class="red--text lighten-1"
+			color="red lighten-1"
+			@click="() => $root.auth.logout()"
+		>
 			<!-- I have no idea why vuetify requires this to be specified red three times -->
 			<v-list-item-icon class="me-4">
 				<v-icon color="red lighten-1">mdi-logout</v-icon>

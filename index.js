@@ -11,20 +11,17 @@ import axios from "axios";
 import moment from "moment";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
-import { createPinia } from "pinia";
+import { createPinia, mapState } from "pinia";
 
-// pinia stores
-import { discordAuthStore, AUTH_STORAGE_KEY, CURRENT_USER_KEY } from "./stores/discordAuthStore.js";
-import { discordUserStore } from "./stores/discordUserStore.js";
-import { appUserStore } from "./stores/appUserStore.js";
+import userStore from "./stores/index.js";
 
 // layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
 import NavAppBar from "@components/navbar/index.vue";
 import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
-import MissingPage from "./pages/404/index.vue";
 import LoadingPage from "@components/loading-page.vue";
+import MissingPage from "./pages/404/index.vue";
 
 Vue.config.devtools = import.meta.env.MODE === "development";
 Vue.use(Vuetify);
@@ -149,11 +146,7 @@ const app = new Vue({
 	},
 	data() {
 		return {
-			/** authentication stuff */
-			discordUser: discordUserStore(),
-			discordAuth: discordAuthStore(),
-			appUser: appUserStore(),
-			authListeners: [],
+			auth: userStore(),
 			/** localization stuff */
 			refreshLang: 0, // more granular than $forceUpdate for updating langs
 			selectedLang: _get_lang(),
@@ -231,29 +224,6 @@ const app = new Vue({
 			this.snackbar.timeout = timeout;
 			this.snackbar.json = json;
 		},
-		updateAccounts(id, payload) {
-			const cur = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "{}") || {};
-			if (payload) cur[id] = payload;
-			else delete cur[id];
-			localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(cur));
-
-			// only emit once localStorage is updated
-			this.emitConnected();
-		},
-		logout(id) {
-			const currentId = this.user.id;
-			if (id && id !== currentId) return this.updateAccounts(id);
-			this.discordAuth.logout();
-			const accounts = Object.keys(JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)));
-			const nextAccountCandidate = accounts.find((a) => a !== currentId);
-
-			// non-reactive update (can simulate being logged out until page is reloaded)
-			if (nextAccountCandidate) localStorage.setItem(CURRENT_USER_KEY, nextAccountCandidate);
-		},
-		switchAccount(id) {
-			const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY))[id];
-			this.discordAuth.loginWithAuth(auth);
-		},
 		/** For debugging in sub-components */
 		checkPermissions() {
 			console.log(this.$route);
@@ -262,13 +232,6 @@ const app = new Vue({
 		compileMarkdown(rawText) {
 			if (!rawText) return "";
 			return DOMPurify.sanitize(marked(rawText));
-		},
-		emitConnected() {
-			this.authListeners.forEach((cb) => cb(this.user.access_token));
-		},
-		addAccessTokenListener(listener) {
-			this.authListeners.push(listener);
-			if (this.isLoggedIn) listener(this.user.access_token);
 		},
 		/** @param {"dark" | "light"} theme */
 		onMediaChange(theme) {
@@ -302,17 +265,12 @@ const app = new Vue({
 		},
 	},
 	computed: {
-		user() {
-			return {
-				access_token: this.discordAuth.access_token,
-				avatar: this.discordUser.discordAvatar,
-				banner: this.discordUser.discordBanner,
-				id: this.appUser.appUserId,
-				username: this.appUser.appUsername || this.discordUser.discordName,
-				discordUsername: this.discordUser.discordUsername,
-				roles: this.appUser.appUserRoles || [],
-				anonymous: this.appUser.appUserAnonymous || false,
-			};
+		// the entire user store state becomes the user property
+		...mapState(userStore, {
+			user: (store) => store.$state,
+		}),
+		loginURL() {
+			return `${this.apiURL}/auth/discord/webapp`;
 		},
 		apiURL() {
 			if (
@@ -390,9 +348,6 @@ const app = new Vue({
 		userRoles() {
 			return this.user.roles;
 		},
-		langBCP47() {
-			return this.langToBCP47(this.selectedLang);
-		},
 		lang() {
 			// add refreshLang to the vue effect subscription by mentioning it
 			this.refreshLang;
@@ -428,7 +383,7 @@ const app = new Vue({
 				// load new language if it exists
 				if (!Object.keys(this.loadedLangs).includes(newValue)) return this.loadLanguage(newValue);
 
-				moment.locale(this.langBCP47);
+				moment.locale(this.langToBCP47(newValue));
 
 				// forces this.lang to update
 				this.refreshLang++;
@@ -481,12 +436,8 @@ const app = new Vue({
 			if (this.$vuetify.breakpoint.mobile) return;
 			localStorage.setItem(MENU_KEY, String(n));
 		},
-		userRoles(n, o) {
-			if (o === undefined || o.length === undefined) return;
-			if (n.length === undefined) return;
-			// only update routes based on your fetched roles (role list is longer)
-			// leave if new role list is shorter or equal
-			if (n.length <= o.length) return;
+		userRoles(n) {
+			if (!Array.isArray(n)) return;
 
 			// add all routes with no role
 			this.$nextTick(() => {
@@ -503,47 +454,8 @@ const app = new Vue({
 	created() {
 		this.reloadSettings();
 		moment.locale(this.langToBCP47(_get_lang()));
-
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
-
-		this.discordAuth.apiURL = window.apiURL;
-		this.discordAuth
-			.tryLogin()
-			.then(() => {
-				// remove query parameters after login
-				if (new URLSearchParams(location.search).has("access_token")) {
-					history.replaceState(null, "", window.location.pathname);
-				}
-			})
-			.catch((err) => {
-				console.error(err);
-				this.showSnackBar(err, "error", 3000);
-			});
-
-		this.discordUser.watchDiscordAuth(this.discordAuth, this, (err) =>
-			this.showSnackBar(err, "error", 3000),
-		);
-		this.appUser.watchDiscordAuth(this.discordAuth, this.apiURL, (err) =>
-			this.showSnackBar(err, "error", 3000),
-		);
-
-		this.discordAuth.$subscribe(() => {
-			// remove query parameters after login
-			const id = localStorage.getItem(CURRENT_USER_KEY);
-			if (this.discordAuth.access_token === undefined) this.updateAccounts(id);
-			else {
-				if (Vue.config.devtools) console.log(`Discord Token: ${this.discordAuth.access_token}`);
-				// defer localStorage write to userStore mutation (has access to discord id)
-				setTimeout(
-					() => this.discordAuth.refreshLogin(),
-					new Date(this.discordAuth.expires_at).getTime() - new Date().getTime(),
-				);
-			}
-		});
-
-		this.discordUser.$subscribe(() => {
-			localStorage.setItem(CURRENT_USER_KEY, this.discordUser.discordId);
-		});
+		this.auth.login(this, Vue.config.devtools);
 	},
 	mounted() {
 		// watch color schemes for light and dark

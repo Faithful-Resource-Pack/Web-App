@@ -5,15 +5,20 @@ import Vue from "vue";
 import strings from "./strings/en_US.js";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { RouteConfig } from "vue-router";
+import userStore from "../stores/index.js";
 
 // Vue has the constructor type in types/vue.d.ts
 declare module "vue/types/vue" {
 	interface DiscordUser {
 		access_token: string;
+
+		id: string;
+		discordUsername: string;
 		avatar: string;
 		banner: string;
-		id: string;
+
 		username: string;
+		uuid: string;
 		roles: string[];
 		anonymous: boolean;
 	}
@@ -27,7 +32,9 @@ declare module "vue/types/vue" {
 
 	// inject methods being used
 	interface Vue {
+		readonly auth: ReturnType<typeof userStore>;
 		readonly selectedLang: string;
+		readonly loginURL: string;
 		readonly apiURL: string;
 		readonly apiOptions: AxiosRequestConfig;
 		readonly user: DiscordUser;
@@ -41,9 +48,7 @@ declare module "vue/types/vue" {
 		lang(key: string): string;
 		makeJsonSnackBar(json: unknown): SnackBarCallback;
 		showSnackBar: SnackBarCallback;
-		logout(): void;
 		compileMarkdown(rawText: string): string;
-		addAccessTokenListener(listener: (token: string) => any): void;
 		reloadSettings(): Promise<void>;
 
 		// there's more methods but none of them are used publicly

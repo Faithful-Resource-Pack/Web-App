@@ -264,18 +264,23 @@ export default {
 			// user deleted, sign them out and put them on the dashboard
 			if (success) {
 				this.$router.push({ path: "dashboard" });
-				this.$root.logout();
+				this.$root.auth.logout();
 			}
 		},
 		getUserInfo() {
 			if (!this.$root.isLoggedIn) return;
+
+			// use cached version to speed up loading (first things on page)
+			this.localUser.username = this.$root.user.username;
+			this.localUser.uuid = this.$root.user.uuid;
+			this.localUser.anonymous = this.$root.user.anonymous;
 
 			axios
 				.get(`${this.$root.apiURL}/users/profile/`, this.$root.apiOptions)
 				.then((res) => {
 					this.localUser = res.data;
 
-					// fix if new user or empty user
+					// validation fix if new user or empty user
 					this.localUser.uuid ||= "";
 					this.localUser.username ||= "";
 					this.localUser.bio ||= "";
@@ -322,8 +327,9 @@ export default {
 			return Object.values(this.validationObject).every((v) => v === true);
 		},
 	},
-	mounted() {
-		this.$root.addAccessTokenListener(this.update);
+	created() {
+		this.$root.auth.addChangeListener(() => this.update());
+		this.update();
 	},
 };
 </script>

@@ -34,10 +34,7 @@
 				</div>
 			</div>
 
-			<v-btn
-				class="text-center rounded-lg pa-3 my-2 blurple"
-				:href="$root.discordAuth.discordAuthURL"
-			>
+			<v-btn class="text-center rounded-lg pa-3 my-2 blurple" :href="$root.loginURL">
 				{{ $root.lang().global.login }}
 			</v-btn>
 		</v-card-text>

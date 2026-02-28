@@ -9,18 +9,12 @@ export const CURRENT_USER_KEY = "current_user_id";
 export const discordAuthStore = defineStore("discordAuth", {
 	state: () => ({
 		/** @type {string} */
-		apiURL: undefined,
-		/** @type {string} */
 		access_token: undefined,
 		/** @type {string} */
 		refresh_token: undefined,
 		/** @type {Date} */
 		expires_at: undefined,
 	}),
-	getters: {
-		discordAuthURL: ({ apiURL }) => `${apiURL}/auth/discord/webapp`,
-		discordRefreshURL: ({ apiURL }) => `${apiURL}/auth/discord/refresh`,
-	},
 	actions: {
 		parseSearchParams(search) {
 			const params = new URLSearchParams(search);
@@ -80,7 +74,7 @@ export const discordAuthStore = defineStore("discordAuth", {
 			if (auth === undefined) auth = this.$state;
 
 			const json = await axios
-				.post(this.discordRefreshURL, {
+				.post(`${window.apiURL}/auth/discord/refresh`, {
 					refresh_token: auth.refresh_token,
 				})
 				.then((res) => res.data);
@@ -92,15 +86,9 @@ export const discordAuthStore = defineStore("discordAuth", {
 			};
 		},
 		logout() {
-			const apiURL = this.$state.apiURL;
 			this.$reset(); // ! Very important to reset all stores
-			this.$patch({
-				apiURL,
-				access_token: this.$state.access_token,
-			});
 		},
-		/** @returns {Promise<boolean>} whether the user is now logged in */
-		async tryLogin() {
+		async getAuthMethod() {
 			// api returns tokens through search params, so prioritize those for login
 			let auth = this.parseSearchParams(location.search);
 
@@ -108,9 +96,8 @@ export const discordAuthStore = defineStore("discordAuth", {
 			if (!this.isValidAuth(auth)) auth = this.parseLocalStorage();
 
 			// both api and localstorage auth tried, user is definitely not logged in at this point
-			if (!this.isValidAuth(auth)) return false;
-
-			return this.loginWithAuth(auth);
+			if (!this.isValidAuth(auth)) return null;
+			return auth;
 		},
 		async loginWithAuth(auth) {
 			const lastLogin = this.isAuthExpired(auth) ? this.refreshLogin(auth) : auth;
