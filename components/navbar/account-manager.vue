@@ -15,7 +15,7 @@
 							<v-img
 								:src="`https://vzge.me/face/80/${profile.uuid || 'X-Steve'}`"
 								:alt="`${profile.username}'s Avatar`"
-								style="image-rendering: pixelated;"
+								style="image-rendering: pixelated"
 							>
 							</v-img>
 						</v-list-item-avatar>
