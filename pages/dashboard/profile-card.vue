@@ -6,7 +6,7 @@
 		class="d-flex flex-column"
 	>
 		<v-card-text v-if="user" class="d-flex flex-column justify-space-between flex-grow-1">
-			<div class="text-center">
+			<div class="text-center mb-3">
 				<v-list-item-avatar
 					tile
 					class="rounded-lg mb-5 mt-3"
