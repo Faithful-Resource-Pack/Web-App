@@ -5,7 +5,7 @@ export default {
 	global: {
 		name: "Faithful Web Application",
 		logout: "Log out",
-		login: "Log in via Discord",
+		login: "Log in with Discord",
 		ends_success: "Completed successfully",
 		loading: "Loading, please wait…",
 		no_results: "No results were found",
