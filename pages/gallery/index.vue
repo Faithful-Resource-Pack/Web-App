@@ -112,7 +112,7 @@ export default {
 				// whether to show animated textures
 				animated: localStorage.getItem(ANIMATED_KEY) !== "false",
 				// number of columns you want to display
-				columns: Number(localStorage.getItem(COLUMN_KEY) || 7),
+				columns: Number(localStorage.getItem(COLUMN_KEY) || 8),
 			},
 			search: {
 				pack: "default",
