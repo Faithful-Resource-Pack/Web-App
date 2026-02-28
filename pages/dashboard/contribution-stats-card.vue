@@ -6,7 +6,7 @@
 		:clickable="$root.isAdmin"
 	>
 		<v-card-text class="pb-4 flex-grow-1 d-flex align-stretch">
-			<v-row v-if="data" dense class="col-12 pa-0">
+			<v-row v-if="data" dense>
 				<v-col cols="12" class="d-flex align-stretch">
 					<v-row dense class="d-flex">
 						<v-col
@@ -24,7 +24,7 @@
 					</v-row>
 				</v-col>
 			</v-row>
-			<v-row v-else dense class="col-12 pa-0">
+			<v-row v-else dense>
 				<v-col cols="12" class="d-flex align-stretch">
 					<v-row dense class="d-flex">
 						<v-col
