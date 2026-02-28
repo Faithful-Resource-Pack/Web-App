@@ -2,8 +2,8 @@
 	<div>
 		<fullscreen-preview v-model="previewOpen" :src="formData.header_img" />
 
-		<div class="row">
-			<div class="col pb-0">
+		<v-row>
+			<v-col :class="$vuetify.breakpoint.smAndDown && 'pb-0'">
 				<v-text-field
 					v-model="formData.title"
 					required
@@ -21,13 +21,21 @@
 					:placeholder="$root.lang().posts.general.permalink.placeholder"
 					persistent-placeholder
 				/>
-			</div>
-			<div v-if="formData.header_img" class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
-				<div class="col">
+			</v-col>
+			<v-col
+				cols="12"
+				sm="3"
+				class="d-flex align-center"
+				:class="$vuetify.breakpoint.smAndDown && 'pt-0 pb-7'"
+			>
+				<v-responsive
+					:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
+					min-height="100px"
+				>
 					<emitting-image :src="formData.header_img" @fullscreen="openPreview" />
-				</div>
-			</div>
-		</div>
+				</v-responsive>
+			</v-col>
+		</v-row>
 
 		<v-text-field
 			v-model.lazy="formData.header_img"
@@ -39,25 +47,21 @@
 			persistent-placeholder
 		/>
 
-		<div class="row">
-			<div class="col pb-0">
-				<v-text-field
-					v-model="formData.date"
-					type="date"
-					required
-					clearable
-					:label="$root.lang().posts.general.date.label"
-					persistent-placeholder
+		<div class="d-flex flex-row align-center">
+			<v-text-field
+				v-model="formData.date"
+				type="date"
+				required
+				clearable
+				:label="$root.lang().posts.general.date.label"
+				persistent-placeholder
+			/>
+			<div class="flex-shrink-0 ml-4">
+				<v-checkbox
+					v-model="formData.discontinued"
+					:label="$root.lang().posts.general.discontinued.label"
+					:hint="$root.lang().posts.general.discontinued.hint"
 				/>
-			</div>
-			<div class="col-4 col-md-2 d-flex px-0 pt-0 align-center">
-				<div class="col">
-					<v-checkbox
-						v-model="formData.discontinued"
-						:label="$root.lang().posts.general.discontinued.label"
-						:hint="$root.lang().posts.general.discontinued.hint"
-					/>
-				</div>
 			</div>
 		</div>
 

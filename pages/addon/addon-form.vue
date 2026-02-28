@@ -17,11 +17,10 @@
 				</v-alert>
 			</a>
 
-			<div class="row">
+			<div class="text-h5">{{ $root.lang().addons.general.title }}</div>
+			<v-row>
 				<!-- LEFT PART : INPUT -->
-				<div class="col pb-0">
-					<div class="text-h5">{{ $root.lang().addons.general.title }}</div>
-
+				<v-col :class="$vuetify.breakpoint.smAndDown && 'pb-0'">
 					<!-- Addon name -->
 					<v-text-field
 						v-model="submittedForm.name"
@@ -40,14 +39,18 @@
 						:label="$root.lang().addons.general.authors.label"
 						:hint="$root.lang().addons.general.authors.hint"
 					/>
-
-					<div v-if="!$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
-						{{ $root.lang().addons.images.title }}
-					</div>
-				</div>
+				</v-col>
 				<!-- RIGHT PART: HEADER IMAGE PREVIEW -->
-				<div class="col-12 col-sm-3 d-flex px-0 pt-0 align-center">
-					<div class="col">
+				<v-col
+					cols="12"
+					sm="3"
+					class="d-flex align-center"
+					:class="$vuetify.breakpoint.smAndDown && 'pt-0 pb-7'"
+				>
+					<v-responsive
+						:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
+						min-height="100px"
+					>
 						<emitting-image
 							v-if="header"
 							deletable
@@ -55,33 +58,27 @@
 							@fullscreen="openPreview"
 							@delete="removeHeader"
 						/>
-						<v-responsive
+						<drop-zone
 							v-else
-							:aspect-ratio="$vuetify.breakpoint.smAndDown ? undefined : 16 / 9"
-							min-height="100px"
-							class="mt-3"
+							v-model="submittedForm.headerFile"
+							:disabled="disabledHeaderInput"
+							accept="image/jpg, image/jpeg"
+							style="height: 100%"
+							@change="updateHeader"
 						>
-							<drop-zone
-								v-model="submittedForm.headerFile"
-								:disabled="disabledHeaderInput"
-								accept="image/jpg, image/jpeg"
-								style="height: 100%"
-								@change="updateHeader"
-							>
-								<v-icon small>mdi-image</v-icon>
-								{{ $root.lang().addons.images.header.labels.drop }}
-							</drop-zone>
-						</v-responsive>
-					</div>
-				</div>
-			</div>
+							<v-icon small>mdi-image</v-icon>
+							{{ $root.lang().addons.images.header.labels.drop }}
+						</drop-zone>
+					</v-responsive>
+				</v-col>
+			</v-row>
 
-			<div v-if="$vuetify.breakpoint.smAndDown" class="text-h5 mb-3">
+			<div class="text-h5 my-3">
 				{{ $root.lang().addons.images.title }}
 			</div>
 
 			<!-- upload field for images -->
-			<div class="py-5">
+			<div class="my-5">
 				<drop-zone
 					v-model="submittedForm.carouselFiles"
 					multiple
