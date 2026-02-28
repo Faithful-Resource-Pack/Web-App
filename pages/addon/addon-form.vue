@@ -586,7 +586,6 @@ export default {
 				});
 		},
 		removeCarouselItem(_item, index, id) {
-			console.log(id);
 			this.carouselDoNotVerify = true;
 			this.submittedForm.carouselFiles.splice(index, 1);
 			this.$emit("screenshot", undefined, index, true, id);
