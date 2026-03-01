@@ -1,6 +1,7 @@
 <template>
 	<v-app-bar app dense>
 		<v-app-bar-nav-icon
+			class="ml-n1"
 			:title="$root.lang().global.navbar.labels.sidebar"
 			@click="$emit('drawer')"
 		/>

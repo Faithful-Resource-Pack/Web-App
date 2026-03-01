@@ -241,7 +241,10 @@ export default {
 
 		const main = document.getElementById("main");
 
-		if (!main) return console.error("Couldn't find main body element for lazy scrolling. This is probably bad.");
+		if (!main)
+			return console.error(
+				"Couldn't find main body element for lazy scrolling. This is probably bad.",
+			);
 		main.addEventListener("scroll", this.scrollListener);
 	},
 	unmounted() {
