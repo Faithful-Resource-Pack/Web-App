@@ -106,21 +106,24 @@ export default {
 		drawerOpen(newValue) {
 			this.$emit("input", newValue);
 		},
-		tabs(nv) {
-			const keys = nv.map((tabs) => tabs.id);
+		tabs: {
+			handler(nv) {
+				const keys = nv.map((tabs) => tabs.id);
 
-			// we diff against the localstorage version since users can get logged out
-			// and their preference should be saved regardless
-			const keyDiff = keys.filter((k) => !Object.keys(this.tabsOpen).includes(k));
-			if (!keyDiff.length) return;
+				// we diff against the localstorage version since users can get logged out
+				// and their preference should be saved regardless
+				const keyDiff = keys.filter((k) => !Object.keys(this.tabsOpen).includes(k));
+				if (!keyDiff.length) return;
 
-			// properly new tabs are always open by default
-			for (const key of keyDiff) {
-				if (key === undefined) continue;
-				this.initialTabsOpen[key] = true;
-				this.tabsOpen[key] = true;
-			}
-			this.updateTabsOpen();
+				// properly new tabs are always open by default
+				for (const key of keyDiff) {
+					if (key === undefined) continue;
+					this.initialTabsOpen[key] = true;
+					this.tabsOpen[key] = true;
+				}
+				this.updateTabsOpen();
+			},
+			immediate: true,
 		},
 	},
 };
