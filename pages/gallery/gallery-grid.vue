@@ -234,14 +234,18 @@ export default {
 			this.width = this.$el.clientWidth;
 		};
 
-		document.addEventListener("scroll", this.scrollListener);
 		window.addEventListener("resize", this.resizeListener);
 
 		// start width calculation
 		window.dispatchEvent(new Event("resize"));
+
+		const main = document.getElementById("main");
+
+		if (!main) return console.error("Couldn't find main body element for lazy scrolling. This is probably bad.");
+		main.addEventListener("scroll", this.scrollListener);
 	},
 	unmounted() {
-		document.removeEventListener("scroll", this.scrollListener);
+		document.getElementById("main").removeEventListener("scroll", this.scrollListener);
 		window.removeEventListener("resize", this.resizeListener);
 	},
 };

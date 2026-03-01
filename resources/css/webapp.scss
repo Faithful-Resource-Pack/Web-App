@@ -55,6 +55,19 @@ v-app {
 	display: none;
 }
 
+// scrollbar doesn't intersect navbar
+html {
+	overflow-y: hidden;
+}
+.v-main {
+	width: 100%;
+	position: absolute;
+	top: 48px;
+	bottom: 0;
+	padding-top: 0 !important;
+	overflow-y: auto;
+}
+
 // prevents white screen flashbang on dark themed browsers
 @media (prefers-color-scheme: dark) {
 	html {

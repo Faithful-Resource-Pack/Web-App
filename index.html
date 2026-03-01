@@ -78,7 +78,7 @@
 				:force-dark="darkSidebar"
 			></nav-sidebar>
 
-			<v-main>
+			<v-main id="main">
 				<loading-page v-if="!settingsLoaded"></loading-page>
 				<router-view v-else></router-view>
 				<span class="my-3 d-flex justify-center">
