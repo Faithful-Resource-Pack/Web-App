@@ -3,20 +3,20 @@
 		<div class="text-h4 py-4">{{ greeting }}</div>
 
 		<v-row class="dashboard-card-container">
-			<v-col cols="12" sm="3">
+			<v-col cols="12" md="3">
 				<profile-card v-if="$root.isLoggedIn" />
 				<faithful-card v-else />
 			</v-col>
-			<v-col cols="12" sm="9">
+			<v-col cols="12" md="9">
 				<texture-card :colors="colors" />
 			</v-col>
-			<v-col cols="12" sm="6">
+			<v-col cols="12" md="6">
 				<addon-card />
 			</v-col>
-			<v-col cols="12" sm="6">
+			<v-col cols="12" md="6">
 				<contribution-stats-card ref="cs" />
 			</v-col>
-			<v-col cols="12" sm="12">
+			<v-col cols="12">
 				<contribution-activity-card :colors="colors" @stats="(t) => $refs.cs.onTotals(t)" />
 			</v-col>
 		</v-row>
