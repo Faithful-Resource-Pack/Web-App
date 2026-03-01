@@ -23,6 +23,7 @@
 			<v-list-item-icon class="me-4">
 				<!-- ripple clips into the list item margins for some reason -->
 				<v-simple-checkbox
+					class="dark-sidebar-checkbox"
 					:ripple="false"
 					:disabled="$root.isDark"
 					:value="darkSidebar"
@@ -55,3 +56,10 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+// for some reason it's gray and looks disabled
+.theme--light .dark-sidebar-checkbox * {
+	color: rgba(0, 0, 0, 0.87);
+}
+</style>
