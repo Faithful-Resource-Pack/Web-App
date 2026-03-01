@@ -34,7 +34,6 @@ export function generatePageStyles(page, pageColor) {
 
 	return `
 	<style>
-		html.theme--light,
 		html.theme--light .colored,
 		html.theme--light .colored *,
 		html.theme--light .v-menu__content,
@@ -44,14 +43,23 @@ export function generatePageStyles(page, pageColor) {
 			scrollbar-color: ${hex} #ffffff !important;
 		}
 
-		html.theme--dark,
+		html.theme--light .v-main,
+		html.theme--light .v-main * {
+			scrollbar-color: ${hex} #fafafa !important;
+		}
+
 		html.theme--dark .colored,
 		html.theme--dark .colored *,
 		html.theme--dark .v-menu__content,
 		html.theme--dark .v-menu__content *,
 		html.theme--dark #${pageId},
 		html.theme--dark #${pageId} * {
-			scrollbar-color: ${hex} #272727 !important;
+			scrollbar-color: ${hex} #1e1e1e !important;
+		}
+
+		html.theme--dark .v-main,
+		html.theme--dark .v-main * {
+			scrollbar-color: ${hex} #191919 !important;
 		}
 	</style>`;
 }
