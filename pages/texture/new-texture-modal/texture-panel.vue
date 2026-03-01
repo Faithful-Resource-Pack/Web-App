@@ -116,7 +116,7 @@
 			:color="color"
 			@click="addEditionUse"
 		>
-			<v-icon left>mdi-plus</v-icon>
+			<v-icon left>mdi-creation</v-icon>
 			{{ addEditionUseLabel }}
 		</v-btn>
 	</v-tab-item>

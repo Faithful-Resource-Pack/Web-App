@@ -94,7 +94,7 @@
 				:color="color"
 				@click="openEditionUseModal"
 			>
-				<v-icon left>mdi-plus</v-icon>
+				<v-icon left>mdi-creation</v-icon>
 				{{ addEditionUseLabel }}
 			</v-btn>
 		</v-form>
