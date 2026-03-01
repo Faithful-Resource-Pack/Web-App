@@ -70,6 +70,9 @@ export default defineStore("user", {
 
 			try {
 				const authMethod = await discordAuth.getAuthMethod();
+
+				// not logged in
+				if (!authMethod) return;
 				await discordAuth.loginWithAuth(authMethod);
 
 				// https://stackoverflow.com/a/41061471/20327257
