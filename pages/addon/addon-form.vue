@@ -232,7 +232,7 @@
 			</v-row>
 			<div class="pb-3">
 				<v-btn block color="secondary" @click="addDownloadGroup">
-					<v-icon left>mdi-plus</v-icon>
+					<v-icon left>mdi-playlist-plus</v-icon>
 					{{ $root.lang().global.btn.add_download }}
 				</v-btn>
 			</div>

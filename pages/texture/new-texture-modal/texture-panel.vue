@@ -105,7 +105,7 @@
 			</v-timeline-item>
 		</v-timeline>
 		<v-btn block class="my-5" color="secondary" @click="addUse">
-			<v-icon left>mdi-plus</v-icon>
+			<v-icon left>mdi-playlist-plus</v-icon>
 			{{ $root.lang().database.textures.uses.add_use }}
 		</v-btn>
 		<!-- one use and one path are essentially guaranteed by the modal setup -->
