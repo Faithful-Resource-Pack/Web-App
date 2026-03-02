@@ -266,7 +266,7 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import DropZone from "@components/drop-zone.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
 import UserSelect from "@components/user-select.vue";
-import LoadingPage from "@components/loading-page.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 import { is16x9, verifyImage } from "@helpers/images";
 
 export default {

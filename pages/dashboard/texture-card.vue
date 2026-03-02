@@ -40,7 +40,7 @@ import axios from "axios";
 
 import DashboardCard from "./dashboard-card.vue";
 import DetailedTreemap from "@components/detailed-treemap.vue";
-import DashboardStat from "@components/dashboard-stat.vue";
+import DashboardStat from "./dashboard-stat.vue";
 
 export default {
 	name: "texture-card",

@@ -121,7 +121,7 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 import EmittingImage from "@components/emitting-image.vue";
-import LoadingPage from "@components/loading-page.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 
 export default {
 	name: "review-preview",

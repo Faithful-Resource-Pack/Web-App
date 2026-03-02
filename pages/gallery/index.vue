@@ -79,7 +79,7 @@ import GalleryStatusBar from "./gallery-status-bar.vue";
 import GalleryGrid from "./gallery-grid.vue";
 import GalleryModal from "./modal/index.vue";
 import SearchBox from "@components/search-box.vue";
-import LoadingPage from "@components/loading-page.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 
 const COLUMN_KEY = "gallery_columns";
 const STRETCHED_KEY = "gallery_stretched";

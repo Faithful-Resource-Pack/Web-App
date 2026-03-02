@@ -35,7 +35,7 @@
 
 <script>
 import axios from "axios";
-import LoadingPage from "@components/loading-page.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 import GeneralTab from "./general-tab.vue";
 import DownloadTab from "./download-tab.vue";
 import ChangelogTab from "./changelog-tab.vue";

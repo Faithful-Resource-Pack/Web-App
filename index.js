@@ -20,7 +20,7 @@ import ALL_TABS from "@helpers/tabs.js";
 import NavAppBar from "@components/navbar/index.vue";
 import NavSidebar from "@components/sidebar/index.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
-import LoadingPage from "@components/loading-page.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 import MissingPage from "./pages/404/index.vue";
 
 Vue.config.devtools = import.meta.env.MODE === "development";
