@@ -186,7 +186,7 @@ export default {
 		});
 	},
 	mounted() {
-		this.pageStyles = generatePageStyles(this, this.pageColor);
+		this.pageStyles = generatePageStyles(this.pageColor);
 	},
 };
 </script>

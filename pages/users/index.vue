@@ -254,7 +254,7 @@ export default {
 	},
 	mounted() {
 		this.update(true);
-		this.pageStyles = generatePageStyles(this, this.pageColor);
+		this.pageStyles = generatePageStyles(this.pageColor);
 	},
 };
 </script>

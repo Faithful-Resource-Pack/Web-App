@@ -24,42 +24,48 @@ const colorToHex = (color) => {
  * @param {string} pageColor - Vuetify or hex color
  * @returns {string} CSS style tag to apply
  */
-export function generatePageStyles(page, pageColor) {
-	// not mounted yet
-	if (!page.$el) return "";
-	page.$el.id ||= page.name;
-
-	const pageId = page.$el.id;
+export function generatePageStyles(pageColor) {
 	const hex = colorToHex(pageColor);
+
+	// taken from resources/css/scrollbar.scss
+	const lightBg = "#fafafa";
+	const darkBg = "#191919";
+	const lightFg = "#ffffff";
+	const darkFg = "#1e1e1e";
 
 	return `
 	<style>
-		html.theme--light .colored,
-		html.theme--light .colored *,
-		html.theme--light .v-menu__content,
-		html.theme--light .v-menu__content *,
-		html.theme--light #${pageId},
-		html.theme--light #${pageId} * {
-			scrollbar-color: ${hex} #ffffff !important;
+		@supports (scrollbar-color: auto) {
+			.v-main.theme--light {
+				scrollbar-color: ${hex} ${lightBg} !important;
+			}
+			.v-main.theme--dark {
+				scrollbar-color: ${hex} ${darkBg} !important;
+			}
+
+			/* menus get mounted outside of the colored div so they need separate targeting */
+			.theme--light .colored,
+			.theme--light .colored *,
+			.theme--light .v-menu__content {
+				scrollbar-color: ${hex} ${lightFg} !important;
+			}
+			.theme--dark .colored,
+			.theme--dark .colored *,
+			.theme--dark .v-menu__content {
+				scrollbar-color: ${hex} ${darkFg} !important;
+			}
 		}
 
-		html.theme--light .v-main,
-		html.theme--light .v-main * {
-			scrollbar-color: ${hex} #fafafa !important;
-		}
-
-		html.theme--dark .colored,
-		html.theme--dark .colored *,
-		html.theme--dark .v-menu__content,
-		html.theme--dark .v-menu__content *,
-		html.theme--dark #${pageId},
-		html.theme--dark #${pageId} * {
-			scrollbar-color: ${hex} #1e1e1e !important;
-		}
-
-		html.theme--dark .v-main,
-		html.theme--dark .v-main * {
-			scrollbar-color: ${hex} #191919 !important;
+		@supports selector(::-webkit-scrollbar) {
+			/* separate selectors for the thumb/track so you only need to change the one property */
+			.v-main::-webkit-scrollbar-thumb,
+			.v-main *::-webkit-scrollbar-thumb,
+			.colored::-webkit-scrollbar-thumb,
+			.colored *::-webkit-scrollbar-thumb,
+			.v-menu__content::-webkit-scrollbar-thumb
+			{
+				background-color: ${hex} !important;
+			}
 		}
 	</style>`;
 }

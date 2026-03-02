@@ -183,7 +183,7 @@ export default {
 	mounted() {
 		axios.get(`${this.$root.apiURL}/packs/tags`).then((res) => (this.tags = res.data));
 		this.startSearch();
-		this.pageStyles = generatePageStyles(this, this.pageColor);
+		this.pageStyles = generatePageStyles(this.pageColor);
 	},
 	watch: {
 		"$route.params": {

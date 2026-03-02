@@ -1,6 +1,6 @@
 <template>
 	<!-- not extending modal-form since this has no action buttons -->
-	<v-dialog v-model="modalOpened" content-class="colored" max-width="800">
+	<v-dialog v-model="modalOpened" max-width="800">
 		<v-card>
 			<v-card-title class="headline">
 				{{ $root.lang().posts.changelog_generator.heading }}

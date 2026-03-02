@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="modalOpened" content-class="colored" max-width="600">
+	<v-dialog v-model="modalOpened" max-width="600">
 		<v-card>
 			<v-card-title class="headline d-flex flex-row align-center justify-space-between">
 				{{ $root.lang().global.account_manager.title }}

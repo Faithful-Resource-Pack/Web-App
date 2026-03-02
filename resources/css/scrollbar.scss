@@ -1,39 +1,99 @@
-$faithful-dark-brand: #76C945;
 $faithful-light-brand: #4ea229;
+$faithful-dark-brand: #76C945;
+
 $light-scroller-bg: #fafafa;
 $dark-scroller-bg: #191919;
+
+$light-scroller-fg: #ffffff;
+$dark-scroller-fg: #1e1e1e;
+
+$light-scroller-sidebar: #ffffff;
 $dark-scroller-sidebar: #363636;
 
-/* ===== Scrollbar CSS ===== */
-// Firefox
-.theme--light, .theme--light * {
-	scrollbar-color: $faithful-light-brand $light-scroller-bg;
+// taken from https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar#examples
+
+/* For browsers that support `scrollbar-*` properties */
+@supports (scrollbar-color: auto) {
+	.v-main.theme--light * {
+		scrollbar-color: $faithful-light-brand $light-scroller-bg;
+	}
+	.v-main.theme--dark * {
+		scrollbar-color: $faithful-dark-brand $dark-scroller-bg;
+	}
+
+	// menus etc
+	.theme--light .colored,
+	.theme--light .colored *,
+	.theme--light .v-menu__content {
+		scrollbar-color: $faithful-light-brand $light-scroller-fg;
+	}
+	.theme--dark .colored,
+	.theme--dark .colored *,
+	.theme--dark .v-menu__content {
+		scrollbar-color: $faithful-dark-brand $dark-scroller-fg;
+	}
+
+	// match sidebar color
+	.v-navigation-drawer.theme--light * {
+		scrollbar-color: $faithful-light-brand $light-scroller-sidebar;
+	}
+	.v-navigation-drawer.theme--dark * {
+		scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar;
+	}
 }
 
-.theme--dark, .theme--dark * {
-	scrollbar-width: auto;
-	// same color as app bar
-	scrollbar-color: $faithful-dark-brand $dark-scroller-bg;
-}
+/* Otherwise, use `::-webkit-scrollbar-*` pseudo-elements */
+@supports selector(::-webkit-scrollbar) {
+	// basic styles to make scrollbars not look terrible
+	::-webkit-scrollbar,
+	*::-webkit-scrollbar {
+		width: 14px;
+	}
 
-// needs to be done separately so the dark sidebar in light mode works
-.v-navigation-drawer.theme--dark * {
-	scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar !important;
-}
+	::-webkit-scrollbar-thumb,
+	*::-webkit-scrollbar-thumb {
+		background-clip: content-box;
+		border-radius: 12px;
+		border: solid 3px transparent;
+	}
 
-// Chrome, Edge, and Safari
-html::-webkit-scrollbar,
-html *::-webkit-scrollbar {
-	width: 8px;
-}
+	// specific theme styles
+	.theme--light::-webkit-scrollbar-thumb,
+	.theme--light *::-webkit-scrollbar-thumb {
+		background-color: $faithful-light-brand;
+	}
+	.theme--dark::-webkit-scrollbar-thumb,
+	.theme--dark *::-webkit-scrollbar-thumb {
+		background-color: $faithful-dark-brand;
+	}
 
-html::-webkit-scrollbar-track,
-html *::-webkit-scrollbar-track {
-	background: $dark-scroller-bg;
-}
+	// we just need the background here, the thumb doesn't change color
+	.theme--light::-webkit-scrollbar-track,
+	.theme--light *::-webkit-scrollbar-track {
+		background: $light-scroller-bg;
+	}
+	.theme--dark::-webkit-scrollbar-track,
+	.theme--dark *::-webkit-scrollbar-track {
+		background: $dark-scroller-bg;
+	}
 
-html::-webkit-scrollbar-thumb,
-html *::-webkit-scrollbar-thumb {
-	background-color: $faithful-dark-brand;
-	border-radius: 12px;
+	.v-navigation-drawer.theme--light::-webkit-scrollbar-track,
+	.v-navigation-drawer.theme--light *::-webkit-scrollbar-track {
+		background: $light-scroller-sidebar;
+	}
+	.v-navigation-drawer.theme--dark::-webkit-scrollbar-track,
+	.v-navigation-drawer.theme--dark *::-webkit-scrollbar-track {
+		background: $dark-scroller-sidebar;
+	}
+
+	.theme--light .colored::-webkit-scrollbar-track,
+	.theme--light .colored *::-webkit-scrollbar-track,
+	.theme--light .v-menu__content::-webkit-scrollbar-track {
+		background: $light-scroller-fg;
+	}
+	.theme--dark .colored::-webkit-scrollbar-track,
+	.theme--dark .colored *::-webkit-scrollbar-track,
+	.theme--dark .v-menu__content::-webkit-scrollbar-track {
+		background: $dark-scroller-fg;
+	}
 }
