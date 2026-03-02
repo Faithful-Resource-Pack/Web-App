@@ -24,7 +24,7 @@ $dark-scroller-sidebar: #363636;
 // Chrome, Edge, and Safari
 html::-webkit-scrollbar,
 html *::-webkit-scrollbar {
-	width: 12px;
+	width: 8px;
 }
 
 html::-webkit-scrollbar-track,
@@ -36,5 +36,4 @@ html::-webkit-scrollbar-thumb,
 html *::-webkit-scrollbar-thumb {
 	background-color: $faithful-dark-brand;
 	border-radius: 12px;
-	border: -1px solid $faithful-dark-brand;
 }
