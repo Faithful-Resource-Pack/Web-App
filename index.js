@@ -8,12 +8,13 @@ import Vuetify from "vuetify";
 
 // general dependencies
 import axios from "axios";
-import moment from "moment";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { createPinia, mapState } from "pinia";
 
-import userStore from "./stores/index.js";
+// pinia stores
+import authStore from "./stores/auth/index.js";
+import translationStore from "./stores/translationStore.js";
 
 // layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
@@ -30,9 +31,6 @@ Vue.use(VueRouter);
 const pinia = createPinia();
 Vue.use(pinia);
 
-// dynamic import because vite, used for fallback translation
-const { default: en_US } = await import("./resources/strings/en_US.js");
-
 /**
  * PWA REGISTRATION
  */
@@ -42,42 +40,6 @@ if ("serviceWorker" in navigator) {
 		console.error("Failed to register PWA Service Worker:", err);
 	});
 }
-
-/**
- * LANGUAGES
- */
-
-// https://www.techonthenet.com/js/language_tags.php
-const AVAILABLE_LANGS = Object.entries(import.meta.glob("/resources/strings/*.js")).map(
-	([path, loadAsImport]) => {
-		const name = path.split("/").pop().split(".")[0];
-		return {
-			id: name.includes("en") ? "en" : name.slice(-2).toLowerCase(),
-			// automatically fetch default import
-			load: () => loadAsImport().then((res) => res.default),
-			bcp47: name.replace("_", "-"),
-			file: path,
-			iso3166: name.split("_")[1].toLowerCase(),
-		};
-	},
-);
-
-// language objects are lazy loaded only when requested
-const LOADED_LANGS = {
-	en: en_US,
-};
-
-const LANG_KEY = "lang";
-const LANG_DEFAULT = "en";
-const _get_lang = () => {
-	const storedLang = localStorage.getItem(LANG_KEY);
-	if (!storedLang) return LANG_DEFAULT;
-	return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
-};
-
-const THEME_KEY = "THEME";
-const DARK_SIDEBAR_KEY = "dark_sidebar";
-const MENU_KEY = "menu_key";
 
 /**
  * ROUTING
@@ -132,6 +94,10 @@ router.addRoute({ path: "*", name: "404", component: MissingPage });
 // needed for some pages to not completely die
 window.settings = {};
 
+const THEME_KEY = "THEME";
+const DARK_SIDEBAR_KEY = "dark_sidebar";
+const MENU_KEY = "menu_key";
+
 /**
  * VUE INITIALIZATION
  */
@@ -146,12 +112,8 @@ const app = new Vue({
 	},
 	data() {
 		return {
-			auth: userStore(),
-			/** localization stuff */
-			refreshLang: 0, // more granular than $forceUpdate for updating langs
-			selectedLang: _get_lang(),
-			loadedLangs: LOADED_LANGS,
-			availableLangs: AVAILABLE_LANGS,
+			auth: authStore(),
+			translation: translationStore(),
 			/** theme stuff */
 			theme: undefined,
 			themes: {
@@ -180,24 +142,6 @@ const app = new Vue({
 		log(...objs) {
 			const cleaned = JSON.parse(JSON.stringify(objs));
 			console.log(cleaned);
-		},
-		langToBCP47(lang) {
-			return this.availableLangs.find((l) => l.id === lang)?.bcp47;
-		},
-		async loadLanguage(langName) {
-			const langObj = this.availableLangs.find((l) => l.id === langName);
-			if (!langObj) return;
-
-			moment.locale(langObj.bcp47);
-
-			// already cached, no need to load
-			if (this.loadedLangs[langObj.id]) return;
-
-			const strings = await langObj.load().catch((err) => void this.showSnackBar(err, "error"));
-			this.loadedLangs[langObj.id] = Object.merge({}, en_US, strings || {});
-
-			// wait until the data changes have pushed to refresh the lang function
-			this.$nextTick(() => this.refreshLang++);
 		},
 		async loadBadge(cb, key) {
 			if (!this.isAdmin) return;
@@ -266,8 +210,11 @@ const app = new Vue({
 	},
 	computed: {
 		// the entire user store state becomes the user property
-		...mapState(userStore, {
+		...mapState(authStore, {
 			user: (store) => store.$state,
+		}),
+		...mapState(translationStore, {
+			lang: (store) => store.lang.bind(store),
 		}),
 		loginURL() {
 			return `${this.apiURL}/auth/discord/webapp`;
@@ -348,48 +295,11 @@ const app = new Vue({
 		userRoles() {
 			return this.user.roles;
 		},
-		lang() {
-			// add refreshLang to the vue effect subscription by mentioning it
-			this.refreshLang;
-
-			// use computed value since we can cache the strings
-			const allStrings = this.loadedLangs[this.selectedLang] || Object.values(this.loadedLangs)[0];
-			return (path, raw = false) => {
-				// no path, return all strings
-				if (!path) return allStrings;
-
-				// traverse object using path string
-				const selectedData = path.split(".").reduce((acc, cur) => acc?.[cur], allStrings);
-
-				// warns user if string not found
-				if (selectedData === undefined)
-					console.warn(`Cannot find ${raw ? "data" : "string"} for "${path}"`);
-
-				// if raw we can use whatever's there (for partial paths)
-				if (raw) return selectedData;
-
-				// Force return type to prevent undefined breaking string methods
-				return String(selectedData);
-			};
-		},
 		isDark() {
 			return this.$vuetify.theme.dark;
 		},
 	},
 	watch: {
-		selectedLang: {
-			handler(newValue) {
-				localStorage.setItem(LANG_KEY, newValue);
-				// load new language if it exists
-				if (!Object.keys(this.loadedLangs).includes(newValue)) return this.loadLanguage(newValue);
-
-				moment.locale(this.langToBCP47(newValue));
-
-				// forces this.lang to update
-				this.refreshLang++;
-			},
-			immediate: true,
-		},
 		theme: {
 			handler(n) {
 				const availableThemes = Object.keys(this.themes);
@@ -453,8 +363,8 @@ const app = new Vue({
 	},
 	created() {
 		this.reloadSettings();
-		moment.locale(this.langToBCP47(_get_lang()));
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
+		this.translation.setup();
 		this.auth.login(this, Vue.config.devtools);
 	},
 	mounted() {

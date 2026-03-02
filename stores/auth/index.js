@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { faithfulUserStore } from "./faithfulUserStore";
-import { AUTH_STORAGE_KEY, CURRENT_USER_KEY, discordAuthStore } from "./discordAuthStore";
-import { discordProfileStore } from "./discordProfileStore";
+import { AUTH_STORAGE_KEY, CURRENT_USER_KEY, discordAuthStore } from "./discordAuthStore.js";
+import { faithfulUserStore } from "./faithfulUserStore.js";
+import { discordProfileStore } from "./discordProfileStore.js";
 
-export default defineStore("user", {
+export default defineStore("auth", {
 	state: () => ({
 		authListeners: [],
 
@@ -35,7 +35,7 @@ export default defineStore("user", {
 				if (discordAuth.access_token === undefined) this.updateAccounts(id);
 				else {
 					if (isDev) console.log(`Discord Token: ${discordAuth.access_token}`);
-					// defer localStorage write to userStore mutation (has access to discord id)
+					// defer localStorage write to authStore mutation (has access to discord id)
 					setTimeout(
 						() => discordAuth.refreshLogin(),
 						new Date(discordAuth.expires_at).getTime() - new Date().getTime(),

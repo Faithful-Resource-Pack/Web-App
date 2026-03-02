@@ -2,10 +2,12 @@
 // https://v2.vuejs.org/v2/guide/typescript.html#Augmenting-Types-for-Use-with-Plugins
 
 import Vue from "vue";
-import strings from "./strings/en_US.js";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { RouteConfig } from "vue-router";
-import userStore from "../stores/index.js";
+
+import authStore from "../stores/auth/index.js";
+import translationStore from "../stores/translationStore.js";
+import strings from "./strings/en_US.js";
 
 // Vue has the constructor type in types/vue.d.ts
 declare module "vue/types/vue" {
@@ -32,8 +34,8 @@ declare module "vue/types/vue" {
 
 	// inject methods being used
 	interface Vue {
-		readonly auth: ReturnType<typeof userStore>;
-		readonly selectedLang: string;
+		readonly auth: ReturnType<typeof authStore>;
+		readonly translation: ReturnType<typeof translationStore>;
 		readonly loginURL: string;
 		readonly apiURL: string;
 		readonly apiOptions: AxiosRequestConfig;

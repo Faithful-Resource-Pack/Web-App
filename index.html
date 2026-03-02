@@ -64,11 +64,11 @@
 		<v-app id="app" ref="app">
 			<nav-app-bar
 				:themes="themes"
-				:languages="availableLangs"
+				:languages="translation.availableLangs"
 				:dark-sidebar.sync="darkSidebar"
 				@drawer="drawerOpen = !drawerOpen"
 				@theme="theme = $event"
-				@lang="selectedLang = $event"
+				@lang="translation.setLang($event)"
 			></nav-app-bar>
 
 			<nav-sidebar

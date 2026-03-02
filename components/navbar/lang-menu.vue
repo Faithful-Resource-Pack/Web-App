@@ -7,7 +7,7 @@
 			v-for="lang in languages"
 			:key="lang.bcp47"
 			class="cursor-pointer text-left"
-			:class="{ 'v-list-item--active': lang.id === $root.selectedLang }"
+			:class="{ 'v-list-item--active': lang.id === $root.translation.selectedLang }"
 			dense
 			@click="$emit('update', lang.id)"
 		>
@@ -21,7 +21,7 @@
 					height="18"
 				/>
 			</v-list-item-avatar>
-			<v-list-item-title class="uppercase">{{ lang.id }}</v-list-item-title>
+			<v-list-item-title class="uppercase">{{ lang.short }}</v-list-item-title>
 		</v-list-item>
 	</v-list>
 </template>
