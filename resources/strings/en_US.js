@@ -696,7 +696,7 @@ export default {
 		edit_raw: "Edit raw JSON",
 	},
 	dashboard: {
-		welcome_user: "Welcome %USER%!",
+		welcome_user: "Welcome, %USER%!",
 		welcome: "Welcome!",
 		totals: {
 			authors: "authors",

@@ -214,7 +214,7 @@ const app = new Vue({
 			user: (store) => store.$state,
 		}),
 		...mapState(translationStore, {
-			lang: (store) => store.lang.bind(store),
+			lang: (store) => store.lang,
 		}),
 		loginURL() {
 			return `${this.apiURL}/auth/discord/webapp`;
