@@ -125,6 +125,11 @@ export default {
 			import_data: "Import JSON data",
 			parse_json: "Convert JSON to data",
 		},
+		datepicker: {
+			year: "Year",
+			month: "Month",
+			day: "Day",
+		},
 		tabbed_text_field: {
 			write: "Write",
 			preview: "Preview",
@@ -136,10 +141,419 @@ export default {
 			dragging_singular: "Release to upload file",
 			dragging_plural: "Release to upload files",
 		},
+
 		account_manager: {
 			title: "Account manager",
 			active_account: "Active account",
 			add_account: "Add new account",
+		},
+	},
+	missing_page: {
+		title: "Are you lost in The End?",
+		description: "Unfortunately, the page you requested doesn't exist!",
+		main_page:
+			"Try checking your spelling or going to the %main page% to find what you were looking for.",
+	},
+	dashboard: {
+		welcome_user: "Welcome, %USER%!",
+		welcome: "Welcome!",
+		totals: {
+			authors: "authors",
+			contributions: "contributions",
+			last_day: "contributions in the last 48 hours",
+			last_week: "contributions last week",
+			last_month: "contributions last month",
+		},
+		titles: {
+			textures: "Textures",
+			addons: "Add-ons",
+			contribution_activity: "Contribution activity",
+			contribution_stats: "Contributions",
+			profile: "Profile",
+		},
+		addons: {
+			submissions: "Submissions",
+			upload: "Upload",
+		},
+		textures: {
+			total: "Textures",
+			versions: "Versions",
+		},
+		locale: {
+			on: "on",
+			less: "Less",
+			more: "More",
+		},
+	},
+	profile: {
+		title: "Customize your profile",
+		public_profile: "Go to public profile",
+		general: {
+			title: "General",
+			username: {
+				label: "Username",
+				hint: "Your username will be displayed on Faithful services for contributions, add-ons, etc",
+				rules: {
+					min: "Username must be longer than %d characters",
+					max: "Username must be fewer than %d characters",
+				},
+			},
+			uuid: {
+				label: "Minecraft profile UUID",
+				hint: "Your skin will be displayed on your profile page and add-ons",
+				rules: {
+					length: "UUID must be exactly 36 characters long",
+				},
+			},
+			bio: {
+				label: "Bio",
+				placeholder: "Bio",
+				hint: "You can use Markdown formatting to style your bio!",
+				rules: {
+					length: "Bio must be fewer than %d characters",
+				},
+			},
+			anonymous: {
+				label: "Anonymous",
+				hint: "Disables profile page and hides username and Minecraft skin in the texture gallery. Username will still be accessible in texture submissions for crediting purposes, but won't appear anywhere else.",
+			},
+		},
+		social: {
+			title: "Social media",
+			add: "Add social media",
+			type: {
+				label: "Social type",
+				rules: {
+					exists: "Social type is required",
+					valid: "Social type must be valid",
+				},
+			},
+			link: {
+				label: "Link to social profile",
+				placeholder: "https://www.example.com/",
+				rules: {
+					valid: "URL must be valid",
+				},
+			},
+		},
+		save_changes: "Save changes",
+		delete: {
+			title: "Delete account",
+			btn: "Delete account",
+			description: "Are you sure you want to delete your account?",
+			warning: "This process is irreversible!",
+			addons: {
+				title_singular: "This will affect %d add-on",
+				title_plural: "This will affect %d add-ons",
+				deleted: "Deleted",
+				transferred: "Transferred to other authors",
+			},
+		},
+	},
+	gallery: {
+		max_items_per_row: "Max items per row",
+		stretched_switcher: "Full width view",
+		animated_switcher: "Play animated textures",
+		share: "Share texture",
+		share_link_copied_to_clipboard: "Share link copied to clipboard",
+		authors_copied_to_clipboard: "Texture submission authors copied to clipboard",
+		title: "Gallery",
+		loading_message: "Loading gallery results…",
+		error_message: {
+			texture_not_done: "This texture is missing!",
+			user_anonymous: "Anonymous",
+			user_not_found: "Unknown user",
+			contribution_not_found: "No contributions found in database!",
+			search_failed: "Failed to search",
+		},
+		category: {
+			search: "Search",
+			tag: "Tag",
+			mc_version: "Minecraft version",
+			edition: "Edition",
+			pack: "Pack",
+		},
+		sort: {
+			name_asc: "Name (A → Z)",
+			name_desc: "Name (Z → A)",
+			id_asc: "Texture ID (smallest → largest)",
+			id_desc: "Texture ID (largest → smallest)",
+			contrib_desc: "Recently contributed",
+		},
+		tooltip: {
+			modded: "Modded Texture",
+			mojang: "Mojang Studios",
+			ignored: "Ignored Texture",
+		},
+		all: "All",
+		latest: "Latest",
+		clear_cache: "Clear gallery cache",
+		result_stats_singular: "%COUNT% texture found in %SECONDS% seconds",
+		result_stats_plural: "%COUNT% textures found in %SECONDS% seconds",
+		modal: {
+			no_contributions: "No contributions found",
+			image_alt_text: "Texture %NAME% for pack %PACK%",
+			loading: "Loading texture…",
+			tabs: {
+				information: "Information",
+				authors: "Authors",
+				animation: "Animation",
+			},
+			info: {
+				texture: "Texture",
+				uses: "Uses",
+				paths: "Paths",
+			},
+			animation: {
+				texture_mcmeta: "MCMETA",
+			},
+			data: {
+				contribution_id: "Contribution ID",
+				date: "Date",
+				authors: "Authors",
+				id: "ID",
+				name: "Name",
+				tags: "Tags",
+				use_id: "Use ID",
+				use_name: "Use name",
+				edition: "Edition",
+				texture_id: "Texture ID",
+				path_id: "Path ID",
+				resource_pack_path: "Resource pack path",
+				mc_versions: "Minecraft versions",
+			},
+		},
+	},
+	addons: {
+		titles: {
+			submit: "Submit a new add-on",
+			edit: "Edit add-on",
+			submissions: "Add-on submissions",
+			details: "Details",
+		},
+		remove: {
+			title: "Confirm deletion",
+			labels: {
+				question: "Do you want to delete %s?",
+				warning: "This operation cannot be undone!",
+			},
+		},
+		general: {
+			loading_addon: "Loading add-on…",
+			no_submissions: "You don't have any submitted add-ons!",
+			rules: "Make sure to read the add-on rules before submitting",
+			title: "General",
+			name: {
+				label: "Add-on name",
+				hint: "A shorter name is preferred",
+				rules: {
+					name_required: "A name is required",
+					name_too_big: "Add-on name must be fewer than %s characters",
+					name_too_small: "Add-on name must be at least %s characters long",
+					name_unavailable: "This name is already taken!",
+				},
+			},
+			slug: {
+				label: "Add-on slug",
+				hint: "Changing this will break old links!",
+			},
+			reason: {
+				title: "Update reason",
+				text: "Please tell us what you updated to make reviewing your add-on easier!",
+				required: "An update reason is required",
+				bounds: "Update reason must be between %s and %s characters long",
+			},
+			authors: {
+				label: "Select authors for the add-on",
+				hint: "Any author can modify the add-on once it is submitted! | If you can't find someone in the list, contact a manager or developer",
+			},
+		},
+		info: {
+			title: "Information",
+			description: {
+				placeholder: "Add-on description",
+				hint: "You can use Markdown formatting to style your description!",
+				rules: {
+					description_required: "The description is required",
+					description_too_big: "Description must be fewer than %s characters",
+					description_too_small: "Description must be at least %s characters long",
+				},
+			},
+			embed_description: {
+				label: "Embed description",
+				hint: "Description seen when sharing the add-on on social media",
+				rules: {
+					too_big: "Embed description must be fewer than %s characters",
+				},
+			},
+		},
+		images: {
+			title: "Screenshots",
+			header: {
+				labels: {
+					drop: "Drop header image or click to select",
+					normal: "Header image",
+					replace: "Replace header image",
+				},
+				rules: {
+					image_size: "Image size should be less than %s KB!",
+					image_ratio: "Wrong ratio: The provided image doesn't have a 16:9 aspect ratio",
+					image_required: "A header image is required",
+					jpeg: "Image must be a lossy JPEG",
+					compress: "You can compress images using https://compressor.io/",
+				},
+			},
+			carousel: {
+				labels: {
+					drop: "Drop additional images or click to select",
+					normal: "Additional image(s)",
+					replace: "Replace additional image(s)",
+				},
+				rule: "Wrong ratio: All images with a side ratio other than 16:9 have been removed",
+			},
+		},
+		compatibility: {
+			title: "Compatibility",
+			optifine: {
+				label: "Requires OptiFine",
+			},
+			editions: {
+				label: "Supported editions",
+			},
+			packs: {
+				label: "Supported packs",
+			},
+		},
+		downloads: {
+			title: "Downloads",
+			name: {
+				placeholder: "CurseForge, GitHub…",
+				label: "Name",
+				rules: {
+					name_required: "A name is required",
+					name_cannot_be_empty: "Name can't be empty",
+				},
+			},
+			link: {
+				placeholder: "https://www.example.com/",
+				label: "Link",
+				rule: "URL must be valid",
+			},
+		},
+		status: {
+			approved: "Approved",
+			denied: "Denied",
+			pending: "Pending",
+			archived: "Archived",
+		},
+	},
+	review: {
+		titles: {
+			addons: "Review add-ons",
+			pending: "Pending approval",
+			denied: "Denied",
+			approved: "Approved",
+			archived: "Archived",
+		},
+		deny_window: {
+			title: "Deny add-on",
+			archive_title: "Archive add-on",
+			label: "Write a reason…",
+			rule: "Any reason can be given",
+		},
+		labels: {
+			pending: "There are currently no pending add-ons!",
+			denied: "There are currently no denied add-ons!",
+			archived: "There are currently no archived add-ons!",
+			approved: "There are currently no approved add-ons!",
+			load_approved: "Load approved add-ons",
+		},
+		addon: {
+			titles: {
+				author_singular: "Author",
+				author_plural: "Authors",
+				description: "Description",
+				links: "Links",
+				options: "Options",
+			},
+			labels: {
+				link: "Link",
+				optifine: "OptiFine",
+				approved_by: "Approved by %s",
+				denied_by: "Denied by %s",
+				reason: "Reason",
+			},
+		},
+	},
+	posts: {
+		titles: {
+			list: "All posts",
+			edit: "Edit post",
+			new: "Create new post",
+		},
+		status: {
+			published: "Published",
+			pending: "Pending",
+		},
+		loading: "Loading post…",
+		general: {
+			heading: "General",
+			title: {
+				label: "Post title",
+				placeholder: "Faithful Smart Fridge: Alpha 1",
+			},
+			permalink: {
+				label: "Permalink",
+				placeholder: "/faithfulsmartfridge/A1",
+			},
+			header_img: {
+				label: "Header image (optional)",
+				hint: "Note: This must be uploaded separately",
+				placeholder: "https://database.faithfulpack.net/images/website/posts/fridge/A1.jpg",
+			},
+			date: {
+				label: "Post release date",
+			},
+			discontinued: {
+				label: "Discontinued",
+				hint: "If checked, the post will be marked as discontinued",
+			},
+			description: {
+				placeholder: "Post description",
+				hint: "You can use Markdown formatting to style your description!",
+			},
+		},
+		download: {
+			heading: "Downloads",
+			add_category: "Add download category",
+			add_single_item: "Add single download",
+			category: "Download category name",
+			name: "Download name",
+			link: "Download link",
+			link_placeholder: "https://www.example.com/",
+		},
+		changelog: {
+			heading: "Changelog",
+			add_category: "Add changelog category",
+			add_item: "Add changelog item",
+			import_json: "Import JSON",
+			form_levels: {
+				primary: "Primary category",
+				secondary: "Secondary category",
+				item_category: "Item category (Authors)",
+				item: "Item (Authors)",
+			},
+		},
+		changelog_generator: {
+			heading: "Generate changelog",
+			date: "Date since last changelog",
+			pack: "Changelog pack",
+			copy: "Copy to clipboard",
+			categorize: "Automatically categorize changelog by type (experimental)",
+			categorize_warning:
+				"Type categorization may be inaccurate due to how contributions are tracked!",
+			download: "Download changelog",
+			warning: "Please manually review the changelog before importing it!",
 		},
 	},
 	database: {
@@ -319,422 +733,9 @@ export default {
 				ask_submission_deletion: "Do you want to delete submission information for %s (%d)?",
 			},
 		},
-	},
-	review: {
-		titles: {
-			addons: "Review add-ons",
-			pending: "Pending approval",
-			denied: "Denied",
-			approved: "Approved",
-			archived: "Archived",
+		settings: {
+			title: "Settings",
+			edit_raw: "Edit raw JSON",
 		},
-		deny_window: {
-			title: "Deny add-on",
-			archive_title: "Archive add-on",
-			label: "Write a reason…",
-			rule: "Any reason can be given",
-		},
-		labels: {
-			pending: "There are currently no pending add-ons!",
-			denied: "There are currently no denied add-ons!",
-			archived: "There are currently no archived add-ons!",
-			approved: "There are currently no approved add-ons!",
-			load_approved: "Load approved add-ons",
-		},
-		addon: {
-			titles: {
-				author_singular: "Author",
-				author_plural: "Authors",
-				description: "Description",
-				links: "Links",
-				options: "Options",
-			},
-			labels: {
-				link: "Link",
-				optifine: "OptiFine",
-				approved_by: "Approved by %s",
-				denied_by: "Denied by %s",
-				reason: "Reason",
-			},
-		},
-	},
-	addons: {
-		titles: {
-			submit: "Submit a new add-on",
-			edit: "Edit add-on",
-			submissions: "Add-on submissions",
-			details: "Details",
-		},
-		remove: {
-			title: "Confirm deletion",
-			labels: {
-				question: "Do you want to delete %s?",
-				warning: "This operation cannot be undone!",
-			},
-		},
-		general: {
-			loading_addon: "Loading add-on…",
-			no_submissions: "You don't have any submitted add-ons!",
-			rules: "Make sure to read the add-on rules before submitting",
-			title: "General",
-			name: {
-				label: "Add-on name",
-				hint: "A shorter name is preferred",
-				rules: {
-					name_required: "A name is required",
-					name_too_big: "Add-on name must be fewer than %s characters",
-					name_too_small: "Add-on name must be at least %s characters long",
-					name_unavailable: "This name is already taken!",
-				},
-			},
-			slug: {
-				label: "Add-on slug",
-				hint: "Changing this will break old links!",
-			},
-			reason: {
-				title: "Update reason",
-				text: "Please tell us what you updated to make reviewing your add-on easier!",
-				required: "An update reason is required",
-				bounds: "Update reason must be between %s and %s characters long",
-			},
-			authors: {
-				label: "Select authors for the add-on",
-				hint: "Any author can modify the add-on once it is submitted! | If you can't find someone in the list, contact a manager or developer",
-			},
-		},
-		info: {
-			title: "Information",
-			description: {
-				placeholder: "Add-on description",
-				hint: "You can use Markdown formatting to style your description!",
-				rules: {
-					description_required: "The description is required",
-					description_too_big: "Description must be fewer than %s characters",
-					description_too_small: "Description must be at least %s characters long",
-				},
-			},
-			embed_description: {
-				label: "Embed description",
-				hint: "Description seen when sharing the add-on on social media",
-				rules: {
-					too_big: "Embed description must be fewer than %s characters",
-				},
-			},
-		},
-		images: {
-			title: "Screenshots",
-			header: {
-				labels: {
-					drop: "Drop header image or click to select",
-					normal: "Header image",
-					replace: "Replace header image",
-				},
-				rules: {
-					image_size: "Image size should be less than %s KB!",
-					image_ratio: "Wrong ratio: The provided image doesn't have a 16:9 aspect ratio",
-					image_required: "A header image is required",
-					jpeg: "Image must be a lossy JPEG",
-					compress: "You can compress images using https://compressor.io/",
-				},
-			},
-			carousel: {
-				labels: {
-					drop: "Drop additional images or click to select",
-					normal: "Additional image(s)",
-					replace: "Replace additional image(s)",
-				},
-				rule: "Wrong ratio: All images with a side ratio other than 16:9 have been removed",
-			},
-		},
-		compatibility: {
-			title: "Compatibility",
-			optifine: {
-				label: "Requires OptiFine",
-			},
-			editions: {
-				label: "Supported editions",
-			},
-			packs: {
-				label: "Supported packs",
-			},
-		},
-		downloads: {
-			title: "Downloads",
-			name: {
-				placeholder: "CurseForge, GitHub…",
-				label: "Name",
-				rules: {
-					name_required: "A name is required",
-					name_cannot_be_empty: "Name can't be empty",
-				},
-			},
-			link: {
-				placeholder: "https://www.example.com/",
-				label: "Link",
-				rule: "URL must be valid",
-			},
-		},
-		status: {
-			approved: "Approved",
-			denied: "Denied",
-			pending: "Pending",
-			archived: "Archived",
-		},
-	},
-	posts: {
-		titles: {
-			list: "All posts",
-			edit: "Edit post",
-			new: "Create new post",
-		},
-		status: {
-			published: "Published",
-			pending: "Pending",
-		},
-		loading: "Loading post…",
-		general: {
-			heading: "General",
-			title: {
-				label: "Post title",
-				placeholder: "Faithful Smart Fridge: Alpha 1",
-			},
-			permalink: {
-				label: "Permalink",
-				placeholder: "/faithfulsmartfridge/A1",
-			},
-			header_img: {
-				label: "Header image (optional)",
-				hint: "Note: This must be uploaded separately",
-				placeholder: "https://database.faithfulpack.net/images/website/posts/fridge/A1.jpg",
-			},
-			date: {
-				label: "Post release date",
-			},
-			discontinued: {
-				label: "Discontinued",
-				hint: "If checked, the post will be marked as discontinued",
-			},
-			description: {
-				placeholder: "Post description",
-				hint: "You can use Markdown formatting to style your description!",
-			},
-		},
-		download: {
-			heading: "Downloads",
-			add_category: "Add download category",
-			add_single_item: "Add single download",
-			category: "Download category name",
-			name: "Download name",
-			link: "Download link",
-			link_placeholder: "https://www.example.com/",
-		},
-		changelog: {
-			heading: "Changelog",
-			add_category: "Add changelog category",
-			add_item: "Add changelog item",
-			import_json: "Import JSON",
-			form_levels: {
-				primary: "Primary category",
-				secondary: "Secondary category",
-				item_category: "Item category (Authors)",
-				item: "Item (Authors)",
-			},
-		},
-		changelog_generator: {
-			heading: "Generate changelog",
-			date: "Date since last changelog",
-			pack: "Changelog pack",
-			copy: "Copy to clipboard",
-			categorize: "Automatically categorize changelog by type (experimental)",
-			categorize_warning:
-				"Type categorization may be inaccurate due to how contributions are tracked!",
-			download: "Download changelog",
-			warning: "Please manually review the changelog before importing it!",
-		},
-	},
-	profile: {
-		title: "Customize your profile",
-		public_profile: "Go to public profile",
-		general: {
-			title: "General",
-			username: {
-				label: "Username",
-				hint: "Your username will be displayed on Faithful services for contributions, add-ons, etc",
-				rules: {
-					min: "Username must be longer than %d characters",
-					max: "Username must be fewer than %d characters",
-				},
-			},
-			uuid: {
-				label: "Minecraft profile UUID",
-				hint: "Your skin will be displayed on your profile page and add-ons",
-				rules: {
-					length: "UUID must be exactly 36 characters long",
-				},
-			},
-			bio: {
-				label: "Bio",
-				placeholder: "Bio",
-				hint: "You can use Markdown formatting to style your bio!",
-				rules: {
-					length: "Bio must be fewer than %d characters",
-				},
-			},
-			anonymous: {
-				label: "Anonymous",
-				hint: "Disables profile page and hides username and Minecraft skin in the texture gallery. Username will still be accessible in texture submissions for crediting purposes, but won't appear anywhere else.",
-			},
-		},
-		social: {
-			title: "Social media",
-			add: "Add social media",
-			type: {
-				label: "Social type",
-				rules: {
-					exists: "Social type is required",
-					valid: "Social type must be valid",
-				},
-			},
-			link: {
-				label: "Link to social profile",
-				placeholder: "https://www.example.com/",
-				rules: {
-					valid: "URL must be valid",
-				},
-			},
-		},
-		save_changes: "Save changes",
-		delete: {
-			title: "Delete account",
-			btn: "Delete account",
-			description: "Are you sure you want to delete your account?",
-			warning: "This process is irreversible!",
-			addons: {
-				title_singular: "This will affect %d add-on",
-				title_plural: "This will affect %d add-ons",
-				deleted: "Deleted",
-				transferred: "Transferred to other authors",
-			},
-		},
-	},
-	gallery: {
-		max_items_per_row: "Max items per row",
-		stretched_switcher: "Full width view",
-		animated_switcher: "Play animated textures",
-		share: "Share texture",
-		share_link_copied_to_clipboard: "Share link copied to clipboard",
-		authors_copied_to_clipboard: "Texture submission authors copied to clipboard",
-		title: "Gallery",
-		loading_message: "Loading gallery results…",
-		error_message: {
-			texture_not_done: "This texture is missing!",
-			user_anonymous: "Anonymous",
-			user_not_found: "Unknown user",
-			contribution_not_found: "No contributions found in database!",
-			search_failed: "Failed to search",
-		},
-		category: {
-			search: "Search",
-			tag: "Tag",
-			mc_version: "Minecraft version",
-			edition: "Edition",
-			pack: "Pack",
-		},
-		sort: {
-			name_asc: "Name (A → Z)",
-			name_desc: "Name (Z → A)",
-			id_asc: "Texture ID (smallest → largest)",
-			id_desc: "Texture ID (largest → smallest)",
-			contrib_desc: "Recently contributed",
-		},
-		tooltip: {
-			modded: "Modded Texture",
-			mojang: "Mojang Studios",
-			ignored: "Ignored Texture",
-		},
-		all: "All",
-		latest: "Latest",
-		clear_cache: "Clear gallery cache",
-		result_stats_singular: "%COUNT% texture found in %SECONDS% seconds",
-		result_stats_plural: "%COUNT% textures found in %SECONDS% seconds",
-		modal: {
-			no_contributions: "No contributions found",
-			image_alt_text: "Texture %NAME% for pack %PACK%",
-			loading: "Loading texture…",
-			tabs: {
-				information: "Information",
-				authors: "Authors",
-				animation: "Animation",
-			},
-			info: {
-				texture: "Texture",
-				uses: "Uses",
-				paths: "Paths",
-			},
-			animation: {
-				texture_mcmeta: "MCMETA",
-			},
-			data: {
-				contribution_id: "Contribution ID",
-				date: "Date",
-				authors: "Authors",
-				id: "ID",
-				name: "Name",
-				tags: "Tags",
-				use_id: "Use ID",
-				use_name: "Use name",
-				edition: "Edition",
-				texture_id: "Texture ID",
-				path_id: "Path ID",
-				resource_pack_path: "Resource pack path",
-				mc_versions: "Minecraft versions",
-			},
-		},
-	},
-	settings: {
-		title: "Settings",
-		edit_raw: "Edit raw JSON",
-	},
-	dashboard: {
-		welcome_user: "Welcome, %USER%!",
-		welcome: "Welcome!",
-		totals: {
-			authors: "authors",
-			contributions: "contributions",
-			last_day: "contributions in the last 48 hours",
-			last_week: "contributions last week",
-			last_month: "contributions last month",
-		},
-		titles: {
-			textures: "Textures",
-			addons: "Add-ons",
-			contribution_activity: "Contribution activity",
-			contribution_stats: "Contributions",
-			profile: "Profile",
-		},
-		addons: {
-			submissions: "Submissions",
-			upload: "Upload",
-		},
-		textures: {
-			total: "Textures",
-			versions: "Versions",
-		},
-		locale: {
-			on: "on",
-			less: "Less",
-			more: "More",
-		},
-	},
-	missing_page: {
-		title: "Are you lost in The End?",
-		description: "Unfortunately, the page you requested doesn't exist!",
-		main_page:
-			"Try checking your spelling or going to the %main page% to find what you were looking for.",
-	},
-	datepicker: {
-		year: "Year",
-		month: "Month",
-		day: "Day",
 	},
 };

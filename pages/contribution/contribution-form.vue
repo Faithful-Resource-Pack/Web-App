@@ -8,7 +8,7 @@
 					class="mx-auto"
 					flat
 					:months="months"
-					:labels="$root.lang().datepicker"
+					:labels="$root.lang().global.datepicker"
 				/>
 			</v-col>
 			<v-col cols="12" :sm="add && $vuetify.breakpoint.mdAndUp ? false : 6">

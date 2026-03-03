@@ -3,9 +3,9 @@
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
 		<div class="text-h4 py-4">
-			{{ $root.lang().settings.title }}
+			{{ $root.lang().database.settings.title }}
 		</div>
-		<div class="my-2 text-h5">{{ $root.lang().settings.edit_raw }}</div>
+		<div class="my-2 text-h5">{{ $root.lang().database.settings.edit_raw }}</div>
 
 		<v-btn :color="pageColor" class="white--text my-6" :disabled="invalidJson" block @click="save">
 			<v-icon left>mdi-content-save</v-icon>
