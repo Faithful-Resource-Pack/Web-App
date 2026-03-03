@@ -18,22 +18,22 @@ const AVAILABLE_LANGS = Object.entries(import.meta.glob("/resources/strings/*.js
 );
 
 // dynamic import because vite, used for fallback translation
-const { default: en_US } = await import("../resources/strings/en_US.js");
 
 const LANG_KEY = "lang";
-const LANG_DEFAULT = "en";
+const LANG_DEFAULT = "en_US";
+const { default: defaultLang } = await import(`../resources/strings/${LANG_DEFAULT}.js`);
 
 export default defineStore("translation", {
 	state: () => ({
 		availableLangs: AVAILABLE_LANGS,
-		loadedLangs: { en_US },
-		selectedLang: "en_US",
+		loadedLangs: { [LANG_DEFAULT]: defaultLang },
+		selectedLang: LANG_DEFAULT,
 	}),
 	actions: {
 		async setLang(id) {
 			localStorage.setItem(LANG_KEY, id);
 			if (!Object.keys(this.loadedLangs).includes(id)) await this.loadLanguage(id);
-			this.selectedLang = id;
+			this.$patch({ selectedLang: id });
 		},
 		getLang() {
 			const storedLang = localStorage.getItem(LANG_KEY) || LANG_DEFAULT;
@@ -51,7 +51,7 @@ export default defineStore("translation", {
 			const strings = await langObj.load();
 
 			this.$patch((store) => {
-				store.loadedLangs[langObj.id] = Object.merge({}, en_US, strings || {});
+				store.loadedLangs[langObj.id] = Object.merge({}, defaultLang, strings || {});
 			});
 		},
 		setup() {
