@@ -40,7 +40,6 @@ export default defineStore("translation", {
 			return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
 		},
 		async loadLanguage(langName) {
-			console.log(`loading language ${langName}`);
 			const langObj = this.availableLangs.find((l) => l.id === langName);
 			if (!langObj) return;
 

@@ -141,7 +141,6 @@ export default {
 			dragging_singular: "Release to upload file",
 			dragging_plural: "Release to upload files",
 		},
-
 		account_manager: {
 			title: "Account manager",
 			active_account: "Active account",
