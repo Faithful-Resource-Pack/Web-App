@@ -1,33 +1,30 @@
 import moment from "moment";
 import { defineStore } from "pinia";
 
-// https://www.techonthenet.com/js/language_tags.php
-const AVAILABLE_LANGS = Object.entries(import.meta.glob("/resources/strings/*.js")).map(
-	([path, loadAsImport]) => {
-		const name = path.split("/").pop().split(".")[0];
-		return {
-			id: name,
-			short: name.includes("en") ? "en" : name.slice(-2).toLowerCase(),
-			// automatically fetch default import
-			load: () => loadAsImport().then((res) => res.default),
-			bcp47: name.replace("_", "-"),
-			file: path,
-			iso3166: name.split("_")[1].toLowerCase(),
-		};
-	},
-);
-
-// dynamic import because vite, used for fallback translation
-
 const LANG_KEY = "lang";
-const LANG_DEFAULT = "en_US";
-const { default: defaultLang } = await import(`../resources/strings/${LANG_DEFAULT}.js`);
+const DEFAULT_LANG_ID = "en_US";
+
+// used for fallback translation
+const { default: defaultLang } = await import(`../resources/strings/${DEFAULT_LANG_ID}.js`);
 
 export default defineStore("translation", {
 	state: () => ({
-		availableLangs: AVAILABLE_LANGS,
-		loadedLangs: { [LANG_DEFAULT]: defaultLang },
-		selectedLang: LANG_DEFAULT,
+		availableLangs: Object.entries(import.meta.glob("/resources/strings/*.js")).map(
+			([path, loadAsImport]) => {
+				const name = path.split("/").pop().split(".")[0];
+				return {
+					id: name,
+					short: name.includes("en") ? "en" : name.slice(-2).toLowerCase(),
+					// automatically fetch default import
+					load: () => loadAsImport().then((res) => res.default),
+					bcp47: name.replace("_", "-"),
+					file: path,
+					iso3166: name.split("_")[1].toLowerCase(),
+				};
+			},
+		),
+		loadedLangs: { [DEFAULT_LANG_ID]: defaultLang },
+		selectedLang: DEFAULT_LANG_ID,
 	}),
 	actions: {
 		async setLang(id) {
@@ -36,8 +33,8 @@ export default defineStore("translation", {
 			this.$patch({ selectedLang: id });
 		},
 		getLang() {
-			const storedLang = localStorage.getItem(LANG_KEY) || LANG_DEFAULT;
-			return AVAILABLE_LANGS.some((e) => storedLang === e.id) ? storedLang : LANG_DEFAULT;
+			const storedLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG_ID;
+			return this.availableLangs.some((e) => storedLang === e.id) ? storedLang : DEFAULT_LANG_ID;
 		},
 		async loadLanguage(langName) {
 			const langObj = this.availableLangs.find((l) => l.id === langName);

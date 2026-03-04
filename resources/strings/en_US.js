@@ -17,7 +17,7 @@ export default {
 				sidebar: "Toggle sidebar",
 				theme: "Toggle theme dropdown",
 				translations: "Toggle translations dropdown",
-				main_site: "Return to main site",
+				user: "Logged in as %s",
 			},
 			profile: {
 				edit: "Edit profile",

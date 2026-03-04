@@ -13,7 +13,7 @@
 					min-width="0"
 					class="px-1 ms-2"
 					elevation="0"
-					:aria-label="$root.lang().global.navbar.labels.theme"
+					:title="$root.lang().global.navbar.labels.theme"
 					v-bind="attrs"
 					v-on="on"
 				>
@@ -34,7 +34,7 @@
 					min-width="0"
 					class="px-1 ms-2"
 					elevation="0"
-					:aria-label="$root.lang().global.navbar.labels.translations"
+					:title="$root.lang().global.navbar.labels.translations"
 					v-bind="attrs"
 					v-on="on"
 				>
@@ -54,11 +54,11 @@
 		>
 			<template #activator="{ on, attrs }">
 				<img
-					v-bind="attrs"
 					class="mx-1 ms-2"
 					style="height: 32px; aspect-ratio: 1 !important; border-radius: 100%"
 					:src="$root.user?.avatar"
-					:alt="`${$root.user.username}'s Avatar`"
+					:title="$root.lang().global.navbar.labels.user.replace('%s', $root.user.username)"
+					v-bind="attrs"
 					v-on="on"
 				/>
 			</template>
