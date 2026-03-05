@@ -23,6 +23,7 @@
 				/>
 			</v-col>
 			<v-col
+				v-if="formData.header_img"
 				cols="12"
 				sm="3"
 				class="d-flex align-center"
