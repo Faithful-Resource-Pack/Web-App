@@ -62,6 +62,7 @@
 
 			<tabbed-text-field
 				v-model="localUser.bio"
+				class="mb-5"
 				:textareaProps="{
 					rules: bioRules,
 					counter: bioMaxLength,

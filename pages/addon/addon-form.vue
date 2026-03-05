@@ -103,6 +103,7 @@
 			<!-- Addon description -->
 			<tabbed-text-field
 				v-model="submittedForm.description"
+				class="mb-3"
 				:textareaProps="{
 					clearable: true,
 					rules: form.description.rules,
