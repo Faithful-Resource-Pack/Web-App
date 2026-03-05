@@ -18,11 +18,11 @@
 						{{ user.username[0] }}
 					</div>
 				</v-list-item-avatar>
-				<h5 class="text-h5 text--primary mb-2">
+				<h3 class="text-h5 text--primary mb-2">
 					{{ user.username }}
-				</h5>
+				</h3>
 				<span class="text--secondary">
-					{{ user.id }}
+					{{ user.discordUsername }}
 				</span>
 			</div>
 
