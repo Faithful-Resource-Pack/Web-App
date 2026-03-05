@@ -19,7 +19,7 @@
 							<changelog-tab v-model="changelog" :convert="convertChangelogToArray" />
 						</v-tab-item>
 					</v-tabs-items>
-					<div class="d-flex justify-end pa-2">
+					<div class="d-flex flex-wrap justify-end pa-2">
 						<v-btn color="darken-1" text @click="onSubmit(false)">
 							{{ $root.lang().global.btn.save_draft }}
 						</v-btn>

@@ -212,17 +212,15 @@
 								:rules="downloadLinkRules"
 							/>
 						</v-col>
-						<v-col v-if="indexLinks == 0" class="flex-grow-0 flex-shrink-0">
-							<v-btn icon @click="addDownloadLink(index)">
+						<v-col class="flex-grow-0 flex-shrink-0">
+							<v-btn v-if="indexLinks === 0" icon @click="addDownloadLink(index)">
 								<v-icon color="lighten-1">mdi-plus</v-icon>
 							</v-btn>
-						</v-col>
-						<v-col v-else class="flex-grow-0 flex-shrink-0">
-							<v-btn icon @click="removeDownloadLink(index, indexLinks)">
+							<v-btn v-else icon @click="removeDownloadLink(index, indexLinks)">
 								<v-icon color="red lighten-1">mdi-minus</v-icon>
 							</v-btn>
 						</v-col>
-						<v-col v-if="index != 0 && indexLinks == 0" class="flex-grow-0 flex-shrink-0">
+						<v-col v-if="index !== 0 && indexLinks === 0" class="flex-grow-0 flex-shrink-0">
 							<v-btn icon @click="removeDownloadGroup(index)">
 								<v-icon color="red lighten-1">mdi-delete</v-icon>
 							</v-btn>
@@ -230,14 +228,15 @@
 					</v-row>
 				</v-col>
 			</v-row>
-			<div class="pb-3">
-				<v-btn block color="secondary" @click="addDownloadGroup">
-					<v-icon left>mdi-playlist-plus</v-icon>
-					{{ $root.lang().global.btn.add_download }}
-				</v-btn>
-			</div>
+			<v-btn block color="secondary" @click="addDownloadGroup">
+				<v-icon left>mdi-playlist-plus</v-icon>
+				{{ $root.lang().global.btn.add_download }}
+			</v-btn>
 
-			<div class="d-flex justify-end pa-2">
+			<div class="d-flex flex-wrap justify-end ma-2 pt-7">
+				<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
+					{{ $root.lang().global.btn.submit_for_review }}
+				</v-btn>
 				<v-btn
 					v-if="$root.isAdmin"
 					:disabled="!validForm"
@@ -246,9 +245,6 @@
 					@click="onSubmit(true)"
 				>
 					{{ $root.lang().global.btn.submit_and_approve }}
-				</v-btn>
-				<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
-					{{ $root.lang().global.btn.submit_for_review }}
 				</v-btn>
 			</div>
 		</v-form>

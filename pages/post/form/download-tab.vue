@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-row v-for="(download, i) in downloads" :key="download.key" dense class="align-baseline">
+		<v-row v-for="(download, index) in downloads" :key="download.key" class="align-baseline">
 			<template v-if="download.category !== undefined">
 				<v-col cols="12" sm="3">
 					<v-text-field
@@ -10,16 +10,19 @@
 					/>
 				</v-col>
 				<v-col cols="12" sm="9">
-					<v-row v-for="(item, j) in download.items" :key="item.key" dense class="align-baseline">
-						<v-col cols="12" sm="3">
+					<v-row
+						v-for="(item, indexLinks) in download.items"
+						:key="item.key"
+						class="align-baseline"
+					>
+						<v-col cols="12" sm="4">
 							<v-text-field
 								v-model="item.name"
 								:label="$root.lang().posts.download.name"
 								hide-details
 							/>
 						</v-col>
-						<!-- on new line with mobile layout so more cols are added -->
-						<v-col :cols="j === 0 ? 10 : 11" :sm="j === 0 ? 7 : 8">
+						<v-col>
 							<v-text-field
 								v-model="item.link"
 								:label="$root.lang().posts.download.link"
@@ -27,21 +30,22 @@
 								hide-details
 							/>
 						</v-col>
-						<template v-if="j === 0">
-							<v-col cols="1">
-								<v-btn icon color="lighten-1" @click="addItemToCategory(i)">
-									<v-icon>mdi-plus</v-icon>
-								</v-btn>
-							</v-col>
-							<v-col cols="1">
-								<v-btn icon color="red lighten-1" @click="removeItem(i)">
-									<v-icon>mdi-delete</v-icon>
-								</v-btn>
-							</v-col>
-						</template>
-						<v-col v-else cols="1">
-							<v-btn icon color="red lighten-1" @click="removeItemInCategory(i, j)">
+						<v-col class="flex-grow-0 flex-shrink-0">
+							<v-btn v-if="indexLinks === 0" icon @click="addItemToCategory(index)">
+								<v-icon>mdi-plus</v-icon>
+							</v-btn>
+							<v-btn
+								v-else
+								icon
+								color="red lighten-1"
+								@click="removeItemInCategory(index, indexLinks)"
+							>
 								<v-icon>mdi-minus</v-icon>
+							</v-btn>
+						</v-col>
+						<v-col v-if="indexLinks === 0" class="flex-grow-0 flex-shrink-0">
+							<v-btn icon color="red lighten-1" @click="removeItem(index)">
+								<v-icon>mdi-delete</v-icon>
 							</v-btn>
 						</v-col>
 					</v-row>
@@ -51,22 +55,17 @@
 				<v-col cols="12" sm="3">
 					<v-text-field v-model="download.name" :label="$root.lang().posts.download.name" />
 				</v-col>
-				<v-col cols="12" sm="9">
-					<!-- extra nesting required to align the delete buttons with categories -->
-					<v-row dense>
-						<v-col cols="12" sm="11">
-							<v-text-field
-								v-model="download.link"
-								:label="$root.lang().posts.download.link"
-								:placeholder="$root.lang().posts.download.link_placeholder"
-							/>
-						</v-col>
-						<v-col cols="12" sm="1">
-							<v-btn icon color="red lighten-1" @click="removeItem(i)">
-								<v-icon>mdi-minus</v-icon>
-							</v-btn>
-						</v-col>
-					</v-row>
+				<v-col>
+					<v-text-field
+						v-model="download.link"
+						:label="$root.lang().posts.download.link"
+						:placeholder="$root.lang().posts.download.link_placeholder"
+					/>
+				</v-col>
+				<v-col class="flex-grow-0 flex-shrink-0">
+					<v-btn icon color="red lighten-1" @click="removeItem(index)">
+						<v-icon>mdi-minus</v-icon>
+					</v-btn>
 				</v-col>
 			</template>
 		</v-row>

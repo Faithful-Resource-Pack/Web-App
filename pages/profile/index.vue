@@ -85,19 +85,23 @@
 							:rules="mediaTypeRules"
 						/>
 					</v-col>
-					<v-col cols="11" sm="8">
-						<v-text-field
-							v-model="socialMedia.link"
-							clearable
-							:placeholder="$root.lang().profile.social.link.placeholder"
-							:label="$root.lang().profile.social.link.label"
-							:rules="urlRules"
-						/>
-					</v-col>
-					<v-col cols="1">
-						<v-btn icon @click="removeSocialMedia(i)">
-							<v-icon color="red darken-1">mdi-minus</v-icon>
-						</v-btn>
+					<v-col cols="12" sm="9">
+						<v-row class="align-baseline" dense>
+							<v-col>
+								<v-text-field
+									v-model="socialMedia.link"
+									clearable
+									:placeholder="$root.lang().profile.social.link.placeholder"
+									:label="$root.lang().profile.social.link.label"
+									:rules="urlRules"
+								/>
+							</v-col>
+							<v-col class="flex-grow-0 flex-shrink-0">
+								<v-btn icon @click="removeSocialMedia(i)">
+									<v-icon color="red lighten-1">mdi-minus</v-icon>
+								</v-btn>
+							</v-col>
+						</v-row>
 					</v-col>
 				</v-row>
 				<v-btn block color="secondary" @click="addSocialMedia">
@@ -106,7 +110,7 @@
 				</v-btn>
 			</v-form>
 
-			<div class="d-flex justify-end ma-2 pt-7">
+			<div class="d-flex flex-wrap justify-end ma-2 pt-7">
 				<v-btn text color="error darken-1" @click="openDeleteModal">
 					{{ $root.lang().profile.delete.btn }}
 				</v-btn>
