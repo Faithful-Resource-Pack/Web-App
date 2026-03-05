@@ -19,7 +19,7 @@
 					</div>
 				</v-list-item-avatar>
 				<h3 class="text-h5 text--primary mb-2">
-					{{ user.username }}
+					{{ user.username || user.discordUsername }}
 				</h3>
 				<span class="text--secondary">
 					{{ user.discordUsername }}
