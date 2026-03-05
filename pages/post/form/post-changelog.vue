@@ -1,7 +1,7 @@
 <template>
 	<div :class="margin ? 'ml-5' : ''">
-		<v-row v-if="typeof item === 'string'" dense>
-			<v-col cols="11">
+		<v-row v-if="typeof item === 'string'" dense class="align-baseline">
+			<v-col>
 				<v-text-field
 					v-model="item"
 					dense
@@ -10,15 +10,15 @@
 					hide-details
 				/>
 			</v-col>
-			<v-col cols="1">
+			<v-col class="flex-grow-0 flex-shrink-0">
 				<v-btn icon :size="categoryHeight" @click="$emit('delete')">
 					<v-icon color="red lighten-1">mdi-minus</v-icon>
 				</v-btn>
 			</v-col>
 		</v-row>
 		<template v-else-if="item.category !== undefined">
-			<v-row dense>
-				<v-col cols="11">
+			<v-row dense class="align-baseline">
+				<v-col>
 					<v-text-field
 						v-model="item.category"
 						dense
@@ -29,7 +29,7 @@
 						:height="categoryHeight"
 					/>
 				</v-col>
-				<v-col cols="1">
+				<v-col class="flex-grow-0 flex-shrink-0">
 					<v-btn icon :size="categoryHeight" @click="$emit('delete')">
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
