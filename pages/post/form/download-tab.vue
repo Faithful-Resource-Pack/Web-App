@@ -69,7 +69,7 @@
 				</v-col>
 			</template>
 		</v-row>
-		<v-row class="pb-3">
+		<v-row>
 			<v-col>
 				<v-btn block color="secondary" @click="addSingleItem">
 					<v-icon left>mdi-plus</v-icon>

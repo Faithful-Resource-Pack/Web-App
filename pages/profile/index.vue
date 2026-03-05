@@ -111,14 +111,14 @@
 				</v-btn>
 			</v-form>
 
-			<div class="d-flex flex-wrap justify-end ma-2 pt-7">
+			<v-card-actions class="form-actions mt-5">
 				<v-btn text color="error darken-1" @click="openDeleteModal">
 					{{ $root.lang().profile.delete.btn }}
 				</v-btn>
 				<v-btn text color="darken-1" :disabled="!canSubmit" @click="send">
 					{{ $root.lang().profile.save_changes }}
 				</v-btn>
-			</div>
+			</v-card-actions>
 		</v-card>
 
 		<user-remove-confirm

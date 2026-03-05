@@ -234,7 +234,7 @@
 				{{ $root.lang().global.btn.add_download }}
 			</v-btn>
 
-			<div class="d-flex flex-wrap justify-end ma-2 pt-7">
+			<v-card-actions class="form-actions mt-5">
 				<v-btn :disabled="!validForm" color="darken-1" text @click="onSubmit(false)">
 					{{ $root.lang().global.btn.submit_for_review }}
 				</v-btn>
@@ -247,7 +247,7 @@
 				>
 					{{ $root.lang().global.btn.submit_and_approve }}
 				</v-btn>
-			</div>
+			</v-card-actions>
 		</v-form>
 
 		<fullscreen-preview v-model="previewOpen" :src="header" />

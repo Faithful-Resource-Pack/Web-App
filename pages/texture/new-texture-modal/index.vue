@@ -55,24 +55,15 @@
 							@delete="deleteTexture(i)"
 						/>
 					</v-list>
-					<v-divider class="mt-2 mb-5" />
-					<div class="d-flex align-center justify-space-between">
-						<v-checkbox
-							v-model="clearOnSave"
-							:color="color"
-							hide-details
-							:label="$root.lang().database.textures.modal.clear_on_save"
-						/>
-						<v-card-actions>
-							<v-spacer />
-							<v-btn class="px-1" color="red darken-1" text @click="resetModal">
-								{{ $root.lang().global.btn.discard }}
-							</v-btn>
-							<v-btn class="px-1" color="darken-1" text @click="send">
-								{{ $root.lang().global.btn.save }}
-							</v-btn>
-						</v-card-actions>
-					</div>
+					<v-divider class="my-2" />
+					<v-card-actions class="form-actions">
+						<v-btn color="red darken-1" text @click="resetModal">
+							{{ $root.lang().global.btn.reset }}
+						</v-btn>
+						<v-btn color="darken-1" text @click="send">
+							{{ $root.lang().global.btn.save }}
+						</v-btn>
+					</v-card-actions>
 				</v-col>
 			</v-row>
 		</div>
@@ -89,8 +80,6 @@ import FullscreenModal from "@layouts/fullscreen-modal.vue";
 import JsonModal from "@components/json-modal.vue";
 import TexturePanel from "./texture-panel.vue";
 import SummaryItem from "./summary-item.vue";
-
-const CLEAR_ON_SAVE_KEY = "new_textures_clear";
 
 export default {
 	name: "new-texture-modal",
@@ -122,7 +111,6 @@ export default {
 			selectedTab: null,
 			textures: [emptyTexture()],
 			jsonModalOpened: false,
-			clearOnSave: localStorage.getItem(CLEAR_ON_SAVE_KEY) === "true",
 		};
 	},
 	methods: {
@@ -179,7 +167,6 @@ export default {
 				.post(`${this.$root.apiURL}/textures/multiple`, this.cleanedData, this.$root.apiOptions)
 				.then(() => {
 					this.$root.showSnackBar(this.$root.lang().database.textures.add_success, "success");
-					if (this.clearOnSave) this.resetModal();
 				})
 				.catch((err) => {
 					console.error(err);
@@ -211,9 +198,6 @@ export default {
 		},
 		modalOpened(n) {
 			this.$emit("input", n);
-		},
-		clearOnSave(n) {
-			localStorage.setItem(CLEAR_ON_SAVE_KEY, n);
 		},
 	},
 };

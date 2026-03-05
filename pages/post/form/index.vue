@@ -19,14 +19,14 @@
 							<changelog-tab v-model="changelog" :convert="convertChangelogToArray" />
 						</v-tab-item>
 					</v-tabs-items>
-					<div class="d-flex flex-wrap justify-end pa-2">
+					<v-card-actions class="form-actions mt-5">
 						<v-btn color="darken-1" text @click="onSubmit(false)">
 							{{ $root.lang().global.btn.save_draft }}
 						</v-btn>
 						<v-btn color="primary" text @click="onSubmit(true)">
 							{{ $root.lang().global.btn.publish }}
 						</v-btn>
-					</div>
+					</v-card-actions>
 				</div>
 			</div>
 		</v-card>

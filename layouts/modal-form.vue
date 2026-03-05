@@ -5,8 +5,7 @@
 			<v-card-text>
 				<slot />
 			</v-card-text>
-			<v-card-actions>
-				<v-spacer />
+			<v-card-actions class="form-actions">
 				<v-btn :color="danger ? normalColor : dangerColor" text @click="closeModal">
 					{{ $root.lang().global.btn.cancel }}
 				</v-btn>

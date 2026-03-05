@@ -314,6 +314,20 @@ img.texture-img {
 	padding-right: 24px;
 }
 
+// right aligned text buttons + decent mobile support
+.v-card__actions.form-actions {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: end;
+	row-gap: 8px;
+}
+
+// since the class has to be on v-card-actions we remove the excess card padding
+.container .v-card__actions.form-actions {
+	padding: 0;
+}
+
 // stylized pill button paths
 .v-list-item__action.merged-actions {
 	margin-top: 4px;

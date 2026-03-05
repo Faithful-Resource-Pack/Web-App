@@ -22,7 +22,7 @@
 			</v-col>
 		</v-row>
 		<br />
-		<v-row class="pb-3">
+		<v-row>
 			<v-col>
 				<v-btn block color="secondary" @click="openGenerateModal">
 					<v-icon left>mdi-pencil</v-icon>
