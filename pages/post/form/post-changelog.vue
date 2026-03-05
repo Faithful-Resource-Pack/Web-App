@@ -43,12 +43,12 @@
 				margin
 				@delete="remove(i)"
 			/>
-			<div class="ml-5">
-				<v-btn class="my-2 mr-1" color="secondary" @click="addItem">
+			<div class="ml-4">
+				<v-btn class="my-2 mx-1" color="secondary" @click="addItem">
 					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().posts.changelog.add_item }}
 				</v-btn>
-				<v-btn class="my-2 ml-1" color="secondary" @click="addCategory">
+				<v-btn class="my-2 mx-1" color="secondary" @click="addCategory">
 					<v-icon left>mdi-playlist-plus</v-icon>
 					{{ $root.lang().posts.changelog.add_category }}
 				</v-btn>
