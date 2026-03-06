@@ -2,8 +2,11 @@
 	<!-- not extending modal-form since this has no action buttons -->
 	<v-dialog v-model="modalOpened" max-width="800">
 		<v-card>
-			<v-card-title class="headline">
+			<v-card-title class="headline justify-space-between">
 				{{ $root.lang().posts.changelog_generator.heading }}
+				<v-btn icon @click="closeModal">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
 			</v-card-title>
 			<v-card-text>
 				<v-alert type="warning" outlined dense>
@@ -83,9 +86,9 @@ export default {
 	},
 	data() {
 		return {
+			modalOpened: false,
 			date: "",
 			selectedPack: "",
-			modalOpened: false,
 			packs: [],
 			loading: false,
 			categorize: false,
@@ -97,6 +100,9 @@ export default {
 	methods: {
 		highlighter(code) {
 			return Prism.highlight(code, Prism.languages.js, "json");
+		},
+		closeModal() {
+			this.modalOpened = false;
 		},
 		copyData() {
 			navigator.clipboard.writeText(this.outputData);

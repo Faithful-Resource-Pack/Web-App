@@ -1,9 +1,12 @@
 <template>
 	<v-dialog v-model="modalOpened" content-class="colored" max-width="800">
 		<v-card>
-			<h2 class="title text--secondary pa-2">
+			<v-card-title class="justify-space-between">
 				{{ $root.lang().global.json_editor.import_data }}
-			</h2>
+				<v-btn icon @click="closeModal">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
+			</v-card-title>
 			<prism-editor
 				v-model="jsonData"
 				class="json-editor json-modal-editor"
@@ -11,6 +14,7 @@
 				line-numbers
 			/>
 			<v-btn block :color="color" class="white--text" @click="parseJSON">
+				<v-icon left>mdi-upload</v-icon>
 				{{ $root.lang().global.json_editor.parse_json }}
 			</v-btn>
 		</v-card>
@@ -64,6 +68,9 @@ export default {
 				console.error(err);
 				this.$root.showSnackBar(err, "error");
 			}
+		},
+		closeModal() {
+			this.modalOpened = false;
 		},
 	},
 	watch: {

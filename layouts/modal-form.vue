@@ -1,7 +1,12 @@
 <template>
 	<v-dialog v-model="modalOpened" content-class="colored" :max-width="maxWidth">
 		<v-card>
-			<v-card-title v-if="title" class="headline">{{ title }}</v-card-title>
+			<v-card-title class="headline justify-space-between">
+				<span>{{ title }}</span>
+				<v-btn icon @click="closeModal">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
+			</v-card-title>
 			<v-card-text>
 				<slot />
 			</v-card-text>
@@ -29,7 +34,7 @@ export default {
 		title: {
 			type: String,
 			required: false,
-			default: null,
+			default: "",
 		},
 		value: {
 			type: Boolean,

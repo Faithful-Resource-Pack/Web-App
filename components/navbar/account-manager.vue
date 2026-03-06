@@ -1,7 +1,7 @@
 <template>
 	<v-dialog v-model="modalOpened" max-width="600">
 		<v-card>
-			<v-card-title class="headline d-flex flex-row align-center justify-space-between">
+			<v-card-title class="headline justify-space-between">
 				{{ $root.lang().global.account_manager.title }}
 				<v-btn icon @click="closeModal">
 					<v-icon>mdi-close</v-icon>
