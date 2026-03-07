@@ -492,7 +492,7 @@ export default {
 		},
 		status: {
 			published: "Published",
-			pending: "Pending",
+			draft: "Draft",
 		},
 		loading: "Loading post…",
 		general: {

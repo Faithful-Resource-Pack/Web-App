@@ -24,7 +24,7 @@
 				</template>
 				<template #text="{ published, permalink }">
 					<v-badge dot inline :color="published ? 'green' : 'yellow'" />
-					{{ $root.lang().posts.status[published ? "published" : "pending"] }}
+					{{ $root.lang().posts.status[published ? "published" : "draft"] }}
 					<v-btn
 						v-if="published"
 						color="blue"
