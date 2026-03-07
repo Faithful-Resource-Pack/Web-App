@@ -143,8 +143,8 @@ export default {
 					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 					this.$emit("close", true);
 				})
-				.catch((error) => {
-					console.error(error);
+				.catch((err) => {
+					console.error(err);
 					this.$root.showSnackBar(err, "error");
 				});
 		},
