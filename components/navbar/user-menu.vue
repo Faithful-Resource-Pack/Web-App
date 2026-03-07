@@ -28,15 +28,15 @@
 			rel="noopener noreferrer"
 		>
 			<v-list-item-icon class="me-4">
-				<v-icon>mdi-open-in-new</v-icon>
+				<v-icon>mdi-account-box-outline</v-icon>
 			</v-list-item-icon>
 			<v-list-item-title>{{ $root.lang().global.navbar.profile.view }}</v-list-item-title>
 		</v-list-item>
-		<v-list-item to="/profile">
-			<v-list-item-icon class="me-4">
-				<v-icon>mdi-pencil</v-icon>
+		<v-list-item href="https://faithfulpack.net" target="_blank" rel="noopener noreferrer">
+			<v-list-item-icon class="align-center justify-center me-4">
+				<span class="icon-faithful" />
 			</v-list-item-icon>
-			<v-list-item-title>{{ $root.lang().global.navbar.profile.edit }}</v-list-item-title>
+			<v-list-item-title>{{ $root.lang().global.navbar.profile.main_site }}</v-list-item-title>
 		</v-list-item>
 		<v-list-item @click="$emit('open-accounts')">
 			<v-list-item-icon class="me-4">

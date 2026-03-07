@@ -107,6 +107,16 @@ html.theme--light,
 	color: #fff;
 }
 
+.icon-faithful {
+	mask-image: url("/resources/icons/faithful_logo.svg");
+	background-color: white;
+	mask-repeat: no-repeat;
+	margin-left: 2px;
+	margin-right: 2px;
+	width: 100%;
+	height: 100%;
+}
+
 // vuetify 3 backported feature (really handy)
 .cursor-pointer {
 	cursor: pointer !important;

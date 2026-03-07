@@ -20,11 +20,11 @@ export default {
 				user: "Logged in as %s",
 			},
 			profile: {
-				edit: "Edit profile",
+				view: "Your profile",
+				main_site: "Faithful website",
 				manage: "Manage accounts",
 				copy: "Copy user ID",
 				copied: "Copied user ID to clipboard",
-				view: "See public profile",
 			},
 		},
 		themes: {
