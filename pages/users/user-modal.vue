@@ -155,7 +155,7 @@ export default {
 		},
 		modalOpened(newValue) {
 			this.$nextTick(() => {
-				if (this.add)
+				if (this.add) {
 					this.formData = {
 						id: "",
 						username: "",
@@ -163,10 +163,13 @@ export default {
 						uuid: "",
 						anonymous: false,
 					};
-				else
+				} else {
 					Object.keys(this.data).forEach((key) => {
+						// todo: support bios better?
+						if (key === "bio") return;
 						this.formData[key] = this.data[key];
 					});
+				}
 			});
 			this.$emit("input", newValue);
 		},
