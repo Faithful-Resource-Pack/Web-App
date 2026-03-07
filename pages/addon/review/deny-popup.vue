@@ -3,6 +3,7 @@
 		v-model="modalOpened"
 		:title="title"
 		:disabled="!denyReason || (denyReason && denyReason.length == 0)"
+		danger
 		@close="interacted(false)"
 		@submit="interacted(true)"
 	>
