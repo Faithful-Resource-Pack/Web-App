@@ -10,6 +10,7 @@
 		<v-text-field
 			v-model="denyReason"
 			:autofocus="!$vuetify.breakpoint.mobile"
+			:color="color"
 			required
 			:label="$root.lang().review.deny_window.label"
 			:rules="reasonRules"
@@ -26,14 +27,19 @@ export default {
 		ModalForm,
 	},
 	props: {
+		value: {
+			type: Boolean,
+			required: true,
+		},
 		archive: {
 			type: Boolean,
 			required: false,
 			default: false,
 		},
-		value: {
-			type: Boolean,
-			required: true,
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
 		},
 	},
 	data() {

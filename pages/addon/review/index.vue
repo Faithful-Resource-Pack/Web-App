@@ -6,7 +6,12 @@
 			{{ $root.lang().review.titles.addons }}
 		</div>
 
-		<deny-popup v-model="showDenyPopup" :archive="archive" @close="closeDenyPopup" />
+		<deny-popup
+			v-model="showDenyPopup"
+			:archive="archive"
+			:color="pageColor"
+			@close="closeDenyPopup"
+		/>
 
 		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
 
