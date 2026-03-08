@@ -58,7 +58,7 @@
 						</v-btn>
 					</v-col>
 				</v-row>
-				<v-row v-for="(path, pi) in use.paths" :key="path.key">
+				<v-row v-for="(path, pi) in use.paths" :key="path.key" class="align-baseline">
 					<v-col cols="12" sm="5">
 						<v-text-field
 							v-model="path.name"

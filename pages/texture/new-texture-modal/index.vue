@@ -54,6 +54,10 @@
 							:color="color"
 							@delete="deleteTexture(i)"
 						/>
+						<v-btn block color="secondary" class="my-2" @click="addTexture()">
+							<v-icon left>mdi-plus</v-icon>
+							{{ $root.lang().database.textures.add_texture }}
+						</v-btn>
 					</v-list>
 					<v-divider class="my-2" />
 					<v-card-actions class="form-actions">
