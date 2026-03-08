@@ -47,14 +47,17 @@
 						<div class="font-weight-medium text--secondary my-2">
 							{{ $root.lang().database.summary }}: [{{ textures.length }}]
 						</div>
-						<summary-item
-							v-for="(tex, i) in textures"
-							:key="tex.key"
-							:texture="tex"
-							:color="color"
-							@delete="deleteTexture(i)"
-						/>
-						<v-btn block color="secondary" class="my-2" @click="addTexture()">
+						<v-list-item-group v-model="selectedTab" mandatory :color="color" class="my-5">
+							<summary-item
+								v-for="(tex, i) in textures"
+								:key="tex.key"
+								:texture="tex"
+								:selected="selectedTab === i"
+								:color="color"
+								@delete="deleteTexture(i)"
+							/>
+						</v-list-item-group>
+						<v-btn block color="secondary" @click="addTexture()">
 							<v-icon left>mdi-plus</v-icon>
 							{{ $root.lang().database.textures.add_texture }}
 						</v-btn>

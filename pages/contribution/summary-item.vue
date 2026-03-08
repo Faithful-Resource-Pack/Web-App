@@ -1,5 +1,5 @@
 <template>
-	<v-list-item class="contribution-summary-item mb-1">
+	<v-list-item class="mb-1">
 		<v-list-item-content>
 			<v-list-item-title>{{ title }}</v-list-item-title>
 			<v-list-item-subtitle class="text-truncate">
@@ -84,10 +84,3 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss">
-// for some reason this style type only applies to navigation-level selectable list elements
-.contribution-summary-item::before {
-	border-radius: 4px;
-}
-</style>

@@ -179,6 +179,10 @@ img.texture-img {
 	image-rendering: pixelated;
 }
 
+
+.v-list-item-group > .v-list-item::before {
+	border-radius: 4px;
+}
 .v-chip {
 	border-radius: 4px !important;
 }

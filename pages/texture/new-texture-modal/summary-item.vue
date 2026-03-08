@@ -1,7 +1,7 @@
 <template>
-	<v-list-item class="pl-0 mb-1">
+	<v-list-item class="mb-1">
 		<v-list-item-content>
-			<v-list-item-title :class="textColor">
+			<v-list-item-title>
 				<template v-if="texture.name">{{ texture.name }}</template>
 				<i v-else>{{ $root.lang().database.nameless }}</i>
 				• {{ summaryString }}
@@ -12,7 +12,7 @@
 			</v-list-item-subtitle>
 		</v-list-item-content>
 		<v-list-item-action>
-			<v-btn icon color="red lighten-1" @click="$emit('delete')">
+			<v-btn icon :color="selected ? color : 'red lighten-1'" @click="$emit('delete')">
 				<v-icon>mdi-delete</v-icon>
 			</v-btn>
 		</v-list-item-action>
@@ -28,6 +28,11 @@ export default {
 			type: Object,
 			required: true,
 		},
+		selected: {
+			type: Boolean,
+			required: false,
+			default: false,
+		},
 		color: {
 			type: String,
 			required: false,
@@ -35,10 +40,6 @@ export default {
 		},
 	},
 	computed: {
-		textColor() {
-			// convert background color class to text color class
-			return this.color.split(" ").map((c) => (c.includes("-") ? c : `${c}--text`));
-		},
 		summaryString() {
 			const texStrings = this.$root.lang().database.textures;
 			// bit cleaner than using a ton of nested ternaries
