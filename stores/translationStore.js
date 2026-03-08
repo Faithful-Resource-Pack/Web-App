@@ -33,7 +33,10 @@ export default defineStore("translation", {
 			this.$patch({ selectedLang: id });
 		},
 		getLang() {
-			const storedLang = localStorage.getItem(LANG_KEY) || DEFAULT_LANG_ID;
+			// navigator language uses bcp47 formatting, read from there if user hasn't overridden config
+			const storedLang = localStorage.getItem(LANG_KEY) || navigator.language.replace(/-/g, "_");
+
+			// use english if navigator language isn't supported or somehow the localstorage value became invalid
 			return this.availableLangs.some((e) => storedLang === e.id) ? storedLang : DEFAULT_LANG_ID;
 		},
 		async loadLanguage(langName) {
