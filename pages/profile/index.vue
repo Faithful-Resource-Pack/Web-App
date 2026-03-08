@@ -151,7 +151,7 @@ export default {
 	data() {
 		return {
 			localUser: {},
-			usernameMinLength: 3,
+			usernameMinLength: 2,
 			usernameMaxLength: 24,
 			uuidMaxLength: 36,
 			bioMaxLength: 300,
