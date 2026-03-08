@@ -34,7 +34,7 @@
 				<template #icon>
 					<span class="white--text">{{ useIDFromIndex(ui) }}</span>
 				</template>
-				<v-row>
+				<v-row class="align-baseline">
 					<v-col cols="12" sm="5">
 						<v-text-field
 							v-model="use.name"
@@ -42,7 +42,7 @@
 							:label="$root.lang().database.textures.uses.name"
 						/>
 					</v-col>
-					<v-col cols="10" sm="6">
+					<v-col>
 						<v-select
 							v-model="use.edition"
 							:color="color"
@@ -52,7 +52,7 @@
 							@change="(e) => onEditionChange(e, use)"
 						/>
 					</v-col>
-					<v-col cols="2" sm="1">
+					<v-col class="flex-grow-0 flex-shrink-0">
 						<v-btn color="red lighten-1" icon @click="deleteUse(ui)">
 							<v-icon>mdi-delete</v-icon>
 						</v-btn>
@@ -71,7 +71,7 @@
 							@change="(e) => onPathAdded(e, path, use)"
 						/>
 					</v-col>
-					<v-col cols="12" sm="4">
+					<v-col>
 						<v-select
 							v-model="path.versions"
 							:color="color"
@@ -85,18 +85,23 @@
 							deletable-chips
 						/>
 					</v-col>
-					<v-col cols="10" sm="2">
-						<v-checkbox
-							v-model="path.mcmeta"
-							:color="color"
-							:label="$root.lang().database.textures.paths.mcmeta"
-						/>
-					</v-col>
-					<v-col cols="2" sm="1">
-						<v-btn color="red lighten-1" icon @click="deletePath(ui, pi)">
-							<v-icon>mdi-minus</v-icon>
-						</v-btn>
-					</v-col>
+					<div
+						class="d-flex justify-space-between flex-grow-0 flex-shrink-0"
+						:style="$vuetify.breakpoint.smAndDown && 'min-width: 100%'"
+					>
+						<v-col>
+							<v-checkbox
+								v-model="path.mcmeta"
+								:color="color"
+								:label="$root.lang().database.textures.paths.mcmeta"
+							/>
+						</v-col>
+						<v-col class="flex-grow-0 flex-shrink-0">
+							<v-btn class="ml-3" color="red lighten-1" icon @click="deletePath(ui, pi)">
+								<v-icon>mdi-minus</v-icon>
+							</v-btn>
+						</v-col>
+					</div>
 				</v-row>
 				<v-btn block class="my-5" color="secondary" @click="addPath(ui)">
 					<v-icon left>mdi-plus</v-icon>
