@@ -1,9 +1,8 @@
 export default {
 	credits: ["Pomi108"],
 	global: {
-		name: "Webová aplikace Faithful",
+		name: "Faithful",
 		logout: "Odhlásit se",
-		login: "Přihlásit přes Discord",
 		ends_success: "Povedlo se!",
 		loading: "Načítám, prosím vyčkejte…",
 		no_results: "Žádné výsledky",

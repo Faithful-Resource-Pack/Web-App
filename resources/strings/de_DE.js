@@ -1,9 +1,8 @@
 export default {
 	credits: ["RobertR11"],
 	global: {
-		name: "Faithful Webanwendung",
+		name: "Faithful",
 		logout: "Abmelden",
-		login: "Über Discord anmelden",
 		ends_success: "Erfolgreich abgeschlossen",
 		loading: "Wird geladen, bitte warten…",
 		no_results: "Es wurden keine Ergebnisse gefunden",

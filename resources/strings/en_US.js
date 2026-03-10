@@ -3,8 +3,8 @@ export default {
 		"DO NOT TRANSLATE THIS STRING! Instead, delete all the text in it and replace it with your name. This is how you will be credited for your translation.",
 	],
 	global: {
-		name: "Faithful Web Application",
-		login: "Log in with Discord",
+		name: "Faithful",
+		login: "Log in",
 		logout: "Log out",
 		ends_success: "Completed successfully",
 		loading: "Loading, please wait…",
@@ -164,11 +164,15 @@ export default {
 			last_month: "contributions last month",
 		},
 		titles: {
+			profile: "Your profile",
 			textures: "Textures",
 			addons: "Add-ons",
-			contribution_activity: "Contribution activity",
 			contribution_stats: "Contributions",
-			profile: "Profile",
+			contribution_activity: "Contribution activity",
+		},
+		profile: {
+			login_notice: "Log in to access more features!",
+			login_button: "Log in with Discord",
 		},
 		addons: {
 			submissions: "Submissions",

@@ -1,9 +1,8 @@
 export default {
 	credits: ["Juknum"],
 	global: {
-		name: "Application Web Faithful",
+		name: "Faithful",
 		logout: "Déconnexion",
-		login: "Se connecter via Discord",
 		ends_success: "Terminé avec succès",
 		loading: "Chargement, veuillez patienter…",
 		no_results: "Aucun résultat n'a été trouvé",

@@ -1,9 +1,9 @@
 export default {
 	credits: ["Zesuelpro"],
 	global: {
-		name: "Aplicación Web Faithful",
+		name: "Faithful",
+		login: "Iniciar sesión",
 		logout: "Cerrar Sesión",
-		login: "Iniciar sesión mediante Discord",
 		ends_success: "Completado con éxito",
 		loading: "Cargando, por favor espere…",
 		no_results: "No se han encontrado resultados",

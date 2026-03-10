@@ -1,8 +1,6 @@
 // easier to inline them all right here
 @use "./scrollbar.scss" as *;
 
-@import url(https://database.faithfulpack.net/fonts/FaithfulFont/stylesheet.css);
-
 @font-face {
 	font-family: "icons";
 	src: url("../fonts/icons.eot?sn8f0g");
@@ -179,7 +177,6 @@ img.texture-img {
 	image-rendering: pixelated;
 }
 
-
 .v-list-item-group > .v-list-item::before {
 	border-radius: 4px;
 }
@@ -188,11 +185,6 @@ img.texture-img {
 }
 .v-chip__content > .v-avatar {
 	border-radius: 0 !important;
-}
-
-#app .faithful-font {
-	font-family: "Faithful 32x";
-	font-weight: normal;
 }
 
 .blurple {

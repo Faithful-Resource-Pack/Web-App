@@ -2,33 +2,54 @@
 	<dashboard-card
 		:title="$root.lang().dashboard.titles.profile"
 		to="/profile"
-		clickable
+		:clickable="$root.isLoggedIn"
 		class="d-flex flex-column"
 	>
-		<v-card-text v-if="user" class="d-flex flex-column justify-space-between flex-grow-1">
+		<v-card-text class="d-flex flex-column justify-space-between flex-grow-1">
 			<div class="text-center mb-3">
-				<v-list-item-avatar
-					tile
-					class="rounded-lg mb-5 mt-3"
-					:class="user.avatar ? 'transparent' : 'primary'"
-					size="120"
-				>
-					<v-img v-if="user.avatar" :src="user.avatar" />
+				<v-list-item-avatar tile class="rounded-lg mb-5 mt-3 secondary" size="128">
+					<v-img
+						v-if="!$root.isLoggedIn"
+						class="mx-auto"
+						aspect-ratio="1"
+						max-width="100%"
+						width="200px"
+						src="https://database.faithfulpack.net/images/branding/logos/transparent/hd/main_logo.png"
+					/>
+					<v-img v-else-if="user.avatar" :src="user.avatar" />
 					<div v-else class="text-h5 text-center text--primary font-weight-medium">
 						{{ user.username[0] }}
 					</div>
 				</v-list-item-avatar>
+
 				<h3 class="text-h5 text--primary mb-2">
-					{{ user.username || user.discordUsername }}
+					<template v-if="$root.isLoggedIn">
+						{{ user.username || user.discordUsername }}
+					</template>
+					<template v-else>{{ $root.lang().global.name }}</template>
 				</h3>
 				<span class="text--secondary">
-					{{ user.discordUsername }}
+					<template v-if="$root.isLoggedIn">@{{ user.discordUsername }}</template>
+					<template v-else>{{ $root.lang().dashboard.profile.login_notice }}</template>
 				</span>
 			</div>
 
-			<div v-if="user.roles.length" class="dashboard-stat text-center rounded-lg pa-3">
-				<p v-for="role in user.roles" :key="role" class="mb-0">{{ role }}</p>
-			</div>
+			<v-btn v-if="!$root.isLoggedIn" text color="primary" :href="$root.loginURL">
+				<v-icon left>mdi-login</v-icon>
+				{{ $root.lang().dashboard.profile.login_button }}
+			</v-btn>
+			<v-btn
+				v-else
+				text
+				color="primary"
+				:disabled="user.anonymous"
+				:href="`https://faithfulpack.net/user/${user.id}`"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<v-icon left>mdi-account-box-outline</v-icon>
+				{{ $root.lang().profile.public_profile }}
+			</v-btn>
 		</v-card-text>
 	</dashboard-card>
 </template>

@@ -66,7 +66,7 @@
 		</v-menu>
 		<v-btn v-else small color="primary" class="mx-1 ms-2" :href="$root.loginURL">
 			<v-icon left>mdi-login</v-icon>
-			Log in
+			{{ $root.lang().global.login }}
 		</v-btn>
 		<account-manager v-model="accountManagerOpen" />
 	</v-app-bar>

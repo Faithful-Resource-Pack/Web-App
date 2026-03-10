@@ -4,8 +4,7 @@
 
 		<v-row class="dashboard-card-container">
 			<v-col cols="12" md="3">
-				<profile-card v-if="$root.isLoggedIn" />
-				<faithful-card v-else />
+				<profile-card />
 			</v-col>
 			<v-col cols="12" md="9">
 				<texture-card :colors="colors" />
@@ -29,7 +28,6 @@ import ProfileCard from "./profile-card.vue";
 import TextureCard from "./texture-card.vue";
 import ContributionActivityCard from "./contribution-activity-card.vue";
 import ContributionStatsCard from "./contribution-stats-card.vue";
-import FaithfulCard from "./faithful-card.vue";
 
 export default {
 	name: "dashboardPage",
@@ -39,7 +37,6 @@ export default {
 		TextureCard,
 		ContributionActivityCard,
 		ContributionStatsCard,
-		FaithfulCard,
 	},
 	computed: {
 		greeting() {
@@ -49,9 +46,9 @@ export default {
 		},
 		colors() {
 			// https://colordesigner.io/gradient-generator
-			if (this.$root.isDark)
-				return ["#1e1e1e", "#303c27", "#425d30", "#537f38", "#65a33f", "#76c945"];
-			return ["#f0f0f0", "#b5dd9e", "#a6d889", "#97d374", "#87ce5d", "#76c945"];
+			return this.$root.isDark
+				? ["#1e1e1e", "#303c27", "#425d30", "#537f38", "#65a33f", "#76c945"]
+				: ["#f0f0f0", "#b5dd9e", "#a6d889", "#97d374", "#87ce5d", "#76c945"];
 		},
 	},
 };

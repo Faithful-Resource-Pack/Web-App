@@ -17,7 +17,7 @@
 				<v-list-item-title class="body-2" style="text-overflow: ellipsis; white-space: nowrap">
 					{{ $root.user.username }}
 				</v-list-item-title>
-				<v-list-item-subtitle>{{ $root.user.discordUsername }}</v-list-item-subtitle>
+				<v-list-item-subtitle>@{{ $root.user.discordUsername }}</v-list-item-subtitle>
 			</v-list-item-content>
 		</v-list-item>
 		<v-divider class="my-1" />

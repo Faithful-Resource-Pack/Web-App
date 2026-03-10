@@ -1,9 +1,9 @@
 export default {
 	credits: ["pure_shadow."],
 	global: {
-		name: "Aplicativo Web Faithful",
+		name: "Faithful",
+		login: "Entrar",
 		logout: "Sair",
-		login: "Entrar com Discord",
 		ends_success: "Concluído com sucesso",
 		loading: "Carregando, por favor aguarde…",
 		no_results: "Nenhum resultado encontrado",
