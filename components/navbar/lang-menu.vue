@@ -21,7 +21,7 @@
 					height="18"
 				/>
 			</v-list-item-avatar>
-			<v-list-item-title class="uppercase">{{ lang.short }}</v-list-item-title>
+			<v-list-item-title class="uppercase">{{ lang.display }}</v-list-item-title>
 		</v-list-item>
 	</v-list>
 </template>

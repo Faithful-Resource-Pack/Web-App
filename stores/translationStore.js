@@ -9,20 +9,23 @@ const { default: defaultLang } = await import(`../resources/strings/${DEFAULT_LA
 
 export default defineStore("translation", {
 	state: () => ({
-		availableLangs: Object.entries(import.meta.glob("/resources/strings/*.js")).map(
-			([path, loadAsImport]) => {
+		availableLangs: Object.entries(import.meta.glob("/resources/strings/*.js"))
+			.map(([path, loadAsImport]) => {
 				const name = path.split("/").pop().split(".")[0];
 				return {
 					id: name,
-					short: name.includes("en") ? "en" : name.slice(-2).toLowerCase(),
+					display: name.includes("en") ? "en" : name.slice(-2).toLowerCase(),
 					// automatically fetch default import
 					load: () => loadAsImport().then((res) => res.default),
 					bcp47: name.replace("_", "-"),
 					file: path,
 					iso3166: name.split("_")[1].toLowerCase(),
 				};
-			},
-		),
+			})
+			.reduce((acc, cur) => {
+				acc[cur.id] = cur;
+				return acc;
+			}, {}),
 		loadedLangs: { [DEFAULT_LANG_ID]: defaultLang },
 		selectedLang: DEFAULT_LANG_ID,
 	}),
@@ -32,15 +35,28 @@ export default defineStore("translation", {
 			if (!Object.keys(this.loadedLangs).includes(id)) await this.loadLanguage(id);
 			this.$patch({ selectedLang: id });
 		},
+		supportedLang(lang) {
+			return Object.keys(this.availableLangs).includes(lang);
+		},
 		getLang() {
 			// navigator language uses bcp47 formatting, read from there if user hasn't overridden config
-			const storedLang = localStorage.getItem(LANG_KEY) || navigator.language.replace(/-/g, "_");
+			const savedLangId = localStorage.getItem(LANG_KEY);
+			if (this.supportedLang(savedLangId)) return savedLangId;
 
-			// use english if navigator language isn't supported or somehow the localstorage value became invalid
-			return this.availableLangs.some((e) => storedLang === e.id) ? storedLang : DEFAULT_LANG_ID;
+			// user hasn't ever interacted, try to figure out language from navigator.language
+			const navigatorLangId = navigator.language.replace(/-/g, "_");
+			if (this.supportedLang(navigatorLangId)) return navigatorLangId;
+
+			// not directly supported, search for a close prefix
+			const navigatorBase = navigatorLangId.split("_")[0];
+			const bestMatch = Object.keys(this.availableLangs).find((l) => l.startsWith(navigatorBase));
+			if (bestMatch) return bestMatch;
+
+			// language isn't supported at all, just use english
+			return DEFAULT_LANG_ID;
 		},
 		async loadLanguage(langName) {
-			const langObj = this.availableLangs.find((l) => l.id === langName);
+			const langObj = this.availableLangs[langName];
 			if (!langObj) return;
 
 			moment.locale(langObj.bcp47);
