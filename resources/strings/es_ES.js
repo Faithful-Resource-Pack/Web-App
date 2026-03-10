@@ -8,7 +8,6 @@ export default {
 		loading: "Cargando, por favor espere…",
 		no_results: "No se han encontrado resultados",
 		nyi: "Aún no implementado.",
-		translations: "Traducciones",
 		themes: {
 			notification: "El tema del sistema ha cambiado a %s",
 			title: "Temas",

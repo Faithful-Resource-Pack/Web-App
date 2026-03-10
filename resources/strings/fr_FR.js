@@ -7,7 +7,6 @@ export default {
 		loading: "Chargement, veuillez patienter…",
 		no_results: "Aucun résultat n'a été trouvé",
 		nyi: "N'a pas encore été implémenté.",
-		translations: "Traductions",
 		themes: {
 			notification: "Thème système changé en %s",
 			options: {

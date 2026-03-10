@@ -11,13 +11,16 @@ export default {
 		no_results: "No results were found",
 		nyi: "Not yet implemented",
 		invalid_url: "This URL is not valid",
-		translations: "Translations",
 		navbar: {
 			labels: {
 				sidebar: "Toggle sidebar",
 				theme: "Toggle theme dropdown",
 				translations: "Toggle translations dropdown",
 				user: "Logged in as %s",
+			},
+			translations: {
+				title: "Translations",
+				crowdin: "Help translate",
 			},
 			profile: {
 				view: "Your profile",

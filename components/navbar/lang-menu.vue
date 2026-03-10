@@ -1,7 +1,7 @@
 <template>
 	<v-list class="pt-0" dense nav>
 		<v-subheader class="text--primary justify-center uppercase">
-			{{ $root.lang().global.translations }}
+			{{ $root.lang().global.navbar.translations.title }}
 		</v-subheader>
 		<v-list-item
 			v-for="lang in languages"
@@ -19,7 +19,18 @@
 					height="18"
 				/>
 			</v-list-item-avatar>
-			<v-list-item-title class="uppercase">{{ lang.display }}</v-list-item-title>
+			<v-list-item-title class="uppercase-unsized">{{ lang.display }}</v-list-item-title>
+		</v-list-item>
+		<v-divider class="my-1" />
+		<v-list-item
+			href="https://translate.faithfulpack.net"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<v-list-item-icon class="me-4">
+				<v-icon>mdi-message-draw</v-icon>
+			</v-list-item-icon>
+			<v-list-item-title>{{ $root.lang().global.navbar.translations.crowdin }}</v-list-item-title>
 		</v-list-item>
 	</v-list>
 </template>

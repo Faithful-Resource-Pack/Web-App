@@ -9,7 +9,6 @@ export default {
 		no_results: "Nenhum resultado encontrado",
 		nyi: "Não implementado ainda.",
 		invalid_url: "Esta URL não é válida",
-		translations: "Traduções",
 		themes: {
 			notification: "Tema do sistema alterado para %s",
 			options: {

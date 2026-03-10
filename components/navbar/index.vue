@@ -28,7 +28,7 @@
 				@update:darkSidebar="$emit('update:darkSidebar', !darkSidebar)"
 			/>
 		</v-menu>
-		<v-menu right offset-y transition="slide-y-transition">
+		<v-menu right min-width="120px" offset-y transition="slide-y-transition">
 			<template #activator="{ on, attrs }">
 				<v-btn
 					min-width="0"
