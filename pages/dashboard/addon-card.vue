@@ -75,13 +75,15 @@
 		<v-card-actions v-if="$root.isLoggedIn" class="d-flex mt-0 px-4 pt-1">
 			<v-row dense>
 				<v-col>
-					<v-btn block text color="primary" to="/addons/submissions">
-						{{ $root.lang().dashboard.addons.submissions }}
+					<v-btn block text color="primary" to="/addons/new">
+						<v-icon left>mdi-plus-thick</v-icon>
+						{{ $root.lang().dashboard.addons.upload }}
 					</v-btn>
 				</v-col>
 				<v-col>
-					<v-btn block text color="primary" to="/addons/new">
-						{{ $root.lang().dashboard.addons.upload }}
+					<v-btn block text color="primary" to="/addons/submissions">
+						<v-icon left>mdi-plus-box-multiple</v-icon>
+						{{ $root.lang().dashboard.addons.submissions }}
 					</v-btn>
 				</v-col>
 			</v-row>
