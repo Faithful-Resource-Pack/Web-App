@@ -34,7 +34,10 @@
 		</v-list-item>
 		<v-list-item href="https://faithfulpack.net" target="_blank" rel="noopener noreferrer">
 			<v-list-item-icon class="align-center justify-center me-4">
-				<span class="icon-faithful" />
+				<span
+					class="icon-faithful"
+					:style="`background-color: ${$root.isDark ? 'white' : 'rgba(0, 0, 0, 0.54)'}`"
+				/>
 			</v-list-item-icon>
 			<v-list-item-title>{{ $root.lang().global.navbar.profile.main_site }}</v-list-item-title>
 		</v-list-item>
