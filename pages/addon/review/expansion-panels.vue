@@ -30,20 +30,20 @@
 					<addon-info class="pt-4" :addonInPanel="addonInPanel" :getUsername="getUsername" />
 
 					<template v-if="addonSources.length > 0">
-						<v-list-item-title class="uppercase my-2">
+						<v-list-item-title class="uppercase mt-2">
 							{{ $root.lang().addons.images.title }}
 						</v-list-item-title>
 						<image-previewer :sources="addonSources" />
 					</template>
 
-					<v-list-item-title class="uppercase my-2">
+					<v-list-item-title class="uppercase mt-2">
 						{{ $root.lang().review.addon.titles.description }}
 					</v-list-item-title>
 
 					<!-- eslint-disable-next-line vue/no-v-html -->
 					<div v-html="$root.compileMarkdown(addonInPanel.description)" />
 
-					<div v-if="status === 'approved'" class="my-2">
+					<div v-if="status === 'approved'" class="mt-2">
 						<v-list-item-title class="uppercase my-2">
 							{{ $root.lang().review.addon.labels.approved_by.replace("%s", approvalAuthor) }}
 						</v-list-item-title>

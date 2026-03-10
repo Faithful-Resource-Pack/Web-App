@@ -56,7 +56,7 @@
 					<image-previewer :sources="addonSources" />
 				</template>
 
-				<v-list-item-title class="uppercase pb-2 py-4">
+				<v-list-item-title class="uppercase pt-4">
 					{{ $root.lang().review.addon.titles.description }}
 				</v-list-item-title>
 
