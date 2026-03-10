@@ -1,4 +1,5 @@
 <template>
+	<!-- eslint-disable vue/html-closing-bracket-newline -->
 	<div class="py-8 text-center text--secondary">
 		<!-- note: the horrible html formatting here is needed for the whitespace to not die -->
 		<p class="body-2 mb-1">
