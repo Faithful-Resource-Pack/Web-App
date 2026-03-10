@@ -202,13 +202,9 @@ export default {
 				this.fetchAddonsByStatus("denied"),
 				this.fetchAddonsByStatus("approved"),
 				this.fetchAddonsByStatus("archived"),
-			])
-				.then(() => {
-					this.selectedAddonId ||= (this.selectedListItems[0] || {}).key;
-				})
-				.catch((err) => {
-					this.$root.showSnackBar(err, "error");
-				});
+			]).catch((err) => {
+				this.$root.showSnackBar(err, "error");
+			});
 		},
 		searchUpdate() {
 			this.status = this.searchGet("status") || this.status;
@@ -252,7 +248,10 @@ export default {
 		status(n) {
 			// select first if not empty
 			this.searchSet("status", n);
-			this.selectedAddonId = this.addons[n].length > 0 ? this.addons[n][0].id : undefined;
+			const matchingAddons = this.addons[n];
+			this.selectedAddonId = matchingAddons.length
+				? matchingAddons[matchingAddons.length - 1].id
+				: undefined;
 		},
 		selectedAddonId(n) {
 			if (n !== undefined) this.searchSet("id", n);

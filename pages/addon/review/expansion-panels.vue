@@ -10,7 +10,7 @@
 			@click="getAddon(addon.id)"
 		>
 			<v-expansion-panel-header expand-icon="mdi-menu-down">
-				<v-list-item class="flex-column align-start px-0" style="min-height: 0px">
+				<v-list-item class="flex-column align-start px-0">
 					<v-list-item-title class="align-self-start">{{ addon.name }}</v-list-item-title>
 					<v-list-item-subtitle>{{ addon.options.tags.join(" • ") }}</v-list-item-subtitle>
 				</v-list-item>
