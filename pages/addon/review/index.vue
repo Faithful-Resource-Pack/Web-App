@@ -258,9 +258,7 @@ export default {
 			// select first if not empty
 			this.searchSet("status", n);
 			const matchingAddons = this.addons[n];
-			this.selectedAddonId = matchingAddons.length
-				? matchingAddons[matchingAddons.length - 1].id
-				: undefined;
+			this.selectedAddonId = matchingAddons.length ? matchingAddons[0].id : undefined;
 		},
 		selectedAddonId(n) {
 			if (n !== undefined) this.searchSet("id", n);
