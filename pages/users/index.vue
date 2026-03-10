@@ -48,7 +48,9 @@
 		</v-btn>
 
 		<!-- results -->
-		<div class="my-2 text-h5">{{ $root.lang().database.users.user_result }}</div>
+		<div class="my-2 text-h5">
+			{{ $root.lang().database.users.user_result }} ({{ users.length }})
+		</div>
 		<div v-if="loading" class="text-center">
 			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
 		</div>

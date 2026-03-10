@@ -47,7 +47,9 @@
 		</div>
 
 		<!-- results -->
-		<div class="my-2 text-h5">{{ $root.lang().database.packs.pack_result }}</div>
+		<div class="my-2 text-h5">
+			{{ $root.lang().database.packs.pack_result }} ({{ packs.length }})
+		</div>
 		<smart-grid
 			v-if="packs.length"
 			:items="packs"

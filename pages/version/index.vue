@@ -36,7 +36,9 @@
 			</v-btn>
 		</div>
 
-		<div class="my-2 text-h5">{{ $root.lang().database.versions.version_result }}</div>
+		<div class="my-2 text-h5">
+			{{ $root.lang().database.versions.version_result }} ({{ grouped.length }})
+		</div>
 
 		<div v-if="!Object.keys(paths).length" class="text-center">
 			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />

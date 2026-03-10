@@ -65,7 +65,9 @@
 			</v-row>
 		</div>
 
-		<div class="my-2 text-h5">{{ $root.lang().database.textures.texture_result }}</div>
+		<div class="my-2 text-h5">
+			{{ $root.lang().database.textures.texture_result }} ({{ Object.keys(textures).length }})
+		</div>
 		<div v-if="loading" class="text-center">
 			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
 		</div>

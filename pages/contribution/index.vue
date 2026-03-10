@@ -93,7 +93,9 @@
 			{{ $root.lang().database.contributions.search_contributions }}
 		</v-btn>
 
-		<div class="mb-2 text-h5">{{ $root.lang().database.contributions.contribution_result }}</div>
+		<div class="mb-2 text-h5">
+			{{ $root.lang().database.contributions.contribution_result }} ({{ searchResults.length }})
+		</div>
 
 		<smart-grid v-if="searchResults.length" :items="searchResults" track="id">
 			<template #default="{ item }">
