@@ -30,7 +30,7 @@ export default {
 		themes: {
 			notification: "System theme changed to %s",
 			dark_sidebar: "Dark sidebar",
-			title: "Theme",
+			title: "Themes",
 			options: {
 				light: "Light",
 				dark: "Dark",

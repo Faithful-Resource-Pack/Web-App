@@ -11,7 +11,7 @@ export default {
 		translations: "Traducciones",
 		themes: {
 			notification: "El tema del sistema ha cambiado a %s",
-			title: "Tema",
+			title: "Temas",
 			options: {
 				light: "Claro",
 				dark: "Oscuro",

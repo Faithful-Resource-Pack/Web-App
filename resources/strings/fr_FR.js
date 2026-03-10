@@ -10,7 +10,6 @@ export default {
 		translations: "Traductions",
 		themes: {
 			notification: "Thème système changé en %s",
-			title: "Thème",
 			options: {
 				light: "Clair",
 				dark: "Sombre",
