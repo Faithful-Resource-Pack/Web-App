@@ -8,6 +8,7 @@
 			<router-link to="/">
 				<img
 					src="https://database.faithfulpack.net/images/branding/wordmarks/default/flat/main_flat_wordmark.png"
+					:alt="$root.lang().global.name"
 					class="mt-2 pa-2"
 					style="width: 100%"
 				/>
