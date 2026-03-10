@@ -4,12 +4,15 @@
 			<v-list-item-title>
 				<template v-if="texture.name">{{ texture.name }}</template>
 				<i v-else>{{ $root.lang().database.nameless }}</i>
-				• {{ summaryString }}
 			</v-list-item-title>
 			<v-list-item-subtitle>
 				<span v-if="texture.tags.length">{{ texture.tags.join(", ") }}</span>
 				<i v-else>{{ $root.lang().database.textures.modal.tagless }}</i>
 			</v-list-item-subtitle>
+			<V-list-item-subtitle>
+				<v-chip class="px-2 mr-1" x-small>{{ useString }}</v-chip>
+				<v-chip class="px-2" x-small>{{ pathString }}</v-chip>
+			</V-list-item-subtitle>
 		</v-list-item-content>
 		<v-list-item-action>
 			<v-btn icon :color="selected ? color : 'red lighten-1'" @click="$emit('delete')">
@@ -40,16 +43,19 @@ export default {
 		},
 	},
 	computed: {
-		summaryString() {
-			const texStrings = this.$root.lang().database.textures;
-			// bit cleaner than using a ton of nested ternaries
-			let strBuilder = `${this.texture.uses.length} `;
-			strBuilder +=
-				this.texture.uses.length === 1 ? texStrings.uses.singular : texStrings.uses.plural;
-			const pathCount = this.texture.uses.reduce((acc, cur) => acc + cur.paths.length, 0);
-			strBuilder += `, ${pathCount} `;
-			strBuilder += pathCount === 1 ? texStrings.paths.singular : texStrings.paths.plural;
-			return strBuilder;
+		useCount() {
+			return this.texture.uses.length;
+		},
+		useString() {
+			const useStrings = this.$root.lang().database.textures.uses;
+			return `${this.useCount} ${this.useCount === 1 ? useStrings.singular : useStrings.plural}`;
+		},
+		pathCount() {
+			return this.texture.uses.reduce((acc, cur) => acc + cur.paths.length, 0);
+		},
+		pathString() {
+			const pathStrings = this.$root.lang().database.textures.paths;
+			return `${this.pathCount} ${this.pathCount === 1 ? pathStrings.singular : pathStrings.plural}`;
 		},
 	},
 };
