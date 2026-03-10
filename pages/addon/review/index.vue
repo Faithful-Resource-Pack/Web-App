@@ -175,7 +175,16 @@ export default {
 			return axios
 				.get(`${this.$root.apiURL}/addons/${status}`, this.$root.apiOptions)
 				.then((res) => {
-					this.addons[status] = res.data;
+					this.addons[status] = res.data.sort((a, b) => {
+						if (a.last_updated && b.last_updated) return b.last_updated - a.last_updated;
+
+						// if there's An Update Date it's automatically newer
+						if (a.last_updated) return -1;
+						if (b.last_updated) return 1;
+
+						// no info to go off, just compare ids
+						return b.id - a.id;
+					});
 					this.loading[status] = false;
 					this.$forceUpdate();
 				})
