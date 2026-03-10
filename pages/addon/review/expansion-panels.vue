@@ -10,7 +10,7 @@
 			@click="getAddon(addon.id)"
 		>
 			<v-expansion-panel-header expand-icon="mdi-menu-down">
-				<v-list-item class="flex-column align-start px-0">
+				<v-list-item class="flex-column align-start px-0" style="min-height: 0px">
 					<v-list-item-title class="align-self-start">{{ addon.name }}</v-list-item-title>
 					<v-list-item-subtitle>{{ addon.options.tags.join(" • ") }}</v-list-item-subtitle>
 				</v-list-item>
@@ -27,10 +27,13 @@
 						@fullscreen="openHeader"
 					/>
 
-					<addon-info class="pt-4" :addonInPanel="addonInPanel" :getUsername="getUsername" />
+					<!-- this positioning is a bit janky but there's not a great place for it -->
+					<v-list-item-title class="uppercase my-2">{{ date }}</v-list-item-title>
+
+					<addon-info :addonInPanel="addonInPanel" :getUsername="getUsername" />
 
 					<template v-if="addonSources.length > 0">
-						<v-list-item-title class="uppercase mt-2">
+						<v-list-item-title class="uppercase my-2">
 							{{ $root.lang().addons.images.title }}
 						</v-list-item-title>
 						<image-previewer :sources="addonSources" />
@@ -98,6 +101,7 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 import EmittingImage from "@components/emitting-image.vue";
+import moment from "moment";
 
 export default {
 	name: "expansion-panels",
@@ -192,6 +196,12 @@ export default {
 		},
 		approvalAuthor() {
 			return this.getUsername(this.addonInPanel.approval.author);
+		},
+		date() {
+			if (!this.addonInPanel.last_updated)
+				return this.$root.lang().review.addon.titles.unknown_date;
+			const formatted = moment(new Date(this.addonInPanel.last_updated)).format("ll");
+			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
 		},
 	},
 	mounted() {

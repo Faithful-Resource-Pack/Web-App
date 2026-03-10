@@ -25,11 +25,7 @@
 							<span class="text--secondary font-weight-regular">{{ `#${addonInPanel.id}` }}</span>
 						</h2>
 						<div class="text--secondary subtitle-2 mt-1" style="line-height: 14px">
-							{{
-								Array.from(addonInPanel.options.tags || [])
-									.sort()
-									.join(" • ")
-							}}
+							{{ date }}
 						</div>
 					</div>
 					<v-btn icon class="ml-auto" :href="`/addons/edit/${addonInPanel.id}`">
@@ -122,6 +118,7 @@ import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 import EmittingImage from "@components/emitting-image.vue";
 import LoadingPage from "@layouts/loading-page.vue";
+import moment from "moment";
 
 export default {
 	name: "review-preview",
@@ -209,6 +206,12 @@ export default {
 		},
 		approvalAuthor() {
 			return this.getUsername(this.addonInPanel.approval.author);
+		},
+		date() {
+			if (!this.addonInPanel.last_updated)
+				return this.$root.lang().review.addon.titles.unknown_date;
+			const formatted = moment(new Date(this.addonInPanel.last_updated)).format("ll");
+			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
 		},
 	},
 	watch: {

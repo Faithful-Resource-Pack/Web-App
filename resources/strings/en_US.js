@@ -481,6 +481,8 @@ export default {
 		},
 		addon: {
 			titles: {
+				last_updated: "Last updated %s",
+				unknown_date: "Last add-on update unknown",
 				author_singular: "Author",
 				author_plural: "Authors",
 				description: "Description",
