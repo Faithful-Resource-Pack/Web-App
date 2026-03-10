@@ -5,10 +5,8 @@
 		<p class="text-body-1 mt-0">
 			<!-- horrible hack for hrefs -->
 			<span v-for="(str, i) in $root.lang().missing_page.main_page.split('%')" :key="str">
-				<router-link v-if="i % 2 !== 0" to="/dashboard">
-					{{ str }}
-				</router-link>
-				<span v-else>{{ str }}</span>
+				<router-link v-if="i % 2 !== 0" to="/dashboard">{{ str }}</router-link>
+				<template v-else>{{ str }}</template>
 			</span>
 		</p>
 	</div>

@@ -81,9 +81,7 @@
 			<v-main id="main">
 				<loading-page v-if="!settingsLoaded"></loading-page>
 				<router-view v-else></router-view>
-				<span class="mt-3 pb-8 d-flex justify-center">
-					&copy; {{ new Date().getFullYear() }} Faithful Resource Pack
-				</span>
+				<nav-footer></nav-footer>
 
 				<!-- this looks really weird but it needs to be here to dynamically change -->
 				<link

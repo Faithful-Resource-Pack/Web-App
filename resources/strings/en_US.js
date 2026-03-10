@@ -30,6 +30,11 @@ export default {
 				copied: "Copied user ID to clipboard",
 			},
 		},
+		footer: {
+			credits: "This website was made using the %Vuetify% component framework.",
+			source: "View the source %here%!",
+			copyright: "© %d Faithful Resource Pack",
+		},
 		themes: {
 			notification: "System theme changed to %s",
 			dark_sidebar: "Dark sidebar",

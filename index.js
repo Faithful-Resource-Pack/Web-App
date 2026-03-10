@@ -20,6 +20,7 @@ import translationStore from "./stores/translationStore.js";
 import ALL_TABS from "@helpers/tabs.js";
 import NavAppBar from "@components/navbar/index.vue";
 import NavSidebar from "@components/sidebar/index.vue";
+import NavFooter from "@components/nav-footer.vue";
 import SnackbarStatus from "@components/snackbar-status.vue";
 import LoadingPage from "@layouts/loading-page.vue";
 import MissingPage from "./pages/404/index.vue";
@@ -107,6 +108,7 @@ const app = new Vue({
 	components: {
 		NavAppBar,
 		NavSidebar,
+		NavFooter,
 		SnackbarStatus,
 		LoadingPage,
 	},
