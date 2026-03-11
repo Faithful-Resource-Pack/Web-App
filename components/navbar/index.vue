@@ -12,7 +12,7 @@
 				<v-btn
 					min-width="0"
 					class="px-1 ms-2"
-					elevation="0"
+					text
 					:title="$root.lang().global.navbar.labels.theme"
 					v-bind="attrs"
 					v-on="on"
@@ -33,7 +33,7 @@
 				<v-btn
 					min-width="0"
 					class="px-1 ms-2"
-					elevation="0"
+					text
 					:title="$root.lang().global.navbar.labels.translations"
 					v-bind="attrs"
 					v-on="on"
