@@ -16,20 +16,26 @@
 					{{ $root.lang().posts.changelog_generator.warning }}
 				</v-alert>
 				<v-form>
-					<v-text-field
-						v-model="date"
-						:label="$root.lang().posts.changelog_generator.date"
-						:placeholder="$root.lang().posts.general.date.placeholder"
-						:autofocus="!$vuetify.breakpoint.mobile"
-						persistent-placeholder
-					/>
-					<v-select
-						v-model="selectedPack"
-						:label="$root.lang().posts.changelog_generator.pack"
-						:items="packs"
-						item-text="name"
-						item-value="id"
-					/>
+					<v-row>
+						<v-col cols="12" sm="6">
+							<v-text-field
+								v-model="date"
+								type="date"
+								:label="$root.lang().posts.changelog_generator.date"
+								:autofocus="!$vuetify.breakpoint.mobile"
+								persistent-placeholder
+							/>
+						</v-col>
+						<v-col cols="12" sm="6">
+							<v-select
+								v-model="selectedPack"
+								:label="$root.lang().posts.changelog_generator.pack"
+								:items="packs"
+								item-text="name"
+								item-value="id"
+							/>
+						</v-col>
+					</v-row>
 					<v-switch
 						v-model="categorize"
 						:label="$root.lang().posts.changelog_generator.categorize"
