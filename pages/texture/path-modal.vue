@@ -1,5 +1,11 @@
 <template>
-	<modal-form v-model="modalOpened" :title="modalTitle" @close="$emit('close')" @submit="send">
+	<modal-form
+		v-model="modalOpened"
+		:title="modalTitle"
+		:disabled="!isValid"
+		@close="$emit('close')"
+		@submit="send"
+	>
 		<v-form ref="form">
 			<v-text-field
 				v-if="!add"
@@ -154,6 +160,9 @@ export default {
 				? Array.from(settings.versions[this.edition])
 				: Object.values(settings.versions).flat();
 			return versions.sort(versionSorter).reverse();
+		},
+		isValid() {
+			return this.formData.versions.length && this.formData.name;
 		},
 	},
 	watch: {

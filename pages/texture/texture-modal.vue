@@ -1,5 +1,11 @@
 <template>
-	<modal-form v-model="modalOpened" :title="modalTitle" @close="$emit('close')" @submit="send">
+	<modal-form
+		v-model="modalOpened"
+		:disabled="!isValid"
+		:title="modalTitle"
+		@close="$emit('close')"
+		@submit="send"
+	>
 		<use-modal
 			v-model="useModalOpen"
 			:color="color"
@@ -160,28 +166,14 @@ export default {
 			},
 		};
 	},
-	computed: {
-		modalTitle() {
-			return this.add
-				? this.$root.lang().database.textures.add_texture
-				: this.$root.lang().database.textures.change_texture;
-		},
-		addEditionUseLabel() {
-			if (!Object.keys(this.formData).length) return;
-			const newEdition = this.getCorrespondingEdition(Object.values(this.formData.uses)[0].edition);
-			return this.$root
-				.lang()
-				.database.textures.uses.add_edition_use.replace("%edition%", newEdition.toTitleCase());
-		},
-	},
 	methods: {
 		getCorrespondingEdition(edition) {
 			return settings.editions.find((e) => e !== edition) || "bedrock";
 		},
 		openUseModal(data, add) {
-			this.useModalOpen = true;
-			this.useModalAdd = add;
 			this.useModalData = data || { texture: this.formData.id };
+			this.useModalAdd = add;
+			this.useModalOpen = true;
 		},
 		openEditionUseModal() {
 			// we already know at least one use exists at this point
@@ -274,6 +266,27 @@ export default {
 		askRemoveUse(data) {
 			this.remove.data = data;
 			this.remove.open = true;
+		},
+	},
+	computed: {
+		modalTitle() {
+			return this.add
+				? this.$root.lang().database.textures.add_texture
+				: this.$root.lang().database.textures.change_texture;
+		},
+		addEditionUseLabel() {
+			if (!Object.keys(this.formData).length) return;
+			const newEdition = this.getCorrespondingEdition(Object.values(this.formData.uses)[0].edition);
+			return this.$root
+				.lang()
+				.database.textures.uses.add_edition_use.replace("%edition%", newEdition.toTitleCase());
+		},
+		isValid() {
+			return (
+				this.formData.name !== "" &&
+				this.formData.tags.length &&
+				Object.keys(this.formData.uses).length
+			);
 		},
 	},
 	watch: {

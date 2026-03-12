@@ -2,7 +2,7 @@
 	<modal-form
 		v-model="modalOpened"
 		max-width="800"
-		:disabled="!formValid"
+		:disabled="!isValid"
 		:title="modalTitle"
 		@close="$emit('close')"
 		@submit="send"
@@ -25,7 +25,7 @@
 			@close="closeAndUpdate"
 		/>
 
-		<v-form ref="form" v-model="formValid">
+		<v-form ref="form">
 			<v-text-field
 				v-if="!add"
 				v-model="formData.id"
@@ -141,7 +141,6 @@ export default {
 	data() {
 		return {
 			modalOpened: false,
-			formValid: false,
 			formData: {
 				edition: "",
 				id: "",
@@ -164,11 +163,14 @@ export default {
 				? this.$root.lang().database.textures.uses.add_use
 				: this.$root.lang().database.textures.uses.change_use;
 		},
+		isValid() {
+			return this.formData.edition && this.formData.texture !== "" && this.formData.paths.length;
+		},
 	},
 	methods: {
 		openPathModal(data = {}, index = null) {
-			this.pathModalOpen = true;
 			this.pathModalData = data;
+			this.pathModalOpen = true;
 			if (this.add && index !== null) this.$delete(this.formData.paths, index);
 		},
 		closePathModal() {
@@ -236,8 +238,8 @@ export default {
 		},
 		askRemovePath(data, index) {
 			this.remove.data = data;
-			this.remove.open = true;
 			this.remove.index = index;
+			this.remove.open = true;
 		},
 	},
 	watch: {
