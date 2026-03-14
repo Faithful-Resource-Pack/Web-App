@@ -10,7 +10,7 @@
 		<path-modal
 			v-model="pathModalOpen"
 			:color="color"
-			:add="Object.keys(pathModalData).length == 0"
+			:add="Object.keys(pathModalData).length === 0"
 			:first="add"
 			:useID="formData.id"
 			:edition="formData.edition"

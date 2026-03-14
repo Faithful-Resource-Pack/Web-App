@@ -5,7 +5,7 @@
 		<user-modal
 			v-model="modalOpen"
 			:color="pageColor"
-			:add="modalAdd"
+			:add="Object.keys(modalData).length === 0"
 			:data="modalData"
 			:roles="roles"
 			@close="closeUserModal"
@@ -42,7 +42,7 @@
 		/>
 
 		<!-- main buttons -->
-		<v-btn block :color="pageColor" :class="[textColorOnPage, 'my-6']" @click="openModal">
+		<v-btn block :color="pageColor" :class="[textColorOnPage, 'my-6']" @click="openModal({})">
 			<v-icon left>mdi-plus</v-icon>
 			{{ $root.lang().database.users.modal.add_user }}
 		</v-btn>
@@ -140,7 +140,6 @@ export default {
 			loading: false,
 			modalOpen: false,
 			modalData: {},
-			modalAdd: false,
 			remove: {
 				open: false,
 				data: {},
@@ -219,15 +218,12 @@ export default {
 			this.search = "";
 			this.startSearch();
 		},
-		openModal(data = undefined) {
+		openModal(data) {
 			this.modalData = data;
-			this.modalAdd = data === undefined;
 			this.modalOpen = true;
 		},
 		closeUserModal(refresh = false) {
 			this.modalData = {};
-			this.modalAdd = false;
-
 			if (refresh) this.update();
 		},
 		askRemove(data) {
