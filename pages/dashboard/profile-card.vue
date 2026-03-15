@@ -7,7 +7,7 @@
 	>
 		<v-card-text class="d-flex flex-column justify-space-between flex-grow-1">
 			<div class="text-center mb-3">
-				<v-list-item-avatar tile class="rounded-lg mb-5 mt-3 secondary" size="128">
+				<v-list-item-avatar tile class="dashboard-stat rounded-lg mb-5 mt-3" size="128">
 					<v-img
 						v-if="!$root.isLoggedIn"
 						class="mx-auto"
