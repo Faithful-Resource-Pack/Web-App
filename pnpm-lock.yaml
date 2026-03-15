@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@vitejs/plugin-vue2':
         specifier: ^2.3.4
-        version: 2.3.4(vite@7.3.1(sass@1.97.3))(vue@2.7.16)
+        version: 2.3.4(vite@7.3.1(sass@1.98.0))(vue@2.7.16)
       axios:
         specifier: ^1.13.6
         version: 1.13.6
       dompurify:
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.3.3
+        version: 3.3.3
       marked:
         specifier: ^17.0.4
         version: 17.0.4
@@ -33,11 +33,11 @@ importers:
         specifier: ^1.30.0
         version: 1.30.0
       sass:
-        specifier: ^1.97.3
-        version: 1.97.3
+        specifier: ^1.98.0
+        version: 1.98.0
       vite:
         specifier: ^7.3.1
-        version: 7.3.1(sass@1.97.3)
+        version: 7.3.1(sass@1.98.0)
       vue:
         specifier: ^2.7.16
         version: 2.7.16
@@ -777,9 +777,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  dompurify@3.3.2:
-    resolution: {integrity: sha512-6obghkliLdmKa56xdbLOpUZ43pAR6xFy1uOrxBaIDjT+yaRuuybLjGS9eVBoSR/UPU5fq3OXClEHLJNGvbxKpQ==}
-    engines: {node: '>=20'}
+  dompurify@3.3.3:
+    resolution: {integrity: sha512-Oj6pzI2+RqBfFG+qOaOLbFXLQ90ARpcGG6UePL82bJLtdsa6CYJD7nmiU8MW9nQNOtCHV3lZ/Bzq1X0QYbBZCA==}
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -1198,8 +1197,8 @@ packages:
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
-  sass@1.97.3:
-    resolution: {integrity: sha512-fDz1zJpd5GycprAbu4Q2PV/RprsRtKC/0z82z0JLgdytmcq0+ujJbJ/09bPGDxCLkKY3Np5cRAOcWiVkLXJURg==}
+  sass@1.98.0:
+    resolution: {integrity: sha512-+4N/u9dZ4PrgzGgPlKnaaRQx64RO0JBKs9sDhQ2pLgN6JQZ25uPQZKQYaBJU48Kd5BxgXoJ4e09Dq7nMcOUW3A==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -1798,9 +1797,9 @@ snapshots:
   '@types/trusted-types@2.0.7':
     optional: true
 
-  '@vitejs/plugin-vue2@2.3.4(vite@7.3.1(sass@1.97.3))(vue@2.7.16)':
+  '@vitejs/plugin-vue2@2.3.4(vite@7.3.1(sass@1.98.0))(vue@2.7.16)':
     dependencies:
-      vite: 7.3.1(sass@1.97.3)
+      vite: 7.3.1(sass@1.98.0)
       vue: 2.7.16
 
   '@vue/compiler-sfc@2.7.16':
@@ -1931,7 +1930,7 @@ snapshots:
   detect-libc@2.1.2:
     optional: true
 
-  dompurify@3.3.2:
+  dompurify@3.3.3:
     optionalDependencies:
       '@types/trusted-types': 2.0.7
 
@@ -2369,7 +2368,7 @@ snapshots:
       '@rollup/rollup-win32-x64-msvc': 4.59.0
       fsevents: 2.3.3
 
-  sass@1.97.3:
+  sass@1.98.0:
     dependencies:
       chokidar: 4.0.3
       immutable: 5.1.5
@@ -2439,7 +2438,7 @@ snapshots:
     transitivePeerDependencies:
       - vue
 
-  vite@7.3.1(sass@1.97.3):
+  vite@7.3.1(sass@1.98.0):
     dependencies:
       esbuild: 0.27.3
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2449,7 +2448,7 @@ snapshots:
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
-      sass: 1.97.3
+      sass: 1.98.0
 
   vue-calendar-heatmap@0.8.4(vue@2.7.16):
     dependencies:

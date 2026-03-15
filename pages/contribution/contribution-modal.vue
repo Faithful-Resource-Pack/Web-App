@@ -2,6 +2,7 @@
 	<modal-form
 		v-model="modalOpened"
 		:title="$root.lang().database.contributions.title"
+		:disabled="!isValid"
 		max-width="800"
 		@close="$emit('close', false)"
 		@submit="handleSubmit"
@@ -236,6 +237,15 @@ export default {
 				acc[cur.id] = cur.name;
 				return acc;
 			}, {});
+		},
+		isValid() {
+			return this.contribs.every(
+				(c) =>
+					// two birds with one stone: textures are real or are actually numeric
+					(Array.isArray(c.texture) ? c.texture.length : !isNaN(Number(c.texture))) &&
+					c.authors.length &&
+					c.pack,
+			);
 		},
 	},
 	watch: {
