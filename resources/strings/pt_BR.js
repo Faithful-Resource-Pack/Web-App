@@ -74,36 +74,359 @@ export default {
 				},
 			},
 		},
-		months: {
-			jan: "Jan",
-			january: "Janeiro",
-			feb: "Fev",
-			february: "Fevereiro",
-			mar: "Mar",
-			march: "Março",
-			apr: "Abr",
-			april: "Abril",
-			may_: "Mai",
-			// longer
-			may: "Mai",
-			jun: "Jun",
-			june: "Junho",
-			jul: "Jul",
-			july: "Julho",
-			aug: "Ago",
-			august: "Agosto",
-			sep: "Set",
-			september: "Setembro",
-			oct: "Out",
-			october: "Outubro",
-			nov: "Nov",
-			november: "Novembro",
-			dec: "Dez",
-			december: "Dezembro",
-		},
 		json_editor: {
 			import_data: "Importar dados em JSON",
 			parse_json: "Analisar JSON para dados",
+		},
+		datepicker: {
+			year: "Ano",
+			month: "Mês",
+			day: "Dia",
+		},
+	},
+	missing_page: {
+		title: "Você está perdido no Fim?",
+		description: "Infelizmente, a página que você solicitou não existe!",
+		main_page:
+			"Tente verificar a ortografia ou ir para a página %main % para encontrar o que estava procurando.",
+	},
+	dashboard: {
+		welcome_user: "Bem-vindo, %USER%!",
+		welcome: "Bem-vindo!",
+		totals: {
+			authors: "autores",
+			contributions: "contribuições",
+			last_day: "contribuições nas últimas 48 horas",
+			last_week: "contribuições na última semana",
+			last_month: "contribuições no último mês",
+		},
+		titles: {
+			users: "Usuários",
+			addons: "Add-ons",
+			contribution_activity: "Atividade de contribuição",
+			contribution_stats: "Contribuições",
+			profile: "Perfil",
+		},
+		addons: {
+			submissions: "Envios",
+			upload: "Enviar",
+		},
+		users: {
+			total: "usuários",
+			total_anonymous: "anônimo",
+			total_roles: "funções",
+		},
+		locale: {
+			on: "ligado",
+			less: "Menos",
+			more: "Mais",
+		},
+	},
+	profile: {
+		title: "Perfil",
+		general: {
+			title: "Geral",
+			uuid: {
+				label: "UUID do perfil do Minecraft",
+			},
+			username: {
+				label: "Nome de usuário",
+				hint: "Seu nome de usuário será mostrado e usado no Website em contribuições, addons, etc.",
+			},
+		},
+		social: {
+			title: "Links sociais",
+			link_label: "Editar link",
+			type_label: "Selecionar tipo de mídia",
+			placeholder: "https://www.example.com",
+			add: "Adicionar rede social",
+		},
+		save_changes: "Salvar mudanças",
+		delete: {
+			title: "Excluir conta",
+			btn: "Excluir conta",
+			description: "Tem certeza que deseja excluir sua conta?",
+			warning: "Este processo é irreversível!",
+		},
+	},
+	gallery: {
+		stretched_switcher: "Visualização completa de largura",
+		share_link_copied_to_clipboard: "Link de compartilhamento copiado para a área de transferência",
+		max_items_per_row: "Máximo de itens por linha",
+		title: "Galeria",
+		error_message: {
+			texture_not_done: "Textura não concluída!",
+			user_anonymous: "Anônimo",
+			user_not_found: "Usuário desconhecido",
+			contribution_not_found: "Nenhuma contribuição encontrada no banco de dados!",
+			search_failed: "Falha ao pesquisar",
+		},
+		category: {
+			search: "Buscar",
+			tag: "Tags",
+			mc_version: "Versão do Minecraft",
+			edition: "Edição",
+			pack: "Pacote",
+		},
+		sort: {
+			name_asc: "Nome (A → Z)",
+			name_desc: "Nome (Z → A)",
+			id_asc: "ID de Textura (menor → maior)",
+			id_desc: "ID de textura (maior → menor)",
+			contrib_desc: "Contribuição Recente",
+		},
+		tooltip: {
+			modded: "Textura modificada",
+			mojang: "Mojang Studios",
+			ignored: "Textura ignorada",
+		},
+		all: "Tudo",
+		latest: "Mais recentes",
+		clear_cache: "Limpar Cache da Galeria",
+		result_stats_singular: "Textura %COUNT% encontrada em %SECONDS% segundos",
+		result_stats_plural: "Texturas %COUNT% encontradas em %SECONDS% segundos",
+		modal: {
+			no_contributions: "Nenhuma contribuição encontrada",
+			tabs: {
+				information: "Informações",
+				authors: "Autores",
+			},
+			info: {
+				texture: "Textura",
+				uses: "Usos",
+				paths: "Caminhos",
+			},
+			data: {
+				contribution_id: "ID de contribuição",
+				date: "Data",
+				authors: "Autor(es)",
+				id: "ID",
+				name: "Nome",
+				tags: "Tags/Tipos",
+				use_id: "ID do uso",
+				use_name: "Nome do uso",
+				edition: "Edição",
+				texture_id: "ID da textura",
+				path_id: "ID do caminho",
+				resource_pack_path: "Caminho do pacote de recursos",
+				mc_versions: "Versão(ões) do Minecraft",
+			},
+		},
+	},
+	addons: {
+		titles: {
+			submit: "Enviar um novo addon",
+			edit: "Editar addon",
+			submissions: "Envios de addon",
+			details: "Detalhes",
+		},
+		remove: {
+			title: "Confirmar exclusão",
+			labels: {
+				question: "Você deseja excluir %s?",
+				warning: "Não é possível reverter essa operação.",
+			},
+		},
+		general: {
+			loading_addon: "Carregando addon",
+			rules: "Certifique-se de ler as regras sobre addons antes de enviar",
+			title: "Geral",
+			name: {
+				label: "Nome do addon",
+				hint: "É preferível um nome mais curto.",
+				rules: {
+					name_required: "É necessário um nome.",
+					name_too_big: "O nome do addon deve ter menos de %s caracteres.",
+					name_too_small: "O nome do addon deve ter no mínimo %s caracteres.",
+					name_unavailable: "Este nome já está em uso!",
+				},
+			},
+			description: {
+				label: "Descrição do addon",
+				hint: "Você pode utilizar a formatação Markdown para melhorar sua descrição!",
+				rules: {
+					description_required: "A descrição é necessária.",
+					description_too_big: "A descrição deve conter menos que %s caracteres.",
+					description_too_small: "A descrição deve ter no mínimo %s caracteres.",
+				},
+			},
+			embed_description: {
+				label: "Descrição atribuída",
+				hint: "Descrição vista ao compartilhar o addon em mídias sociais",
+				rules: {
+					too_big: "A descrição atribuída deve ser menor que %s caracteres.",
+				},
+			},
+			slug: {
+				label: "Slug do addon",
+				hint: "Alterar isto quebrará os links antigos!",
+			},
+			reason: {
+				title: "Motivo da atualização",
+				text: "Por favor, conte-nos o que você atualizou para tornar a análise do seu addon mais fácil!",
+				required: "Uma razão para atualizar é necessária",
+				bounds: "Motivo da atualização deve ter entre %s e %s caracteres",
+			},
+			authors: {
+				label: "Selecionar autores do addon",
+				hint: "Qualquer autor pode modificar o addon após seu envio! | Se você não encontrar ninguém na lista que deveria estar nela, contate um administrador ou desenvolvedor",
+			},
+		},
+		images: {
+			title: "Capturas de tela",
+			header: {
+				labels: {
+					drop: "Clique para selecionar a imagem do cabeçalho",
+					normal: "Imagem de cabeçalho",
+					replace: "Substituir imagem de cabeçalho",
+				},
+				rules: {
+					image_size:
+						"O tamanho da imagem deve ser menor que %s KB! Use https://compressor.io/ para comprimi-la.",
+					image_ratio:
+						"Proporção errada: a imagem fornecida não tem uma proporção lateral de 16:9.",
+					image_required: "Uma imagem de cabeçalho é necessária.",
+					jpeg: "A imagem deve ser um JPEG com perdas.",
+				},
+			},
+			carousel: {
+				labels: {
+					drop: "Clique para selecionar imagens adicionais",
+					normal: "Imagem(ns) adicional(is)",
+					replace: "Substituir imagem(ns) adicional(is)",
+				},
+				rule: "Proporção errada: Imagem(ns) sem uma proporção lateral de 16:9 foram removidas.",
+			},
+		},
+		options: {
+			title: "Configurações",
+			optifine: {
+				label: "Requer OptiFine",
+			},
+			editions: {
+				label: "Edição(ões) com suporte",
+				rule: "Você precisa selecionar pelo menos 1 edição.",
+			},
+			resolutions: {
+				label: "Resolução(ões) com suporte",
+				rule: "Você precisa selecionar pelo menos 1 resolução.",
+			},
+		},
+		downloads: {
+			title: "Downloads",
+			name: {
+				placeholder: "CurseForge, GitHub…",
+				label: "Nome",
+				rules: {
+					name_required: "Um nome é necessário.",
+					name_cannot_be_empty: "O nome não pode ser vazio.",
+				},
+			},
+			link: {
+				placeholder: "https://www.exemplo.com",
+				label: "Link",
+				rule: "URL deve ser válido.",
+			},
+		},
+		status: {
+			approved: "Aprovado",
+			denied: "Negado",
+			pending: "Pendente",
+			archived: "Arquivado",
+		},
+	},
+	review: {
+		titles: {
+			addons: "Analisar addons",
+			pending: "Esperando aprovação",
+			denied: "Negado",
+			approved: "Aprovado",
+			archived: "Arquivado",
+		},
+		deny_window: {
+			title: "Negar addon",
+			archive_title: "Arquivar add-on",
+			label: "Escreva um motivo…",
+			rule: "Qualquer motivo pode ser dado",
+		},
+		labels: {
+			pending: "Não há nenhum addon pendente no momento!",
+			denied: "Não há nenhum addon negado no momento!",
+			archived: "Não há nenhum addon arquivado no momento!",
+			approved: "Não há nenhum addon aprovado no momento!",
+			load_approved: "Carregar addons aprovados",
+		},
+		addon: {
+			titles: {
+				author_singular: "Autor",
+				author_plural: "Autor(es)",
+				description: "Descrição",
+				links: "Links",
+				options: "Configurações",
+			},
+			labels: {
+				link: "Link",
+				optifine: "OptiFine",
+				approved_by: "Aprovado por %s",
+				denied_by: "Negado por %s",
+				reason: "Motivo",
+			},
+		},
+	},
+	posts: {
+		titles: {
+			list: "Todas as publicações",
+			edit: "Editar publicação",
+			new: "Criar nova publicação",
+		},
+		status: {
+			published: "Publicado",
+			pending: "Pendente",
+		},
+		loading: "Carregando publicação…",
+		general: {
+			heading: "Geral",
+			title: {
+				label: "Título da publicação",
+				placeholder: "Faithful Smart Fridge - Alpha 1",
+			},
+			permalink: {
+				label: "Link permanente",
+				placeholder: "/faithfulsmartfridge/A1",
+			},
+			header_img: {
+				label: "Imagem do cabeçalho (opcional)",
+				hint: "Nota: Isto deve ser enviado separadamente",
+				placeholder: "https://database.faithfulpack.net/images/website/posts/fridge/A1.jpg",
+			},
+			date: {
+				label: "Publicar data de lançamento",
+				placeholder: "AAAA-MM-DD",
+			},
+			description: {
+				label: "Descrição da publicação",
+				hint: "Você pode usar marcação HTML para melhorar sua descrição!",
+			},
+		},
+		download: {
+			heading: "Downloads",
+			add_category: "Adicionar categoria de download",
+			add_single_item: "Adicionar download único",
+			category: "Baixar nome da categoria",
+			name: "Nome do download",
+			link: "Link de download",
+			link_placeholder: "https://www.exemplo.com",
+		},
+		changelog: {
+			heading: "Histórico de mudanças",
+			add_category: "Adicionar categoria de histórico de mudanças",
+			add_item: "Adicionar item do histórico de mudanças",
+			form_levels: {
+				primary: "Categoria primária",
+				secondary: "Categoria secundária",
+				item_category: "Categoria do Item (Autores)",
+				item: "Item (Autores)",
+			},
 		},
 	},
 	database: {
@@ -259,362 +582,12 @@ export default {
 				ask_submission_deletion: "Deseja excluir informações de envio para %s (%d)?",
 			},
 		},
-	},
-	review: {
-		titles: {
-			addons: "Analisar addons",
-			pending: "Esperando aprovação",
-			denied: "Negado",
-			approved: "Aprovado",
-			archived: "Arquivado",
-		},
-		deny_window: {
-			title: "Negar addon",
-			archive_title: "Arquivar add-on",
-			label: "Escreva um motivo…",
-			rule: "Qualquer motivo pode ser dado",
-		},
-		labels: {
-			pending: "Não há nenhum addon pendente no momento!",
-			denied: "Não há nenhum addon negado no momento!",
-			archived: "Não há nenhum addon arquivado no momento!",
-			approved: "Não há nenhum addon aprovado no momento!",
-			load_approved: "Carregar addons aprovados",
-		},
-		addon: {
-			titles: {
-				author_singular: "Autor",
-				author_plural: "Autor(es)",
-				description: "Descrição",
-				links: "Links",
-				options: "Configurações",
-			},
-			labels: {
-				link: "Link",
-				optifine: "OptiFine",
-				approved_by: "Aprovado por %s",
-				denied_by: "Negado por %s",
-				reason: "Motivo",
-			},
-		},
-	},
-	addons: {
-		titles: {
-			submit: "Enviar um novo addon",
-			edit: "Editar addon",
-			submissions: "Envios de addon",
-			details: "Detalhes",
-		},
-		remove: {
-			title: "Confirmar exclusão",
-			labels: {
-				question: "Você deseja excluir %s?",
-				warning: "Não é possível reverter essa operação.",
-			},
-		},
-		general: {
-			loading_addon: "Carregando addon",
-			rules: "Certifique-se de ler as regras sobre addons antes de enviar",
-			title: "Geral",
-			name: {
-				label: "Nome do addon",
-				hint: "É preferível um nome mais curto.",
-				rules: {
-					name_required: "É necessário um nome.",
-					name_too_big: "O nome do addon deve ter menos de %s caracteres.",
-					name_too_small: "O nome do addon deve ter no mínimo %s caracteres.",
-					name_unavailable: "Este nome já está em uso!",
-				},
-			},
-			description: {
-				label: "Descrição do addon",
-				hint: "Você pode utilizar a formatação Markdown para melhorar sua descrição!",
-				rules: {
-					description_required: "A descrição é necessária.",
-					description_too_big: "A descrição deve conter menos que %s caracteres.",
-					description_too_small: "A descrição deve ter no mínimo %s caracteres.",
-				},
-			},
-			embed_description: {
-				label: "Descrição atribuída",
-				hint: "Descrição vista ao compartilhar o addon em mídias sociais",
-				rules: {
-					too_big: "A descrição atribuída deve ser menor que %s caracteres.",
-				},
-			},
-			slug: {
-				label: "Slug do addon",
-				hint: "Alterar isto quebrará os links antigos!",
-			},
-			reason: {
-				title: "Motivo da atualização",
-				text: "Por favor, conte-nos o que você atualizou para tornar a análise do seu addon mais fácil!",
-				required: "Uma razão para atualizar é necessária",
-				bounds: "Motivo da atualização deve ter entre %s e %s caracteres",
-			},
-			authors: {
-				label: "Selecionar autores do addon",
-				hint: "Qualquer autor pode modificar o addon após seu envio! | Se você não encontrar ninguém na lista que deveria estar nela, contate um administrador ou desenvolvedor",
-			},
-		},
-		images: {
-			title: "Capturas de tela",
-			header: {
-				labels: {
-					drop: "Clique para selecionar a imagem do cabeçalho",
-					normal: "Imagem de cabeçalho",
-					replace: "Substituir imagem de cabeçalho",
-				},
-				rules: {
-					image_size:
-						"O tamanho da imagem deve ser menor que %s KB! Use https://compressor.io/ para comprimi-la.",
-					image_ratio:
-						"Proporção errada: a imagem fornecida não tem uma proporção lateral de 16:9.",
-					image_required: "Uma imagem de cabeçalho é necessária.",
-					jpeg: "A imagem deve ser um JPEG com perdas.",
-				},
-			},
-			carousel: {
-				labels: {
-					drop: "Clique para selecionar imagens adicionais",
-					normal: "Imagem(ns) adicional(is)",
-					replace: "Substituir imagem(ns) adicional(is)",
-				},
-				rule: "Proporção errada: Imagem(ns) sem uma proporção lateral de 16:9 foram removidas.",
-			},
-		},
-		options: {
+		settings: {
 			title: "Configurações",
-			optifine: {
-				label: "Requer OptiFine",
-			},
-			editions: {
-				label: "Edição(ões) com suporte",
-				rule: "Você precisa selecionar pelo menos 1 edição.",
-			},
-			resolutions: {
-				label: "Resolução(ões) com suporte",
-				rule: "Você precisa selecionar pelo menos 1 resolução.",
+			label: {
+				edit_raw: "Editar JSON bruto",
+				edit_editor: "Edite com editor visual",
 			},
 		},
-		downloads: {
-			title: "Downloads",
-			name: {
-				placeholder: "CurseForge, GitHub…",
-				label: "Nome",
-				rules: {
-					name_required: "Um nome é necessário.",
-					name_cannot_be_empty: "O nome não pode ser vazio.",
-				},
-			},
-			link: {
-				placeholder: "https://www.exemplo.com",
-				label: "Link",
-				rule: "URL deve ser válido.",
-			},
-		},
-		status: {
-			approved: "Aprovado",
-			denied: "Negado",
-			pending: "Pendente",
-			archived: "Arquivado",
-		},
-	},
-	posts: {
-		titles: {
-			list: "Todas as publicações",
-			edit: "Editar publicação",
-			new: "Criar nova publicação",
-		},
-		status: {
-			published: "Publicado",
-			pending: "Pendente",
-		},
-		loading: "Carregando publicação…",
-		general: {
-			heading: "Geral",
-			title: {
-				label: "Título da publicação",
-				placeholder: "Faithful Smart Fridge - Alpha 1",
-			},
-			permalink: {
-				label: "Link permanente",
-				placeholder: "/faithfulsmartfridge/A1",
-			},
-			header_img: {
-				label: "Imagem do cabeçalho (opcional)",
-				hint: "Nota: Isto deve ser enviado separadamente",
-				placeholder: "https://database.faithfulpack.net/images/website/posts/fridge/A1.jpg",
-			},
-			date: {
-				label: "Publicar data de lançamento",
-				placeholder: "AAAA-MM-DD",
-			},
-			description: {
-				label: "Descrição da publicação",
-				hint: "Você pode usar marcação HTML para melhorar sua descrição!",
-			},
-		},
-		download: {
-			heading: "Downloads",
-			add_category: "Adicionar categoria de download",
-			add_single_item: "Adicionar download único",
-			category: "Baixar nome da categoria",
-			name: "Nome do download",
-			link: "Link de download",
-			link_placeholder: "https://www.exemplo.com",
-		},
-		changelog: {
-			heading: "Histórico de mudanças",
-			add_category: "Adicionar categoria de histórico de mudanças",
-			add_item: "Adicionar item do histórico de mudanças",
-			form_levels: {
-				primary: "Categoria primária",
-				secondary: "Categoria secundária",
-				item_category: "Categoria do Item (Autores)",
-				item: "Item (Autores)",
-			},
-		},
-	},
-	profile: {
-		title: "Perfil",
-		general: {
-			title: "Geral",
-			uuid: {
-				label: "UUID do perfil do Minecraft",
-			},
-			username: {
-				label: "Nome de usuário",
-				hint: "Seu nome de usuário será mostrado e usado no Website em contribuições, addons, etc.",
-			},
-		},
-		social: {
-			title: "Links sociais",
-			link_label: "Editar link",
-			type_label: "Selecionar tipo de mídia",
-			placeholder: "https://www.example.com",
-			add: "Adicionar rede social",
-		},
-		save_changes: "Salvar mudanças",
-		delete: {
-			title: "Excluir conta",
-			btn: "Excluir conta",
-			description: "Tem certeza que deseja excluir sua conta?",
-			warning: "Este processo é irreversível!",
-		},
-	},
-	gallery: {
-		stretched_switcher: "Visualização completa de largura",
-		share_link_copied_to_clipboard: "Link de compartilhamento copiado para a área de transferência",
-		max_items_per_row: "Máximo de itens por linha",
-		title: "Galeria",
-		error_message: {
-			texture_not_done: "Textura não concluída!",
-			user_anonymous: "Anônimo",
-			user_not_found: "Usuário desconhecido",
-			contribution_not_found: "Nenhuma contribuição encontrada no banco de dados!",
-			search_failed: "Falha ao pesquisar",
-		},
-		category: {
-			search: "Buscar",
-			tag: "Tags",
-			mc_version: "Versão do Minecraft",
-			edition: "Edição",
-			pack: "Pacote",
-		},
-		sort: {
-			name_asc: "Nome (A → Z)",
-			name_desc: "Nome (Z → A)",
-			id_asc: "ID de Textura (menor → maior)",
-			id_desc: "ID de textura (maior → menor)",
-			contrib_desc: "Contribuição Recente",
-		},
-		tooltip: {
-			modded: "Textura modificada",
-			mojang: "Mojang Studios",
-			ignored: "Textura ignorada",
-		},
-		all: "Tudo",
-		latest: "Mais recentes",
-		clear_cache: "Limpar Cache da Galeria",
-		result_stats_singular: "Textura %COUNT% encontrada em %SECONDS% segundos",
-		result_stats_plural: "Texturas %COUNT% encontradas em %SECONDS% segundos",
-		modal: {
-			no_contributions: "Nenhuma contribuição encontrada",
-			tabs: {
-				information: "Informações",
-				authors: "Autores",
-			},
-			info: {
-				texture: "Textura",
-				uses: "Usos",
-				paths: "Caminhos",
-			},
-			data: {
-				contribution_id: "ID de contribuição",
-				date: "Data",
-				authors: "Autor(es)",
-				id: "ID",
-				name: "Nome",
-				tags: "Tags/Tipos",
-				use_id: "ID do uso",
-				use_name: "Nome do uso",
-				edition: "Edição",
-				texture_id: "ID da textura",
-				path_id: "ID do caminho",
-				resource_pack_path: "Caminho do pacote de recursos",
-				mc_versions: "Versão(ões) do Minecraft",
-			},
-		},
-	},
-	settings: {
-		title: "Configurações",
-		label: {
-			edit_raw: "Editar JSON bruto",
-			edit_editor: "Edite com editor visual",
-		},
-	},
-	dashboard: {
-		welcome_user: "Bem-vindo, %USER%!",
-		welcome: "Bem-vindo!",
-		totals: {
-			authors: "autores",
-			contributions: "contribuições",
-			last_day: "contribuições nas últimas 48 horas",
-			last_week: "contribuições na última semana",
-			last_month: "contribuições no último mês",
-		},
-		titles: {
-			users: "Usuários",
-			addons: "Add-ons",
-			contribution_activity: "Atividade de contribuição",
-			contribution_stats: "Contribuições",
-			profile: "Perfil",
-		},
-		addons: {
-			submissions: "Envios",
-			upload: "Enviar",
-		},
-		users: {
-			total: "usuários",
-			total_anonymous: "anônimo",
-			total_roles: "funções",
-		},
-		locale: {
-			on: "ligado",
-			less: "Menos",
-			more: "Mais",
-		},
-	},
-	missing_page: {
-		title: "Você está perdido no Fim?",
-		description: "Infelizmente, a página que você solicitou não existe!",
-		main_page:
-			"Tente verificar a ortografia ou ir para a página %main % para encontrar o que estava procurando.",
-	},
-	datepicker: {
-		year: "Ano",
-		month: "Mês",
-		day: "Dia",
 	},
 };
