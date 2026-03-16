@@ -140,6 +140,14 @@ a {
 	outline: none;
 }
 
+@media screen and (max-width: 600px) {
+	// add back some padding space that would otherwise be useless
+	.container {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+}
+
 // clears space under hint text (creates some nasty text clipping otherwise)
 .v-text-field__details {
 	margin-bottom: 8px;
