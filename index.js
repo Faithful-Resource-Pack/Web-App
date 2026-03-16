@@ -362,7 +362,7 @@ const app = new Vue({
 					.forEach((s) => this.loadBadge(s.badge, s.id));
 			});
 		},
-		availableTabObjects(n) {
+		availableTabs(n) {
 			this.syncRoutes(n);
 		},
 	},
