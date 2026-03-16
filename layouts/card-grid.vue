@@ -84,7 +84,7 @@ export default {
 	},
 	computed: {
 		columnCount() {
-			if (this.$vuetify.breakpoint.xl) return 4;
+			// if (this.$vuetify.breakpoint.xl) return 4;
 			if (this.$vuetify.breakpoint.lgAndUp) return 3;
 			if (this.$vuetify.breakpoint.mdAndUp) return 2;
 			return 1;

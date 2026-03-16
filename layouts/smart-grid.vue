@@ -71,7 +71,7 @@ export default {
 			return this.items.slice(0, this.displayedResults);
 		},
 		baseColumnCount() {
-			if (this.$vuetify.breakpoint.xl && this.displayedResults >= 12) return 4;
+			// if (this.$vuetify.breakpoint.xl && this.displayedResults >= 12) return 4;
 			if (this.$vuetify.breakpoint.lgAndUp && this.displayedResults >= 9) return 3;
 			if (this.$vuetify.breakpoint.mdAndUp && this.displayedResults >= 6) return 2;
 			return 1;

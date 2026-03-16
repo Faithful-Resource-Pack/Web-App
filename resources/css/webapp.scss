@@ -140,6 +140,12 @@ a {
 	outline: none;
 }
 
+// fixes 1080p screens
+// todo: figure out how to make breakpoints not suck
+.container {
+	max-width: 1080px;
+}
+
 @media screen and (max-width: 600px) {
 	// add back some padding space that would otherwise be useless
 	.container {
