@@ -3,7 +3,7 @@
 		<v-col
 			v-for="item in loading ? skeletonCount : items"
 			:key="item[track]"
-			:cols="$vuetify.breakpoint.mdAndUp ? 4 : $vuetify.breakpoint.smAndUp ? 6 : 12"
+			:cols="12 / columnCount"
 			class="d-flex align-stretch"
 		>
 			<v-card class="d-flex flex-column main-container" style="width: 100%">
@@ -80,6 +80,14 @@ export default {
 			this.failed[item[this.track]] = true;
 			this.$forceUpdate();
 			return false;
+		},
+	},
+	computed: {
+		columnCount() {
+			if (this.$vuetify.breakpoint.xl) return 4;
+			if (this.$vuetify.breakpoint.lgAndUp) return 3;
+			if (this.$vuetify.breakpoint.mdAndUp) return 2;
+			return 1;
 		},
 	},
 };
