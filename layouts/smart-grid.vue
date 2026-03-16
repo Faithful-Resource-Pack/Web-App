@@ -1,7 +1,7 @@
 <template>
 	<v-card class="main-container px-2 py-4">
 		<v-row>
-			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount" xs="1">
+			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
 				<v-list-item>
 					<slot :item="item" />
 				</v-list-item>
@@ -50,10 +50,10 @@ export default {
 			required: false,
 			default: "id",
 		},
-		maxColumns: {
-			type: Number,
+		wide: {
+			type: Boolean,
 			required: false,
-			default: 3,
+			default: false,
 		},
 	},
 	data() {
@@ -70,18 +70,17 @@ export default {
 		results() {
 			return this.items.slice(0, this.displayedResults);
 		},
+		baseColumnCount() {
+			if (this.$vuetify.breakpoint.xl && this.displayedResults >= 12) return 4;
+			if (this.$vuetify.breakpoint.lgAndUp && this.displayedResults >= 9) return 3;
+			if (this.$vuetify.breakpoint.mdAndUp && this.displayedResults >= 6) return 2;
+			return 1;
+		},
 		columnCount() {
-			let columns = 1;
-
-			if (this.$vuetify.breakpoint.mdAndUp && this.displayedResults >= 6) {
-				columns = 2;
-				if (this.$vuetify.breakpoint.lgAndUp && this.displayedResults >= 21) {
-					columns = 3;
-				}
-			}
-
-			if (this.items.length === 1) columns = 1;
-			return Math.min(columns, this.maxColumns);
+			let count = this.baseColumnCount;
+			if (this.wide) count -= 1;
+			if (this.displayedResults === 1) count = 1;
+			return Math.max(1, count);
 		},
 		loadMoreStyle() {
 			const width = this.$vuetify.breakpoint.xs ? 100 : 50;

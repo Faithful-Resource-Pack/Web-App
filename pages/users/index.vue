@@ -59,7 +59,7 @@
 			:items="users"
 			:pageColor="pageColor"
 			:textColor="textColorOnPage"
-			:maxColumns="2"
+			wide
 			track="id"
 		>
 			<template #default="{ item }">

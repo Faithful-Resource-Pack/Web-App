@@ -48,7 +48,7 @@
 			:items="grouped"
 			:pageColor="pageColor"
 			:textColor="textColorOnPage"
-			:maxColumns="2"
+			wide
 			track="version"
 		>
 			<template #default="{ item }">
