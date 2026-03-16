@@ -99,7 +99,7 @@ export default {
 		},
 		modalOpened(newValue) {
 			this.$nextTick(() => {
-				this.formData = JSON.parse(JSON.stringify(this.data));
+				this.formData = structuredClone(this.data);
 			});
 			this.$emit("input", newValue);
 		},

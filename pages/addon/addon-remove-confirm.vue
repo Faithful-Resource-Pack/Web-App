@@ -39,9 +39,8 @@ export default {
 	},
 	methods: {
 		deleteAddon() {
-			const addonID = JSON.parse(JSON.stringify(this.$props.data.id));
 			axios
-				.delete(`${this.$root.apiURL}/addons/${addonID}`, this.$root.apiOptions)
+				.delete(`${this.$root.apiURL}/addons/${this.data.id}`, this.$root.apiOptions)
 				.then(() => {
 					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 					this.$emit("close", true);

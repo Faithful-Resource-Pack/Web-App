@@ -143,7 +143,7 @@ const app = new Vue({
 	methods: {
 		/** log reactive object */
 		log(...objs) {
-			const cleaned = JSON.parse(JSON.stringify(objs));
+			const cleaned = structuredClone(objs);
 			console.log(cleaned);
 		},
 		async loadBadge(cb, key) {
