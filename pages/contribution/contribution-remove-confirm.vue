@@ -9,7 +9,7 @@
 		<li>ID: {{ data.id }}</li>
 		<li>Name: {{ data.name }}</li>
 		<li>Pack: {{ data.pack }}</li>
-		<li>Date: {{ data.date }} ({{ timestampToDate(data.date) }})</li>
+		<li>Date: {{ data.date }} ({{ $root.formatDate(data.date) }})</li>
 		<li>
 			Authors:
 			<ul>
@@ -23,7 +23,6 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
 import ModalForm from "@layouts/modal-form.vue";
 
 export default {
@@ -53,9 +52,6 @@ export default {
 		};
 	},
 	methods: {
-		timestampToDate(t) {
-			return moment(new Date(t)).format("ll");
-		},
 		deleteContribution() {
 			axios
 				.delete(`${this.$root.apiURL}/contributions/${this.data.id}`, this.$root.apiOptions)

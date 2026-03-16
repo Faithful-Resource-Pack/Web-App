@@ -1,4 +1,3 @@
-import moment from "moment";
 import { defineStore } from "pinia";
 
 const LANG_KEY = "lang";
@@ -59,8 +58,6 @@ export default defineStore("translation", {
 			const langObj = this.availableLangs[langName];
 			if (!langObj) return;
 
-			moment.locale(langObj.bcp47);
-
 			// already cached, no need to load
 			if (this.loadedLangs[langObj.id]) return;
 
@@ -96,6 +93,9 @@ export default defineStore("translation", {
 				// Force return type to prevent undefined breaking string methods
 				return String(selectedData);
 			};
+		},
+		current() {
+			return this.availableLangs[this.selectedLang];
 		},
 	},
 });

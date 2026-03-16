@@ -4,6 +4,7 @@
 import Vue from "vue";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { RouteConfig } from "vue-router";
+import { DateTimeFormatOptions } from "luxon";
 
 import authStore from "../stores/auth/index.js";
 import translationStore from "../stores/translationStore.js";
@@ -32,7 +33,7 @@ declare module "vue/types/vue" {
 		json?: unknown, // any json-encodable object
 	) => void;
 
-	// inject methods being used
+	// add public method/getter types
 	interface Vue {
 		readonly auth: ReturnType<typeof authStore>;
 		readonly translation: ReturnType<typeof translationStore>;
@@ -51,6 +52,7 @@ declare module "vue/types/vue" {
 		makeJsonSnackBar(json: unknown): SnackBarCallback;
 		showSnackBar: SnackBarCallback;
 		compileMarkdown(rawText: string): string;
+		formatDate(date: number | string | Date, format?: DateTimeFormatOptions): string;
 		reloadSettings(): Promise<void>;
 
 		// there's more methods but none of them are used publicly

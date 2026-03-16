@@ -97,11 +97,10 @@
 <script>
 import axios from "axios";
 
+import EmittingImage from "@components/emitting-image.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
-import EmittingImage from "@components/emitting-image.vue";
-import moment from "moment";
 
 export default {
 	name: "expansion-panels",
@@ -200,7 +199,8 @@ export default {
 		date() {
 			if (!this.addonInPanel.last_updated)
 				return this.$root.lang().review.addon.titles.unknown_date;
-			const formatted = moment(new Date(this.addonInPanel.last_updated)).format("ll");
+
+			const formatted = this.$root.formatDate(this.addonInPanel.last_updated);
 			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
 		},
 	},

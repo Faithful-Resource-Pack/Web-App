@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
 	name: "gallery-tooltip",
 	props: {
@@ -85,7 +83,7 @@ export default {
 			);
 		},
 		date() {
-			return moment(new Date(this.lastContribution.date)).format("ll");
+			return this.$root.formatDate(this.lastContribution.date);
 		},
 		icon() {
 			return this.lastContribution.authors.length === 1 ? "mdi-account" : "mdi-account-multiple";

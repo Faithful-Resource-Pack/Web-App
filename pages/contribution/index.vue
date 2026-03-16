@@ -107,7 +107,7 @@
 
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ `${item.name || "Unknown texture"} • ${moment(new Date(item.date)).format("ll")}` }}
+						{{ `${item.name || "Unknown texture"} • ${$root.formatDate(item.date)}` }}
 					</v-list-item-title>
 					<v-list-item-subtitle>
 						{{
@@ -146,7 +146,6 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
 
 import ContributionModal from "./contribution-modal.vue";
 import ContributionRemoveConfirm from "./contribution-remove-confirm.vue";
@@ -193,7 +192,6 @@ export default {
 	},
 	methods: {
 		// expose for inline use
-		moment,
 		addContribution() {
 			this.modalOpen = true;
 			this.modalAdd = true;

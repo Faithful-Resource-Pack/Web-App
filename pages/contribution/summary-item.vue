@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
 	name: "summary-item",
 	props: {
@@ -58,8 +56,7 @@ export default {
 	computed: {
 		title() {
 			const pack = this.packToName[this.contrib.pack] || this.contrib.pack;
-			const formattedDate = moment(new Date(this.contrib.date)).format("ll");
-			return `${pack} • ${formattedDate}`;
+			return `${pack} • ${this.$root.formatDate(this.contrib.date)}`;
 		},
 		subtitle() {
 			const groupedContributors = this.contributors.reduce((acc, cur) => {

@@ -8,6 +8,7 @@ import Vuetify from "vuetify";
 
 // general dependencies
 import axios from "axios";
+import { DateTime } from "luxon";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { createPinia, mapState } from "pinia";
@@ -178,6 +179,14 @@ const app = new Vue({
 		compileMarkdown(rawText) {
 			if (!rawText) return "";
 			return DOMPurify.sanitize(marked(rawText));
+		},
+		// DATE_MED is the most common (e.g. Mar 15, 2026)
+		formatDate(date, format = DateTime.DATE_MED) {
+			// wrap the date so you can pass in anything the date constructor accepts
+			// e.g. unix timestamps YMD dates etc
+			return DateTime.fromJSDate(new Date(date))
+				.setLocale(this.$root.translation.current.bcp47)
+				.toLocaleString(format);
 		},
 		/** @param {"dark" | "light"} theme */
 		onMediaChange(theme) {

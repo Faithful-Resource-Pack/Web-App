@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 export default {
 	name: "author-tab",
 	props: {
@@ -87,9 +85,6 @@ export default {
 		formatAuthors(authors) {
 			return authors.map((a) => a.username).join(", ");
 		},
-		timestampToDate(t) {
-			return moment(new Date(t)).format("ll");
-		},
 		copySubmissionAuthors(authors) {
 			const authorString = authors
 				.map((a) => {
@@ -109,7 +104,7 @@ export default {
 				.sort((a, b) => b.date - a.date)
 				.map((el) => ({
 					id: el.id,
-					date: this.timestampToDate(el.date),
+					date: this.$root.formatDate(el.date),
 					authors: el.authors.map((el) => ({ id: el, username: this.discordIDtoName(el) })),
 				}));
 		},

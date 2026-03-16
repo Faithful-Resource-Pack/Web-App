@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import moment from "moment";
+import { Info } from "luxon";
 
 import DashboardCard from "./dashboard-card.vue";
 import { CalendarHeatmap } from "vue-calendar-heatmap";
@@ -84,8 +84,8 @@ export default {
 		},
 		locale() {
 			return {
-				months: moment.monthsShort().map((e) => e[0].toUpperCase() + e.slice(1)),
-				days: moment.weekdaysShort().map((e) => e[0].toUpperCase() + e.slice(1)),
+				months: Info.months("short", { locale: this.$root.translation.current.bcp47 }),
+				days: Info.weekdays("short", { locale: this.$root.translation.current.bcp47 }),
 				...this.$root.lang().dashboard.locale,
 			};
 		},

@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import moment from "moment";
+import { Info } from "luxon";
 
 import UserSelect from "@components/user-select.vue";
 import QuickDatePicker from "@components/quick-date-picker.vue";
@@ -104,7 +104,6 @@ export default {
 	data() {
 		return {
 			contrib: this.value,
-			months: moment.monthsShort(),
 		};
 	},
 	methods: {
@@ -123,6 +122,10 @@ export default {
 				label: p.name,
 				value: p.id,
 			}));
+		},
+		months() {
+			// computed so if user changes language things update properly
+			return Info.months("short", { locale: this.$root.translation.current.bcp47 });
 		},
 	},
 	watch: {
