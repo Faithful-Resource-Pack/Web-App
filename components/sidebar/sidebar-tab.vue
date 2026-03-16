@@ -6,7 +6,7 @@
 		</v-list-item-icon>
 		<v-list-item-content>
 			<v-list-item-title class="body-2">
-				{{ subtab.label || subtab.id.toTitleCase() }}
+				{{ $root.lang().global.tabs[parent]?.subtabs[subtab.id] || subtab.id.toTitleCase() }}
 			</v-list-item-title>
 		</v-list-item-content>
 		<v-list-item-action v-if="subtab.badge && badges[subtab.id]" class="nav-badge">
@@ -23,6 +23,10 @@ export default {
 	props: {
 		subtab: {
 			type: Object,
+			required: true,
+		},
+		parent: {
+			type: String,
 			required: true,
 		},
 		badges: {

@@ -14,34 +14,16 @@
 				/>
 			</router-link>
 			<v-divider class="my-2" />
-			<v-list-group
+			<sidebar-category
 				v-for="tab in tabs"
 				:key="tab.id"
-				color="inherit"
-				:value="initialTabsOpen[tab.id]"
+				:tab="tab"
+				:badges="badges"
+				:initOpen="initialTabsOpen[tab.id]"
+				:value="tabsOpen[tab.id]"
 				@click="updateTabsOpen(tab.id)"
-			>
-				<template #activator>
-					<v-list-item-title class="uppercase-unsized">
-						{{ tab.label }}
-					</v-list-item-title>
-				</template>
-				<template #appendIcon>
-					<!-- regular is 24 and small is 16, both are a bit too extreme -->
-					<v-icon size="20" style="opacity: 80%">
-						{{ tabsOpen[tab.id] ? "mdi-chevron-up" : "mdi-chevron-right" }}
-					</v-icon>
-				</template>
-				<div class="v-list pb-4 pt-0">
-					<sidebar-tab
-						v-for="subtab in tab.subtabs"
-						:key="subtab.id"
-						:subtab="subtab"
-						:badges="badges"
-						@select="autoClose"
-					/>
-				</div>
-			</v-list-group>
+				@autoClose="autoClose"
+			/>
 			<!-- Fix problem on firefox on mobile where bar disappears and fixed elements are hidden -->
 			<div v-if="$vuetify.breakpoint.mdAndDown" class="py-5" />
 		</div>
@@ -49,14 +31,14 @@
 </template>
 
 <script>
-import SidebarTab from "./sidebar-tab.vue";
+import SidebarCategory from "./sidebar-category.vue";
 
 const OPEN_TAB_KEY = "menu_open_tabs";
 
 export default {
 	name: "nav-sidebar",
 	components: {
-		SidebarTab,
+		SidebarCategory,
 	},
 	props: {
 		value: {

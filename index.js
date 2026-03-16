@@ -246,7 +246,11 @@ const app = new Vue({
 				headers: { discord: this.user.access_token },
 			};
 		},
-		availableTabObjects() {
+		/**
+		 * Check user perms & add (or not) tabs & routes following user perms
+		 * @returns all tabs to be added in the html
+		 */
+		availableTabs() {
 			return (
 				ALL_TABS
 					// first filter categories
@@ -254,31 +258,21 @@ const app = new Vue({
 					.map((tab) => ({
 						// must create a new object so if the user logs in the old tabs aren't deleted
 						...tab,
-						subtabs: tab.subtabs.filter((subtab) => {
-							if (subtab.public) return true;
-							// if there's no roles then it's available to all logged in users
-							if (!subtab.roles) return this.isLoggedIn;
-							return subtab.roles.some((r) => this.userRoles.includes(r));
-						}),
+						subtabs: tab.subtabs
+							.filter((subtab) => {
+								if (subtab.public) return true;
+								// if there's no roles then it's available to all logged in users
+								if (!subtab.roles) return this.isLoggedIn;
+								return subtab.roles.some((r) => this.userRoles.includes(r));
+							})
+							.map((s) => {
+								s.to = s.routes[0].path;
+								return s;
+							}),
 					}))
 					// then when subtabs are filtered filter again
 					.filter((tab) => tab.subtabs.length)
 			);
-		},
-		/**
-		 * Check user perms & add (or not) tabs & routes following user perms
-		 * @returns all tabs to be added in the html
-		 */
-		availableTabs() {
-			return this.availableTabObjects.map((tab) => {
-				tab.label = this.lang().global.tabs[tab.id]?.title;
-				tab.subtabs = tab.subtabs.map((s) => {
-					s.label = this.lang().global.tabs[tab.id]?.subtabs[s.id];
-					s.to = s.routes[0].path;
-					return s;
-				});
-				return tab;
-			});
 		},
 		/**
 		 * Tell if the user is logged in
@@ -362,7 +356,7 @@ const app = new Vue({
 
 			// add all routes with no role
 			this.$nextTick(() => {
-				this.availableTabObjects
+				this.availableTabs
 					.flatMap((t) => t.subtabs)
 					.filter((s) => s.badge)
 					.forEach((s) => this.loadBadge(s.badge, s.id));
