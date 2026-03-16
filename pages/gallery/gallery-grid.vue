@@ -224,7 +224,7 @@ export default {
 			const el = this.$refs.bottomElement;
 			this.scrollY = document.firstElementChild.scrollTop;
 
-			if (!el || !this.isScrolledIntoView(el, 600)) return;
+			if (!el || !this.isScrolledIntoView(el, 300)) return;
 
 			// add more results when near bottom
 			this.displayedResults += this.pageLength;
@@ -235,20 +235,14 @@ export default {
 		};
 
 		window.addEventListener("resize", this.resizeListener);
+		this.resizeListener();
 
-		// start width calculation
-		window.dispatchEvent(new Event("resize"));
-
-		const main = document.getElementById("main");
-
-		if (!main)
-			return console.error(
-				"Couldn't find main body element for lazy scrolling. This is probably bad.",
-			);
-		main.addEventListener("scroll", this.scrollListener);
+		// add to main since it's the scrollable container
+		document.getElementById("main")?.addEventListener("scroll", this.scrollListener);
+		this.scrollListener();
 	},
 	unmounted() {
-		document.getElementById("main").removeEventListener("scroll", this.scrollListener);
+		document.getElementById("main")?.removeEventListener("scroll", this.scrollListener);
 		window.removeEventListener("resize", this.resizeListener);
 	},
 };
