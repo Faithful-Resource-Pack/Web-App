@@ -386,6 +386,7 @@ export default {
 		totals: {
 			authors: "autorů",
 			contributions: "příspěvků",
+			last_day: "příspěvků za posledních 48 hodin",
 			last_week: "příspěvků minulý týden",
 			last_month: "příspěvků minulý měsíc",
 		},
