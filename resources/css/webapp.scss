@@ -148,9 +148,10 @@ a {
 
 @media screen and (max-width: 600px) {
 	// add back some padding space that would otherwise be useless
-	.container {
-		padding-left: 0 !important;
-		padding-right: 0 !important;
+	.container > .main-container {
+		box-sizing: content-box;
+		margin-left: -12px !important;
+		margin-right: -12px !important;
 	}
 }
 
