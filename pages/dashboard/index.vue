@@ -46,7 +46,7 @@ export default {
 		},
 		colors() {
 			// https://colordesigner.io/gradient-generator
-			return this.$root.isDark
+			return this.$root.theme.isDark
 				? ["#1e1e1e", "#303c27", "#425d30", "#537f38", "#65a33f", "#76c945"]
 				: ["#f0f0f0", "#b5dd9e", "#a6d889", "#97d374", "#87ce5d", "#76c945"];
 		},

@@ -21,6 +21,7 @@ export default defineStore("auth", {
 		anonymous: false,
 	}),
 	actions: {
+		// need app/dev for snackbars and logging
 		async login(app, isDev) {
 			const discordAuth = discordAuthStore();
 			const discordProfile = discordProfileStore();

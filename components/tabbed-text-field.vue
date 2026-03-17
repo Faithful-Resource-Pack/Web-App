@@ -1,5 +1,5 @@
 <template>
-	<v-card :outlined="!$root.isDark">
+	<v-card :outlined="!$root.theme.isDark">
 		<div class="transparent-tabs">
 			<v-tabs v-model="tab" dense :color="activeColor">
 				<v-tab>

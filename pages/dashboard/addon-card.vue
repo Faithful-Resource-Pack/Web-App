@@ -114,7 +114,7 @@ export default {
 	computed: {
 		statusColor() {
 			// bit janky but it does work
-			const archivedModifier = this.$root.isDark ? "lighten-2" : "darken-2";
+			const archivedModifier = this.$root.theme.isDark ? "lighten-2" : "darken-2";
 			return {
 				approved: "success--text",
 				pending: "warning--text",

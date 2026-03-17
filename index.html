@@ -63,11 +63,11 @@
 		<!-- HTML parsing rules apply here; no auto-closing tags -->
 		<v-app id="app" ref="app">
 			<nav-app-bar
-				:themes="themes"
+				:themes="Object.values(theme.availableThemes)"
 				:languages="Object.values(translation.availableLangs)"
 				:dark-sidebar.sync="darkSidebar"
 				@drawer="drawerOpen = !drawerOpen"
-				@theme="theme = $event"
+				@theme="theme.setTheme($event)"
 				@lang="translation.setLang($event)"
 			></nav-app-bar>
 
@@ -87,7 +87,7 @@
 				<link
 					rel="stylesheet"
 					:href="
-						isDark
+						theme.isDark
 							? 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-vsc-dark-plus.css'
 							: 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css'
 					"

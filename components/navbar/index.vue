@@ -88,7 +88,7 @@ export default {
 	},
 	props: {
 		themes: {
-			type: Object,
+			type: Array,
 			required: true,
 		},
 		languages: {

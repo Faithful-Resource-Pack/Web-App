@@ -29,13 +29,14 @@ export default defineStore("translation", {
 		selectedLang: DEFAULT_LANG_ID,
 	}),
 	actions: {
+		setup() {
+			// incredible code
+			this.setLang(this.getLang());
+		},
 		async setLang(id) {
 			localStorage.setItem(LANG_KEY, id);
 			if (!Object.keys(this.loadedLangs).includes(id)) await this.loadLanguage(id);
 			this.$patch({ selectedLang: id });
-		},
-		supportedLang(lang) {
-			return Object.keys(this.availableLangs).includes(lang);
 		},
 		getLang() {
 			// navigator language uses bcp47 formatting, read from there if user hasn't overridden config
@@ -67,9 +68,8 @@ export default defineStore("translation", {
 				store.loadedLangs[langObj.id] = Object.merge({}, defaultLang, strings || {});
 			});
 		},
-		setup() {
-			// incredible code
-			this.setLang(this.getLang());
+		supportedLang(lang) {
+			return Object.keys(this.availableLangs).includes(lang);
 		},
 	},
 	getters: {

@@ -16,6 +16,7 @@ import { createPinia, mapState } from "pinia";
 // pinia stores
 import authStore from "./stores/auth/index.js";
 import translationStore from "./stores/translationStore.js";
+import themeStore from "./stores/themeStore.js";
 
 // layout components and tabs
 import ALL_TABS from "@helpers/tabs.js";
@@ -96,7 +97,6 @@ router.addRoute({ path: "*", name: "404", component: MissingPage });
 // needed for some pages to not completely die
 window.settings = {};
 
-const THEME_KEY = "THEME";
 const DARK_SIDEBAR_KEY = "dark_sidebar";
 const MENU_KEY = "menu_key";
 
@@ -117,13 +117,7 @@ const app = new Vue({
 		return {
 			auth: authStore(),
 			translation: translationStore(),
-			/** theme stuff */
-			theme: undefined,
-			themes: {
-				dark: "mdi-weather-night",
-				system: "mdi-desktop-tower-monitor",
-				light: "mdi-white-balance-sunny",
-			},
+			theme: themeStore(),
 			darkSidebar: localStorage.getItem(DARK_SIDEBAR_KEY) === "true" || false,
 			/** sidebar stuff */
 			drawerOpen: localStorage.getItem(MENU_KEY)
@@ -187,20 +181,6 @@ const app = new Vue({
 			return DateTime.fromJSDate(new Date(date))
 				.setLocale(this.$root.translation.current.bcp47)
 				.toLocaleString(format);
-		},
-		/** @param {"dark" | "light"} theme */
-		onMediaChange(theme) {
-			// only if system theme
-			if (this.theme !== "system") return;
-
-			this.$vuetify.theme.dark = theme === "dark";
-
-			const notificationString = this.lang().global.themes.notification;
-			this.showSnackBar(
-				notificationString.replace("%s", this.lang().global.themes.options[theme]),
-				"success",
-				2000,
-			);
 		},
 		syncRoutes(tabs) {
 			return syncRoutes(tabs.flatMap((r) => r.subtabs).flatMap((s) => s.routes));
@@ -300,48 +280,17 @@ const app = new Vue({
 		userRoles() {
 			return this.user.roles;
 		},
-		isDark() {
-			return this.$vuetify.theme.dark;
-		},
 	},
 	watch: {
-		theme: {
-			handler(n) {
-				const availableThemes = Object.keys(this.themes);
-				const defaultTheme = availableThemes[0];
-				if (n === undefined) {
-					const theme = localStorage.getItem(THEME_KEY);
-
-					// input validation
-					this.theme = this.themes[theme] ? theme : defaultTheme;
-					return;
-				}
-				if (!this.themes[n]) {
-					this.theme = defaultTheme;
-					return;
-				}
-
-				localStorage.setItem(THEME_KEY, String(n));
-				const isDark =
-					n !== "light" &&
-					(n === "dark" || window.matchMedia("(prefers-color-scheme: dark)").matches);
-				this.$vuetify.theme.dark = isDark;
-			},
-			immediate: true,
-		},
-		// alias for $vuetify.theme.dark
-		isDark: {
+		// bit more granular than subscribing to the whole store
+		"theme.isDark": {
 			handler(n) {
 				const arr = ["theme--light", "theme--dark"];
 				if (n) arr.reverse();
-
-				// handle css
-				const html = document.querySelector("html");
-
-				html.classList.add(arr[0]);
-				html.classList.remove(arr[1]);
+				this.$vuetify.theme.dark = n;
 			},
 			immediate: true,
+			deep: true,
 		},
 		darkSidebar(n) {
 			localStorage.setItem(DARK_SIDEBAR_KEY, String(n));
@@ -370,16 +319,8 @@ const app = new Vue({
 		this.reloadSettings();
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
 		this.translation.setup();
+		this.theme.setup(this);
 		this.auth.login(this, Vue.config.devtools);
-	},
-	mounted() {
-		// watch color schemes for light and dark
-		window.matchMedia("(prefers-color-scheme: dark)").onchange = (ev) => {
-			if (ev.matches) this.onMediaChange("dark");
-		};
-		window.matchMedia("(prefers-color-scheme: light)").onchange = (ev) => {
-			if (ev.matches) this.onMediaChange("light");
-		};
 	},
 	// plugins
 	router,

@@ -100,7 +100,7 @@ export default {
 			return this.height * this.ratio;
 		},
 		theme() {
-			return this.$root.isDark ? "dark" : "classic";
+			return this.$root.theme.isDark ? "dark" : "classic";
 		},
 		types() {
 			return this.labels.reduce((acc, cur, i) => {

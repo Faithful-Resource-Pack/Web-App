@@ -8,6 +8,7 @@ import { DateTimeFormatOptions } from "luxon";
 
 import authStore from "../stores/auth/index.js";
 import translationStore from "../stores/translationStore.js";
+import themeStore from "../stores/themeStore.js";
 import strings from "./strings/en_US.js";
 
 // Vue has the constructor type in types/vue.d.ts
@@ -37,13 +38,13 @@ declare module "vue/types/vue" {
 	interface Vue {
 		readonly auth: ReturnType<typeof authStore>;
 		readonly translation: ReturnType<typeof translationStore>;
+		readonly theme: ReturnType<typeof themeStore>;
 		readonly loginURL: string;
 		readonly apiURL: string;
 		readonly apiOptions: AxiosRequestConfig;
 		readonly user: DiscordUser;
 		readonly isLoggedIn: boolean;
 		readonly isAdmin: boolean;
-		readonly isDark: boolean;
 
 		// log reactive vue object without all the ugly stuff
 		log(...objs: any[]): void;
