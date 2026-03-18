@@ -43,7 +43,6 @@
 				:key="`qd-day-${i}`"
 				class="qd-day px-0"
 				:color="i == day ? 'primary' : ''"
-				rounded
 				:text="i !== day"
 				:elevation="i == day ? 2 : 0"
 				:disabled="disabled || i > daysInCurMonth"
