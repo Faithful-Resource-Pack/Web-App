@@ -11,7 +11,7 @@
 						{{ authors }}
 					</p>
 					<p>
-						<v-icon small>mdi-clock-outline</v-icon>
+						<v-icon small>mdi-calendar</v-icon>
 						{{ date }}
 					</p>
 				</template>
