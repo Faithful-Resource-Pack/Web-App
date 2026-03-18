@@ -137,16 +137,9 @@ export default {
 
 			Object.keys(data).forEach((k) => (data[k] = data[k] === null ? this.default[k] : data[k]));
 
-			axios
-				.post(`${this.$root.apiURL}/users/${id}`, data, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+			return this.$root
+				.wrapSnackBar(axios.post(`${this.$root.apiURL}/users/${id}`, data, this.$root.apiOptions))
+				.then(() => this.$emit("close", true));
 		},
 	},
 	watch: {

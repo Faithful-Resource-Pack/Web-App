@@ -225,15 +225,7 @@ export default {
 						this.$root.apiOptions,
 					);
 
-			promise
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+			return this.$root.wrapSnackBar(promise).then(() => this.$emit("close", true));
 		},
 		updateTags(data) {
 			data.tags = sortTags(data.tags);

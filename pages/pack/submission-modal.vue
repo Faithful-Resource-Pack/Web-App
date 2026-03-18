@@ -152,15 +152,7 @@ export default {
 				? axios.post(`${this.$root.apiURL}/submissions`, data, this.$root.apiOptions)
 				: axios.put(`${this.$root.apiURL}/submissions/${data.id}`, data, this.$root.apiOptions);
 
-			requestPromise
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+			this.$root.wrapSnackBar(requestPromise).then(() => this.$emit("close", true));
 		},
 	},
 	computed: {

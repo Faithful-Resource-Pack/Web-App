@@ -95,14 +95,8 @@ export default {
 					this.$root.apiOptions,
 				);
 			}
-			prom
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-				})
-				.catch((error) => {
-					console.error(error);
-					this.$root.showSnackBar(error, "error");
-				});
+
+			return this.$root.wrapSnackBar(prom);
 		},
 		convertDownloadsToArray(obj) {
 			return Object.entries(obj).map(([category, items]) => {

@@ -53,14 +53,11 @@ export default {
 	},
 	methods: {
 		deleteContribution() {
-			axios
-				.delete(`${this.$root.apiURL}/contributions/${this.data.id}`, this.$root.apiOptions)
+			this.$root
+				.wrapSnackBar(
+					axios.delete(`${this.$root.apiURL}/contributions/${this.data.id}`, this.$root.apiOptions),
+				)
 				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((err) => {
-					this.$root.showSnackBar(err, "error");
 					this.$emit("close", true);
 				});
 		},

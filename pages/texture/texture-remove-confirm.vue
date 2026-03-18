@@ -88,40 +88,25 @@ export default {
 		},
 		deleteData() {
 			switch (this.type) {
+				case "texture":
+					const textureId = this.data.id;
+					return this.$root
+						.wrapSnackBar(
+							axios.delete(`${this.$root.apiURL}/textures/${textureId}`, this.$root.apiOptions),
+						)
+						.then(() => this.$emit("close", true));
 				case "use":
 					const useId = this.data.id;
-					return axios
-						.delete(`${this.$root.apiURL}/uses/${useId}`, this.$root.apiOptions)
-						.then(() => {
-							this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-							this.$emit("close", true);
-						})
-						.catch((err) => {
-							console.error(err);
-							this.$root.showSnackBar(err, "error");
-							this.$emit("close", true);
-						});
+					return this.$root
+						.wrapSnackBar(axios.delete(`${this.$root.apiURL}/uses/${useId}`, this.$root.apiOptions))
+						.then(() => this.$emit("close", true));
 				case "path":
 					const pathId = this.data.id;
-					return axios
-						.delete(`${this.$root.apiURL}/paths/${pathId}`, this.$root.apiOptions)
-						.then(() => {
-							this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-							this.$emit("close", true);
-						})
-						.catch((err) => {
-							console.error(err);
-							this.$root.showSnackBar(err, "error");
-							this.$emit("close", true);
-						});
-				case "texture":
-					return this.onSubmit(this.data)
-						.then(() => this.$emit("close", true))
-						.catch((err) => {
-							console.error(err);
-							this.$root.showSnackBar(err, "error");
-							this.$emit("close", true);
-						});
+					return this.$root
+						.wrapSnackBar(
+							axios.delete(`${this.$root.apiURL}/paths/${pathId}`, this.$root.apiOptions),
+						)
+						.then(() => this.$emit("close", true));
 			}
 		},
 	},

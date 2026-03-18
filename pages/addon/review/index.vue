@@ -150,16 +150,13 @@ export default {
 				reason: reason,
 			};
 
-			axios
-				.put(`${this.$root.apiURL}/addons/${id}/review`, data, this.$root.apiOptions)
+			this.$root
+				.wrapSnackBar(
+					axios.put(`${this.$root.apiURL}/addons/${id}/review`, data, this.$root.apiOptions),
+				)
 				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 					this.selectedAddonId = undefined;
 					this.update();
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
 				});
 		},
 		closeDenyPopup(send = false, reason) {

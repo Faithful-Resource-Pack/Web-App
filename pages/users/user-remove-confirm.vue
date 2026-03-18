@@ -59,18 +59,12 @@ export default {
 	},
 	methods: {
 		deleteUser() {
-			axios
-				// apiOptions works for self-deletion as well
-				.delete(`${this.$root.apiURL}/users/${this.data.id}`, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((error) => {
-					console.error(error);
-					this.$root.showSnackBar(err, "error");
-					this.$emit("close", true);
-				});
+			this.$root
+				.wrapSnackBar(
+					// apiOptions works for self-deletion as well
+					axios.delete(`${this.$root.apiURL}/users/${this.data.id}`, this.$root.apiOptions),
+				)
+				.then(() => this.$emit("close", true));
 		},
 		getAddons() {
 			axios

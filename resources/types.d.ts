@@ -46,12 +46,12 @@ declare module "vue/types/vue" {
 		readonly isLoggedIn: boolean;
 		readonly isAdmin: boolean;
 
-		// log reactive vue object without all the ugly stuff
 		log(...objs: any[]): void;
 		lang(): Readonly<typeof strings>;
 		lang(key: string): string;
 		makeJsonSnackBar(json: unknown): SnackBarCallback;
 		showSnackBar: SnackBarCallback;
+		wrapSnackBar<T>(prom: T | Awaited<T>): Promise<Awaited<T>>;
 		compileMarkdown(rawText: string): string;
 		formatDate(date: number | string | Date, format?: DateTimeFormatOptions): string;
 		reloadSettings(): Promise<void>;

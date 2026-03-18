@@ -40,16 +40,11 @@ export default {
 	},
 	methods: {
 		deleteVersion() {
-			axios
-				.delete(`${this.$root.apiURL}/versions/${this.data.version}`, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((error) => {
-					console.error(error);
-					this.$root.showSnackBar(err, "error");
-				});
+			this.$root
+				.wrapSnackBar(
+					axios.delete(`${this.$root.apiURL}/versions/${this.data.version}`, this.$root.apiOptions),
+				)
+				.then(() => this.$emit("close", true));
 		},
 	},
 	computed: {

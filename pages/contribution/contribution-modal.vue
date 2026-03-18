@@ -153,7 +153,8 @@ export default {
 		},
 		handleSubmit() {
 			// the code is different enough for adding/creating it's worth having two functions
-			return this.add ? this.addContributions() : this.editContribution();
+			const result = this.add ? this.addContributions() : this.editContribution();
+			return result.then(() => this.closeOnSubmit && this.$emit("close", true));
 		},
 		async addContributions() {
 			let success = true;
@@ -194,22 +195,14 @@ export default {
 			// all contributions must be valid
 			if (!success) return;
 
-			axios
-				.post(`${this.$root.apiURL}/contributions`, finalContributions, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					if (this.closeOnSubmit) this.$emit("close", true);
-				})
-				.catch((err) => {
-					this.$root.showSnackBar(err, "error");
-					console.error(err);
-					return false;
-				});
+			return this.$root.wrapSnackBar(
+				axios.post(`${this.$root.apiURL}/contributions`, finalContributions, this.$root.apiOptions),
+			);
 		},
 		async editContribution() {
 			const contrib = this.contribs[0];
-			axios
-				.put(
+			return this.$root.wrapSnackBar(
+				axios.put(
 					`${this.$root.apiURL}/contributions/${contrib.id}`,
 					{
 						date: new Date(contrib.date).getTime(),
@@ -218,14 +211,8 @@ export default {
 						texture: Number(contrib.texture),
 					},
 					this.$root.apiOptions,
-				)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					if (this.closeOnSubmit) this.$emit("close", true);
-				})
-				.catch((err) => {
-					this.$root.showSnackBar(err, "error");
-				});
+				),
+			);
 		},
 	},
 	computed: {

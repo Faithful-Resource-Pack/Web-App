@@ -39,16 +39,11 @@ export default {
 	},
 	methods: {
 		deleteAddon() {
-			axios
-				.delete(`${this.$root.apiURL}/addons/${this.data.id}`, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close", true);
-				})
-				.catch((error) => {
-					console.error(error);
-					this.$root.showSnackBar(`${error.message} : ${error.response.data.error}`, "error");
-				});
+			this.$root
+				.wrapSnackBar(
+					axios.delete(`${this.$root.apiURL}/addons/${this.data.id}`, this.$root.apiOptions),
+				)
+				.then(() => this.$emit("close", true));
 		},
 	},
 	watch: {

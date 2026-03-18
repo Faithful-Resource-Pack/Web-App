@@ -140,6 +140,11 @@ const app = new Vue({
 			const cleaned = structuredClone(objs);
 			console.log(cleaned);
 		},
+		/** For debugging in sub-components */
+		checkPermissions() {
+			console.log(this.$route);
+			console.log(this.$router.options.routes);
+		},
 		async loadBadge(cb, key) {
 			if (!this.isAdmin) return;
 			// use await to prevent sync callbacks not having a then() method
@@ -165,10 +170,19 @@ const app = new Vue({
 			this.snackbar.timeout = timeout;
 			this.snackbar.json = json;
 		},
-		/** For debugging in sub-components */
-		checkPermissions() {
-			console.log(this.$route);
-			console.log(this.$router.options.routes);
+		// this is such a common operation it should really be a macro
+		async wrapSnackBar(promise, successMessage = "") {
+			try {
+				const result = await promise;
+				this.showSnackBar(successMessage || this.lang().global.ends_success, "success");
+				// so it can still be used
+				return result;
+			} catch (err) {
+				console.error(err);
+				this.showSnackBar(err, "error");
+				// re-throw so it doesn't accidentally trigger the .then handler
+				throw err;
+			}
 		},
 		compileMarkdown(rawText) {
 			if (!rawText) return "";

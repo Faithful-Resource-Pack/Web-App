@@ -97,20 +97,15 @@ export default {
 		},
 		send() {
 			// /textures/merge/{source}/{destination}
-			axios
-				.put(
-					`${this.$root.apiURL}/textures/merge/${this.srcTextureID}/${this.destTextureID}`,
-					null,
-					this.$root.apiOptions,
+			this.$root
+				.wrapSnackBar(
+					axios.put(
+						`${this.$root.apiURL}/textures/merge/${this.srcTextureID}/${this.destTextureID}`,
+						null,
+						this.$root.apiOptions,
+					),
 				)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					this.$emit("close");
-				})
-				.catch((err) => {
-					this.$root.showSnackBar(err, "error");
-					this.$emit("close");
-				});
+				.then(() => this.$emit("close"));
 		},
 	},
 	computed: {

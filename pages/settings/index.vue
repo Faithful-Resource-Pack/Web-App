@@ -60,16 +60,11 @@ export default {
 			return Prism.highlight(code, Prism.languages.js, "json");
 		},
 		save() {
-			axios
-				.post(`${this.$root.apiURL}/settings/raw`, this.json, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-					return this.$root.reloadSettings();
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+			return this.$root
+				.wrapSnackBar(
+					axios.post(`${this.$root.apiURL}/settings/raw`, this.json, this.$root.apiOptions),
+				)
+				.then(() => this.$root.reloadSettings());
 		},
 	},
 	watch: {

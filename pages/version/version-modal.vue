@@ -68,20 +68,17 @@ export default {
 			return this.versions.includes(version) && this.data.version !== version;
 		},
 		send() {
-			axios
-				.put(
-					`${this.$root.apiURL}/versions/rename/${this.data.version}/${this.formData.version}`,
-					null,
-					this.$root.apiOptions,
+			this.$root
+				.wrapSnackBar(
+					axios.put(
+						`${this.$root.apiURL}/versions/rename/${this.data.version}/${this.formData.version}`,
+						null,
+						this.$root.apiOptions,
+					),
 				)
 				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 					this.$root.reloadSettings();
 					this.$emit("close", true);
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
 				});
 		},
 	},

@@ -252,15 +252,9 @@ export default {
 				media: this.cleanedMedia,
 			};
 
-			axios
-				.post(`${this.$root.apiURL}/users/profile/`, data, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
-				})
-				.catch((error) => {
-					console.error(error);
-					this.$root.showSnackBar(error, "error");
-				});
+			return this.$root.wrapSnackBar(
+				axios.post(`${this.$root.apiURL}/users/profile/`, data, this.$root.apiOptions),
+			);
 		},
 		openDeleteModal() {
 			this.deleteModalOpened = true;

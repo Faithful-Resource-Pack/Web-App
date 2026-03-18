@@ -36,69 +36,69 @@ export default {
 		},
 	},
 	methods: {
-		handleSubmit(data) {
+		async handleSubmit(data) {
 			// 1. Upload
 			let id;
-			axios
-				.post(`${this.$root.apiURL}/addons`, data, this.$root.apiOptions)
-				.then(async (response) => {
-					const addon = response.data;
-					id = addon.id;
+			try {
+				const response = await axios.post(
+					`${this.$root.apiURL}/addons`,
+					data,
+					this.$root.apiOptions,
+				);
+				const addon = response.data;
+				id = addon.id;
 
-					const promises = [];
-					// 2. Upload header and screenshots
-					let form;
-					if (this.header || this.screenshots.length) form = new FormData();
+				const promises = [];
+				// 2. Upload header and screenshots
+				let form;
+				if (this.header || this.screenshots.length) form = new FormData();
 
-					if (this.header) {
-						form.set("file", this.header, this.header.name);
-						promises.push(
-							axios.post(`${this.$root.apiURL}/addons/${id}/header`, form, this.$root.apiOptions),
-						);
+				if (this.header) {
+					form.set("file", this.header, this.header.name);
+					promises.push(
+						axios.post(`${this.$root.apiURL}/addons/${id}/header`, form, this.$root.apiOptions),
+					);
+				}
+				if (this.screenshots.length) {
+					// add all of them
+					// fix to stabilize upload and make one request then another...
+					let i = 0;
+					let successful = true;
+					let err;
+					let screenshots = this.screenshots;
+					while (i < screenshots.length && successful) {
+						const screen = screenshots[i];
+						const form = new FormData();
+						form.set("file", screen, screen.name);
+
+						successful = await axios
+							.post(`${this.$root.apiURL}/addons/${id}/screenshots`, form, this.$root.apiOptions)
+							.then(() => true)
+							.catch((error) => {
+								err = error;
+								return false;
+							});
+
+						i++;
 					}
-					if (this.screenshots.length) {
-						// add all of them
-						// fix to stabilize upload and make one request then another...
-						let i = 0;
-						let successful = true;
-						let err;
-						let screenshots = this.screenshots;
-						while (i < screenshots.length && successful) {
-							const screen = screenshots[i];
-							const form = new FormData();
-							form.set("file", screen, screen.name);
 
-							successful = await axios
-								.post(`${this.$root.apiURL}/addons/${id}/screenshots`, form, this.$root.apiOptions)
-								.then(() => true)
-								.catch((error) => {
-									err = error;
-									return false;
-								});
+					promises.push(successful ? Promise.resolve() : Promise.reject(err));
+				}
 
-							i++;
-						}
+				await Promise.all(promises);
+				this.$root.showSnackBar("Saved", "success");
+				this.$router.push("/addons/submissions");
+			} catch (err) {
+				console.error(err);
+				this.$root.showSnackBar(err, "error");
 
-						promises.push(successful ? Promise.resolve() : Promise.reject(err));
-					}
-
-					return Promise.all(promises);
-				})
-				.then(() => {
-					this.$root.showSnackBar("Saved", "success");
-					this.$router.push("/addons/submissions");
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-
-					// delete what is left of addon
-					// if we have id then we at least successfully created the file
-					if (id)
-						axios
-							.delete(`${this.$root.apiURL}/addons/${id}`, this.$root.apiOptions)
-							.catch((err) => this.$root.showSnackBar(err, "error"));
-				});
+				// delete what is left of addon
+				// if we have id then we at least successfully created the file
+				if (id)
+					axios
+						.delete(`${this.$root.apiURL}/addons/${id}`, this.$root.apiOptions)
+						.catch((err) => this.$root.showSnackBar(err, "error"));
+			}
 		},
 		handleHeader(file, remove = false) {
 			this.header = remove ? undefined : file;

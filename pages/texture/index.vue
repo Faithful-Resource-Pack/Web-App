@@ -20,7 +20,7 @@
 			v-model="remove.open"
 			type="texture"
 			:data="remove.data"
-			:on-submit="removeTexture"
+			@close="removeTexture"
 		/>
 
 		<div class="text-h4 py-4">
@@ -235,9 +235,7 @@ export default {
 			if (success) this.getTextures();
 			this.getTags();
 		},
-		async removeTexture(data) {
-			const textureId = data.id;
-			await axios.delete(`${this.$root.apiURL}/textures/${textureId}`, this.$root.apiOptions);
+		async removeTexture() {
 			this.startSearch();
 		},
 	},
