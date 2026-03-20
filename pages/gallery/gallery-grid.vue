@@ -222,7 +222,7 @@ export default {
 		// initialize callback references (they need to be the same for unmounting)
 		this.scrollListener = () => {
 			const el = this.$refs.bottomElement;
-			this.scrollY = document.firstElementChild.scrollTop;
+			this.scrollY = document.getElementById("main").scrollTop;
 
 			if (!el || !this.isScrolledIntoView(el, 300)) return;
 
