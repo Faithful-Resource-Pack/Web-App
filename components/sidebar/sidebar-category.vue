@@ -1,15 +1,11 @@
 <template>
 	<v-list-group color="inherit" :value="initOpen" @click="$emit('click')">
 		<template #activator>
-			<v-list-item-title class="uppercase-unsized">
-				{{ $root.lang().global.tabs[tab.id].title || tab.id.toTitleCase() }}
-			</v-list-item-title>
+			<v-list-item-title class="uppercase-unsized">{{ title }}</v-list-item-title>
 		</template>
 		<template #appendIcon>
 			<!-- regular is 24 and small is 16, both are a bit too extreme -->
-			<v-icon size="20" style="opacity: 80%">
-				{{ value ? "mdi-chevron-up" : "mdi-chevron-right" }}
-			</v-icon>
+			<v-icon size="20" style="opacity: 80%">{{ collapseIcon }}</v-icon>
 		</template>
 		<div class="v-list pb-4 pt-0">
 			<sidebar-tab
@@ -49,6 +45,14 @@ export default {
 		badges: {
 			type: Object,
 			required: true,
+		},
+	},
+	computed: {
+		title() {
+			return this.$root.lang().global.tabs[this.tab.id].title || this.tab.id.toTitleCase();
+		},
+		collapseIcon() {
+			return this.value ? "mdi-chevron-up" : "mdi-chevron-right";
 		},
 	},
 };

@@ -5,9 +5,7 @@
 			<v-icon small>{{ subtab.icon }}</v-icon>
 		</v-list-item-icon>
 		<v-list-item-content>
-			<v-list-item-title class="body-2">
-				{{ $root.lang().global.tabs[parent]?.subtabs[subtab.id] || subtab.id.toTitleCase() }}
-			</v-list-item-title>
+			<v-list-item-title class="body-2">{{ title }}</v-list-item-title>
 		</v-list-item-content>
 		<v-list-item-action v-if="subtab.badge && badges[subtab.id]" class="nav-badge">
 			<span class="nav-badge-inner error white--text font-weight-black">
@@ -33,6 +31,14 @@ export default {
 			type: Object,
 			required: false,
 			default: () => ({}),
+		},
+	},
+	computed: {
+		title() {
+			return (
+				this.$root.lang().global.tabs[this.parent]?.subtabs[this.subtab.id] ||
+				this.subtab.id.toTitleCase()
+			);
 		},
 	},
 };
