@@ -132,8 +132,10 @@ export default {
 			const data = this.formData;
 			const id = data.id;
 
-			delete data.id; // excess property and therefore is not allowed
-			delete data.media; // excess property and therefore is not allowed
+			// excess properties and therefore are not allowed
+			delete data.id;
+			delete data.bio;
+			delete data.media;
 
 			Object.keys(data).forEach((k) => (data[k] = data[k] === null ? this.default[k] : data[k]));
 
@@ -158,8 +160,6 @@ export default {
 					};
 				} else {
 					Object.keys(this.data).forEach((key) => {
-						// todo: support bios better?
-						if (key === "bio") return;
 						this.formData[key] = this.data[key];
 					});
 				}
