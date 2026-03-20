@@ -120,7 +120,7 @@ export default {
 	},
 	methods: {
 		toTop() {
-			window.scrollTo({
+			document.getElementById("main").scrollTo({
 				top: 0,
 				behavior: "smooth",
 			});
