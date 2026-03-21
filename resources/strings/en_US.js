@@ -127,6 +127,7 @@ export default {
 			title: "Account manager",
 			active_account: "Active account",
 			add_account: "Add new account",
+			avatar_alt_text: "%s's avatar",
 		},
 	},
 	missing_page: {

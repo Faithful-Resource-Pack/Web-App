@@ -2,7 +2,7 @@
 	<v-list dense nav>
 		<v-list-item two-line style="min-height: 0">
 			<v-list-item-avatar left class="my-0">
-				<v-img :src="$root.user?.avatar" :alt="`${$root.user.username}'s Avatar`">
+				<v-img :src="$root.user?.avatar" :alt="avatarAlt">
 					<template #placeholder>
 						<div
 							class="d-flex align-center justify-center white--text"
@@ -77,6 +77,13 @@ export default {
 		copyID() {
 			navigator.clipboard.writeText(this.$root.user.id);
 			this.$root.showSnackBar(this.$root.lang().global.navbar.profile.copied, "success");
+		},
+	},
+	computed: {
+		avatarAlt() {
+			return this.$root
+				.lang()
+				.global.account_manager.avatar_alt_text.replace("%s", this.$root.user.username);
 		},
 	},
 };

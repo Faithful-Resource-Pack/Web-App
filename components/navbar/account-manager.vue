@@ -14,7 +14,11 @@
 						<v-list-item-avatar style="border-radius: 0 !important">
 							<v-img
 								:src="`https://vzge.me/face/80/${profile.uuid || 'X-Steve'}`"
-								:alt="`${profile.username}'s Avatar`"
+								:alt="
+									$root
+										.lang()
+										.global.account_manager.avatar_alt_text.replace('%s', profile.username)
+								"
 								style="image-rendering: pixelated"
 							>
 							</v-img>
