@@ -24,7 +24,7 @@
 					v-if="localUser.uuid && localUser.uuid.length === uuidMaxLength"
 					class="mx-5"
 					:src="avatar"
-					alt="Minecraft skin"
+					:alt="$root.lang().profile.general.uuid.skin_alt_text"
 				/>
 				<div class="flex-grow-1">
 					<v-form lazy-validation>

@@ -59,7 +59,7 @@
 			<v-col v-if="formData.uuid && $vuetify.breakpoint.smAndUp" cols="3">
 				<img
 					:src="`https://vzge.me/full/256/${formData.uuid}`"
-					alt="Minecraft skin"
+					:alt="$root.lang().profile.general.uuid.skin_alt_text"
 					style="width: 100%; max-width: 250"
 				/>
 			</v-col>
