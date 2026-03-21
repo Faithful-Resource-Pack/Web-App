@@ -14,7 +14,7 @@
 		<v-container v-if="error" class="d-flex align-center justify-center flex-grow-1">
 			<ascii-error :subtitle="error" :errorCode="errorCode" />
 		</v-container>
-		<div v-else class="gallery-modal-container pa-5">
+		<div v-else class="gallery-modal-container pa-5 ga-2">
 			<image-display
 				:textureObj="textureObj"
 				:loading="loading"
@@ -204,7 +204,6 @@ export default {
 	flex-flow: row wrap;
 	justify-content: space-between;
 	align-items: flex-start;
-	gap: 8px; // equivalent to mx-2
 }
 
 $modal-image-size: 160px;

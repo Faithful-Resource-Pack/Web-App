@@ -115,9 +115,18 @@ html.theme--light,
 	height: 100%;
 }
 
-// vuetify 3 backported feature (really handy)
+// vuetify 3 backported features (really handy)
 .cursor-pointer {
 	cursor: pointer !important;
+}
+// vuetify 3 gap styles (used in same way as other spacing classes)
+@for $i from 0 through 16 {
+	.gy-#{$i}, .ga-#{$i} {
+		row-gap: $i * 4px;
+	}
+	.gx-#{$i}, .ga-#{$i} {
+		column-gap: $i * 4px;
+	}
 }
 
 a {

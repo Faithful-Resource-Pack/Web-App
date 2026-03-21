@@ -22,7 +22,7 @@
 				<ascii-error :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
 			<!-- desktop layout -->
-			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="review-content">
+			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="review-content ga-2">
 				<review-list
 					v-model="selectedAddonId"
 					:items="selectedListItems"
@@ -294,8 +294,6 @@ $preview-width: 60%;
 	flex-flow: row nowrap;
 	justify-content: center;
 	align-items: stretch;
-	// ma-2
-	gap: 8px;
 }
 
 // make sure all children take up the same space
