@@ -23,9 +23,7 @@
 				</v-list-item-avatar>
 
 				<h3 class="text-h5 text--primary mb-2">
-					<template v-if="$root.isLoggedIn">
-						{{ user.username || user.discordUsername }}
-					</template>
+					<template v-if="$root.isLoggedIn">{{ user.username }}</template>
 					<template v-else>{{ $root.lang().global.name }}</template>
 				</h3>
 				<span class="text--secondary">

@@ -54,6 +54,8 @@ export default defineStore("auth", {
 
 				this.$patch({
 					id: discordProfile.discordId,
+					// if there's already a username prioritize that (faithfulUser resolved first)
+					username: this.username || discordProfile.discordDisplayName,
 					discordUsername: discordProfile.discordUsername,
 					avatar: discordProfile.discordAvatar,
 					banner: discordProfile.discordBanner,
