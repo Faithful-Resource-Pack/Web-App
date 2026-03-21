@@ -236,13 +236,14 @@ export default {
 		},
 	},
 	gallery: {
+		title: "Gallery",
 		max_items_per_row: "Max items per row",
 		stretched_switcher: "Full width view",
 		animated_switcher: "Play animated textures",
 		share: "Share texture",
+		to_top: "Return to page start",
 		share_link_copied_to_clipboard: "Share link copied to clipboard",
 		authors_copied_to_clipboard: "Texture submission authors copied to clipboard",
-		title: "Gallery",
 		loading_message: "Loading gallery results…",
 		error_message: {
 			texture_not_done: "This texture is missing!",

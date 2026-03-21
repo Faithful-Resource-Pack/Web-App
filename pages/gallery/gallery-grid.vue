@@ -48,7 +48,13 @@
 		</div>
 
 		<!-- already a scroll listener here so we can reuse it -->
-		<v-btn v-show="scrollY > 500" fab class="go-up-btn" @click="toTop">
+		<v-btn
+			v-show="scrollY > 500"
+			fab
+			class="go-up-btn"
+			:title="$root.lang().gallery.to_top"
+			@click="toTop"
+		>
 			<v-icon large>mdi-chevron-up</v-icon>
 		</v-btn>
 		<div ref="bottomElement" />
