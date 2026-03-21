@@ -2,7 +2,7 @@
 	<v-container>
 		<div class="text-h4 py-4 d-flex flex-row align-center">
 			{{ $root.lang().posts.titles.list }}
-			<v-progress-circular v-if="loading" indeterminate class="ml-2" />
+			<v-progress-circular v-if="loading" indeterminate class="ml-5" />
 		</div>
 
 		<div v-if="!loading && posts.length === 0">
