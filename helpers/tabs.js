@@ -231,7 +231,7 @@ export default [
 					{
 						path: "/settings",
 						component: SettingsPage,
-						name: "Settings",
+						name: "Edit global settings",
 					},
 				],
 			},
