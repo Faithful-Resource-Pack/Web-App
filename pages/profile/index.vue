@@ -1,9 +1,8 @@
 <template>
 	<v-container>
-		<div class="d-flex flex-wrap align-center justify-space-between">
-			<h4 class="text-h4 my-4">{{ $root.lang().profile.title }}</h4>
+		<div class="d-flex flex-wrap align-center justify-space-between py-4" style="gap: 16px">
+			<h4 class="text-h4">{{ $root.lang().profile.title }}</h4>
 			<v-btn
-				class="my-4"
 				color="secondary"
 				:href="`https://faithfulpack.net/user/${$root.user.id}`"
 				:disabled="localUser.anonymous"
