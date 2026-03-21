@@ -2,20 +2,24 @@
 	<v-container>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
-		<div class="text-h4 py-4">
-			{{ $root.lang().database.settings.title }}
-		</div>
-		<div class="my-2 text-h5">{{ $root.lang().database.settings.edit_raw }}</div>
+		<v-row no-gutters class="py-0 mb-0" align="center">
+			<v-col cols="12" sm="6">
+				<div class="text-h4 py-4">
+					{{ $root.lang().database.settings.title }}
+				</div>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<v-btn :color="pageColor" class="white--text" :disabled="invalidJson" block @click="save">
+					<v-icon left>mdi-content-save</v-icon>
+					{{ $root.lang().global.btn.save }}
+				</v-btn>
+			</v-col>
+		</v-row>
 
-		<v-btn :color="pageColor" class="white--text my-6" :disabled="invalidJson" block @click="save">
-			<v-icon left>mdi-content-save</v-icon>
-			{{ $root.lang().global.btn.save }}
-		</v-btn>
-
-		<v-card class="main-container my-2">
+		<v-card class="main-container my-2 pa-1">
 			<prism-editor
 				v-model="jsonText"
-				class="ma-0 json-editor"
+				class="json-editor"
 				style="height: auto"
 				:highlight="highlighter"
 				line-numbers

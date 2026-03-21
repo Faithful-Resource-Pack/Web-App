@@ -721,8 +721,7 @@ export default {
 			},
 		},
 		settings: {
-			title: "Settings",
-			edit_raw: "Edit raw JSON",
+			title: "Edit global settings",
 		},
 	},
 };
