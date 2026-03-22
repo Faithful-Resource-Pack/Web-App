@@ -72,7 +72,7 @@ export default {
 	},
 	methods: {
 		updateTabsOpen(label) {
-			this.tabsOpen[label] = !this.tabsOpen[label];
+			if (label) this.tabsOpen[label] = !this.tabsOpen[label];
 			localStorage.setItem(OPEN_TAB_KEY, JSON.stringify(this.tabsOpen));
 		},
 		autoClose() {
