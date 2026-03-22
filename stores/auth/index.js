@@ -91,10 +91,10 @@ export default defineStore("auth", {
 			// we can get the auth already from localstorage and skip the validation
 			return discordAuthStore().loginWithAuth(auth);
 		},
-		logout(id) {
+		logout(logoutId) {
 			const currentId = this.id;
 			// not logged into account being logged out of; remove it from localStorage and update
-			if (id && id !== currentId) return this.updateAccounts(id);
+			if (logoutId && logoutId !== currentId) return this.updateAccounts(logoutId);
 
 			const discordAuth = discordAuthStore();
 			discordAuth.logout();
@@ -103,6 +103,10 @@ export default defineStore("auth", {
 			const accounts = Object.entries(JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)));
 			const nextAccountCandidate = accounts.find(([id]) => id !== currentId);
 			if (nextAccountCandidate) return discordAuth.loginWithAuth(nextAccountCandidate[1]);
+
+			// no more accounts, fully reset everything
+			localStorage.removeItem(CURRENT_USER_KEY);
+			this.$reset();
 		},
 		addChangeListener(cb) {
 			this.authListeners.push(cb);
