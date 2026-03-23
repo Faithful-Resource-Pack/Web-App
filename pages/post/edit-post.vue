@@ -1,12 +1,14 @@
 <template>
 	<v-container>
-		<h4 class="text-h4 py-4">
-			<v-btn large icon class="ml-2" to="/posts/list">
+		<div class="d-flex align-center py-4">
+			<v-btn large icon class="mx-2" to="/posts/list">
 				<v-icon large>mdi-chevron-left</v-icon>
 			</v-btn>
-			{{ $root.lang().posts.titles.edit }}
-			<span class="font-weight-light text--secondary">#{{ id }}</span>
-		</h4>
+			<h4 class="text-h4">
+				{{ $root.lang().posts.titles.edit }}
+				<span class="font-weight-light text--secondary">#{{ id }}</span>
+			</h4>
+		</div>
 		<post-form v-model="post" :loading="loading" />
 	</v-container>
 </template>
