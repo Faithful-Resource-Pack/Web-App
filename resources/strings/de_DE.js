@@ -71,7 +71,6 @@ export default {
 				subtabs: {
 					dashboard: "Dashboard",
 					profile: "Profil",
-					statistics: "Statistik",
 					gallery: "Galerie",
 				},
 			},
@@ -96,6 +95,7 @@ export default {
 					contributions: "Beiträge",
 					users: "Benutzer",
 					textures: "Texturen",
+					versions: "Versionen",
 					packs: "Packs",
 					settings: "Einstellungen",
 				},
