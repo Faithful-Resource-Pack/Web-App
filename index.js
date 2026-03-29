@@ -14,7 +14,7 @@ import { marked } from "marked";
 import { createPinia, mapState } from "pinia";
 
 // pinia stores
-import authStore from "./stores/auth/index.js";
+import authStore from "./stores/authStore.js";
 import translationStore from "./stores/translationStore.js";
 import themeStore from "./stores/themeStore.js";
 

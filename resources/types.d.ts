@@ -6,7 +6,7 @@ import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { RouteConfig } from "vue-router";
 import { DateTimeFormatOptions } from "luxon";
 
-import authStore from "../stores/auth/index.js";
+import authStore from "../stores/authStore.js";
 import translationStore from "../stores/translationStore.js";
 import themeStore from "../stores/themeStore.js";
 import strings from "./strings/en_US.js";

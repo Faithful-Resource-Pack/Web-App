@@ -61,7 +61,7 @@
 
 <script>
 import axios from "axios";
-import { AUTH_STORAGE_KEY } from "../../stores/auth/discordAuthStore";
+import { AUTH_STORAGE_KEY } from "../../stores/discordTokenStore.js";
 
 export default {
 	name: "account-manager",

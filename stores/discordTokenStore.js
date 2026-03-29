@@ -5,8 +5,8 @@ export const LEGACY_AUTH_STORAGE_KEY = "auth";
 export const AUTH_STORAGE_KEY = "available_accounts";
 export const CURRENT_USER_KEY = "current_user_id";
 
-/** Base store to handle logins and Discord tokens */
-export const discordAuthStore = defineStore("discordAuth", {
+/** Handle and validate session tokens from Discord integration */
+export default defineStore("discordToken", {
 	state: () => ({
 		/** @type {string} */
 		access_token: undefined,
@@ -85,9 +85,6 @@ export const discordAuthStore = defineStore("discordAuth", {
 				expires_at: this.expiryDurationToTime(json.expires_in),
 			};
 		},
-		logout() {
-			this.$reset(); // ! Very important to reset all stores
-		},
 		async getAuthMethod() {
 			// api returns tokens through search params, so prioritize those for login
 			let auth = this.parseSearchParams(location.search);
@@ -99,7 +96,7 @@ export const discordAuthStore = defineStore("discordAuth", {
 			if (!this.isValidAuth(auth)) return null;
 			return auth;
 		},
-		async loginWithAuth(auth) {
+		async authenticate(auth) {
 			const lastLogin = this.isAuthExpired(auth) ? this.refreshLogin(auth) : auth;
 			const { access_token, refresh_token, expires_at } = await lastLogin;
 			this.$patch({ access_token, refresh_token, expires_at });
