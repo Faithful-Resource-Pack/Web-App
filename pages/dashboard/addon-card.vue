@@ -45,7 +45,7 @@
 				<v-col
 					v-for="(number, tag) in data.numbers"
 					:key="tag"
-					cols="12"
+					cols="6"
 					sm="3"
 					class="d-flex align-stretch"
 				>
@@ -56,7 +56,7 @@
 				<v-col
 					v-for="i in 4"
 					:key="`skeleton-stats-${i}`"
-					cols="12"
+					cols="6"
 					sm="3"
 					class="d-flex align-stretch"
 				>
