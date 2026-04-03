@@ -15,50 +15,9 @@
 		</div>
 		<v-card class="main-container mb-2 pa-4">
 			<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
-			<div
-				class="d-flex flex-row justify-center align-center"
-				:class="$vuetify.breakpoint.xs && 'flex-wrap'"
-			>
-				<img
-					v-if="localUser.uuid && localUser.uuid.length === uuidMaxLength"
-					class="mx-5"
-					:src="avatar"
-					:alt="$root.lang().profile.general.uuid.skin_alt_text"
-				/>
-				<div class="flex-grow-1">
-					<v-form lazy-validation>
-						<v-text-field
-							v-model="localUser.username"
-							required
-							:rules="usernameRules"
-							:counter="usernameMaxLength"
-							clearable
-							:label="$root.lang().profile.general.username.label"
-							:hint="$root.lang().profile.general.username.hint"
-						/>
-						<v-text-field
-							v-model="localUser.uuid"
-							placeholder="aaabbbcc-ddee-1122-3344-zzz555aadd33"
-							:rules="uuidRules"
-							:counter="uuidMaxLength"
-							clearable
-							:label="$root.lang().profile.general.uuid.label"
-							:hint="$root.lang().profile.general.uuid.hint"
-						/>
-						<v-checkbox v-model="localUser.anonymous" class="extended-checkbox">
-							<template #label>
-								<p class="text--primary mb-2">
-									{{ $root.lang().profile.general.anonymous.label }}
-								</p>
-								<p class="my-0">{{ $root.lang().profile.general.anonymous.hint }}</p>
-							</template>
-						</v-checkbox>
-					</v-form>
-				</div>
-			</div>
+			<general-section v-model="localUser" :validate="validate" />
 
 			<div class="text-h5 mb-5">{{ $root.lang().profile.general.bio.label }}</div>
-
 			<tabbed-text-field
 				v-model="localUser.bio"
 				class="mb-5"
@@ -71,44 +30,7 @@
 			/>
 
 			<div class="text-h5 mb-5">{{ $root.lang().profile.social.title }}</div>
-			<v-form lazy-validation>
-				<v-row
-					v-for="(socialMedia, i) in localUser.media"
-					:key="socialMedia.key"
-					class="align-baseline"
-				>
-					<v-col cols="12" sm="3">
-						<v-select
-							v-model="socialMedia.type"
-							:items="mediaTypes"
-							:label="$root.lang().profile.social.type.label"
-							:rules="mediaTypeRules"
-						/>
-					</v-col>
-					<v-col cols="12" sm="9">
-						<v-row class="align-baseline" dense>
-							<v-col>
-								<v-text-field
-									v-model="socialMedia.link"
-									clearable
-									:placeholder="$root.lang().profile.social.link.placeholder"
-									:label="$root.lang().profile.social.link.label"
-									:rules="urlRules"
-								/>
-							</v-col>
-							<v-col class="flex-grow-0 flex-shrink-0">
-								<v-btn icon @click="removeSocialMedia(i)">
-									<v-icon color="red lighten-1">mdi-minus</v-icon>
-								</v-btn>
-							</v-col>
-						</v-row>
-					</v-col>
-				</v-row>
-				<v-btn block color="secondary" @click="addSocialMedia">
-					<v-icon left>mdi-plus</v-icon>
-					{{ $root.lang().profile.social.add }}
-				</v-btn>
-			</v-form>
+			<social-section v-model="localUser" :validate="validate" />
 
 			<v-card-actions class="form-actions mt-5">
 				<v-btn text color="error darken-1" @click="openDeleteModal">
@@ -132,56 +54,24 @@
 <script>
 import axios from "axios";
 
-import UserRemoveConfirm from "../users/user-remove-confirm.vue";
+import GeneralSection from "./general-section.vue";
+import SocialSection from "./social-section.vue";
 import TabbedTextField from "@components/tabbed-text-field.vue";
-
-const emptySocial = () => ({
-	key: crypto.randomUUID(),
-	type: "",
-	link: "",
-});
+import UserRemoveConfirm from "../users/user-remove-confirm.vue";
 
 export default {
 	name: "profile-page",
 	components: {
-		UserRemoveConfirm,
+		GeneralSection,
+		SocialSection,
 		TabbedTextField,
+		UserRemoveConfirm,
 	},
 	data() {
 		return {
 			localUser: {},
-			usernameMinLength: 2,
-			usernameMaxLength: 24,
-			uuidMaxLength: 36,
 			bioMaxLength: 300,
-			mediaTypes: settings.socials,
 			validationObject: {},
-			usernameRules: [
-				(u) =>
-					this.validate(
-						"username:exists",
-						u && typeof u === "string" && u.trim().length > this.usernameMinLength,
-						this.$root
-							.lang()
-							.profile.general.username.rules.min.replace("%d", this.usernameMinLength),
-					),
-				(u) =>
-					this.validate(
-						"username:length",
-						u && u.length <= this.usernameMaxLength,
-						this.$root
-							.lang()
-							.profile.general.username.rules.max.replace("%d", this.usernameMaxLength),
-					),
-			],
-			uuidRules: [
-				(u) =>
-					this.validate(
-						"uuid:length",
-						(u && u.length === this.uuidMaxLength) || !u,
-						this.$root.lang().profile.general.uuid.rules.length,
-					),
-			],
 			bioRules: [
 				(b) =>
 					this.validate(
@@ -190,44 +80,10 @@ export default {
 						this.$root.lang().profile.general.bio.rules.length.replace("%d", this.bioMaxLength),
 					),
 			],
-			urlRules: [
-				(u) =>
-					this.validate(
-						"social:valid",
-						this.validURL(u),
-						this.$root.lang().profile.social.link.rules.valid,
-					),
-			],
-			mediaTypeRules: [
-				(u) =>
-					this.validate(
-						"social:exists",
-						u && typeof u === "string" && u.trim().length > 0,
-						this.$root.lang().profile.social.type.rules.exists,
-					),
-				// this should be impossible under normal circumstances
-				(u) =>
-					this.validate(
-						"social:valid",
-						this.mediaTypes.includes(u),
-						this.$root.lang().profile.social.type.rules.valid,
-					),
-			],
 			deleteModalOpened: false,
 		};
 	},
 	methods: {
-		validURL(str) {
-			if (!str || typeof str !== "string") return false;
-			return String.urlRegex.test(str);
-		},
-		addSocialMedia() {
-			this.localUser.media ||= [];
-			this.localUser.media.push(emptySocial());
-		},
-		removeSocialMedia(index) {
-			this.localUser.media.splice(index, 1);
-		},
 		validate(scope, value, msg) {
 			const nonSocialScopes = ["username:", "uuid:", "bio:"];
 
@@ -295,12 +151,6 @@ export default {
 		},
 	},
 	computed: {
-		avatar() {
-			const base = this.$vuetify.breakpoint.xs
-				? "https://vzge.me/head/128"
-				: "https://vzge.me/full/256";
-			return `${base}/${this.localUser.uuid}`;
-		},
 		cleanedMedia() {
 			return (this.localUser.media || [])
 				.filter((m) => m.link && m.type)
@@ -309,15 +159,12 @@ export default {
 					return m;
 				});
 		},
-		hasUUID() {
-			return this.localUser.uuid && this.localUser.uuid.length === this.uuidMaxLength;
-		},
 		canSubmit() {
 			// media handled separately since there's multiple
 			if (
 				(this.localUser.media || []).some((m) => {
-					if (!this.validURL(m.link)) return true;
-					if (!this.mediaTypes.includes(m.type)) return true;
+					if (!String.urlRegex.test(m.link)) return true;
+					if (!settings.socials.includes(m.type)) return true;
 					return false;
 				})
 			)
