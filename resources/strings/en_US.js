@@ -390,6 +390,10 @@ export default {
 					jpeg: "Image must be a lossy JPEG",
 					compress: "You can compress images using https://compressor.io/",
 				},
+				status: {
+					upload: "Succesfully uploaded header image",
+					remove: "Succesfully removed header image",
+				},
 			},
 			carousel: {
 				labels: {
@@ -398,6 +402,10 @@ export default {
 					replace: "Replace additional image(s)",
 				},
 				rule: "Wrong ratio: All images with a side ratio other than 16:9 have been removed",
+				status: {
+					upload: "Succesfully uploaded screenshot",
+					remove: "Succesfully removed screenshot",
+				},
 			},
 		},
 		compatibility: {

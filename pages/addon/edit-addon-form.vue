@@ -146,30 +146,12 @@ export default {
 				);
 			}
 
-			promise
-				.then(() => {
-					this.getHeader();
-					this.$root.showSnackBar(
-						"Successfully " + (remove ? "removed" : "uploaded") + " header image",
-						"success",
-					);
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				})
+			const messages = this.$root.lang().addons.images.header.status;
+			return this.$root
+				.wrapSnackBar(promise, remove ? messages.remove : messages.upload)
+				.then(() => this.getHeader())
 				.finally(() => {
 					this.headerDisabled = false;
-				});
-		},
-		getHeader() {
-			axios
-				.get(`${this.$root.apiURL}/addons/${this.id}/files/header`, this.$root.apiOptions)
-				.then((res) => {
-					this.headerSource = `${res.data}?t=${Date.now()}`;
-				})
-				.catch(() => {
-					this.headerSource = "";
 				});
 		},
 		async handleScreenshot(screenshots, index, remove = false, id) {
@@ -177,17 +159,10 @@ export default {
 
 			let promise;
 			if (remove) {
-				if (id !== undefined) {
-					promise = axios.delete(
-						`${this.$root.apiURL}/addons/${this.id}/screenshots/${id}`,
-						this.$root.apiOptions,
-					);
-				} else {
-					promise = axios.delete(
-						`${this.$root.apiURL}/addons/${this.id}/screenshots/${index}`,
-						this.$root.apiOptions,
-					);
-				}
+				promise = axios.delete(
+					`${this.$root.apiURL}/addons/${this.id}/screenshots/${id ?? index}`,
+					this.$root.apiOptions,
+				);
 			} else {
 				// add all of them
 				// fix to stabilize upload and make one request then another...
@@ -210,17 +185,19 @@ export default {
 				promise = successful ? Promise.resolve() : Promise.reject(err);
 			}
 
-			promise
-				.then(() => {
-					this.getScreens();
-					this.$root.showSnackBar(
-						"Successfully " + (remove ? "removed" : "uploaded") + " screenshots",
-						"success",
-					);
+			const messages = this.$root.lang().addons.images.carousel.status;
+			return this.$root
+				.wrapSnackBar(promise, remove ? messages.remove : messages.upload)
+				.then(() => this.getScreens());
+		},
+		getHeader() {
+			axios
+				.get(`${this.$root.apiURL}/addons/${this.id}/files/header`, this.$root.apiOptions)
+				.then((res) => {
+					this.headerSource = `${res.data}?t=${Date.now()}`;
 				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
+				.catch(() => {
+					this.headerSource = "";
 				});
 		},
 		getScreens() {

@@ -51,7 +51,7 @@ declare module "vue/types/vue" {
 		lang(key: string): string;
 		makeJsonSnackBar(json: unknown): SnackBarCallback;
 		showSnackBar: SnackBarCallback;
-		wrapSnackBar<T>(prom: T | Awaited<T>): Promise<Awaited<T>>;
+		wrapSnackBar<T>(prom: T | Awaited<T>, successMessage?: string): Promise<Awaited<T>>;
 		compileMarkdown(rawText: string): string;
 		formatDate(date: number | string | Date, format?: DateTimeFormatOptions): string;
 		reloadSettings(): Promise<void>;

@@ -50,21 +50,20 @@ export default {
 				addonId = addon.id;
 
 				const promises = [];
-				// 2. Upload header and screenshots
-				let form;
-				if (this.header || this.screenshots.length) form = new FormData();
-
+				// 2. Upload header
 				if (this.header) {
-					form.set("file", this.header, this.header.name);
+					const headerForm = new FormData();
+					headerForm.set("file", this.header, this.header.name);
 					promises.push(
 						axios.post(
 							`${this.$root.apiURL}/addons/${addon.id}/header`,
-							form,
+							headerForm,
 							this.$root.apiOptions,
 						),
 					);
 				}
 
+				// 3. Upload screenshots
 				if (this.screenshots.length) {
 					// add all of them
 					// fix to stabilize upload and make one request then another...
@@ -85,6 +84,7 @@ export default {
 								err = error;
 								return false;
 							});
+
 						if (!successful) break;
 					}
 
