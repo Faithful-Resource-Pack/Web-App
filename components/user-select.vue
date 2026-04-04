@@ -7,7 +7,6 @@
 		item-text="username"
 		item-value="id"
 		multiple
-		:dense="dense"
 		chips
 		v-bind="$attrs"
 	>
@@ -83,11 +82,6 @@ export default {
 		value: {
 			type: Array,
 			required: true,
-		},
-		dense: {
-			type: Boolean,
-			required: false,
-			default: () => false,
 		},
 		limit: {
 			type: Number,
