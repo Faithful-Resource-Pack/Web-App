@@ -1,70 +1,60 @@
 <template>
-	<v-dialog v-model="modalOpened" max-width="600">
-		<v-card>
-			<v-card-title class="headline justify-space-between">
-				{{ $root.lang().global.account_manager.title }}
-				<v-btn icon @click="closeModal">
-					<v-icon>mdi-close</v-icon>
-				</v-btn>
-			</v-card-title>
+	<modal-form v-model="modalOpened" :title="$root.lang().global.account_manager.title" hide-actions>
+		<v-list>
+			<v-list-item v-for="profile in profiles" :key="profile.id" class="px-0">
+				<v-list-item-avatar style="border-radius: 0 !important">
+					<v-img
+						:src="`https://vzge.me/face/80/${profile.uuid || 'X-Steve'}`"
+						:alt="getAvatarAlt(profile.username)"
+						style="image-rendering: pixelated"
+					>
+					</v-img>
+				</v-list-item-avatar>
+				<v-list-item-content>
+					<v-list-item-title>
+						{{ profile.username }}
+					</v-list-item-title>
+					<v-list-item-subtitle
+						v-if="profile.id === $root.user.id"
+						class="primary--text font-weight-bold"
+					>
+						{{ $root.lang().global.account_manager.active_account }}
+					</v-list-item-subtitle>
+				</v-list-item-content>
 
-			<v-card-text>
-				<v-list>
-					<v-list-item v-for="profile in profiles" :key="profile.id" class="px-0">
-						<v-list-item-avatar style="border-radius: 0 !important">
-							<v-img
-								:src="`https://vzge.me/face/80/${profile.uuid || 'X-Steve'}`"
-								:alt="
-									$root
-										.lang()
-										.global.account_manager.avatar_alt_text.replace('%s', profile.username)
-								"
-								style="image-rendering: pixelated"
-							>
-							</v-img>
-						</v-list-item-avatar>
-						<v-list-item-content>
-							<v-list-item-title>
-								{{ profile.username }}
-							</v-list-item-title>
-							<v-list-item-subtitle
-								v-if="profile.id === $root.user.id"
-								class="primary--text font-weight-bold"
-							>
-								{{ $root.lang().global.account_manager.active_account }}
-							</v-list-item-subtitle>
-						</v-list-item-content>
+				<v-list-item-action class="merged-actions">
+					<v-btn
+						icon
+						:disabled="profile.id === $root.user.id"
+						@click="$root.auth.switchAccount(profile.id)"
+					>
+						<v-icon color="lighten-1">mdi-swap-horizontal</v-icon>
+					</v-btn>
+					<v-btn icon @click="$root.auth.logout(profile.id)">
+						<v-icon color="red lighten-1">mdi-logout</v-icon>
+					</v-btn>
+				</v-list-item-action>
+			</v-list-item>
+		</v-list>
 
-						<v-list-item-action class="merged-actions">
-							<v-btn
-								icon
-								:disabled="profile.id === $root.user.id"
-								@click="$root.auth.switchAccount(profile.id)"
-							>
-								<v-icon color="lighten-1">mdi-swap-horizontal</v-icon>
-							</v-btn>
-							<v-btn icon @click="$root.auth.logout(profile.id)">
-								<v-icon color="red lighten-1">mdi-logout</v-icon>
-							</v-btn>
-						</v-list-item-action>
-					</v-list-item>
-				</v-list>
-
-				<v-btn block class="mt-2" color="secondary" :href="$root.loginURL">
-					<v-icon left>mdi-plus</v-icon>
-					{{ $root.lang().global.account_manager.add_account }}
-				</v-btn>
-			</v-card-text>
-		</v-card>
-	</v-dialog>
+		<v-btn block class="mt-2" color="secondary" :href="$root.loginURL">
+			<v-icon left>mdi-plus</v-icon>
+			{{ $root.lang().global.account_manager.add_account }}
+		</v-btn>
+	</modal-form>
 </template>
 
 <script>
 import axios from "axios";
 import { AUTH_STORAGE_KEY } from "../../stores/discordTokenStore.js";
 
+import ModalForm from "@layouts/modal-form.vue";
+
 export default {
 	name: "account-manager",
+	components: {
+		ModalForm,
+	},
 	props: {
 		value: {
 			required: true,
@@ -84,6 +74,9 @@ export default {
 		},
 		closeModal() {
 			this.modalOpened = false;
+		},
+		getAvatarAlt(username) {
+			return this.$root.lang().global.account_manager.avatar_alt_text.replace("%s", username);
 		},
 	},
 	watch: {

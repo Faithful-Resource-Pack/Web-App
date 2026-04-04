@@ -1,88 +1,81 @@
 <template>
-	<!-- not extending modal-form since this has no action buttons -->
-	<v-dialog v-model="modalOpened" max-width="800">
-		<v-card>
-			<v-card-title class="headline justify-space-between">
-				{{ $root.lang().posts.changelog_generator.heading }}
-				<v-btn icon @click="closeModal">
-					<v-icon>mdi-close</v-icon>
-				</v-btn>
-			</v-card-title>
-			<v-card-text>
-				<v-alert type="warning" outlined dense>
-					<h3 v-if="categorize" class="font-weight-black mb-1">
-						{{ $root.lang().posts.changelog_generator.categorize_warning }}
-					</h3>
-					{{ $root.lang().posts.changelog_generator.warning }}
-				</v-alert>
-				<v-form>
-					<v-row>
-						<v-col cols="12" sm="6">
-							<v-text-field
-								v-model="date"
-								type="date"
-								:label="$root.lang().posts.changelog_generator.date"
-								:autofocus="!$vuetify.breakpoint.mobile"
-								persistent-placeholder
-							/>
-						</v-col>
-						<v-col cols="12" sm="6">
-							<v-select
-								v-model="selectedPack"
-								:label="$root.lang().posts.changelog_generator.pack"
-								:items="packs"
-								item-text="name"
-								item-value="id"
-							/>
-						</v-col>
-					</v-row>
-					<v-switch
-						v-model="categorize"
-						:label="$root.lang().posts.changelog_generator.categorize"
+	<modal-form
+		v-model="modalOpened"
+		max-width="800"
+		:title="$root.lang().posts.changelog_generator.heading"
+		hide-actions
+	>
+		<v-alert type="warning" outlined dense>
+			<h3 v-if="categorize" class="font-weight-black mb-1">
+				{{ $root.lang().posts.changelog_generator.categorize_warning }}
+			</h3>
+			{{ $root.lang().posts.changelog_generator.warning }}
+		</v-alert>
+		<v-form>
+			<v-row>
+				<v-col cols="12" sm="6">
+					<v-text-field
+						v-model="date"
+						type="date"
+						:label="$root.lang().posts.changelog_generator.date"
+						:autofocus="!$vuetify.breakpoint.mobile"
+						persistent-placeholder
 					/>
-				</v-form>
-				<v-btn block color="secondary" :disabled="formInvalid" :loading="loading" @click="generate">
-					<v-icon left>mdi-pencil</v-icon>
-					{{ $root.lang().posts.changelog_generator.heading }}
-				</v-btn>
-				<template v-if="outputData">
-					<v-divider class="my-5" />
-					<v-row>
-						<v-col>
-							<v-btn block color="secondary" @click="copyData">
-								<v-icon left>mdi-content-copy</v-icon>
-								{{ $root.lang().posts.changelog_generator.copy }}
-							</v-btn>
-						</v-col>
-						<v-col>
-							<v-btn block color="secondary" :href="fileURL" :download="fileName">
-								<v-icon left>mdi-download</v-icon>
-								{{ $root.lang().posts.changelog_generator.download }}
-							</v-btn>
-						</v-col>
-					</v-row>
-					<prism-editor
-						v-model="outputData"
-						class="json-editor json-modal-editor mt-5"
-						readonly
-						:highlight="highlighter"
+				</v-col>
+				<v-col cols="12" sm="6">
+					<v-select
+						v-model="selectedPack"
+						:label="$root.lang().posts.changelog_generator.pack"
+						:items="packs"
+						item-text="name"
+						item-value="id"
 					/>
-				</template>
-			</v-card-text>
-		</v-card>
-	</v-dialog>
+				</v-col>
+			</v-row>
+			<v-switch v-model="categorize" :label="$root.lang().posts.changelog_generator.categorize" />
+		</v-form>
+		<v-btn block color="secondary" :disabled="formInvalid" :loading="loading" @click="generate">
+			<v-icon left>mdi-pencil</v-icon>
+			{{ $root.lang().posts.changelog_generator.heading }}
+		</v-btn>
+		<template v-if="outputData">
+			<v-divider class="my-5" />
+			<v-row>
+				<v-col>
+					<v-btn block color="secondary" @click="copyData">
+						<v-icon left>mdi-content-copy</v-icon>
+						{{ $root.lang().posts.changelog_generator.copy }}
+					</v-btn>
+				</v-col>
+				<v-col>
+					<v-btn block color="secondary" :href="fileURL" :download="fileName">
+						<v-icon left>mdi-download</v-icon>
+						{{ $root.lang().posts.changelog_generator.download }}
+					</v-btn>
+				</v-col>
+			</v-row>
+			<prism-editor
+				v-model="outputData"
+				class="json-editor json-modal-editor mt-5"
+				readonly
+				:highlight="highlighter"
+			/>
+		</template>
+	</modal-form>
 </template>
 
 <script>
 import axios from "axios";
-
 import Prism from "prismjs";
+
 import { PrismEditor } from "vue-prism-editor";
+import ModalForm from "@layouts/modal-form.vue";
 
 export default {
 	name: "changelog-generator",
 	components: {
 		PrismEditor,
+		ModalForm,
 	},
 	props: {
 		value: {
