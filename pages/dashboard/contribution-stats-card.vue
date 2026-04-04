@@ -5,20 +5,20 @@
 		to="/users"
 		:clickable="$root.isAdmin"
 	>
-		<v-card-text class="pb-4 flex-grow-1 d-flex align-stretch">
-			<v-row v-if="totals.length" dense class="d-flex">
+		<v-card-text>
+			<v-row v-if="data.totals" dense class="d-flex">
 				<v-col
-					v-for="total in totals"
-					:key="total.name"
+					v-for="(value, key) in data.totals"
+					:key="key"
 					cols="12"
-					:sm="6"
+					sm="6"
 					class="d-flex align-stretch"
 				>
-					<dashboard-stat :label="$root.lang().dashboard.totals[total.name]" :value="total.value" />
+					<dashboard-stat :label="$root.lang().dashboard.totals[key] || key" :value="value" />
 				</v-col>
 			</v-row>
 			<v-row v-else dense class="d-flex">
-				<v-col v-for="i in 5" :key="`skeleton-${i}`" cols="12" sm="6" class="d-flex align-stretch">
+				<v-col v-for="i in 6" :key="`skeleton-${i}`" cols="12" sm="6" class="d-flex align-stretch">
 					<div class="dashboard-stat mb-0 rounded-lg pa-2">
 						<v-card-title class="pa-0 d-inline text--primary">
 							<v-skeleton-loader height="24" type="text" />
@@ -40,14 +40,11 @@ export default {
 		DashboardCard,
 		DashboardStat,
 	},
-	data() {
-		return {
-			totals: [],
-		};
-	},
-	methods: {
-		onTotals(totals) {
-			this.totals = totals;
+	props: {
+		data: {
+			type: Object,
+			required: false,
+			default: () => ({}),
 		},
 	},
 };

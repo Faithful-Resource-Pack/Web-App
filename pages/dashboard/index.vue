@@ -13,16 +13,18 @@
 				<addon-card />
 			</v-col>
 			<v-col cols="12" md="6">
-				<contribution-stats-card ref="cs" />
+				<contribution-stats-card :data="contributionStats" />
 			</v-col>
 			<v-col cols="12">
-				<contribution-activity-card :colors="colors" @stats="(t) => $refs.cs.onTotals(t)" />
+				<contribution-activity-card :colors="colors" :data="contributionStats" />
 			</v-col>
 		</v-row>
 	</div>
 </template>
 
 <script>
+import axios from "axios";
+
 import AddonCard from "./addon-card.vue";
 import ProfileCard from "./profile-card.vue";
 import TextureCard from "./texture-card.vue";
@@ -38,6 +40,11 @@ export default {
 		ContributionActivityCard,
 		ContributionStatsCard,
 	},
+	data() {
+		return {
+			contributionStats: undefined,
+		};
+	},
 	computed: {
 		greeting() {
 			return this.$root.user.username
@@ -50,6 +57,11 @@ export default {
 				? ["#1e1e1e", "#303c27", "#425d30", "#537f38", "#65a33f", "#76c945"]
 				: ["#f0f0f0", "#b5dd9e", "#a6d889", "#97d374", "#87ce5d", "#76c945"];
 		},
+	},
+	created() {
+		axios.get(`${this.$root.apiURL}/contributions/stats`, this.$root.apiOptions).then((res) => {
+			this.contributionStats = res.data;
+		});
 	},
 };
 </script>

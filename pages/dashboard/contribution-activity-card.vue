@@ -59,6 +59,11 @@ export default {
 		CalendarHeatmap,
 	},
 	props: {
+		data: {
+			type: Object,
+			required: false,
+			default: undefined,
+		},
 		colors: {
 			type: Array,
 			required: true,
@@ -66,22 +71,10 @@ export default {
 	},
 	data() {
 		return {
-			data: undefined,
 			packToName: {},
 		};
 	},
 	computed: {
-		totals() {
-			if (!this.data) return [, , ,];
-			return Object.keys(this.data)
-				.filter((e) => e.includes("total"))
-				.map((e) => {
-					return {
-						name: e.replace("total_", ""),
-						value: this.data[e],
-					};
-				});
-		},
 		locale() {
 			return {
 				months: Info.months("short", { locale: this.$root.translation.current.bcp47 }),
@@ -91,24 +84,12 @@ export default {
 		},
 	},
 	created() {
-		axios.get(`${this.$root.apiURL}/contributions/stats`, this.$root.apiOptions).then((res) => {
-			this.data = res.data;
-		});
 		axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
 			this.packToName = Object.values(res.data).reduce((acc, cur) => {
 				acc[cur.id] = cur.name;
 				return acc;
 			}, {});
 		});
-	},
-	watch: {
-		totals(n, o) {
-			if (!o) return; // o is undefined
-			if (!o.length) return; // o is empty
-
-			// run
-			this.$emit("stats", n);
-		},
 	},
 };
 </script>

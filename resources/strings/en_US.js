@@ -142,9 +142,10 @@ export default {
 		totals: {
 			authors: "authors",
 			contributions: "contributions",
-			last_day: "contributions in the last 48 hours",
-			last_week: "contributions last week",
+			last_year: "contributions last year",
 			last_month: "contributions last month",
+			last_week: "contributions last week",
+			last_day: "contributions in the last 48 hours",
 		},
 		titles: {
 			profile: "Your profile",
