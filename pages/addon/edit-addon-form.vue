@@ -10,10 +10,9 @@
 			</h4>
 		</div>
 		<addon-form
-			:addon-new="false"
 			:loading="loading"
 			:addon-data="addonData"
-			:disabled-header-input="hidisabled"
+			:disabled-header-input="headerDisabled"
 			:screen-sources="screenSources"
 			:screen-ids="screenIds"
 			:header-source="headerSource"
@@ -56,7 +55,7 @@ export default {
 	},
 	data() {
 		return {
-			hidisabled: false,
+			headerDisabled: false,
 			reasonModalOpen: false,
 			reasonData: undefined,
 			reasonRules: [
@@ -101,12 +100,9 @@ export default {
 			else this.reason = "";
 		},
 		handleSubmit(data, approve) {
-			if (!approve) {
-				this.reasonData = data;
-				this.reasonModalOpen = true;
-			} else {
-				this.confirmSubmit(data, approve);
-			}
+			if (approve) return this.confirmSubmit(data, approve);
+			this.reasonData = data;
+			this.reasonModalOpen = true;
 		},
 		confirmSubmit(data, approve) {
 			if (approve) data.reason = "Manager edit";
@@ -114,31 +110,25 @@ export default {
 				data.reason = this.reason.trim();
 				this.reason = "";
 			}
-			let prom = axios
-				.patch(`${this.$root.apiURL}/addons/${this.id}`, data, this.$root.apiOptions)
-				.then(() => {
-					this.$root.showSnackBar("Saved", "success");
-				});
 
-			if (approve === true) {
-				prom = prom
-					.then(() =>
-						axios.put(
+			return this.$root
+				.wrapSnackBar(
+					axios.patch(`${this.$root.apiURL}/addons/${this.id}`, data, this.$root.apiOptions),
+				)
+				.then(() => {
+					if (approve === true)
+						return axios.put(
 							`${this.$root.apiURL}/addons/${this.id}/review`,
 							{
 								status: "approved",
 								reason: "Manager edit",
 							},
 							this.$root.apiOptions,
-						),
-					)
-					.then(() => this.$root.showSnackBar("Approved", "success"));
-			}
-
-			prom.catch((err) => this.$root.showSnackBar(err, "error"));
+						);
+				});
 		},
 		handleHeader(file, remove = false) {
-			this.hidisabled = true;
+			this.headerDisabled = true;
 
 			let promise;
 			if (remove) {
@@ -169,14 +159,14 @@ export default {
 					this.$root.showSnackBar(err, "error");
 				})
 				.finally(() => {
-					this.hidisabled = false;
+					this.headerDisabled = false;
 				});
 		},
 		getHeader() {
 			axios
 				.get(`${this.$root.apiURL}/addons/${this.id}/files/header`, this.$root.apiOptions)
 				.then((res) => {
-					this.headerSource = `${res.data}?t=${new Date().getTime()}`;
+					this.headerSource = `${res.data}?t=${Date.now()}`;
 				})
 				.catch(() => {
 					this.headerSource = "";
@@ -201,11 +191,9 @@ export default {
 			} else {
 				// add all of them
 				// fix to stabilize upload and make one request then another...
-				let i = 0;
 				let successful = true;
 				let err;
-				while (i < screenshots.length && successful) {
-					const screen = screenshots[i];
+				for (const screen of screenshots) {
 					const form = new FormData();
 					form.set("file", screen, screen.name);
 
@@ -216,8 +204,7 @@ export default {
 							err = error;
 							return false;
 						});
-
-					i++;
+					if (!successful) break;
 				}
 
 				promise = successful ? Promise.resolve() : Promise.reject(err);

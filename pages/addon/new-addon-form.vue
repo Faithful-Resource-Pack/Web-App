@@ -62,24 +62,24 @@ export default {
 				if (this.screenshots.length) {
 					// add all of them
 					// fix to stabilize upload and make one request then another...
-					let i = 0;
-					let successful = true;
 					let err;
-					let screenshots = this.screenshots;
-					while (i < screenshots.length && successful) {
-						const screen = screenshots[i];
+					let successful = true;
+					for (const screen of screenshots) {
 						const form = new FormData();
 						form.set("file", screen, screen.name);
 
 						successful = await axios
-							.post(`${this.$root.apiURL}/addons/${id}/screenshots`, form, this.$root.apiOptions)
+							.post(
+								`${this.$root.apiURL}/addons/${this.id}/screenshots`,
+								form,
+								this.$root.apiOptions,
+							)
 							.then(() => true)
 							.catch((error) => {
 								err = error;
 								return false;
 							});
-
-						i++;
+						if (!successful) break;
 					}
 
 					promises.push(successful ? Promise.resolve() : Promise.reject(err));
