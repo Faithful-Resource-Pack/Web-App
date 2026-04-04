@@ -206,26 +206,6 @@ img.texture-img {
 .v-chip__content > .v-avatar {
 	border-radius: 0 !important;
 }
-
-.blurple {
-	background-color: #5865F2 !important;
-	height: auto;
-	white-space: normal;
-}
-
-.blurple > *:first-child::before {
-	content: url(/resources/icons/discord_white.svg);
-	width: 1em;
-	height: 1em;
-	margin-right: 8px;
-	margin-left: -4px;
-}
-
-.blurple .v-btn__content {
-	flex: auto;
-	color: white;
-}
-
 .v-input__control {
 	border-top-left-radius: 3px !important;
 	border-top-right-radius: 3px !important;

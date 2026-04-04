@@ -119,7 +119,6 @@ const app = new Vue({
 			translation: translationStore(),
 			theme: themeStore(),
 			darkSidebar: localStorage.getItem(DARK_SIDEBAR_KEY) === "true" || false,
-			/** sidebar stuff */
 			drawerOpen: localStorage.getItem(MENU_KEY)
 				? localStorage.getItem(MENU_KEY) === "true"
 				: !this.$vuetify.breakpoint.mobile,
