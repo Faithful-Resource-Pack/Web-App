@@ -44,7 +44,9 @@
 			</v-list-item-content>
 			<template v-else>
 				<v-list-item-content>
-					<v-list-item-title>{{ formatTitle(data.item) }}</v-list-item-title>
+					<v-list-item-title>
+						{{ formatTitle(data.item) }}
+					</v-list-item-title>
 					<v-list-item-subtitle v-if="data.item.contributions">
 						{{ formatSubtitle(data.item) }}
 					</v-list-item-subtitle>
@@ -106,41 +108,29 @@ export default {
 	methods: {
 		startSearch(val) {
 			val = val.trim();
-
-			// limit search on client and server side
 			if (val.length < 3) return;
 
-			// make search only if not searched before
-			let alreadySearched = false;
-			let i = 0;
-			while (i < this.previousSearches.length && !alreadySearched) {
-				alreadySearched = this.previousSearches[i].includes(val);
-				++i;
-			}
-			if (alreadySearched) return;
-
+			// start search only if not searched before
+			if (this.previousSearches.some((search) => search.includes(val))) return;
 			this.previousSearches.push(val);
 			this.isSearching = true;
 
-			axios
+			return axios
 				.get(`${this.$root.apiURL}/users/role/all/${val}`)
 				.then((res) => {
 					const results = res.data;
 					results.forEach((result) => {
 						// in case some clever guy forgot their username or uuid or whatever
-						this.$set(
-							this.loadedUsers,
-							result.id,
-							Object.merge(
-								{
-									username: "",
-									uuid: "",
-									roles: [],
-									media: [],
-								},
-								result,
-							),
+						const user = Object.merge(
+							{
+								username: "",
+								uuid: "",
+								roles: [],
+								media: [],
+							},
+							result,
 						);
+						this.$set(this.loadedUsers, result.id, user);
 					});
 				})
 				.catch((err) => {
@@ -152,8 +142,7 @@ export default {
 				});
 		},
 		remove(id) {
-			const index = this.content.indexOf(id);
-			if (index >= 0) this.content.splice(index, 1);
+			if (this.content.includes(id)) this.content.splice(index, 1);
 		},
 		formatTitle(item) {
 			return item.username || `${this.$root.lang().database.anonymous} (${item.id})`;
@@ -193,10 +182,7 @@ export default {
 		search(val) {
 			if (!val) return;
 
-			if (this.searchTimeout) {
-				clearTimeout(this.searchTimeout);
-			}
-
+			if (this.searchTimeout) clearTimeout(this.searchTimeout);
 			this.searchTimeout = setTimeout(() => {
 				this.searchTimeout = undefined;
 				this.startSearch(val);

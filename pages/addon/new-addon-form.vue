@@ -38,15 +38,16 @@ export default {
 	methods: {
 		async handleSubmit(data) {
 			// 1. Upload
-			let id;
+			let addonId;
 			try {
 				const response = await axios.post(
 					`${this.$root.apiURL}/addons`,
 					data,
 					this.$root.apiOptions,
 				);
+
 				const addon = response.data;
-				id = addon.id;
+				addonId = addon.id;
 
 				const promises = [];
 				// 2. Upload header and screenshots
@@ -56,9 +57,14 @@ export default {
 				if (this.header) {
 					form.set("file", this.header, this.header.name);
 					promises.push(
-						axios.post(`${this.$root.apiURL}/addons/${id}/header`, form, this.$root.apiOptions),
+						axios.post(
+							`${this.$root.apiURL}/addons/${addon.id}/header`,
+							form,
+							this.$root.apiOptions,
+						),
 					);
 				}
+
 				if (this.screenshots.length) {
 					// add all of them
 					// fix to stabilize upload and make one request then another...
@@ -86,17 +92,17 @@ export default {
 				}
 
 				await Promise.all(promises);
-				this.$root.showSnackBar("Saved", "success");
+				this.$root.showSnackBar(this.$root.lang().global.ends_success, "success");
 				this.$router.push("/addons/submissions");
 			} catch (err) {
 				console.error(err);
 				this.$root.showSnackBar(err, "error");
 
-				// delete what is left of addon
+				// created malformed addon, delete the whole thing to try again
 				// if we have id then we at least successfully created the file
-				if (id)
+				if (addonId)
 					axios
-						.delete(`${this.$root.apiURL}/addons/${id}`, this.$root.apiOptions)
+						.delete(`${this.$root.apiURL}/addons/${addonId}`, this.$root.apiOptions)
 						.catch((err) => this.$root.showSnackBar(err, "error"));
 			}
 		},
