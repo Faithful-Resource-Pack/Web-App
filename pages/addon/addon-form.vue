@@ -337,18 +337,13 @@ export default {
 					carousel: {
 						rules: [
 							(files) =>
-								files
-									.map(
-										(file) =>
-											file.size < this.form.files.carousel.counter.max ||
-											this.$root
-												.lang()
-												.addons.images.header.rules.image_size.replace(
-													"%s",
-													this.form.files.header.counter.max / 1000,
-												),
-									)
-									.filter((r) => typeof r === "string")[0] || true,
+								files.every((file) => file.size < this.form.files.carousel.counter.max) ||
+								this.$root
+									.lang()
+									.addons.images.header.rules.image_size.replace(
+										"%s",
+										this.form.files.header.counter.max / 1000,
+									),
 						],
 						counter: {
 							max: 3000000,
@@ -486,35 +481,6 @@ export default {
 			previewOpen: false,
 		};
 	},
-	computed: {
-		header() {
-			if (!this.addonNew) return this.headerSource;
-			if (this.headerValidating || !this.headerValid || !this.submittedForm.headerFile) return;
-			return URL.createObjectURL(this.submittedForm.headerFile);
-		},
-		carouselSources() {
-			return this.screenSources ? this.screenSources : [];
-		},
-		carouselFiles() {
-			return this.submittedForm.carouselFiles;
-		},
-		submittedData() {
-			const data = Object.merge({}, this.submittedForm);
-
-			data.options.tags = [...data.selectedEditions, ...data.selectedPacks];
-			delete data.selectedEditions;
-			delete data.selectedPacks;
-
-			// we treat files with different endpoint
-			delete data.headerFile;
-			delete data.carouselFiles;
-
-			return data;
-		},
-		resolutions() {
-			return this.packs.map((p) => p.value);
-		},
-	},
 	methods: {
 		updateHeader(file) {
 			// delete not uploaded file
@@ -623,6 +589,30 @@ export default {
 				.catch((err) => console.trace(err));
 		},
 	},
+	computed: {
+		header() {
+			if (!this.addonNew) return this.headerSource;
+			if (this.headerValidating || !this.headerValid || !this.submittedForm.headerFile) return;
+			return URL.createObjectURL(this.submittedForm.headerFile);
+		},
+		carouselSources() {
+			return this.screenSources || [];
+		},
+		submittedData() {
+			const data = structuredClone(this.submittedForm);
+
+			// todo: store packs/editions separately
+			data.options.tags = [...data.selectedEditions, ...data.selectedPacks];
+			delete data.selectedEditions;
+			delete data.selectedPacks;
+
+			// we treat files with different endpoint
+			delete data.headerFile;
+			delete data.carouselFiles;
+
+			return data;
+		},
+	},
 	watch: {
 		addonData: {
 			handler(data) {
@@ -632,9 +622,11 @@ export default {
 				data = structuredClone(data);
 				data.headerFile = undefined;
 				data.carouselFiles = [];
-				data.selectedPacks = data.options.tags.filter((e) => this.resolutions.includes(e));
+				data.selectedPacks = data.options.tags.filter((e) =>
+					this.packs.some((pack) => pack.value === e),
+				);
 				data.selectedEditions = data.options.tags.filter((e) =>
-					this.editions.some((ed) => ed.value === e),
+					this.editions.some((edition) => edition.value === e),
 				);
 				this.submittedForm = data;
 			},
