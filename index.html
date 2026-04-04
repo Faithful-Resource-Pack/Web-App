@@ -83,15 +83,8 @@
 				<router-view v-else></router-view>
 				<nav-footer></nav-footer>
 
-				<!-- this looks really weird but it needs to be here to dynamically change -->
-				<link
-					rel="stylesheet"
-					:href="
-						theme.isDark
-							? 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-vsc-dark-plus.css'
-							: 'https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css'
-					"
-				/>
+				<!-- the placement looks kinda stupid but it needs to be reactive -->
+				<link rel="stylesheet" :href="theme.prismURL" />
 			</v-main>
 
 			<snackbar-status v-model="snackbar.show" :snackbar="snackbar" />

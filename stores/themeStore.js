@@ -67,4 +67,11 @@ export default defineStore("theme", {
 			);
 		},
 	},
+	getters: {
+		prismURL() {
+			return this.isDark
+				? "https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-vsc-dark-plus.css"
+				: "https://cdn.jsdelivr.net/gh/PrismJS/prism-themes/themes/prism-ghcolors.css";
+		},
+	},
 });
