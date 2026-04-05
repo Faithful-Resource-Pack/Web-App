@@ -32,7 +32,7 @@
 					<v-card-text style="flex-grow: 1">
 						<slot name="text" v-bind="item" />
 					</v-card-text>
-					<v-card-actions style="justify-content: flex-end">
+					<v-card-actions class="justify-end">
 						<slot name="btns" v-bind="item" />
 					</v-card-actions>
 				</template>

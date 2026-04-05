@@ -1,35 +1,29 @@
 <template>
 	<v-card class="main-container px-2 py-4">
-		<v-row>
-			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
-				<v-list-item>
-					<slot :item="item" />
-				</v-list-item>
-			</v-col>
-		</v-row>
-
-		<v-btn
-			v-if="displayedResults < items.length"
-			class="my-2 mx-auto"
-			:color="pageColor"
-			:class="textColor"
-			:style="loadMoreStyle"
-			block
-			@click="showMore"
-		>
-			<v-icon left>mdi-plus</v-icon>
-			{{ $root.lang().global.btn.load_more }}
-		</v-btn>
+		<infinite-scroller @more="showMore">
+			<v-row>
+				<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
+					<v-list-item>
+						<slot :item="item" />
+					</v-list-item>
+				</v-col>
+			</v-row>
+		</infinite-scroller>
 	</v-card>
 </template>
 
 <script>
+import InfiniteScroller from "./infinite-scroller.vue";
+
 const MIN_DISPLAYED_RESULTS = 60;
 const RESULT_INCREMENT = 120;
 
 // lazy loaded list which automatically paginates and fits list to screen
 export default {
 	name: "smart-grid",
+	components: {
+		InfiniteScroller,
+	},
 	props: {
 		items: {
 			type: Array,
@@ -81,12 +75,6 @@ export default {
 			if (this.wide) count -= 1;
 			if (this.displayedResults === 1) count = 1;
 			return Math.max(1, count);
-		},
-		loadMoreStyle() {
-			const width = this.$vuetify.breakpoint.xs ? 100 : 50;
-			return {
-				"min-width": `${width}% !important`,
-			};
 		},
 	},
 };

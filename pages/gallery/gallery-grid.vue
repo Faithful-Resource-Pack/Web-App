@@ -1,5 +1,9 @@
 <template>
-	<div class="gallery-textures-container mx-auto" :style="gridStyles">
+	<infinite-scroller
+		class="gallery-textures-container mx-auto"
+		:style="gridStyles"
+		@more="showMore"
+	>
 		<!-- sort method in key ensures rerenders change the image (this took me an hour to figure out) -->
 		<div
 			v-for="texture in displayedTextures"
@@ -58,12 +62,13 @@
 			<v-icon large>mdi-chevron-up</v-icon>
 		</v-btn>
 		<div ref="bottomElement" />
-	</div>
+	</infinite-scroller>
 </template>
 
 <script>
 import axios from "axios";
 
+import InfiniteScroller from "@layouts/infinite-scroller.vue";
 import GalleryTooltip from "./gallery-tooltip.vue";
 import GalleryImage from "./gallery-image.vue";
 import { TippyComponent } from "vue-tippy";
@@ -74,6 +79,7 @@ const ROW_INCREMENT = 5;
 export default {
 	name: "gallery-grid",
 	components: {
+		InfiniteScroller,
 		GalleryTooltip,
 		GalleryImage,
 		TippyComponent,
@@ -120,7 +126,6 @@ export default {
 			// list of animated textures ids
 			animatedTextures: [],
 			// must maintain static references to listeners for unmounting
-			scrollListener: () => {},
 			resizeListener: () => {},
 		};
 	},
@@ -133,11 +138,8 @@ export default {
 			// prevents page becoming really slow from too many displayed results after going up
 			this.displayedResults = this.pageLength;
 		},
-		isScrolledIntoView(el, margin = 0) {
-			const rect = el.getBoundingClientRect();
-			const elemTop = rect.top;
-			const elemBottom = rect.bottom;
-			return elemTop < window.innerHeight + margin && elemBottom >= 0;
+		showMore() {
+			this.displayedResults += this.pageLength;
 		},
 	},
 	computed: {
@@ -226,29 +228,14 @@ export default {
 	},
 	mounted() {
 		// initialize callback references (they need to be the same for unmounting)
-		this.scrollListener = () => {
-			const el = this.$refs.bottomElement;
-			this.scrollY = document.getElementById("main").scrollTop;
-
-			if (!el || !this.isScrolledIntoView(el, 300)) return;
-
-			// add more results when near bottom
-			this.displayedResults += this.pageLength;
-		};
-
 		this.resizeListener = () => {
 			this.width = this.$el.clientWidth;
 		};
 
 		window.addEventListener("resize", this.resizeListener);
 		this.resizeListener();
-
-		// add to main since it's the scrollable container
-		document.getElementById("main")?.addEventListener("scroll", this.scrollListener);
-		this.scrollListener();
 	},
 	unmounted() {
-		document.getElementById("main")?.removeEventListener("scroll", this.scrollListener);
 		window.removeEventListener("resize", this.resizeListener);
 	},
 };
