@@ -1,7 +1,8 @@
 <template>
-	<v-row>
+	<!-- can save some space by declaring the div a v-row using the underlying class -->
+	<infinite-scroller class="row" @more="showMore">
 		<v-col
-			v-for="item in loading ? skeletonCount : items"
+			v-for="item in loading ? skeletonCount : shownItems"
 			:key="item[track]"
 			:cols="12 / columnCount"
 			class="d-flex align-stretch"
@@ -9,24 +10,7 @@
 			<v-card class="d-flex flex-column main-container" style="width: 100%">
 				<v-skeleton-loader v-if="loading" type="image, article" />
 				<template v-else>
-					<v-img
-						style="border-radius: 5px"
-						:src="getImage(item)"
-						:aspect-ratio="16 / 9"
-						@error="onImageFail(item)"
-					>
-						<template #placeholder>
-							<v-row
-								class="fill-height ma-0"
-								align="center"
-								justify="center"
-								style="background-color: rgba(255, 255, 255, 0.1)"
-							>
-								<v-icon v-if="failed[item[track]]" x-large>mdi-image-off</v-icon>
-								<v-progress-circular v-else indeterminate />
-							</v-row>
-						</template>
-					</v-img>
+					<emitting-image :src="getImage(item)" :aspect-ratio="16 / 9" />
 					<!-- use scoped slots for more customizable layouts -->
 					<slot name="title" v-bind="item" />
 					<v-card-text style="flex-grow: 1">
@@ -38,12 +22,23 @@
 				</template>
 			</v-card>
 		</v-col>
-	</v-row>
+	</infinite-scroller>
 </template>
 
 <script>
+import InfiniteScroller from "./infinite-scroller.vue";
+import EmittingImage from "@components/emitting-image.vue";
+
+// the cards are pretty chunky so not many have to be shown to fill the screen
+const MIN_DISPLAYED_RESULTS = 24;
+const RESULT_INCREMENT = 24;
+
 export default {
 	name: "card-grid",
+	components: {
+		InfiniteScroller,
+		EmittingImage,
+	},
 	props: {
 		items: {
 			type: Array,
@@ -72,17 +67,23 @@ export default {
 	},
 	data() {
 		return {
+			displayedResults: MIN_DISPLAYED_RESULTS,
 			failed: {},
 		};
 	},
 	methods: {
 		onImageFail(item) {
 			this.failed[item[this.track]] = true;
-			this.$forceUpdate();
 			return false;
+		},
+		showMore() {
+			this.displayedResults += RESULT_INCREMENT;
 		},
 	},
 	computed: {
+		shownItems() {
+			return this.items.slice(0, this.displayedResults);
+		},
 		columnCount() {
 			// if (this.$vuetify.breakpoint.xl) return 4;
 			if (this.$vuetify.breakpoint.lgAndUp) return 3;

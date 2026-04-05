@@ -61,7 +61,6 @@
 		>
 			<v-icon large>mdi-chevron-up</v-icon>
 		</v-btn>
-		<div ref="bottomElement" />
 	</infinite-scroller>
 </template>
 

@@ -1,13 +1,12 @@
 <template>
 	<v-card class="main-container px-2 py-4">
-		<infinite-scroller @more="showMore">
-			<v-row>
-				<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
-					<v-list-item>
-						<slot :item="item" />
-					</v-list-item>
-				</v-col>
-			</v-row>
+		<!-- can save some space by declaring the div a v-row using the underlying class -->
+		<infinite-scroller class="row" @more="showMore">
+			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
+				<v-list-item>
+					<slot :item="item" />
+				</v-list-item>
+			</v-col>
 		</infinite-scroller>
 	</v-card>
 </template>
