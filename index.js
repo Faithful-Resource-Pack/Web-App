@@ -192,7 +192,7 @@ const app = new Vue({
 			// wrap the date so you can pass in anything the date constructor accepts
 			// e.g. unix timestamps YMD dates etc
 			return DateTime.fromJSDate(new Date(date))
-				.setLocale(this.$root.translation.current.bcp47)
+				.setLocale(this.translation.current.bcp47)
 				.toLocaleString(format);
 		},
 		syncRoutes(tabs) {
