@@ -54,14 +54,7 @@
 		<div v-if="loading" class="text-center">
 			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
 		</div>
-		<smart-grid
-			v-else-if="users.length"
-			:items="users"
-			:pageColor="pageColor"
-			:textColor="textColorOnPage"
-			wide
-			track="id"
-		>
+		<smart-grid v-else-if="users.length" :items="users" wide track="id">
 			<template #default="{ item }">
 				<a
 					:href="`https://faithfulpack.net/user/${item.id}`"

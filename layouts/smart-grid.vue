@@ -17,7 +17,7 @@ import InfiniteScroller from "./infinite-scroller.vue";
 const MIN_DISPLAYED_RESULTS = 60;
 const RESULT_INCREMENT = 120;
 
-// lazy loaded list which automatically paginates and fits list to screen
+// lazy loaded list which automatically scales to screen width
 export default {
 	name: "smart-grid",
 	components: {
@@ -27,16 +27,6 @@ export default {
 		items: {
 			type: Array,
 			required: true,
-		},
-		pageColor: {
-			type: String,
-			required: false,
-			default: "primary",
-		},
-		textColor: {
-			type: String,
-			required: false,
-			default: "",
 		},
 		track: {
 			type: String,

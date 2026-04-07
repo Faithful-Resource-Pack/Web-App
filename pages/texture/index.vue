@@ -73,8 +73,6 @@
 		</div>
 		<smart-grid
 			v-else-if="Object.keys(textures).length"
-			:pageColor="pageColor"
-			:textColor="textColorOnPage"
 			:items="Object.values(textures)"
 			track="id"
 		>
