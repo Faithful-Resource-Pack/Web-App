@@ -1,6 +1,6 @@
 <template>
 	<v-list dense nav>
-		<v-list-item two-line style="min-height: 0">
+		<v-list-item two-line style="min-height: 0" to="/profile">
 			<v-list-item-avatar left class="my-0">
 				<v-img :src="$root.user?.avatar" :alt="avatarAlt">
 					<template #placeholder>
