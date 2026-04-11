@@ -148,7 +148,7 @@ export default {
 			if (this.categorize) {
 				const categorized = changelogContributions.reduce(
 					(acc, cur) => {
-						const hasExisting = allContributions.filter((c) => c.texture === cur.id).length > 1;
+						const hasExisting = allContributions.filter((c) => String(c.texture) === cur.id).length > 1;
 						acc[hasExisting ? "Changed" : "Added"].push(cur);
 						return acc;
 					},
