@@ -4,8 +4,8 @@
 			v-for="(cat, cat_i) in categories"
 			:key="cat.value"
 			cols="12"
-			md="6"
-			:lg="12 / (categories.length || 1)"
+			:md="12 / (categories.length || 1)"
+			sm="6"
 		>
 			<v-card
 				class="py-2 px-4 d-flex align-center overflow-hidden main-container"
