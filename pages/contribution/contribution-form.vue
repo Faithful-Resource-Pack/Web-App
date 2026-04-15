@@ -54,7 +54,7 @@
 					v-model="contrib.authors"
 					:users="contributors"
 					:label="$root.lang().database.contributions.contributors"
-					:limit="5"
+					:limit="add ? 3 : 15"
 					small-chips
 					deletable-chips
 					:placeholder="$root.lang().database.contributions.modal.one_contributor"
