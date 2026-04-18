@@ -7,7 +7,6 @@
 		item-text="username"
 		item-value="id"
 		multiple
-		chips
 		v-bind="$attrs"
 	>
 		<!-- SELECTED THINGY -->
@@ -136,7 +135,7 @@ export default {
 				});
 		},
 		remove(id) {
-			if (this.content.includes(id)) this.content.splice(index, 1);
+			this.content = this.content.filter((c) => c !== id);
 		},
 		formatTitle(item) {
 			return item.username || `${this.$root.lang().database.anonymous} (${item.id})`;
