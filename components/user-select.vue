@@ -167,8 +167,10 @@ export default {
 			deep: true,
 		},
 		content: {
-			handler(n) {
+			handler(n, o) {
 				this.$emit("input", n);
+				// reset search on select
+				if (n.length > o.length) this.search = null;
 			},
 			deep: true,
 		},
