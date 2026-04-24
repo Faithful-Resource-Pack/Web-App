@@ -85,13 +85,13 @@ export default {
 		getNextOpenCategory(category, delta, depth = 1) {
 			const nextCategory = category + delta * depth;
 
-			// no need to navigate, take existing one
+			// already at end, nowhere to go (also base case if nothing was found along the way)
 			if (nextCategory < 0 || nextCategory >= this.tabs.length) return category;
 
 			// the category is open, we're good to use it
 			if (this.openCategories[this.tabs[nextCategory].id]) return nextCategory;
 
-			// closed, try again (if all fails it'll go back to the same category eventually)
+			// collapsed category, try going one further in chosen direction (breaks at end)
 			return this.getNextOpenCategory(category, delta, depth + 1);
 		},
 		updateCategory(delta, pos = 0) {
@@ -100,7 +100,8 @@ export default {
 			);
 
 			const nextCategory = this.getNextOpenCategory(curCategory, delta);
-			console.log("made it out of the loop");
+
+			// avoid redundant navigation if there's nowhere to go
 			if (curCategory === nextCategory) return;
 
 			const nextTabs = this.tabs[nextCategory].subtabs;
