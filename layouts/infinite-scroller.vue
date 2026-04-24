@@ -38,7 +38,7 @@ export default {
 		document.getElementById("main")?.addEventListener("scroll", this.scrollListener);
 		this.scrollListener();
 	},
-	unmounted() {
+	destroyed() {
 		document.getElementById("main")?.removeEventListener("scroll", this.scrollListener);
 	},
 };

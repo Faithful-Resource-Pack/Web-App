@@ -234,7 +234,7 @@ export default {
 			}, {});
 		});
 	},
-	unmounted() {
+	destroyed() {
 		// clean up download button
 		if (this.fileURL) URL.revokeObjectURL(this.fileURL);
 	},

@@ -234,7 +234,7 @@ export default {
 		window.addEventListener("resize", this.resizeListener);
 		this.resizeListener();
 	},
-	unmounted() {
+	destroyed() {
 		window.removeEventListener("resize", this.resizeListener);
 	},
 };
