@@ -57,7 +57,7 @@
 					:limit="add ? 3 : 15"
 					:placeholder="$root.lang().database.contributions.modal.one_contributor"
 					:error-messages="
-						contrib.length === 0 ? [$root.lang().database.contributions.no_contributor_yet] : []
+						contrib.length === 0 ? [$root.lang().database.contributions.authorless] : []
 					"
 					@newUser="(users) => $emit('newUser', users)"
 				/>

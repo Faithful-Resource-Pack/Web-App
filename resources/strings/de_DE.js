@@ -562,7 +562,6 @@ export default {
 			select_user: "Benutzer auswählen",
 			contribution_count_singular: "%d Beitrag",
 			contribution_count_plural: "%d Beiträge",
-			no_contributor_yet: "Noch keine Beiträge",
 			contribution_result: "Beiträge",
 			search_contributions: "Beiträge suchen",
 			modal: {

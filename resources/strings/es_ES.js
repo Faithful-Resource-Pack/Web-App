@@ -101,7 +101,6 @@ export default {
 		subtitles: {
 			add_new_contribution: "Agregar nueva contribución",
 			clone_contribution: "Clonar la contribución",
-			no_contributor_yet: "Aún no hay contribuyentes",
 			pack: "Resource Pack",
 			submissions: "Información de envío",
 			github: "GitHub",

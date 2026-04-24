@@ -81,7 +81,6 @@ export default {
 		subtitles: {
 			add_new_contribution: "Ajouter une nouvelle contribution",
 			clone_contribution: "Cloner la contribution",
-			no_contributor_yet: "Pas encore de contributeurs",
 			resolution: "Résolution",
 			pack: "Pack de Ressources",
 			user: "Utilisateurs",

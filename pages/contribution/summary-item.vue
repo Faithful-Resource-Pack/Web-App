@@ -4,7 +4,7 @@
 			<v-list-item-title>{{ title }}</v-list-item-title>
 			<v-list-item-subtitle>
 				<span v-if="contrib.authors?.length">{{ subtitle }}</span>
-				<i v-else>{{ $root.lang().database.contributions.no_contributor_yet }}</i>
+				<i v-else>{{ $root.lang().database.contributions.authorless }}</i>
 			</v-list-item-subtitle>
 			<v-list-item-subtitle v-if="contrib.texture?.length">
 				<v-chip

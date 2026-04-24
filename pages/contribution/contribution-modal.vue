@@ -183,7 +183,7 @@ export default {
 				}
 
 				if (contrib.authors.length === 0) {
-					showSnackBar(this.$root.lang().database.contributions.no_contributor_yet, "error");
+					showSnackBar(this.$root.lang().database.contributions.authorless, "error");
 					console.error(contrib);
 					success = false;
 				}

@@ -443,7 +443,6 @@ export default {
 			user_filter: "Usuários",
 			texture_filter: "Texturas",
 			select_user: "Selecionar usuário(s)",
-			no_contributor_yet: "Nenhum contribuidor ainda",
 			contribution_result: "Resultados da contribuição",
 			search_contributions: "Buscar contribuições",
 			modal: {

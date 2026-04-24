@@ -572,7 +572,7 @@ export default {
 			select_user: "Select user(s)",
 			contribution_count_singular: "%d contribution",
 			contribution_count_plural: "%d contributions",
-			no_contributor_yet: "No contributor yet",
+			authorless: "No authors added",
 			contribution_result: "Contribution results",
 			search_contributions: "Search contributions",
 			modal: {
