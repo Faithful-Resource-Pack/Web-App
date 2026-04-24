@@ -43,13 +43,14 @@
 							:selected="selectedContrib === i"
 							:packToName="packToName"
 							:contributors="allContributors"
+							@clone="cloneContribution(contrib)"
 							@delete="deleteContrib(i)"
 						/>
 					</v-list-item-group>
 				</v-list>
-				<v-btn color="secondary" elevation="0" block @click.stop.prevent="cloneContribution">
-					<v-icon left>mdi-content-duplicate</v-icon>
-					{{ $root.lang().database.contributions.modal.clone_contribution }}
+				<v-btn color="secondary" elevation="0" block @click.stop.prevent="addContribution">
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().database.contributions.modal.add_new_contribution }}
 				</v-btn>
 			</v-col>
 		</v-row>
@@ -123,8 +124,14 @@ export default {
 		};
 	},
 	methods: {
-		cloneContribution() {
-			const form = structuredClone(this.contribs[this.selectedContrib]);
+		addContribution() {
+			const newLen = this.contribs.push(emptyContrib());
+			this.$nextTick(() => {
+				this.selectedContrib = newLen - 1;
+			});
+		},
+		cloneContribution(contrib) {
+			const form = structuredClone(contrib);
 			form.key = crypto.randomUUID();
 			const newLen = this.contribs.push(form);
 
@@ -153,10 +160,10 @@ export default {
 		},
 		handleSubmit() {
 			// the code is different enough for adding/creating it's worth having two functions
-			const result = this.add ? this.addContributions() : this.editContribution();
+			const result = this.add ? this.postContributions() : this.editContribution();
 			return result.then(() => this.closeOnSubmit && this.$emit("close", true));
 		},
-		async addContributions() {
+		async postContributions() {
 			let success = true;
 			const finalContributions = [];
 			// can't use map since errors can be thrown

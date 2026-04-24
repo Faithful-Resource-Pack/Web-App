@@ -576,7 +576,7 @@ export default {
 			contribution_result: "Contribution results",
 			search_contributions: "Search contributions",
 			modal: {
-				add_new_contribution: "Add a new contribution",
+				add_new_contribution: "Add new contribution",
 				clone_contribution: "Clone selected contribution",
 				one_contributor: "Select at least one contributor",
 				pack: "Resource pack",

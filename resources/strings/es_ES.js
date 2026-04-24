@@ -99,7 +99,7 @@ export default {
 			confirm_deletion: "Confirmar eliminación",
 		},
 		subtitles: {
-			add_new_contribution: "Agregar una nueva contribución",
+			add_new_contribution: "Agregar nueva contribución",
 			clone_contribution: "Clonar la contribución",
 			no_contributor_yet: "Aún no hay contribuyentes",
 			pack: "Resource Pack",

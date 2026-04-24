@@ -447,7 +447,7 @@ export default {
 			contribution_result: "Resultados da contribuição",
 			search_contributions: "Buscar contribuições",
 			modal: {
-				add_new_contribution: "Adicionar uma nova contribuição",
+				add_new_contribution: "Adicionar nova contribuição",
 				clone_contribution: "Clonar a contribuição",
 				one_contributor: "Por favor escolha pelo menos um contribuidor",
 				pack: "Pacote de recursos",

@@ -2,7 +2,7 @@
 	<v-list-item class="mb-1">
 		<v-list-item-content>
 			<v-list-item-title>{{ title }}</v-list-item-title>
-			<v-list-item-subtitle class="text-truncate">
+			<v-list-item-subtitle>
 				<span v-if="contrib.authors?.length">{{ subtitle }}</span>
 				<i v-else>{{ $root.lang().database.contributions.no_contributor_yet }}</i>
 			</v-list-item-subtitle>
@@ -17,7 +17,10 @@
 				</v-chip>
 			</v-list-item-subtitle>
 		</v-list-item-content>
-		<v-list-item-action>
+		<v-list-item-action class="merged-actions no-bg">
+			<v-btn icon @click="$emit('clone')">
+				<v-icon>mdi-content-duplicate</v-icon>
+			</v-btn>
 			<v-btn icon :color="selected ? 'primary' : 'red lighten-1'" @click="$emit('delete')">
 				<v-icon>mdi-delete</v-icon>
 			</v-btn>
@@ -47,6 +50,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["clone", "delete"],
 	methods: {
 		formatRange(range) {
 			if (Array.isArray(range)) return `#${range.join(" – #")}`;
@@ -81,3 +85,10 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss">
+// can't use nested selectors with inline styles, kinda annoying
+.no-bg > * {
+	background: transparent !important;
+}
+</style>
