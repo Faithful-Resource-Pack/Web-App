@@ -203,7 +203,7 @@ export default [
 						redirect: "/versions/all",
 					},
 					{
-						path: "/versions/:edition?/",
+						path: "/versions/:edition?",
 						component: VersionPage,
 						name: "Versions",
 					},
@@ -218,7 +218,7 @@ export default [
 						redirect: "/packs/all",
 					},
 					{
-						path: "/packs/:tag?/",
+						path: "/packs/:tag?",
 						component: PackPage,
 						name: "Packs",
 					},
