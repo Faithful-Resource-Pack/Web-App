@@ -19,8 +19,8 @@
 				:key="tab.id"
 				:tab="tab"
 				:badges="badges"
-				:initOpen="initialTabsOpen[tab.id]"
-				:value="tabsOpen[tab.id]"
+				:initOpen="initialOpenCategories[tab.id]"
+				:value="openCategories[tab.id]"
 				@click="updateTabsOpen(tab.id)"
 				@autoClose="autoClose"
 			/>
@@ -33,7 +33,7 @@
 <script>
 import SidebarCategory from "./sidebar-category.vue";
 
-const OPEN_TAB_KEY = "menu_open_tabs";
+const OPEN_CATEGORY_KEY = "open_sidebar_categories";
 
 export default {
 	name: "nav-sidebar",
@@ -61,23 +61,104 @@ export default {
 		},
 	},
 	data() {
-		const tabOpenJSON = localStorage.getItem(OPEN_TAB_KEY) || "{}";
+		const openCategoryJSON = localStorage.getItem(OPEN_CATEGORY_KEY) || "{}";
 		return {
 			drawerOpen: false,
 			// updating tabsOpen when it's assigned to a value prop causes problems
-			initialTabsOpen: JSON.parse(tabOpenJSON),
+			initialOpenCategories: JSON.parse(openCategoryJSON),
 			// JSON.parse twice to get different references for mutation later
-			tabsOpen: JSON.parse(tabOpenJSON),
+			openCategories: JSON.parse(openCategoryJSON),
+			navListener: () => {},
 		};
 	},
 	methods: {
 		updateTabsOpen(label) {
-			if (label) this.tabsOpen[label] = !this.tabsOpen[label];
-			localStorage.setItem(OPEN_TAB_KEY, JSON.stringify(this.tabsOpen));
+			if (label) this.openCategories[label] = !this.openCategories[label];
+			localStorage.setItem(OPEN_CATEGORY_KEY, JSON.stringify(this.openCategories));
 		},
 		autoClose() {
 			if (this.$vuetify.breakpoint.mobile) this.drawerOpen = false;
 		},
+		isCurrentPath(path) {
+			return this.$route.matched.some((r) => r.path === path);
+		},
+		getNextOpenCategory(category, delta, depth = 1) {
+			const nextCategory = category + delta * depth;
+
+			// no need to navigate, take existing one
+			if (nextCategory < 0 || nextCategory >= this.tabs.length) return category;
+
+			// the category is open, we're good to use it
+			if (this.openCategories[this.tabs[nextCategory].id]) return nextCategory;
+
+			// closed, try again (if all fails it'll go back to the same category eventually)
+			return this.getNextOpenCategory(category, delta, depth + 1);
+		},
+		updateCategory(delta, pos = 0) {
+			const curCategory = this.tabs.findIndex((t) =>
+				t.subtabs.some((s) => s.routes.some((r) => this.isCurrentPath(r.path))),
+			);
+
+			const nextCategory = this.getNextOpenCategory(curCategory, delta);
+			console.log("made it out of the loop");
+			if (curCategory === nextCategory) return;
+
+			const nextTabs = this.tabs[nextCategory].subtabs;
+
+			// if we're coming from a later tab then use the last tab of the new category
+			const subtabIdx = pos >= 0 ? pos : nextTabs.length + pos;
+			this.$router.push({ path: nextTabs[subtabIdx].routes[0].path });
+		},
+		updateTab(delta) {
+			// there's probably a more eloquent way to write this but whatever it gets the job done
+			let category;
+			let subtabIdx;
+			for (const tab of this.tabs) {
+				const i = tab.subtabs.findIndex((s) => s.routes.some((r) => this.isCurrentPath(r.path)));
+				if (i !== -1) {
+					category = tab;
+					subtabIdx = i;
+					break;
+				}
+			}
+
+			// if we ended up on the 404 page or something go to a "safe" page (dashboard)
+			if (!category) return this.$router.push({ path: this.tabs[0].subtabs[0].routes[0].path });
+
+			subtabIdx += delta;
+
+			// if we overflowed we try going to the next/previous category
+			if (subtabIdx < 0 || subtabIdx >= category.subtabs.length)
+				return this.updateCategory(delta, delta > 0 ? 0 : -1);
+
+			this.$router.push({ path: category.subtabs[subtabIdx].routes[0].path });
+		},
+	},
+	mounted() {
+		// add discord-style alt/ctrl keyboard navigation
+		/** @param {KeyboardEvent} event */
+		this.navListener = (event) => {
+			if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+
+			// both category/tab switching use the alt key
+			if (!event.altKey) return;
+
+			event.preventDefault();
+
+			// mac uses cmd+option+arrow
+			const isCategorySwitch = navigator.platform.toLowerCase().includes("mac")
+				? event.metaKey
+				: event.ctrlKey;
+
+			// when working with indices we can just add the delta to get the new tab index
+			const delta = event.key === "ArrowDown" ? 1 : -1;
+			return isCategorySwitch ? this.updateCategory(delta) : this.updateTab(delta);
+		};
+
+		window.addEventListener("keydown", this.navListener);
+	},
+	destroyed() {
+		window.removeEventListener("keydown", this.navListener);
 	},
 	watch: {
 		value: {
@@ -95,14 +176,14 @@ export default {
 
 				// we diff against the localstorage version since users can get logged out
 				// and their preference should be saved regardless
-				const keyDiff = keys.filter((k) => !Object.keys(this.tabsOpen).includes(k));
+				const keyDiff = keys.filter((k) => !Object.keys(this.openCategories).includes(k));
 				if (!keyDiff.length) return;
 
 				// properly new tabs are always open by default
 				for (const key of keyDiff) {
 					if (key === undefined) continue;
-					this.initialTabsOpen[key] = true;
-					this.tabsOpen[key] = true;
+					this.initialOpenCategories[key] = true;
+					this.openCategories[key] = true;
 				}
 				this.updateTabsOpen();
 			},
