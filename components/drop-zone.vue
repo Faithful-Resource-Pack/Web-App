@@ -62,6 +62,7 @@ export default {
 			default: () => false,
 		},
 	},
+	emits: ["change", "input"],
 	data() {
 		return {
 			isDragging: false,

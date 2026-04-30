@@ -8,6 +8,7 @@
 <script>
 export default {
 	name: "infinite-scroller",
+	emits: ["more"],
 	data() {
 		return {
 			// must maintain static references to listeners for unmounting

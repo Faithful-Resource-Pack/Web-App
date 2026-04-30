@@ -140,6 +140,7 @@ export default {
 			default: () => ({}),
 		},
 	},
+	emits: ["reviewAddon", "openDenyPopup"],
 	data() {
 		return {
 			modalData: {},

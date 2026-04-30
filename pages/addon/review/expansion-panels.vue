@@ -133,6 +133,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["reviewAddon", "openDenyPopup", "input", "close"],
 	data() {
 		return {
 			modalData: {},

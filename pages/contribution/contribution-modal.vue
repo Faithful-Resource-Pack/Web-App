@@ -112,6 +112,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input", "close"],
 	data() {
 		return {
 			modalOpened: false,

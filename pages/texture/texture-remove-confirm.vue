@@ -61,6 +61,7 @@ export default {
 			default: () => Promise.resolve(),
 		},
 	},
+	emits: ["input", "close"],
 	data() {
 		return {
 			modalOpened: false,

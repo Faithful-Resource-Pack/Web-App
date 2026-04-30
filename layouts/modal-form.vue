@@ -72,6 +72,7 @@ export default {
 			default: "600",
 		},
 	},
+	emits: ["submit", "close"],
 	methods: {
 		closeModal() {
 			this.modalOpened = false;

@@ -114,6 +114,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["open", "openNewTab", "share"],
 	data() {
 		return {
 			width: 0,

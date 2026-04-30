@@ -88,6 +88,7 @@ export default {
 			default: () => 0,
 		},
 	},
+	emits: ["input", "newUser"],
 	data() {
 		return {
 			content: this.value,

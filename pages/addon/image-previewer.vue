@@ -45,6 +45,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["delete"],
 	data() {
 		return {
 			fullscreenItem: undefined,

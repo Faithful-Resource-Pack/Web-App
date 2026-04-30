@@ -54,6 +54,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["update", "update:darkSidebar"],
 };
 </script>
 

@@ -55,6 +55,7 @@ export default {
 			default: "primary",
 		},
 	},
+	emits: ["input", "close"],
 	data() {
 		const defaultEdition = settings.editions[0];
 		return {

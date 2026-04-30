@@ -100,6 +100,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["drawer", "theme", "update:darkSidebar", "lang"],
 	data() {
 		return {
 			accountManagerOpen: false,

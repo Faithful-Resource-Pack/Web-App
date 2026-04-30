@@ -77,6 +77,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["input", "delete"],
 	data() {
 		return {
 			item: undefined,

@@ -115,6 +115,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["input", "close", "submissionFinished"],
 	data() {
 		return {
 			modalOpened: false,

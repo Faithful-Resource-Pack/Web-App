@@ -99,6 +99,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["newUser", "input"],
 	data() {
 		return {
 			contrib: this.value,

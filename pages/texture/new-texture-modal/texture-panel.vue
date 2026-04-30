@@ -156,6 +156,7 @@ export default {
 			default: () => [],
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			texture: {},

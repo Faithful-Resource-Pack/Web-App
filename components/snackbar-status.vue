@@ -54,6 +54,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			snackbarShown: false,

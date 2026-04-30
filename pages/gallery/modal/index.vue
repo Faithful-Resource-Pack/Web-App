@@ -106,6 +106,7 @@ export default {
 			default: () => [],
 		},
 	},
+	emits: ["input", "close", "share"],
 	data() {
 		return {
 			textureObj: {},

@@ -33,6 +33,7 @@ export default {
 			default: () => ({}),
 		},
 	},
+	emits: ["select"],
 	computed: {
 		title() {
 			return (

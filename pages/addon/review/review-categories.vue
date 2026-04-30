@@ -38,6 +38,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input"],
 	computed: {
 		classes() {
 			return this.categories.map((c) =>

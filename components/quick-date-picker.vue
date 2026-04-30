@@ -88,6 +88,7 @@ export default {
 			default: () => false,
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			date: new Date(new Date(this.value).setHours(0, 0, 0, 0)),

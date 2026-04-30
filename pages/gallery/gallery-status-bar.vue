@@ -43,6 +43,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["input"],
 	data() {
 		const sortStrings = this.$root.lang().gallery.sort;
 		return {

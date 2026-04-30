@@ -83,6 +83,7 @@ export default {
 			default: () => [],
 		},
 	},
+	emits: ["click", "loaded"],
 	data() {
 		return {
 			exists: true,

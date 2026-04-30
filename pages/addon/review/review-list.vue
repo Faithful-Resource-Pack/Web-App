@@ -34,6 +34,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input"],
 	computed: {
 		classes() {
 			return this.items.map(({ key }) =>

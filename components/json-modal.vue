@@ -47,6 +47,7 @@ export default {
 			default: "",
 		},
 	},
+	emits: ["input", "data"],
 	data() {
 		return {
 			modalOpened: false,

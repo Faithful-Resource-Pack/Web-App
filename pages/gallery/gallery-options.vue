@@ -108,6 +108,7 @@ export default {
 			default: 16,
 		},
 	},
+	emits: ["update:search", "update:display", "updateRoute"],
 	data() {
 		return {
 			// search values available

@@ -47,6 +47,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["click", "autoClose"],
 	computed: {
 		title() {
 			return this.$root.lang().global.tabs[this.tab.id].title || this.tab.id.toTitleCase();

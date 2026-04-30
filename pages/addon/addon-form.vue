@@ -314,6 +314,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["header", "screenshot", "submit"],
 	data() {
 		return {
 			form: {

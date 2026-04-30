@@ -148,6 +148,7 @@ export default {
 			default: "primary",
 		},
 	},
+	emits: ["input", "close"],
 	data() {
 		return {
 			modalOpened: false,

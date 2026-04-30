@@ -42,6 +42,7 @@ export default {
 			default: "primary",
 		},
 	},
+	emits: ["delete"],
 	computed: {
 		useCount() {
 			return this.texture.uses.length;

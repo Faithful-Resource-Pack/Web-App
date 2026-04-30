@@ -35,6 +35,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["click", "loaded"],
 	data() {
 		return {
 			canvasRef: null,

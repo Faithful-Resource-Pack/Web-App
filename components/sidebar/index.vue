@@ -60,6 +60,7 @@ export default {
 			default: () => ({}),
 		},
 	},
+	emits: ["input"],
 	data() {
 		const openCategoryJSON = localStorage.getItem(OPEN_CATEGORY_KEY) || "{}";
 		return {

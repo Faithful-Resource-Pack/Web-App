@@ -50,5 +50,6 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["fullscreen", "delete"],
 };
 </script>

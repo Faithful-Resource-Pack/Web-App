@@ -102,6 +102,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			downloads: [],

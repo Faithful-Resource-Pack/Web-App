@@ -42,6 +42,7 @@ export default {
 			}),
 		},
 	},
+	emits: ["input", "valid-ranges", "generated-values"],
 	data() {
 		return {
 			ranges: [],

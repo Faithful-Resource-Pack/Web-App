@@ -61,6 +61,7 @@ export default {
 			type: Boolean,
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			modalOpened: false,

@@ -50,6 +50,7 @@ export default {
 			default: false,
 		},
 	},
+	emits: ["input", "close"],
 	data() {
 		return {
 			modalOpened: false,

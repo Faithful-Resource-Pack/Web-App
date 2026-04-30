@@ -25,6 +25,7 @@ export default {
 			default: "",
 		},
 	},
+	emits: ["search", "clear", "input"],
 	data() {
 		return {
 			search: "",

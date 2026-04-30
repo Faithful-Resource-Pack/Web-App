@@ -83,6 +83,7 @@ export default {
 			required: true,
 		},
 	},
+	emits: ["input"],
 	data() {
 		return {
 			modalOpened: false,
