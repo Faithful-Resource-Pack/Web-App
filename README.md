@@ -21,7 +21,7 @@
 ---
 
 ## Requirements
-- NodeJS v20+ https://nodejs.org
+- Node.js v22+ (https://nodejs.org)
 - pnpm (`corepack enable` + `corepack prepare pnpm@latest --activate`)
 
 ## Running
