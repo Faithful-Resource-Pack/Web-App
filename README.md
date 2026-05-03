@@ -21,6 +21,7 @@
 ---
 
 ## Requirements
+
 - Node.js v22+ (https://nodejs.org)
 - pnpm (`corepack enable` + `corepack prepare pnpm@latest --activate`)
 
@@ -52,7 +53,7 @@ If you're using Apache to serve the site, make sure to set `FallbackResource` to
 
 ## API Reference
 
-This project is heavily developed around our public API. Check out our API documentation at https://api.faithfulpack.net/docs for more information about endpoints and making requests.
+This project uses the Faithful API for retrieving and writing most dynamic data, such as texture information, user contributions, and available resource packs. Check out our [API reference](https://api.faithfulpack.net/docs) for documentation about each API endpoint, its associated types, and user authentication.
 
 ## Translating
 
