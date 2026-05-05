@@ -24,6 +24,9 @@
 			/>
 
 			<div class="flex-grow-1 pa-2">
+				<v-alert v-if="isIgnored" type="info" color="secondary">
+					{{ $root.lang().gallery.modal.ignored }}
+				</v-alert>
 				<v-tabs id="info-tabs" v-model="selectedTab" :show-arrows="false">
 					<v-tabs-slider />
 					<v-tab v-for="tab in displayedTabs" :key="tab">{{ tab }}</v-tab>
@@ -135,6 +138,11 @@ export default {
 			if (this.error) return this.$root.lang().gallery.error_message.search_failed;
 			if (this.loading) return this.$root.lang().global.loading;
 			return `[#${this.textureID}] ${this.textureObj.texture.name}`;
+		},
+		isIgnored() {
+			if (this.loading) return false;
+			const url = Object.values(this.textureObj.urls)[0];
+			return this.ignoreList.some((el) => url.includes(el));
 		},
 		tabs() {
 			const availableTabs = ["information", "authors"];

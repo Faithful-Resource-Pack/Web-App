@@ -283,6 +283,7 @@ export default {
 			no_contributions: "No contributions found",
 			image_alt_text: "Texture %NAME% for pack %PACK%",
 			loading: "Loading texture…",
+			ignored: "This texture has been ignored and may not be upscaled for all projects!",
 			tabs: {
 				information: "Information",
 				authors: "Authors",
