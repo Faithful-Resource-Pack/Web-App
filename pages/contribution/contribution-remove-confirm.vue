@@ -1,23 +1,56 @@
 <template>
 	<modal-form
 		v-model="modalOpened"
+		max-width="800"
 		danger
-		:title="$root.lang().database.confirm_deletion"
+		scrollable
+		:title="$root.lang().database.contributions.delete_title"
 		@close="$emit('close')"
 		@submit="deleteContribution"
 	>
-		<li>ID: {{ data.id }}</li>
-		<li>Name: {{ data.name }}</li>
-		<li>Pack: {{ data.pack }}</li>
-		<li>Date: {{ data.date }} ({{ $root.formatDate(data.date) }})</li>
-		<li>
-			Authors:
-			<ul>
-				<li v-for="author in formattedAuthors" :key="author">
-					{{ author }}
-				</li>
-			</ul>
-		</li>
+		<v-sheet style="position: sticky; top: 0px; z-index: 998">
+			<v-list-item class="mx-0">
+				<a :href="data.url" target="_blank" rel="noopener noreferrer">
+					<v-list-item-avatar tile class="database-list-sprite">
+						<v-img class="texture-img" :src="data.url" lazy-src="/resources/transparency.png" />
+					</v-list-item-avatar>
+				</a>
+				<v-list-item-content>
+					<v-list-item-title>
+						{{ `[#${data.texture}] ${data.name} • ${$root.formatDate(data.date)}` }}
+					</v-list-item-title>
+					<v-list-item-subtitle>
+						{{ packToName[data.pack]?.label || data.pack }}
+					</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
+			<v-divider class="my-5" />
+		</v-sheet>
+		<h2 class="title mb-3">
+			{{ $root.lang().database.contributions.contributors }} ({{ formattedAuthors.length }})
+		</h2>
+		<v-row>
+			<v-col v-for="author in formattedAuthors" :key="author.id" cols="12" md="6">
+				<v-list-item class="mx-0">
+					<a
+						:href="`https://faithfulpack.net/user/${author.id}`"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<v-list-item-avatar v-if="author.uuid" class="database-list-sprite" tile>
+							<v-img :src="`https://vzge.me/face/96/${author.uuid}`" />
+						</v-list-item-avatar>
+						<v-list-item-avatar v-else class="database-list-avatar">
+							<v-icon large>mdi-account</v-icon>
+						</v-list-item-avatar>
+					</a>
+					<v-list-item-content>
+						<v-list-item-title>{{ author.username }}</v-list-item-title>
+						<v-list-item-subtitle>{{ author.id }}</v-list-item-subtitle>
+					</v-list-item-content>
+				</v-list-item>
+			</v-col>
+		</v-row>
 	</modal-form>
 </template>
 
@@ -40,6 +73,10 @@ export default {
 			required: false,
 			// when initially loaded it has no value
 			default: () => ({}),
+		},
+		packToName: {
+			type: Object,
+			required: true,
 		},
 		contributors: {
 			type: Array,
@@ -65,10 +102,8 @@ export default {
 	},
 	computed: {
 		formattedAuthors() {
-			if (!this.data || !this.data.authors) return ["Unknown"];
-			return this.data.authors.map(
-				(author) => `${this.contributors.find((c) => c.id == author).username} (${author})`,
-			);
+			if (!this.data || !this.data.authors) return { unknown: "Unknown" };
+			return this.data.authors.map((author) => this.contributors.find((c) => c.id == author));
 		},
 	},
 	watch: {

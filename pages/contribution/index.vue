@@ -11,6 +11,7 @@
 		<contribution-remove-confirm
 			v-model="remove.open"
 			:data="remove.data"
+			:packToName="selectedPacks"
 			:contributors="contributors"
 			@close="closeDeleteModal"
 		/>

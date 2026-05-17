@@ -567,6 +567,7 @@ export default {
 			title: "Contributions",
 			contributors: "Contributors",
 			add_contributions: "Add new contributions",
+			delete_title: "Delete contribution",
 			pack_filter: "Filter by pack",
 			user_filter: "Users",
 			texture_filter: "Textures",
