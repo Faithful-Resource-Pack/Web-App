@@ -1,5 +1,5 @@
 <template>
-	<v-dialog v-model="modalOpened" content-class="colored" :max-width="maxWidth">
+	<v-dialog v-model="modalOpened" content-class="colored" :max-width="maxWidth" v-bind="$attrs">
 		<v-card>
 			<v-card-title class="headline justify-space-between">
 				<span>{{ title }}</span>

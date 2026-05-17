@@ -24,7 +24,7 @@
 				<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_uses }}</h2>
 				<v-list v-if="uses.length">
 					<v-list-item v-for="use in uses" :key="use.id" class="px-0">
-						<v-list-item-avatar rounded :class="color" class="use-id">
+						<v-list-item-avatar rounded :class="color" class="white--text use-id">
 							#{{ use.id }}
 						</v-list-item-avatar>
 						<v-list-item-content>
@@ -98,7 +98,7 @@
 
 		<template v-if="type === 'use' && hasData">
 			<v-list-item class="px-0">
-				<v-list-item-avatar rounded :class="color" class="use-id">
+				<v-list-item-avatar rounded :class="color" class="white--text use-id">
 					#{{ data.id }}
 				</v-list-item-avatar>
 				<v-list-item-content>
