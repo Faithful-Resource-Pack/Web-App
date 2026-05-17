@@ -233,8 +233,8 @@ export default {
 			if (success) this.getTextures();
 			this.getTags();
 		},
-		async removeTexture() {
-			this.startSearch();
+		async removeTexture(success) {
+			if (success) this.startSearch();
 		},
 	},
 	computed: {
