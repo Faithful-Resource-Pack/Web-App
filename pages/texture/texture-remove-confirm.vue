@@ -21,7 +21,9 @@
 					</v-list-item-content>
 				</v-list-item>
 				<v-divider class="my-5" />
-				<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_uses }}</h2>
+				<h2 class="title">
+					{{ $root.lang().database.textures.delete_modal.affected_uses }} ({{ uses.length }})
+				</h2>
 				<v-list v-if="uses.length">
 					<v-list-item v-for="use in uses" :key="use.id" class="px-0">
 						<v-list-item-avatar rounded :class="color" class="white--text use-id">
@@ -42,7 +44,9 @@
 				<!-- vuetify pads an inner element so we have to undo it instead of just override -->
 				<v-skeleton-loader v-else type="list-item-avatar-two-line" class="mx-n4" />
 				<v-divider class="my-5" />
-				<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_paths }}</h2>
+				<h2 class="title">
+					{{ $root.lang().database.textures.delete_modal.affected_paths }} ({{ paths.length }})
+				</h2>
 				<v-list v-if="paths.length">
 					<v-list-item v-for="path in paths" :key="path.id" class="px-0">
 						<v-list-item-content>
@@ -59,6 +63,7 @@
 			<v-col cols="12" md="6">
 				<h2 class="title">
 					{{ $root.lang().database.textures.delete_modal.affected_contributions }}
+					({{ contributions.length }})
 				</h2>
 				<v-list v-if="contributions.length">
 					<v-list-item v-for="contrib in contributions" :key="contrib.id" class="px-0">
@@ -112,7 +117,9 @@
 				</v-list-item-content>
 			</v-list-item>
 			<v-divider class="my-5" />
-			<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_paths }}</h2>
+			<h2 class="title">
+				{{ $root.lang().database.textures.delete_modal.affected_paths }} ({{ paths.length }})
+			</h2>
 			<v-list v-if="paths.length">
 				<v-list-item v-for="path in paths" :key="path.id" class="px-0">
 					<v-list-item-content>

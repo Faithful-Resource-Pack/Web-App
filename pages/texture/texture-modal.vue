@@ -53,7 +53,9 @@
 				@change="updateTags(formData)"
 			/>
 
-			<h2 class="title">{{ $root.lang().database.textures.uses.title }}</h2>
+			<h2 class="title">
+				{{ $root.lang().database.textures.uses.title }} ({{ Object.keys(formData.uses).length }})
+			</h2>
 			<v-list v-if="Object.keys(formData.uses).length">
 				<v-list-item v-for="(use, index) in formData.uses" :key="index" class="px-0">
 					<v-list-item-avatar rounded :class="color" class="white--text use-id">

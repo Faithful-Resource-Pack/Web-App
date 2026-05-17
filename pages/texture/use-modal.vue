@@ -61,7 +61,9 @@
 				:items="editions"
 				:label="$root.lang().database.textures.uses.edition"
 			/>
-			<h2 class="title">{{ $root.lang().database.textures.paths.title }}</h2>
+			<h2 class="title">
+				{{ $root.lang().database.textures.paths.title }} ({{ Object.keys(formData.paths).length }})
+			</h2>
 			<v-list v-if="Object.keys(formData.paths).length">
 				<v-list-item v-for="(path, index) in formData.paths" :key="index" class="px-0">
 					<v-list-item-content>
