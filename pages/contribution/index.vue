@@ -248,7 +248,7 @@ export default {
 			const url = new URL(`${this.$root.apiURL}/contributions/search`);
 			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
 			url.searchParams.set("users", this.selectedContributors.join("-"));
-			url.searchParams.set("search", this.searchValue);
+			url.searchParams.set("search", this.searchValue.replace(/ /g, "_"));
 
 			Promise.all([axios.get(url.toString()), axios.get(`${this.$root.apiURL}/textures/raw`)])
 				.then(([contributions, textures]) => {
