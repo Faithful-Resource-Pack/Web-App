@@ -66,7 +66,7 @@
 					<v-list-item-content>
 						<v-list-item-title :title="path.name">{{ path.name }}</v-list-item-title>
 						<v-list-item-subtitle :title="(path.versions || []).join(', ')">
-							{{ (path.versions || []).join(", ") }}
+							{{ formatPathVersions(path.versions) }}
 						</v-list-item-subtitle>
 					</v-list-item-content>
 
@@ -221,7 +221,6 @@ export default {
 					// reset path data
 					this.formData.paths = paths.map((p) => ({
 						...p,
-						use: p.use || useId,
 						versions: p.versions.sort(versionSorter),
 					}));
 				})
@@ -233,6 +232,11 @@ export default {
 			this.remove.data = data;
 			this.remove.index = index;
 			this.remove.open = true;
+		},
+		formatPathVersions(versions) {
+			if (versions.length === 1) return versions[0];
+			// use nbsp to prevent weirdness on mobile
+			return `${versions[0]} – ${versions[versions.length - 1]}`;
 		},
 	},
 	watch: {
