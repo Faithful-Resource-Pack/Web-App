@@ -22,6 +22,7 @@
 			v-model="remove.open"
 			type="path"
 			:data="remove.data"
+			:color="color"
 			@close="closeAndUpdate"
 		/>
 

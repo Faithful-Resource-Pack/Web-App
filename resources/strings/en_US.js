@@ -614,8 +614,12 @@ export default {
 			search_texture: "Search texture name",
 			add_success: "Added texture(s) successfully",
 			delete_modal: {
-				deleting_use_will_delete_paths: "Deleting a use will also delete all its paths",
-				load_paths: "Load affected paths",
+				title_texture: "Delete texture",
+				title_use: "Delete use",
+				title_path: "Delete path",
+				affected_uses: "Affected uses",
+				affected_paths: "Affected paths",
+				affected_contributions: "Affected contributions",
 			},
 			modal: {
 				title: "Texture",

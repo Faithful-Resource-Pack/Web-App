@@ -18,6 +18,7 @@
 			v-model="remove.open"
 			type="use"
 			:data="remove.data"
+			:color="color"
 			@close="closeAndUpdate"
 		/>
 		<v-form ref="form">
@@ -55,15 +56,7 @@
 			<h2 class="title">{{ $root.lang().database.textures.uses.title }}</h2>
 			<v-list v-if="Object.keys(formData.uses).length">
 				<v-list-item v-for="(use, index) in formData.uses" :key="index" class="px-0">
-					<v-list-item-avatar
-						tile
-						:class="[color, 'white--text']"
-						class="px-2"
-						:style="{
-							'border-radius': '4px !important',
-							width: 'auto',
-						}"
-					>
+					<v-list-item-avatar rounded :class="color" class="use-id">
 						#{{ index }}
 					</v-list-item-avatar>
 

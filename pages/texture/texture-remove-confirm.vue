@@ -1,34 +1,135 @@
 <template>
 	<modal-form
 		v-model="modalOpened"
+		:max-width="type === 'texture' ? '1000' : '600'"
 		danger
-		:title="$root.lang().database.confirm_deletion"
+		:title="title"
 		@close="$emit('close')"
 		@submit="deleteData"
 	>
-		<v-alert v-if="type == 'use'" type="warning" outlined dense>
-			{{ $root.lang().database.textures.delete_modal.deleting_use_will_delete_paths }}
-		</v-alert>
-		<ul>
-			<li v-for="key in cleanedData" :key="key">
-				{{ key.toTitleCase() }}: {{ Array.isArray(data[key]) ? data[key].join(", ") : data[key] }}
-			</li>
-		</ul>
-		<template v-if="type == 'use'">
-			<v-divider class="ma-3" />
-			<v-btn block color="secondary" @click="loadUsePaths">
-				{{ $root.lang().database.textures.delete_modal.load_paths }}
-			</v-btn>
-			<v-list v-if="Object.keys(paths).length">
-				<v-list-item v-for="path in paths" :key="path.id">
+		<v-row v-if="type === 'texture' && hasData">
+			<v-col cols="12" md="6">
+				<v-list-item class="px-0">
+					<a :href="`/gallery?show=${data.id}`" target="_blank" rel="noopener noreferrer">
+						<v-list-item-avatar class="database-list-avatar text--primary">
+							#{{ data.id }}
+						</v-list-item-avatar>
+					</a>
+					<v-list-item-content>
+						<v-list-item-title>{{ data.name }}</v-list-item-title>
+						<v-list-item-subtitle>{{ data.tags.join(", ") }}</v-list-item-subtitle>
+					</v-list-item-content>
+				</v-list-item>
+				<v-divider class="my-5" />
+				<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_uses }}</h2>
+				<v-list v-if="uses.length">
+					<v-list-item v-for="use in uses" :key="use.id" class="px-0">
+						<v-list-item-avatar rounded :class="color" class="use-id">
+							#{{ use.id }}
+						</v-list-item-avatar>
+						<v-list-item-content>
+							<v-list-item-title>
+								<template v-if="use.name">{{ use.name }}</template>
+								<template v-else>
+									<i>{{ $root.lang().database.nameless }}</i>
+								</template>
+							</v-list-item-title>
+							<v-list-item-subtitle>{{ use.edition.toTitleCase() }}</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</v-list>
+
+				<!-- vuetify pads an inner element so we have to undo it instead of just override -->
+				<v-skeleton-loader v-else type="list-item-avatar-two-line" class="mx-n4" />
+				<v-divider class="my-5" />
+				<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_paths }}</h2>
+				<v-list v-if="paths.length">
+					<v-list-item v-for="path in paths" :key="path.id" class="px-0">
+						<v-list-item-content>
+							<v-list-item-title>{{ path.name }}</v-list-item-title>
+							<v-list-item-subtitle :title="path.versions.join(', ')">
+								{{ formatPathVersions(path.versions) }}
+							</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</v-list>
+				<v-skeleton-loader v-else type="list-item-two-line" class="mx-n4" />
+			</v-col>
+
+			<v-col cols="12" md="6">
+				<h2 class="title">
+					{{ $root.lang().database.textures.delete_modal.affected_contributions }}
+				</h2>
+				<v-list v-if="contributions.length">
+					<v-list-item v-for="contrib in contributions" :key="contrib.id" class="px-0">
+						<a :href="contrib.url" target="_blank" rel="noopener noreferrer">
+							<v-list-item-avatar tile class="database-list-sprite">
+								<v-img
+									class="texture-img"
+									:src="contrib.url"
+									lazy-src="/resources/transparency.png"
+								/>
+							</v-list-item-avatar>
+						</a>
+						<v-list-item-content>
+							<v-list-item-title>
+								{{ `${packToName[contrib.pack]} • ${$root.formatDate(contrib.date)}` }}
+							</v-list-item-title>
+							<v-list-item-subtitle>
+								{{
+									(contrib.authors || [])
+										.map((id) => discordIDtoName[id]?.username || id)
+										.join(", ")
+								}}
+							</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</v-list>
+				<!-- since this is the only thing on the right panel add a few so it looks less empty -->
+				<v-skeleton-loader
+					v-for="i in 3"
+					v-else
+					:key="i"
+					type="list-item-avatar-two-line"
+					class="mx-n4"
+				/>
+			</v-col>
+		</v-row>
+
+		<template v-if="type === 'use' && hasData">
+			<v-list-item class="px-0">
+				<v-list-item-avatar rounded :class="color" class="use-id">
+					#{{ data.id }}
+				</v-list-item-avatar>
+				<v-list-item-content>
 					<v-list-item-title>
-						{{ path.name }}
-						<v-list-item-subtitle>
-							{{ `${path.id} — ${path.versions.join(", ")}` }}
-						</v-list-item-subtitle>
+						<template v-if="data.name">{{ data.name }}</template>
+						<template v-else>
+							<i>{{ $root.lang().database.nameless }}</i>
+						</template>
 					</v-list-item-title>
+					<v-list-item-subtitle>{{ data.edition.toTitleCase() }}</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
+			<v-divider class="my-5" />
+			<h2 class="title">{{ $root.lang().database.textures.delete_modal.affected_paths }}</h2>
+			<v-list v-if="paths.length">
+				<v-list-item v-for="path in paths" :key="path.id" class="px-0">
+					<v-list-item-content>
+						<v-list-item-title>{{ path.name }}</v-list-item-title>
+						<v-list-item-subtitle>{{ formatPathVersions(path.versions) }}</v-list-item-subtitle>
+					</v-list-item-content>
 				</v-list-item>
 			</v-list>
+			<v-skeleton-loader v-else type="list-item-two-line" class="mx-n4" />
+		</template>
+		<template v-if="type === 'path' && hasData">
+			<v-list-item class="px-0">
+				<v-list-item-content>
+					<v-list-item-title>{{ data.name }}</v-list-item-title>
+					<v-list-item-subtitle>{{ formatPathVersions(data.versions) }}</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
 		</template>
 	</modal-form>
 </template>
@@ -36,6 +137,7 @@
 <script>
 import axios from "axios";
 import ModalForm from "@layouts/modal-form.vue";
+import versionSorter from "@helpers/versionSorter";
 
 export default {
 	name: "texture-remove-confirm",
@@ -55,10 +157,10 @@ export default {
 			type: String,
 			required: true,
 		},
-		onSubmit: {
-			type: Function,
+		color: {
+			type: String,
 			required: false,
-			default: () => Promise.resolve(),
+			default: "primary",
 		},
 	},
 	emits: ["input", "close"],
@@ -66,21 +168,48 @@ export default {
 		return {
 			modalOpened: false,
 			deletePaths: true,
-			paths: {},
+			uses: [],
+			rawPaths: [],
+			contributions: [],
+			packToName: {},
+			discordIDtoName: {},
 		};
 	},
 	methods: {
-		// only available if type === "use"
-		loadUsePaths() {
-			axios
-				.get(`${this.$root.apiURL}/uses/${this.data.id}/paths`, this.$root.apiOptions)
-				.then((res) => {
-					this.paths = res.data.reduce((acc, path) => {
-						acc[path.id] = path;
+		loadTextureInformation(textureId) {
+			axios.get(`${this.$root.apiURL}/textures/${textureId}/all`).then((res) => {
+				this.uses = res.data.uses;
+				this.rawPaths = res.data.paths;
+				this.contributions = res.data.contributions
+					.sort((a, b) => b.date - a.date)
+					.map((c) => ({
+						...c,
+						url: `${this.$root.apiURL}/textures/${c.texture}/url/${c.pack}/latest`,
+					}));
+			});
+
+			// only need to cache once if deleting multiple textures in one session
+			if (!Object.keys(this.packToName).length)
+				axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
+					this.packToName = Object.values(res.data).reduce((acc, cur) => {
+						acc[cur.id] = cur.name;
 						return acc;
 					}, {});
+				});
 
-					this.$forceUpdate();
+			if (!Object.keys(this.discordIDtoName).length)
+				axios.get(`${this.$root.apiURL}/contributions/authors`).then((res) => {
+					this.discordIDtoName = res.data.reduce((acc, cur) => {
+						acc[cur.id] = cur;
+						return acc;
+					}, {});
+				});
+		},
+		loadUseInformation(useId) {
+			axios
+				.get(`${this.$root.apiURL}/uses/${useId}/paths`, this.$root.apiOptions)
+				.then((res) => {
+					this.rawPaths = res.data;
 				})
 				.catch((err) => {
 					this.$root.showSnackBar(err, "error");
@@ -88,34 +217,44 @@ export default {
 				});
 		},
 		deleteData() {
+			// firestorm id field is the same for all collections
+			const id = this.data.id;
 			switch (this.type) {
 				case "texture":
-					const textureId = this.data.id;
 					return this.$root
 						.wrapSnackBar(
-							axios.delete(`${this.$root.apiURL}/textures/${textureId}`, this.$root.apiOptions),
+							axios.delete(`${this.$root.apiURL}/textures/${id}`, this.$root.apiOptions),
 						)
 						.then(() => this.$emit("close", true));
 				case "use":
-					const useId = this.data.id;
 					return this.$root
-						.wrapSnackBar(axios.delete(`${this.$root.apiURL}/uses/${useId}`, this.$root.apiOptions))
+						.wrapSnackBar(axios.delete(`${this.$root.apiURL}/uses/${id}`, this.$root.apiOptions))
 						.then(() => this.$emit("close", true));
 				case "path":
-					const pathId = this.data.id;
 					return this.$root
-						.wrapSnackBar(
-							axios.delete(`${this.$root.apiURL}/paths/${pathId}`, this.$root.apiOptions),
-						)
+						.wrapSnackBar(axios.delete(`${this.$root.apiURL}/paths/${id}`, this.$root.apiOptions))
 						.then(() => this.$emit("close", true));
 			}
 		},
+		formatPathVersions(versions) {
+			if (versions.length === 1) return versions[0];
+			// use nbsp to prevent weirdness on mobile
+			return `${versions[0]} – ${versions[versions.length - 1]}`;
+		},
 	},
 	computed: {
-		cleanedData() {
-			return Object.keys(this.data)
-				.filter((k) => typeof this.data[k] === "string" || Array.isArray(this.data[k]))
-				.sort();
+		title() {
+			return this.$root.lang().database.textures.delete_modal[`title_${this.type}`];
+		},
+		hasData() {
+			return Object.keys(this.data).length;
+		},
+		// easier to do it like this than to map both with texture/use info separately
+		paths() {
+			return this.rawPaths.map((p) => ({
+				...p,
+				versions: Array.from(p.versions).sort(versionSorter),
+			}));
 		},
 	},
 	watch: {
@@ -123,7 +262,18 @@ export default {
 			this.modalOpened = newValue;
 		},
 		modalOpened(newValue) {
-			this.paths = {};
+			this.uses = [];
+			this.rawPaths = [];
+			this.contributions = [];
+
+			switch (this.type) {
+				case "texture":
+					this.loadTextureInformation(this.data.id);
+					break;
+				case "use":
+					this.loadUseInformation(this.data.id);
+					break;
+			}
 			this.$emit("input", newValue);
 		},
 	},

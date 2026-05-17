@@ -20,6 +20,7 @@
 			v-model="remove.open"
 			type="texture"
 			:data="remove.data"
+			:color="pageColor"
 			@close="removeTexture"
 		/>
 
