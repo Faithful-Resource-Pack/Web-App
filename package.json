@@ -37,5 +37,8 @@
 		"eslint": "^9.39.4",
 		"eslint-plugin-vue": "^10.9.1",
 		"nodemon": "^3.1.14"
+	},
+	"peerDependencies": {
+		"vue-eslint-parser": "^10.4.0"
 	}
 }
