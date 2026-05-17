@@ -55,6 +55,16 @@
 				</v-data-table>
 			</div>
 		</div>
+		<v-btn
+			v-if="$root.isAdmin"
+			block
+			color="secondary"
+			class="my-5"
+			:to="`/textures/all/${textureObj.texture.id}`"
+		>
+			<v-icon left>mdi-pencil</v-icon>
+			{{ $root.lang().database.textures.change_texture }}
+		</v-btn>
 		<!-- eslint-enable vue/valid-v-slot -->
 	</div>
 </template>
