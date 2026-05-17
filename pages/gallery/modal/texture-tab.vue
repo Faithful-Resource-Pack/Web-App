@@ -1,18 +1,6 @@
 <template>
 	<div>
 		<!-- eslint-disable vue/valid-v-slot -->
-		<!-- vuetify uses dots as table fields but eslint reads them as modifiers -->
-		<div class="py-3">
-			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.texture }}</h2>
-			<v-data-table
-				dense
-				:headers="headers.texture"
-				:items="texture"
-				class="elevation-1"
-				hide-default-footer
-				disable-pagination
-			/>
-		</div>
 		<div class="py-3">
 			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.uses }}</h2>
 			<v-data-table

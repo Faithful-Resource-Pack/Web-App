@@ -16,9 +16,14 @@
 				</v-btn>
 				<v-toolbar-title v-if="loading">
 					{{ $root.lang().global.loading }}
-					<v-progress-circular v-if="loading" indeterminate size="25" width="3" class="ml-2" />
+					<v-progress-circular indeterminate size="25" width="3" class="ml-2" />
 				</v-toolbar-title>
-				<v-toolbar-title v-else-if="title">{{ title }}</v-toolbar-title>
+				<v-list-item-content v-else class="ml-5">
+					<v-toolbar-title v-if="title">{{ title }}</v-toolbar-title>
+					<v-list-item-subtitle v-if="subtitle" class="text--secondary">
+						{{ subtitle }}
+					</v-list-item-subtitle>
+				</v-list-item-content>
 				<v-spacer v-if="$slots.toolbar" />
 				<slot name="toolbar" />
 			</v-toolbar>
@@ -38,6 +43,11 @@ export default {
 			required: true,
 		},
 		title: {
+			type: String,
+			required: false,
+			default: "",
+		},
+		subtitle: {
 			type: String,
 			required: false,
 			default: "",

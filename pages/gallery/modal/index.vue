@@ -2,7 +2,8 @@
 	<fullscreen-modal
 		v-model="modalOpened"
 		:loading="loading"
-		:title="modalTitle"
+		:title="title"
+		:subtitle="subtitle"
 		@close="closeModal"
 	>
 		<template #toolbar>
@@ -34,10 +35,10 @@
 				<v-tabs-items v-model="selectedTab">
 					<v-tab-item v-for="tab in displayedTabs" :key="tab">
 						<template v-if="loading">
-							<div v-for="i in Array.from({ length: 3 }).keys()" :key="i">
+							<div v-for="i in Array.from({ length: 2 }).keys()" :key="i">
 								<v-skeleton-loader type="heading" class="pt-5 pb-2" />
-								<!-- cool trick where the texture table has 1, uses has 2, and paths has 3 -->
-								<v-skeleton-loader :type="`table-row-divider@${i + 1}`" class="mx-2 pb-5" />
+								<!-- cool trick where each table has more rows than the last -->
+								<v-skeleton-loader :type="`table-row-divider@${i + 2}`" class="mx-2 pb-5" />
 							</div>
 						</template>
 						<texture-tab v-else-if="tab === displayedTabs.information" :textureObj="textureObj" />
@@ -134,10 +135,14 @@ export default {
 			const hasContent = Object.keys(this.textureObj).length || this.error;
 			return !hasContent;
 		},
-		modalTitle() {
+		title() {
 			if (this.error) return this.$root.lang().gallery.error_message.search_failed;
 			if (this.loading) return this.$root.lang().global.loading;
 			return `[#${this.textureID}] ${this.textureObj.texture.name}`;
+		},
+		subtitle() {
+			if (this.error || this.loading) return "";
+			return this.textureObj.texture.tags.join(" • ");
 		},
 		isIgnored() {
 			if (this.loading) return false;
