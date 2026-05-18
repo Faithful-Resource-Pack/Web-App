@@ -11,9 +11,8 @@
 		/>
 		<pack-remove-confirm
 			v-model="remove.open"
-			:packID="remove.id"
+			:data="remove.data"
 			type="submissions"
-			:label="remove.label"
 			@close="getSubmission(data.id)"
 		/>
 		<v-form ref="form" lazy-validation>
@@ -90,14 +89,14 @@
 				</v-row>
 			</div>
 			<h2 class="title mb-2">{{ $root.lang().database.packs.submissions.title }}</h2>
-			<v-row v-if="Object.keys(formData.submission).length">
-				<v-col cols="12" sm="10">
+			<v-row v-if="Object.keys(formData.submission).length" dense>
+				<v-col>
 					<v-btn block color="secondary" @click="openSubmissionModal(formData, false)">
 						<v-icon left>mdi-pencil</v-icon>
 						{{ $root.lang().database.packs.submissions.edit_submission }}
 					</v-btn>
 				</v-col>
-				<v-col cols="12" sm="2">
+				<v-col class="flex-grow-0 flex-shrink-0">
 					<v-btn block color="error darken-1" @click="deleteSubmission(formData)">
 						<v-icon>mdi-delete</v-icon>
 					</v-btn>
@@ -170,8 +169,7 @@ export default {
 			submissionData: {},
 			submissionAdd: false,
 			remove: {
-				id: "",
-				label: "",
+				data: {},
 				open: false,
 			},
 		};
@@ -180,11 +178,7 @@ export default {
 		openSubmissionModal(data, add) {
 			this.submissionOpen = true;
 			this.submissionAdd = add;
-			if (add)
-				this.submissionData = {
-					id: data.id,
-				};
-			else this.submissionData = data.submission;
+			this.submissionData = add ? { id: data.id } : data.submission;
 		},
 		closeSubmissionModal() {
 			// clear form
@@ -201,18 +195,14 @@ export default {
 					this.formData.submission = res.data;
 				});
 		},
-		deleteSubmission() {
+		deleteSubmission(data) {
 			if (this.add) {
 				// reset directly, no need for confirmation modal
 				this.formData.submission = {};
 				return;
 			}
 
-			this.remove.id = this.data.id;
-			this.remove.label = this.remove.name = this.$root
-				.lang()
-				.database.packs.submissions.ask_submission_deletion.replace("%s", this.data.name)
-				.replace("%d", this.data.id);
+			this.remove.data = data;
 			this.remove.open = true;
 		},
 		validURL(str) {

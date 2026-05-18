@@ -703,6 +703,7 @@ export default {
 			modal: {
 				add_pack: "Add new pack",
 				change_pack: "Edit pack",
+				delete_pack: "Delete pack",
 				id: "Pack ID",
 				id_creation_hint: "A pack ID can either be manually specified or automatically generated",
 				id_editing_hint: "Changing a pack ID can break everything!",
@@ -718,9 +719,12 @@ export default {
 					organization: "Organization",
 					repository: "Repository",
 				},
+				delete_hint:
+					"Deleting a pack will remove it from the texture gallery and Discord bots, but will not affect its GitHub repositories.",
 			},
 			submissions: {
 				title: "Submission information",
+				delete_submission: "Delete submission information",
 				add_submission: "Add submission information",
 				edit_submission: "Edit submission information",
 				reference_pack: "Reference pack",
@@ -734,7 +738,7 @@ export default {
 					submit: "Submission channel",
 					results: "Results channel",
 				},
-				ask_submission_deletion: "Do you want to delete submission information for %s (%d)?",
+				delete_warning: "This will remove %d contributions!",
 			},
 		},
 		settings: {

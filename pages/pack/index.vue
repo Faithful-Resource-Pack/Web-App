@@ -12,9 +12,8 @@
 		/>
 		<pack-remove-confirm
 			v-model="remove.open"
-			:packID="remove.id"
+			:data="remove.data"
 			type="packs"
-			:label="remove.label"
 			@close="startSearch"
 		/>
 
@@ -107,9 +106,8 @@ export default {
 			modalData: {},
 			modalAdd: false,
 			remove: {
-				id: "",
-				label: "",
 				open: false,
+				data: {},
 			},
 		};
 	},
@@ -159,11 +157,7 @@ export default {
 			if (refresh) this.startSearch();
 		},
 		askRemove(data) {
-			this.remove.id = data.id;
-			this.remove.label = this.$root
-				.lang()
-				.database.ask_deletion.replace("%s", data.name)
-				.replace("%d", data.id);
+			this.remove.data = data;
 			this.remove.open = true;
 		},
 	},
