@@ -3,7 +3,7 @@
 		v-model="modalOpened"
 		danger
 		:title="$root.lang().database.confirm_deletion"
-		@close="$emit('close')"
+		@close="$emit('close', false)"
 		@submit="deleteUser"
 	>
 		<p>{{ description }}</p>
