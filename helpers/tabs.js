@@ -158,7 +158,8 @@ export default [
 				icon: "mdi-file-multiple",
 				routes: [
 					{
-						path: "/contributions",
+						cleanPath: "/contributions",
+						path: "/contributions/:name*",
 						component: ContributionPage,
 						name: "Contributions",
 					},

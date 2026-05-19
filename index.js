@@ -260,7 +260,7 @@ const app = new Vue({
 								return subtab.roles.some((r) => this.userRoles.includes(r));
 							})
 							.map((s) => {
-								s.to = s.routes[0].path;
+								s.to = s.routes[0].cleanPath || s.routes[0].path;
 								return s;
 							}),
 					}))

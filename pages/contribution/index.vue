@@ -243,6 +243,21 @@ export default {
 		},
 		startSearch() {
 			if (this.searchDisabled) return;
+
+			let newPath;
+			if (this.$route.params.name) {
+				const split = this.$route.path.split("/");
+				split.pop();
+				newPath = split.join("/");
+			} else {
+				newPath = this.$route.path;
+			}
+			if (!newPath.endsWith("/")) newPath += "/";
+			if (this.searchValue) newPath += this.searchValue;
+			if (newPath !== this.$route.path) {
+				this.$router.push(newPath).catch(() => {});
+			}
+
 			this.loading = true;
 
 			const url = new URL(`${this.$root.apiURL}/contributions/search`);
@@ -315,6 +330,8 @@ export default {
 	created() {
 		this.getPacks();
 		this.getAuthors();
+		this.searchValue = this.$route.params.name || "";
+		if (this.searchValue) this.startSearch();
 	},
 	watch: {
 		contributors: {

@@ -106,7 +106,7 @@ interface SidebarSubtab {
 	// not included when false
 	public?: true;
 	disabled?: true;
-	routes: RouteConfig[];
+	routes: (RouteConfig & { cleanPath?: string })[];
 	// takes a vue instance and returns what to display in the badge
 	// not done with `this` binding so arrow functions can be used
 	badge?: (app: Vue) => any;
