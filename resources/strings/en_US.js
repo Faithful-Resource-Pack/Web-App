@@ -8,7 +8,7 @@ export default {
 		logout: "Log out",
 		ends_success: "Completed successfully",
 		loading: "Loading, please wait…",
-		no_results: "No results were found",
+		no_results: "No results found",
 		nyi: "Not yet implemented",
 		invalid_url: "This URL is not valid",
 		navbar: {
