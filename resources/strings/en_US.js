@@ -228,7 +228,6 @@ export default {
 		delete: {
 			title: "Delete account",
 			btn: "Delete account",
-			description: "Are you sure you want to delete your account?",
 			warning: "This process is irreversible!",
 			addons: {
 				title_singular: "This will affect %d add-on",
