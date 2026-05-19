@@ -18,7 +18,7 @@
 					:items="packList"
 					item-text="label"
 					item-value="value"
-					hide-details
+					:hide-details="add"
 					required
 				/>
 				<!-- must manually handle v-model to prevent type errors -->
@@ -27,7 +27,7 @@
 					:value="Array.isArray(contrib.texture) ? contrib.texture : []"
 					:label="$root.lang().database.contributions.modal.texture_ids"
 					:errors="$root.lang().database.contributions.modal.id_field_errors"
-					hide-details
+					:hide-details="add"
 					@input="
 						(value) => {
 							contrib.texture = value;
@@ -39,7 +39,7 @@
 						v-model.number="contrib.texture"
 						:label="$root.lang().database.contributions.modal.texture_id"
 						required
-						hide-details
+						:hide-details="add"
 						class="mr-2"
 						min="0"
 					/>
