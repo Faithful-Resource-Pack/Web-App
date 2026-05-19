@@ -73,7 +73,7 @@
 			</v-col>
 			<v-col cols="12" sm="6" class="pb-0 py-sm-0">
 				<v-text-field
-					v-model="searchValue"
+					v-model="search"
 					persistent-placeholder
 					:label="$root.lang().database.contributions.texture_filter"
 					outlined
@@ -95,10 +95,10 @@
 		</v-btn>
 
 		<div class="mb-2 text-h5">
-			{{ $root.lang().database.contributions.contribution_result }} ({{ searchResults.length }})
+			{{ $root.lang().database.contributions.contribution_result }} ({{ contributions.length }})
 		</div>
 
-		<smart-grid :loading="loading" :items="searchResults" track="id">
+		<smart-grid :loading="loading" :items="contributions" track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar tile class="database-list-sprite">
 					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
@@ -139,7 +139,7 @@
 					<v-btn
 						icon
 						:title="$root.lang().database.contributions.delete_contribution"
-						@click="openDeleteModal(item)"
+						@click="askRemove(item)"
 					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
@@ -184,8 +184,8 @@ export default {
 			packToCode: {},
 			logos: {},
 			loading: false,
-			searchResults: [],
-			searchValue: "",
+			search: "",
+			contributions: [],
 			modalOpen: false,
 			modalAdd: false,
 			modalData: null,
@@ -211,7 +211,7 @@ export default {
 			this.modalData = null;
 			if (refresh) this.startSearch();
 		},
-		openDeleteModal(data) {
+		askRemove(data) {
 			this.remove.data = data;
 			this.remove.open = true;
 		},
@@ -248,30 +248,24 @@ export default {
 		startSearch() {
 			if (this.searchDisabled) return;
 
-			let newPath;
-			if (this.$route.params.name) {
-				const split = this.$route.path.split("/");
-				split.pop();
-				newPath = split.join("/");
-			} else {
-				newPath = this.$route.path;
-			}
+			let newPath = this.name
+				? this.$route.path.split("/").slice(0, -1).join("/")
+				: this.$route.path;
+
 			if (!newPath.endsWith("/")) newPath += "/";
-			if (this.searchValue) newPath += this.searchValue;
-			if (newPath !== this.$route.path) {
-				this.$router.push(newPath).catch(() => {});
-			}
+			if (this.search) newPath += this.search;
+			if (newPath !== this.$route.path) this.$router.push(newPath);
 
 			this.loading = true;
 
 			const url = new URL(`${this.$root.apiURL}/contributions/search`);
 			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
 			url.searchParams.set("users", this.selectedContributors.join("-"));
-			url.searchParams.set("search", this.searchValue.replace(/ /g, "_"));
+			url.searchParams.set("search", this.search.replace(/ /g, "_"));
 
 			Promise.all([axios.get(url.toString()), axios.get(`${this.$root.apiURL}/textures/raw`)])
 				.then(([contributions, textures]) => {
-					this.searchResults = contributions.data
+					this.contributions = contributions.data
 						.sort((a, b) => b.date - a.date)
 						.map((c) => ({
 							...c,
@@ -318,10 +312,10 @@ export default {
 	},
 	computed: {
 		searchInvalid() {
-			if (this.searchValue.length === 0) return true;
+			if (this.search.length === 0) return true;
 
 			// if search is numeric it can be fewer than three characters
-			return this.searchValue.length < 3 && isNaN(Number(this.searchValue));
+			return this.search.length < 3 && isNaN(Number(this.search));
 		},
 		searchDisabled() {
 			const noFilters = this.selectedContributors.length === 0 && this.searchInvalid;
@@ -334,8 +328,8 @@ export default {
 	created() {
 		this.getPacks();
 		this.getAuthors();
-		this.searchValue = this.$route.params.name || "";
-		if (this.searchValue) this.startSearch();
+		this.search = this.$route.params.name || "";
+		if (this.search) this.startSearch();
 	},
 	watch: {
 		contributors: {

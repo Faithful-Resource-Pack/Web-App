@@ -158,20 +158,23 @@ export default {
 
 			return result;
 		},
-		textureURL(t, name = undefined) {
-			// provided name is prioritized
-			if (name) return `/textures/${t}/${name}`;
-			if (this.name) return `/textures/${t}/${this.name}`;
-			// no texture searched, remove name param
-			return `/textures/${t}`;
+		textureURL(t) {
+			return `/textures/${t}/${this.name || ""}`;
 		},
 		startSearch() {
-			const newPath = this.textureURL(this.tag, this.search);
+			// /whatever/ => /whatever/<search>
+			// /whatever/<oldSearch> => /whatever/<search>
+			// /whatever/<role> =>/whatever/<role>/<search>
+			// /whatever/<role>/<name> => /whatever/<role>/<search>
+			let newPath = this.name
+				? this.$route.path.split("/").slice(0, -1).join("/")
+				: this.$route.path;
 
-			// don't change route if same path
+			if (!newPath.endsWith("/")) newPath += "/";
+			if (this.search) newPath += this.search;
 			if (newPath !== this.$route.path) this.$router.push(newPath);
-			// else get textures manually
-			else this.getTextures();
+
+			this.getTextures();
 		},
 		clearSearch() {
 			this.search = "";

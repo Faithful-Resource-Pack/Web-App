@@ -154,20 +154,14 @@ export default {
 			// /whatever/<oldSearch> => /whatever/<search>
 			// /whatever/<role> =>/whatever/<role>/<search>
 			// /whatever/<role>/<name> => /whatever/<role>/<search>
-			let newPath;
-			if (this.name) {
-				const split = this.$route.path.split("/");
-				split.pop();
-				newPath = split.join("/");
-			} else {
-				newPath = this.$route.path;
-			}
+			let newPath = this.name
+				? this.$route.path.split("/").slice(0, -1).join("/")
+				: this.$route.path;
 
 			if (!newPath.endsWith("/")) newPath += "/";
 			if (this.search) newPath += this.search;
-			if (newPath !== this.$route.path) {
-				this.$router.push(newPath).catch(() => {});
-			}
+			if (newPath !== this.$route.path) this.$router.push(newPath);
+
 			this.getUsers();
 		},
 		getRoles() {
