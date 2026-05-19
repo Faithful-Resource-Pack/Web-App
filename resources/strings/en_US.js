@@ -30,6 +30,11 @@ export default {
 				copied: "Copied user ID to clipboard",
 			},
 		},
+		connection: {
+			description: "Connection problems?",
+			contact: "Contact Us",
+			status: "Faithful Status",
+		},
 		footer: {
 			credits: "This website was made using the %Vuetify% component framework.",
 			source: "View the source %here%!",

@@ -3,9 +3,10 @@
 		<slot name="logo">
 			<v-progress-circular :size="150" :width="10" indeterminate />
 		</slot>
-		<p class="text-h6 mt-10 mb-0">
+		<p class="text-h6 text-center mt-10 mb-0">
 			<slot>{{ $root.lang().global.loading }}</slot>
 		</p>
+		<slot name="actions" />
 	</div>
 </template>
 

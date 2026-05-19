@@ -96,6 +96,34 @@ html.theme--light,
 	flex: 1;
 }
 
+.connection-problem {
+	position: absolute;
+	bottom: 32px;
+	padding: 0 16px;
+}
+// I have no idea why this works but it does (makes buttons fill space of largest one)
+.connection-actions {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 16px;
+}
+
+// vuetify is really weird about good looking grids so we manually do the breakpoints (600px == xs)
+@media screen and (max-width: 600px) {
+	.connection-problem {
+		width: 100%;
+	}
+	.connection-actions {
+		grid-template-columns: repeat(1, 1fr);
+	}
+}
+
+.icon-discord::before {
+	content: url(/resources/icons/discord_white.svg);
+	width: 100%;
+	height: 100%;
+}
+
 .icon-mojang-red:before {
 	content: "\e900";
 	color: #ec343c;

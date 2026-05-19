@@ -125,6 +125,7 @@ const app = new Vue({
 			badgeData: {},
 			settingsLoaded: false,
 			loginResolved: false,
+			showActions: false,
 			snackbar: {
 				show: false,
 				message: "",
@@ -333,6 +334,11 @@ const app = new Vue({
 		},
 	},
 	created() {
+		// can't load after three seconds, show error message
+		setTimeout(() => {
+			this.showActions = true;
+		}, 3000);
+
 		this.reloadSettings();
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
 		this.translation.setup();
