@@ -12,6 +12,14 @@
 				/>
 			</v-col>
 			<v-col>
+				<v-text-field
+					v-if="!add"
+					v-model="contrib.id"
+					disabled
+					persistent-hint
+					:hint="'⚠️ ' + $root.lang().database.contributions.modal.id_hint"
+					:label="$root.lang().database.contributions.modal.id"
+				/>
 				<v-select
 					v-model="contrib.pack"
 					:label="$root.lang().database.contributions.modal.pack"

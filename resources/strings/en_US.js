@@ -582,6 +582,8 @@ export default {
 				add_new_contribution: "Add new contribution",
 				clone_contribution: "Clone selected contribution",
 				one_contributor: "Select at least one contributor",
+				id: "Contribution ID",
+				id_hint: "Changing the contribution ID can break everything!",
 				pack: "Resource pack",
 				texture_id: "Texture ID",
 				texture_ids: "Texture IDs",
