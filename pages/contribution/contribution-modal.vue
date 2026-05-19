@@ -1,7 +1,7 @@
 <template>
 	<modal-form
 		v-model="modalOpened"
-		:title="$root.lang().database.contributions.title"
+		:title="title"
 		:disabled="!isValid"
 		max-width="800"
 		@close="$emit('close', false)"
@@ -224,6 +224,11 @@ export default {
 		},
 	},
 	computed: {
+		title() {
+			return this.add
+				? this.$root.lang().database.contributions.add_contributions
+				: this.$root.lang().database.contributions.change_contribution;
+		},
 		allContributors() {
 			return [...this.contributors, ...this.searchedContributors];
 		},
