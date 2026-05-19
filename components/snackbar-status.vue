@@ -107,7 +107,10 @@ export default {
 				};
 			}
 
-			return { message: extractedMessage, submessage };
+			return {
+				message: extractedMessage,
+				submessage: `${message.config.method.toUpperCase()} ${message.config.url}`,
+			};
 		},
 		json() {
 			// if something is explicitly provided that takes precedence
