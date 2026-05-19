@@ -40,6 +40,7 @@
 				{{ $root.lang().gallery.loading_message }}
 			</loading-page>
 			<div v-else-if="textures.length === 0" class="text-h6 my-2">
+				<v-icon left>mdi-alert-circle-outline</v-icon>
 				{{ error || $root.lang().global.no_results }}
 			</div>
 			<gallery-grid
