@@ -86,10 +86,14 @@
 
 				<!-- action buttons -->
 				<v-list-item-action class="merged-actions">
-					<v-btn icon @click="openModal(item)">
+					<v-btn icon :title="$root.lang().database.users.modal.edit_user" @click="openModal(item)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
-					<v-btn icon @click="askRemove(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.users.modal.delete_user"
+						@click="askRemove(item)"
+					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
 				</v-list-item-action>

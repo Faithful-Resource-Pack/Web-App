@@ -601,6 +601,7 @@ export default {
 			modal: {
 				add_user: "Add new user",
 				edit_user: "Edit user",
+				delete_user: "Delete account",
 				id: "Discord ID",
 				username: "Username",
 				uuid: "Minecraft profile UUID",
@@ -693,6 +694,7 @@ export default {
 				new_version: "New version name",
 			},
 			delete: {
+				title: "Delete Minecraft version",
 				description: "Do you want to delete version %VERSION% for %EDITION% Edition?",
 				no_affected_paths: "No paths will be affected",
 				affected_paths_singular: "%d path will be affected.",

@@ -129,10 +129,18 @@
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
-					<v-btn icon @click="editContribution(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.contributions.edit_contribution"
+						@click="editContribution(item)"
+					>
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
-					<v-btn icon @click="openDeleteModal(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.contributions.delete_contribution"
+						@click="openDeleteModal(item)"
+					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
 				</v-list-item-action>

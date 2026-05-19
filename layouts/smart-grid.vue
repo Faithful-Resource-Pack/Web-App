@@ -40,6 +40,11 @@ export default {
 			required: false,
 			default: false,
 		},
+		error: {
+			type: String,
+			required: false,
+			default: "",
+		},
 		track: {
 			type: String,
 			required: false,

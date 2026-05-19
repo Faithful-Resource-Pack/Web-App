@@ -2,7 +2,7 @@
 	<modal-form
 		v-model="modalOpened"
 		danger
-		:title="$root.lang().database.confirm_deletion"
+		:title="$root.lang().database.versions.delete.title"
 		@close="$emit('close')"
 		@submit="deleteVersion"
 	>

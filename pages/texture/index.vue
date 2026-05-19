@@ -84,10 +84,18 @@
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
-					<v-btn icon @click="openTextureModal(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.textures.edit_texture"
+						@click="openTextureModal(item)"
+					>
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
-					<v-btn icon @click="askRemove(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.textures.delete_modal.title_texture"
+						@click="askRemove(item)"
+					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
 				</v-list-item-action>
