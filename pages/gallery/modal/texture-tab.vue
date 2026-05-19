@@ -51,7 +51,7 @@
 			:to="`/textures/all/${textureObj.texture.id}`"
 		>
 			<v-icon left>mdi-pencil</v-icon>
-			{{ $root.lang().database.textures.change_texture }}
+			{{ $root.lang().database.textures.edit_texture }}
 		</v-btn>
 		<!-- eslint-enable vue/valid-v-slot -->
 	</div>

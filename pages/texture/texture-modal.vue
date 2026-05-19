@@ -260,7 +260,7 @@ export default {
 		modalTitle() {
 			return this.add
 				? this.$root.lang().database.textures.add_texture
-				: this.$root.lang().database.textures.change_texture;
+				: this.$root.lang().database.textures.edit_texture;
 		},
 		addEditionUseLabel() {
 			if (!Object.keys(this.formData).length) return;

@@ -262,7 +262,7 @@ export default {
 		modalTitle() {
 			return this.add
 				? this.$root.lang().database.packs.modal.add_pack
-				: this.$root.lang().database.packs.modal.change_pack;
+				: this.$root.lang().database.packs.modal.edit_pack;
 		},
 	},
 	watch: {

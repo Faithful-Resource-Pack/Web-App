@@ -227,7 +227,7 @@ export default {
 		title() {
 			return this.add
 				? this.$root.lang().database.contributions.add_contributions
-				: this.$root.lang().database.contributions.change_contribution;
+				: this.$root.lang().database.contributions.edit_contribution;
 		},
 		allContributors() {
 			return [...this.contributors, ...this.searchedContributors];

@@ -36,7 +36,7 @@
 			:to="`/contributions/${textureID}`"
 		>
 			<v-icon left>mdi-pencil</v-icon>
-			{{ $root.lang().database.contributions.change_contribution }}
+			{{ $root.lang().database.contributions.edit_contribution }}
 		</v-btn>
 		<!-- eslint-enable vue/valid-v-slot -->
 	</div>

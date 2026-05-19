@@ -125,7 +125,7 @@ export default {
 		modalTitle() {
 			return this.add
 				? this.$root.lang().database.users.modal.add_user
-				: this.$root.lang().database.users.modal.change_user;
+				: this.$root.lang().database.users.modal.edit_user;
 		},
 	},
 	methods: {

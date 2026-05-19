@@ -146,7 +146,7 @@ export default {
 		modalTitle() {
 			return this.add
 				? this.$root.lang().database.textures.paths.add_path
-				: this.$root.lang().database.textures.paths.change_path;
+				: this.$root.lang().database.textures.paths.edit_path;
 		},
 		sortedVersions() {
 			const versions = this.edition

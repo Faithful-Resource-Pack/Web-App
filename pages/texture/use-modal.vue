@@ -165,7 +165,7 @@ export default {
 		modalTitle() {
 			return this.add
 				? this.$root.lang().database.textures.uses.add_use
-				: this.$root.lang().database.textures.uses.change_use;
+				: this.$root.lang().database.textures.uses.edit_use;
 		},
 		isValid() {
 			return this.formData.edition && this.formData.texture !== "" && this.formData.paths.length;

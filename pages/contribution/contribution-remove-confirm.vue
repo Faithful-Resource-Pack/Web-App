@@ -4,7 +4,7 @@
 		max-width="800"
 		danger
 		scrollable
-		:title="$root.lang().database.contributions.delete_title"
+		:title="$root.lang().database.contributions.delete_contribution"
 		@close="$emit('close')"
 		@submit="deleteContribution"
 	>
