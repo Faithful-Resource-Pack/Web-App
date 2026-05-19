@@ -28,6 +28,16 @@
 				</v-col>
 			</v-row>
 		</div>
+		<v-btn
+			v-if="$root.isAdmin"
+			block
+			color="secondary"
+			class="my-5"
+			:to="`/contributions/${textureID}`"
+		>
+			<v-icon left>mdi-pencil</v-icon>
+			{{ $root.lang().database.contributions.change_contribution }}
+		</v-btn>
 		<!-- eslint-enable vue/valid-v-slot -->
 	</div>
 </template>
@@ -36,6 +46,10 @@
 export default {
 	name: "author-tab",
 	props: {
+		textureID: {
+			type: String,
+			required: true,
+		},
 		contributions: {
 			type: Array,
 			required: true,

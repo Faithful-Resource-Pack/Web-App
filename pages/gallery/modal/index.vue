@@ -44,6 +44,7 @@
 						<texture-tab v-else-if="tab === displayedTabs.information" :textureObj="textureObj" />
 						<author-tab
 							v-else-if="tab === displayedTabs.authors"
+							:textureID="textureObj.texture.id"
 							:contributions="textureObj.contributions"
 							:packToName="packToName"
 							:discordIDtoName="discordIDtoName"
