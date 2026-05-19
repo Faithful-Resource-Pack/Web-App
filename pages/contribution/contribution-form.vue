@@ -1,17 +1,17 @@
 <template>
 	<!-- wrapped by contribution-modal -->
 	<v-form lazy-validation>
-		<v-row>
-			<v-col cols="12" :sm="add && $vuetify.breakpoint.mdAndUp ? false : 6">
+		<v-row class="d-flex flex-column flex-sm-row justify-center">
+			<v-col class="flex-grow-0 flex-shrink-0">
 				<quick-date-picker
 					v-model="contrib.date"
-					class="mx-auto"
+					:class="$vuetify.breakpoint.mdAndDown && 'mx-auto'"
 					flat
 					:months="months"
 					:labels="$root.lang().global.datepicker"
 				/>
 			</v-col>
-			<v-col cols="12" :sm="add && $vuetify.breakpoint.mdAndUp ? false : 6">
+			<v-col>
 				<v-select
 					v-model="contrib.pack"
 					:label="$root.lang().database.contributions.modal.pack"
