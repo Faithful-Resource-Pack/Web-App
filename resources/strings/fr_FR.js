@@ -241,7 +241,7 @@ export default {
 					image_required: "Une image d'en-tête est requise.",
 				},
 			},
-			carousel: {
+			screenshots: {
 				labels: {
 					drop: "Glissez ou cliquez pour ajouter des images additionnelles",
 					normal: "Image(s) additionnelles",

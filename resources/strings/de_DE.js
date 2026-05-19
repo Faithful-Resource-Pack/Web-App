@@ -391,7 +391,7 @@ export default {
 					compress: "Bilder können mit https://compressor.io/ komprimiert werden",
 				},
 			},
-			carousel: {
+			screenshots: {
 				labels: {
 					drop: "Zusätzliche Bilder ablegen oder zum Auswählen klicken",
 					normal: "Zusätzliche Bilder",

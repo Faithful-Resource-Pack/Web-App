@@ -7,7 +7,7 @@
 			:screen-ids="screenshotIds"
 			@submit="handleSubmit"
 			@header="handleHeader"
-			@screenshot="handleScreenshot"
+			@screenshots="handleScreenshot"
 		/>
 	</v-container>
 </template>

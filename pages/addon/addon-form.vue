@@ -80,22 +80,22 @@
 			<!-- upload field for images -->
 			<div class="my-5">
 				<drop-zone
-					v-model="submittedForm.carouselFiles"
+					v-model="submittedForm.screenshots"
 					multiple
 					accept="image/jpg, image/jpeg"
 					style="height: 70px"
-					@change="onCarouselChange"
+					@change="onScreenshotChange"
 				>
 					<v-icon small>mdi-image</v-icon>
-					{{ $root.lang().addons.images.carousel.labels.drop }}
+					{{ $root.lang().addons.images.screenshots.labels.drop }}
 				</drop-zone>
 			</div>
 
 			<image-previewer
 				deletable
-				:sources="carouselSources"
+				:sources="screenSources"
 				:ids="screenIds"
-				@delete="removeCarouselItem"
+				@delete="removeScreenshot"
 			/>
 
 			<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
@@ -335,10 +335,10 @@ export default {
 							max: 3000000,
 						},
 					},
-					carousel: {
+					screenshots: {
 						rules: [
 							(files) =>
-								files.every((file) => file.size < this.form.files.carousel.counter.max) ||
+								files.every((file) => file.size < this.form.files.screenshots.counter.max) ||
 								this.$root
 									.lang()
 									.addons.images.header.rules.image_size.replace(
@@ -438,7 +438,7 @@ export default {
 			submittedForm: {
 				name: "",
 				headerFile: undefined,
-				carouselFiles: [],
+				screenshots: [],
 				description: "",
 				downloads: [
 					{
@@ -457,10 +457,7 @@ export default {
 			headerValid: false,
 			headerValidating: false,
 			headerError: "",
-			carouselValid: true,
-			carouselValidating: false,
-			carouselError: "",
-			carouselDoNotVerify: false,
+			screenshotDoNotVerify: false,
 			downloadTitleRules: [
 				(u) => !!u || this.$root.lang().addons.downloads.name.rules.name_required,
 				(u) => u !== " " || this.$root.lang().addons.downloads.name.rules.name_cannot_be_empty,
@@ -518,40 +515,33 @@ export default {
 			this.$emit("header", undefined, true);
 			this.submittedForm.headerFile = undefined;
 		},
-		// submittedForm.carouselFiles has already been updated, not param
-		onCarouselChange() {
-			if (this.carouselDoNotVerify) return;
+		// submittedForm.screenshots has already been updated, not param
+		onScreenshotChange() {
+			if (this.screenshotDoNotVerify) return;
 
-			const files = this.submittedForm.carouselFiles;
-			if (!files || files.length == 0) return;
+			const files = this.submittedForm.screenshots;
+			if (!files || !files.length) return;
 
-			this.carouselValidating = true;
 			Promise.all(
 				files.map((f) =>
 					verifyImage(f, is16x9, this.$root.lang().addons.images.header.rules.image_ratio),
 				),
 			)
 				.then(() => {
-					this.carouselValid = true;
-					this.$emit("screenshot", files);
-					this.submittedForm.carouselFiles = [];
+					this.$emit("screenshots", files);
+					this.submittedForm.screenshots = [];
 				})
 				.catch((error) => {
 					console.error(error);
-					this.carouselValid = false;
-					this.carouselError = error.message;
 					this.$root.showSnackBar(error, "error");
-				})
-				.finally(() => {
-					this.carouselValidating = false;
 				});
 		},
-		removeCarouselItem(_item, index, id) {
-			this.carouselDoNotVerify = true;
-			this.submittedForm.carouselFiles.splice(index, 1);
-			this.$emit("screenshot", undefined, index, true, id);
+		removeScreenshot(_item, index, id) {
+			this.screenshotDoNotVerify = true;
+			this.submittedForm.screenshots.splice(index, 1);
+			this.$emit("screenshots", undefined, index, true, id);
 			this.$nextTick(() => {
-				this.carouselDoNotVerify = false;
+				this.screenshotDoNotVerify = false;
 			});
 		},
 		addDownloadGroup() {
@@ -596,9 +586,6 @@ export default {
 			if (this.headerValidating || !this.headerValid || !this.submittedForm.headerFile) return;
 			return URL.createObjectURL(this.submittedForm.headerFile);
 		},
-		carouselSources() {
-			return this.screenSources || [];
-		},
 		submittedData() {
 			const data = structuredClone(this.submittedForm);
 
@@ -609,7 +596,7 @@ export default {
 
 			// we treat files with different endpoint
 			delete data.headerFile;
-			delete data.carouselFiles;
+			delete data.screenshots;
 
 			return data;
 		},
@@ -622,7 +609,7 @@ export default {
 				// deep copy
 				data = structuredClone(data);
 				data.headerFile = undefined;
-				data.carouselFiles = [];
+				data.screenshots = [];
 				data.selectedPacks = data.options.tags.filter((e) =>
 					this.packs.some((pack) => pack.value === e),
 				);

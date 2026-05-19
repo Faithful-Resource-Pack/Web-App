@@ -18,7 +18,7 @@
 			:header-source="headerSource"
 			@submit="handleSubmit"
 			@header="handleHeader"
-			@screenshot="handleScreenshot"
+			@screenshots="handleScreenshot"
 		/>
 		<modal-form
 			v-model="reasonModalOpen"
@@ -185,7 +185,7 @@ export default {
 				promise = successful ? Promise.resolve() : Promise.reject(err);
 			}
 
-			const messages = this.$root.lang().addons.images.carousel.status;
+			const messages = this.$root.lang().addons.images.screenshots.status;
 			return this.$root
 				.wrapSnackBar(promise, remove ? messages.remove : messages.upload)
 				.then(() => this.getScreens());

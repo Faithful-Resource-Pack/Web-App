@@ -289,7 +289,7 @@ export default {
 					jpeg: "A imagem deve ser um JPEG com perdas.",
 				},
 			},
-			carousel: {
+			screenshots: {
 				labels: {
 					drop: "Clique para selecionar imagens adicionais",
 					normal: "Imagem(ns) adicional(is)",

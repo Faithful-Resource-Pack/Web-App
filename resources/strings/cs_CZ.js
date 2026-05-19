@@ -230,7 +230,7 @@ export default {
 					image_required: "Hlavní obrázek je vyžadován.",
 				},
 			},
-			carousel: {
+			screenshots: {
 				labels: {
 					drop: "Kliknutím vyberte další obrázky",
 					normal: "Další obrázky",

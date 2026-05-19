@@ -196,7 +196,7 @@ export default {
 	computed: {
 		addonSources() {
 			return (this.addonInPanel.files || [])
-				.filter((f) => f.use === "carousel" || f.use === "screenshot")
+				.filter((f) => f.use === "screenshot")
 				.map((f) => f.source);
 		},
 		status() {

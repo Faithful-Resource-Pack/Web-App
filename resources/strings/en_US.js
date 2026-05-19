@@ -397,7 +397,7 @@ export default {
 					remove: "Succesfully removed header image",
 				},
 			},
-			carousel: {
+			screenshots: {
 				labels: {
 					drop: "Drop additional images or click to select",
 					normal: "Additional image(s)",
