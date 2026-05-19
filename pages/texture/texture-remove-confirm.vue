@@ -52,7 +52,7 @@
 						<v-list-item-content>
 							<v-list-item-title>{{ path.name }}</v-list-item-title>
 							<v-list-item-subtitle :title="path.versions.join(', ')">
-								{{ formatPathVersions(path.versions) }}
+								{{ path.id }}: {{ formatPathVersions(path.versions) }}
 							</v-list-item-subtitle>
 						</v-list-item-content>
 					</v-list-item>
@@ -124,7 +124,9 @@
 				<v-list-item v-for="path in paths" :key="path.id" class="px-0">
 					<v-list-item-content>
 						<v-list-item-title>{{ path.name }}</v-list-item-title>
-						<v-list-item-subtitle>{{ formatPathVersions(path.versions) }}</v-list-item-subtitle>
+						<v-list-item-subtitle>
+							{{ path.id }}: {{ formatPathVersions(path.versions) }}
+						</v-list-item-subtitle>
 					</v-list-item-content>
 				</v-list-item>
 			</v-list>
