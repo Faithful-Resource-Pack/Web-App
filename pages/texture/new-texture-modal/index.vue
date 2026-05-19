@@ -45,7 +45,7 @@
 				<v-col>
 					<v-list>
 						<div class="font-weight-medium text--secondary my-2">
-							{{ $root.lang().database.summary }}: [{{ textures.length }}]
+							{{ $root.lang().database.summary }} ({{ textures.length }})
 						</div>
 						<v-list-item-group v-model="selectedTab" mandatory :color="color" class="my-5">
 							<summary-item

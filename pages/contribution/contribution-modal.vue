@@ -28,7 +28,7 @@
 			</v-col>
 			<v-col class="flex-grow-1 flex-shrink-0" :cols="$vuetify.breakpoint.mdAndUp ? false : 12">
 				<div class="font-weight-medium text--secondary mb-2">
-					{{ $root.lang().database.summary }}: [{{ contribs.length }}]
+					{{ $root.lang().database.summary }} ({{ contribs.length }})
 				</div>
 				<v-list
 					class="mb-5"
