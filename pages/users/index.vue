@@ -51,10 +51,12 @@
 		<div class="my-2 text-h5">
 			{{ $root.lang().database.users.user_result }} ({{ users.length }})
 		</div>
-		<div v-if="loading" class="text-center">
-			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
+
+		<div v-if="!loading && !users.length">
+			<br />
+			<i>{{ $root.lang().global.no_results }}</i>
 		</div>
-		<smart-grid v-else-if="users.length" :items="users" wide track="id">
+		<smart-grid v-else :loading="loading" :items="users" wide track="id">
 			<template #default="{ item }">
 				<a
 					:href="`https://faithfulpack.net/user/${item.id}`"
@@ -97,10 +99,6 @@
 				</v-list-item-action>
 			</template>
 		</smart-grid>
-		<div v-else>
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
 	</v-container>
 </template>
 

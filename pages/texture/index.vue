@@ -69,14 +69,12 @@
 		<div class="my-2 text-h5">
 			{{ $root.lang().database.textures.texture_result }} ({{ Object.keys(textures).length }})
 		</div>
-		<div v-if="loading" class="text-center">
-			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
+
+		<div v-if="!loading && !Object.keys(textures).length">
+			<br />
+			<i>{{ $root.lang().global.no_results }}</i>
 		</div>
-		<smart-grid
-			v-else-if="Object.keys(textures).length"
-			:items="Object.values(textures)"
-			track="id"
-		>
+		<smart-grid v-else :loading="loading" :items="Object.values(textures)" track="id">
 			<template #default="{ item }">
 				<a :href="`/gallery?show=${item.id}`" target="_blank" rel="noopener noreferrer">
 					<v-list-item-avatar class="database-list-avatar text--primary">
@@ -99,10 +97,6 @@
 				</v-list-item-action>
 			</template>
 		</smart-grid>
-		<div v-else>
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
 	</v-container>
 </template>
 

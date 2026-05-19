@@ -49,7 +49,7 @@
 		<div class="my-2 text-h5">
 			{{ $root.lang().database.packs.pack_result }} ({{ packs.length }})
 		</div>
-		<smart-grid v-if="packs.length" :items="packs" wide track="id">
+		<smart-grid :loading="!packs.length" :items="packs" wide track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar class="database-list-avatar">
 					<v-img :src="item.logo" />
@@ -71,9 +71,6 @@
 				</v-list-item-action>
 			</template>
 		</smart-grid>
-		<div v-else class="text-center">
-			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
-		</div>
 	</v-container>
 </template>
 

@@ -40,10 +40,7 @@
 			{{ $root.lang().database.versions.version_result }} ({{ grouped.length }})
 		</div>
 
-		<div v-if="!Object.keys(paths).length" class="text-center">
-			<v-progress-circular :size="70" :width="7" indeterminate :color="pageColor" />
-		</div>
-		<smart-grid v-else :items="grouped" wide track="version">
+		<smart-grid :loading="!Object.keys(paths).length" :items="grouped" wide track="version">
 			<template #default="{ item }">
 				<a
 					:href="`/gallery/${item.edition}/default/${item.version}/all`"

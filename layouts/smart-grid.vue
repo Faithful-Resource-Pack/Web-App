@@ -1,7 +1,8 @@
 <template>
 	<v-card class="main-container px-2 py-4">
+		<loading-page v-if="loading" />
 		<!-- can save some space by declaring the div a v-row using the underlying class -->
-		<infinite-scroller class="row" @more="showMore">
+		<infinite-scroller v-else class="row" @more="showMore">
 			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
 				<v-list-item>
 					<slot :item="item" />
@@ -13,6 +14,7 @@
 
 <script>
 import InfiniteScroller from "./infinite-scroller.vue";
+import LoadingPage from "./loading-page.vue";
 
 const MIN_DISPLAYED_RESULTS = 60;
 const RESULT_INCREMENT = 120;
@@ -21,12 +23,18 @@ const RESULT_INCREMENT = 120;
 export default {
 	name: "smart-grid",
 	components: {
+		LoadingPage,
 		InfiniteScroller,
 	},
 	props: {
 		items: {
 			type: Array,
 			required: true,
+		},
+		loading: {
+			type: Boolean,
+			required: false,
+			default: false,
 		},
 		track: {
 			type: String,

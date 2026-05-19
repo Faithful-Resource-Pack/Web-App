@@ -98,7 +98,11 @@
 			{{ $root.lang().database.contributions.contribution_result }} ({{ searchResults.length }})
 		</div>
 
-		<smart-grid v-if="searchResults.length" :items="searchResults" track="id">
+		<div v-if="!loading && !searchResults.length">
+			<br />
+			<i>{{ $root.lang().global.no_results }}</i>
+		</div>
+		<smart-grid v-else :loading="loading" :items="searchResults" track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar tile class="database-list-sprite">
 					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
@@ -138,10 +142,6 @@
 				</v-list-item-action>
 			</template>
 		</smart-grid>
-		<div v-else>
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
 	</v-container>
 </template>
 
@@ -179,7 +179,7 @@ export default {
 			packs: [],
 			packToCode: {},
 			logos: {},
-			searching: false,
+			loading: false,
 			searchResults: [],
 			searchValue: "",
 			modalOpen: false,
@@ -243,7 +243,7 @@ export default {
 		},
 		startSearch() {
 			if (this.searchDisabled) return;
-			this.searching = true;
+			this.loading = true;
 
 			const url = new URL(`${this.$root.apiURL}/contributions/search`);
 			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
@@ -261,7 +261,7 @@ export default {
 						}));
 				})
 				.finally(() => {
-					this.searching = false;
+					this.loading = false;
 				})
 				.catch((err) => this.$root.showSnackBar(err, "error"));
 		},
@@ -306,7 +306,7 @@ export default {
 		},
 		searchDisabled() {
 			const noFilters = this.selectedContributors.length === 0 && this.searchInvalid;
-			return this.searching || noFilters;
+			return this.loading || noFilters;
 		},
 		selectedPackKeys() {
 			return Object.keys(this.selectedPacks).filter((k) => this.selectedPacks[k].selected);
