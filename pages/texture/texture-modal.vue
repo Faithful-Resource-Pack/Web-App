@@ -27,7 +27,7 @@
 				:disabled="!add"
 				:color="color"
 				persistent-hint
-				:hint="'⚠️' + $root.lang().database.textures.modal.id_hint"
+				:hint="'⚠️ ' + $root.lang().database.textures.modal.id_hint"
 				required
 				:readonly="!add"
 				:label="$root.lang().database.textures.modal.id"

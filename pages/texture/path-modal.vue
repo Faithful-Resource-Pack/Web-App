@@ -13,14 +13,14 @@
 				:color="color"
 				disabled
 				persistent-hint
-				:hint="'⚠️' + $root.lang().database.textures.paths.id_hint"
+				:hint="'⚠️ ' + $root.lang().database.textures.paths.id_hint"
 				:label="$root.lang().database.textures.paths.id"
 			/>
 			<v-text-field
 				v-if="!add"
 				v-model="formData.use"
 				:color="color"
-				:hint="'⚠️' + $root.lang().database.textures.uses.id_hint"
+				:hint="'⚠️ ' + $root.lang().database.textures.uses.id_hint"
 				:label="$root.lang().database.textures.uses.id"
 			/>
 			<v-text-field
