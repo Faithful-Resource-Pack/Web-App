@@ -1,7 +1,9 @@
 <template>
 	<div class="d-flex flex-column align-center justify-center flex-grow-1 my-5" style="height: 100%">
-		<v-progress-circular :size="150" :width="10" indeterminate />
-		<p class="text-h6 mt-10 mb-0">
+		<slot name="logo">
+			<v-progress-circular :size="150" :width="10" indeterminate class="ma-10" />
+		</slot>
+		<p class="text-h6 my-0">
 			<slot>{{ $root.lang().global.loading }}</slot>
 		</p>
 	</div>

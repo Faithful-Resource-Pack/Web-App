@@ -124,6 +124,7 @@ const app = new Vue({
 				: !this.$vuetify.breakpoint.mobile,
 			badgeData: {},
 			settingsLoaded: false,
+			loginResolved: false,
 			snackbar: {
 				show: false,
 				message: "",
@@ -292,6 +293,9 @@ const app = new Vue({
 		 */
 		userRoles() {
 			return this.user.roles;
+		},
+		appLoading() {
+			return !this.settingsLoaded || !this.loginResolved;
 		},
 	},
 	watch: {

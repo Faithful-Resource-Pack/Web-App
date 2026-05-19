@@ -62,7 +62,14 @@
 	<body>
 		<!-- HTML parsing rules apply here; no auto-closing tags -->
 		<v-app id="app" ref="app">
-			<loading-page v-if="!settingsLoaded"></loading-page>
+			<loading-page v-if="appLoading">
+				<template #logo>
+					<img
+						src="https://database.faithfulpack.net/images/branding/logos/transparent/hd/main_logo.gif"
+						width="256"
+					/>
+				</template>
+			</loading-page>
 			<template v-else>
 				<nav-app-bar
 					:themes="Object.values(theme.availableThemes)"

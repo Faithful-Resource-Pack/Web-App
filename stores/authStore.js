@@ -39,13 +39,19 @@ export default defineStore("auth", {
 				Promise.all([
 					this.loadDiscordProfile(access_token).catch((err) => app.showSnackBar(err, "error")),
 					this.loadFaithfulProfile(access_token).catch((err) => app.showSnackBar(err, "error")),
-				]);
+				]).then(() => {
+					app.loginResolved = true;
+				});
 			});
 
 			const authMethod = await discordToken.getAuthMethod();
 
-			// not logged in
-			if (!authMethod) return;
+			// not logged in, resolve immediately
+			if (!authMethod) {
+				app.loginResolved = true;
+				return;
+			}
+
 			await discordToken.authenticate(authMethod).catch((err) => app.showSnackBar(err, "error"));
 
 			// https://stackoverflow.com/a/41061471/20327257
