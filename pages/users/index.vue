@@ -52,11 +52,7 @@
 			{{ $root.lang().database.users.user_result }} ({{ users.length }})
 		</div>
 
-		<div v-if="!loading && !users.length">
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
-		<smart-grid v-else :loading="loading" :items="users" wide track="id">
+		<smart-grid :loading="loading" :items="users" wide track="id">
 			<template #default="{ item }">
 				<a
 					:href="`https://faithfulpack.net/user/${item.id}`"

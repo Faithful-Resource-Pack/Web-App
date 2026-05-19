@@ -98,11 +98,7 @@
 			{{ $root.lang().database.contributions.contribution_result }} ({{ searchResults.length }})
 		</div>
 
-		<div v-if="!loading && !searchResults.length">
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
-		<smart-grid v-else :loading="loading" :items="searchResults" track="id">
+		<smart-grid :loading="loading" :items="searchResults" track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar tile class="database-list-sprite">
 					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">

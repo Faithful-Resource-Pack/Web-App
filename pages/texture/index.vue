@@ -70,11 +70,7 @@
 			{{ $root.lang().database.textures.texture_result }} ({{ Object.keys(textures).length }})
 		</div>
 
-		<div v-if="!loading && !Object.keys(textures).length">
-			<br />
-			<i>{{ $root.lang().global.no_results }}</i>
-		</div>
-		<smart-grid v-else :loading="loading" :items="Object.values(textures)" track="id">
+		<smart-grid :loading="loading" :items="Object.values(textures)" track="id">
 			<template #default="{ item }">
 				<a :href="`/gallery?show=${item.id}`" target="_blank" rel="noopener noreferrer">
 					<v-list-item-avatar class="database-list-avatar text--primary">

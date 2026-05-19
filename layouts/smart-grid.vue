@@ -1,6 +1,10 @@
 <template>
 	<v-card class="main-container px-2 py-4">
 		<loading-page v-if="loading" />
+		<div v-else-if="items.length === 0" class="text-h6 text-center">
+			<v-icon left>mdi-alert-circle-outline</v-icon>
+			{{ error || $root.lang().global.no_results }}
+		</div>
 		<!-- can save some space by declaring the div a v-row using the underlying class -->
 		<infinite-scroller v-else class="row" @more="showMore">
 			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
