@@ -66,14 +66,18 @@
 					({{ contributions.length }})
 				</h2>
 				<v-list v-if="contributions.length">
-					<v-list-item v-for="contrib in contributions" :key="contrib.id" class="px-0">
+					<v-list-item v-for="(contrib, i) in contributions" :key="contrib.id" class="px-0">
 						<a :href="contrib.url" target="_blank" rel="noopener noreferrer">
-							<v-list-item-avatar tile class="database-list-sprite">
+							<v-list-item-avatar v-if="contrib.url" class="database-list-sprite" tile>
 								<v-img
+									v-if="contrib.url"
 									class="texture-img"
 									:src="contrib.url"
-									lazy-src="/resources/transparency.png"
+									@error="imageNotFound(i)"
 								/>
+							</v-list-item-avatar>
+							<v-list-item-avatar v-else class="database-list-avatar">
+								<v-icon large>mdi-image</v-icon>
 							</v-list-item-avatar>
 						</a>
 						<v-list-item-content>
@@ -249,6 +253,9 @@ export default {
 			if (versions.length === 1) return versions[0];
 			// use nbsp to prevent weirdness on mobile
 			return `${versions[0]} – ${versions[versions.length - 1]}`;
+		},
+		imageNotFound(index) {
+			this.contributions[index].url = null;
 		},
 	},
 	computed: {

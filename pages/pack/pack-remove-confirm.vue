@@ -108,6 +108,7 @@ export default {
 				case "submissions":
 					return this.$root.lang().database.packs.submissions.delete_submission;
 			}
+			return this.$root.lang().database.confirm_deletion;
 		},
 	},
 	watch: {
