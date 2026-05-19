@@ -204,13 +204,9 @@ const app = new Vue({
 			this.settingsLoaded = false;
 			try {
 				window.settings = await axios.get(`${window.apiURL}/settings/raw`).then((res) => res.data);
+				this.settingsLoaded = true;
 			} catch (err) {
-				console.error(err);
-			} finally {
-				// even if settings failed to load some pages work anyways, at least we tried
-				this.$nextTick(() => {
-					this.settingsLoaded = true;
-				});
+				this.showSnackBar(err, "error");
 			}
 		},
 	},
