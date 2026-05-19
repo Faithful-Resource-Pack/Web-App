@@ -140,7 +140,9 @@
 			<v-list-item class="px-0">
 				<v-list-item-content>
 					<v-list-item-title>{{ data.name }}</v-list-item-title>
-					<v-list-item-subtitle>{{ formatPathVersions(data.versions) }}</v-list-item-subtitle>
+					<v-list-item-subtitle>
+						{{ data.id }}: {{ formatPathVersions(data.versions) }}
+					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
 		</template>
