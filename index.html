@@ -62,32 +62,34 @@
 	<body>
 		<!-- HTML parsing rules apply here; no auto-closing tags -->
 		<v-app id="app" ref="app">
-			<nav-app-bar
-				:themes="Object.values(theme.availableThemes)"
-				:languages="Object.values(translation.availableLangs)"
-				:dark-sidebar.sync="darkSidebar"
-				@drawer="drawerOpen = !drawerOpen"
-				@theme="theme.setTheme($event)"
-				@lang="translation.setLang($event)"
-			></nav-app-bar>
+			<loading-page v-if="!settingsLoaded"></loading-page>
+			<template v-else>
+				<nav-app-bar
+					:themes="Object.values(theme.availableThemes)"
+					:languages="Object.values(translation.availableLangs)"
+					:dark-sidebar.sync="darkSidebar"
+					@drawer="drawerOpen = !drawerOpen"
+					@theme="theme.setTheme($event)"
+					@lang="translation.setLang($event)"
+				></nav-app-bar>
 
-			<nav-sidebar
-				v-model="drawerOpen"
-				:tabs="availableTabs"
-				:badges="badgeData"
-				:force-dark="darkSidebar"
-			></nav-sidebar>
+				<nav-sidebar
+					v-model="drawerOpen"
+					:tabs="availableTabs"
+					:badges="badgeData"
+					:force-dark="darkSidebar"
+				></nav-sidebar>
 
-			<v-main id="main">
-				<loading-page v-if="!settingsLoaded"></loading-page>
-				<router-view v-else></router-view>
-				<nav-footer></nav-footer>
+				<v-main id="main">
+					<router-view></router-view>
+					<nav-footer></nav-footer>
 
-				<!-- the placement looks kinda stupid but it needs to be reactive -->
-				<link rel="stylesheet" :href="theme.prismURL" />
-			</v-main>
+					<!-- the placement looks kinda stupid but it needs to be reactive -->
+					<link rel="stylesheet" :href="theme.prismURL" />
+				</v-main>
 
-			<snackbar-status v-model="snackbar.show" :snackbar="snackbar" />
+				<snackbar-status v-model="snackbar.show" :snackbar="snackbar"></snackbar-status>
+			</template>
 		</v-app>
 
 		<!-- main script -->
