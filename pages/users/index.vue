@@ -190,7 +190,7 @@ export default {
 			axios
 				.get(url, this.$root.apiOptions)
 				.then((res) => {
-					this.users = res.data;
+					this.users = Array.isArray(res.data) ? res.data : [res.data];
 				})
 				.catch((err) => console.error(err))
 				.finally(() => {

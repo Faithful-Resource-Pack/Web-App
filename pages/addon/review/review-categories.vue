@@ -1,7 +1,7 @@
 <template>
 	<v-row justify="center" dense>
 		<v-col
-			v-for="(cat, cat_i) in categories"
+			v-for="(cat, i) in categories"
 			:key="cat.value"
 			cols="12"
 			:md="12 / (categories.length || 1)"
@@ -9,8 +9,8 @@
 		>
 			<v-card
 				class="py-2 px-4 d-flex align-center overflow-hidden main-container"
-				:class="classes[cat_i]"
-				@click="$emit('input', cat.value)"
+				:class="classes[i]"
+				:to="statusURL(cat.value)"
 			>
 				<v-badge inline dot left :color="cat.color" style="margin-left: -4px">
 					<div class="subtitle-1" style="margin-left: 5px">{{ cat.label }}</div>
@@ -30,7 +30,8 @@ export default {
 			required: true,
 		},
 		categories: {
-			type: Array, // { label: String, color: String }[]
+			// { label: string, color: string }[]
+			type: Array,
 			required: true,
 		},
 		activeColor: {
@@ -39,6 +40,11 @@ export default {
 		},
 	},
 	emits: ["input"],
+	methods: {
+		statusURL(value) {
+			return `/addons/review?status=${value}`;
+		},
+	},
 	computed: {
 		classes() {
 			return this.categories.map((c) =>

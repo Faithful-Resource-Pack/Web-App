@@ -1,17 +1,14 @@
 <template>
 	<v-card class="main-container review-list overflow-y-auto">
-		<v-list-item
-			v-for="(item, i) in items"
-			:key="item.key"
-			two-line
-			:class="classes[i]"
-			@click="$emit('input', item.key)"
-		>
-			<v-list-item-content>
-				<v-list-item-title>{{ item.primary }}</v-list-item-title>
-				<v-list-item-subtitle>{{ item.secondary }}</v-list-item-subtitle>
-			</v-list-item-content>
-		</v-list-item>
+		<!-- workaround to prevent the navigation list styles incorrectly applying -->
+		<router-link v-for="(item, i) in items" :key="item.key" :to="addonURL(item.key)">
+			<v-list-item two-line :class="classes[i]" @click="$emit('input', item.key)">
+				<v-list-item-content>
+					<v-list-item-title>{{ item.primary }}</v-list-item-title>
+					<v-list-item-subtitle>{{ item.secondary }}</v-list-item-subtitle>
+				</v-list-item-content>
+			</v-list-item>
+		</router-link>
 	</v-card>
 </template>
 
@@ -35,6 +32,11 @@ export default {
 		},
 	},
 	emits: ["input"],
+	methods: {
+		addonURL(id) {
+			return `/addons/review?status=${this.$route.query.status}&id=${id}`;
+		},
+	},
 	computed: {
 		classes() {
 			return this.items.map(({ key }) =>

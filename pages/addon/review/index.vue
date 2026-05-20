@@ -92,6 +92,7 @@ const searchMixin = {
 		},
 		searchDelete(name) {
 			const query = { ...this.$route.query };
+			if (query[name] === undefined) return;
 			delete query[name];
 			this.$router.push({ query });
 		},
@@ -251,15 +252,13 @@ export default {
 		},
 	},
 	watch: {
-		status(n) {
-			// select first if not empty
-			this.searchSet("status", n);
-			const matchingAddons = this.addons[n];
-			this.selectedAddonId = matchingAddons.length ? matchingAddons[0].id : undefined;
-		},
-		selectedAddonId(n) {
-			if (n !== undefined) this.searchSet("id", n);
-			else this.searchDelete("id");
+		status: {
+			handler(n) {
+				// select first if not empty
+				const matchingAddons = this.addons[n];
+				this.selectedAddonId = matchingAddons.length ? matchingAddons[0].id : undefined;
+			},
+			immediate: true,
 		},
 		"$route.query": {
 			handler(params, prev) {
