@@ -89,7 +89,7 @@
 		</v-row>
 
 		<!-- Search button -->
-		<v-btn block color="primary" :disabled="searchDisabled" class="my-6" @click="startSearch()">
+		<v-btn block color="primary" class="my-6" @click="startSearch()">
 			<v-icon left dark>mdi-magnify</v-icon>
 			{{ $root.lang().database.contributions.search_contributions }}
 		</v-btn>
@@ -246,8 +246,6 @@ export default {
 			this.$set(this.selectedPacks[ALL_PACK_KEY], "selected", false);
 		},
 		startSearch() {
-			if (this.searchDisabled) return;
-
 			let newPath = this.$route.params.name
 				? this.$route.path.split("/").slice(0, -1).join("/")
 				: this.$route.path;
@@ -258,11 +256,7 @@ export default {
 
 			this.loading = true;
 
-			const url = new URL(`${this.$root.apiURL}/contributions/search`);
-			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
-			url.searchParams.set("users", this.selectedContributors.join("-"));
-			url.searchParams.set("search", this.search.replace(/ /g, "_"));
-
+			Promise.all([axios.get(this.searchURL), axios.get(`${this.$root.apiURL}/textures/raw`)])
 				.then(([contributions, textures]) => {
 					this.contributions = Object.values(contributions.data)
 						.sort((a, b) => b.date - a.date)
@@ -314,17 +308,15 @@ export default {
 		},
 	},
 	computed: {
-		searchInvalid() {
-			if (this.search.length === 0) return true;
-
-			// if search is numeric it can be fewer than three characters
-			return this.search.length < 3 && isNaN(Number(this.search));
-		},
-		searchDisabled() {
-			const noFilters = this.selectedContributors.length === 0 && this.searchInvalid;
 		selectedPackKeys() {
 			return Object.keys(this.selectedPacks).filter((k) => this.selectedPacks[k].selected);
 		},
+		searchURL() {
+			if (!this.search) return `${this.$root.apiURL}/contributions/raw`;
+			const url = new URL(`${this.$root.apiURL}/contributions/search`);
+			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
+			url.searchParams.set("users", this.selectedContributors.join("-"));
+			url.searchParams.set("search", this.search.replace(/ /g, "_"));
 			return url.toString();
 		},
 	},
