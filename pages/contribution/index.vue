@@ -248,7 +248,7 @@ export default {
 		startSearch() {
 			if (this.searchDisabled) return;
 
-			let newPath = this.name
+			let newPath = this.$route.params.name
 				? this.$route.path.split("/").slice(0, -1).join("/")
 				: this.$route.path;
 
@@ -263,9 +263,8 @@ export default {
 			url.searchParams.set("users", this.selectedContributors.join("-"));
 			url.searchParams.set("search", this.search.replace(/ /g, "_"));
 
-			Promise.all([axios.get(url.toString()), axios.get(`${this.$root.apiURL}/textures/raw`)])
 				.then(([contributions, textures]) => {
-					this.contributions = contributions.data
+					this.contributions = Object.values(contributions.data)
 						.sort((a, b) => b.date - a.date)
 						.map((c) => ({
 							...c,
@@ -286,12 +285,16 @@ export default {
 					label: pack.name,
 					selected: false,
 				};
-				this.logos[pack.id] = pack.logo;
-				this.packToCode[pack.id] = pack.name
-					.split(" ")
-					// Classic Faithful 32x Jappa -> CF32J
-					.map((el) => (isNaN(Number(el[0])) ? el[0].toUpperCase() : el.match(/\d+/g)?.[0]))
-					.join("");
+				this.$set(this.logos, pack.id, pack.logo);
+				this.$set(
+					this.packToCode,
+					pack.id,
+					pack.name
+						.split(" ")
+						// Classic Faithful 32x Jappa -> CF32J
+						.map((el) => (isNaN(Number(el[0])) ? el[0].toUpperCase() : el.match(/\d+/g)?.[0]))
+						.join(""),
+				);
 			}
 		},
 		async getAuthors() {
@@ -319,17 +322,17 @@ export default {
 		},
 		searchDisabled() {
 			const noFilters = this.selectedContributors.length === 0 && this.searchInvalid;
-			return this.loading || noFilters;
-		},
 		selectedPackKeys() {
 			return Object.keys(this.selectedPacks).filter((k) => this.selectedPacks[k].selected);
+		},
+			return url.toString();
 		},
 	},
 	created() {
 		this.getPacks();
 		this.getAuthors();
 		this.search = this.$route.params.name || "";
-		if (this.search) this.startSearch();
+		this.$nextTick(() => this.startSearch());
 	},
 	watch: {
 		contributors: {
