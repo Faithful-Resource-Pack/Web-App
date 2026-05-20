@@ -28,7 +28,7 @@
 							{{ date }}
 						</div>
 					</div>
-					<v-btn icon class="ml-auto" :href="`/addons/edit/${addonInPanel.id}`">
+					<v-btn icon class="ml-auto" :to="`/addons/edit/${addonInPanel.id}`">
 						<v-icon>mdi-pencil</v-icon>
 					</v-btn>
 				</div>
