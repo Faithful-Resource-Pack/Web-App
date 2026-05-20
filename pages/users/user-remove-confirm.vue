@@ -38,7 +38,9 @@
 		<template v-if="transferredAddons.length || deletedAddons.length">
 			<h2 class="title">{{ addonDeleteTitle }}</h2>
 			<template v-if="deletedAddons.length">
-				<h3 class="subtitle-1 mb-n1 mt-3">{{ $root.lang().profile.delete.addons.deleted }}</h3>
+				<h3 class="subtitle-1 mb-n1 mt-3">
+					{{ $root.lang().profile.delete.addons.deleted }} ({{ deletedAddons.length }})
+				</h3>
 				<v-list>
 					<v-list-item v-for="addon in deletedAddons" :key="addon.id">
 						<v-list-item-content>
@@ -65,7 +67,9 @@
 				</v-list>
 			</template>
 			<template v-if="transferredAddons.length">
-				<h3 class="subtitle-1 mb-n1 mt-3">{{ $root.lang().profile.delete.addons.transferred }}</h3>
+				<h3 class="subtitle-1 mb-n1 mt-3">
+					{{ $root.lang().profile.delete.addons.transferred }} ({{ transferredAddons.length }})
+				</h3>
 				<v-list>
 					<v-list-item v-for="addon in transferredAddons" :key="addon.id">
 						<v-list-item-content>
