@@ -113,7 +113,7 @@
 					<v-list-item-subtitle>
 						{{
 							(item.authors || [])
-								.map((id) => contributors.find((c) => c.id == id).username || id)
+								.map((id) => contributors.find((c) => c.id === id)?.username || id)
 								.join(", ")
 						}}
 					</v-list-item-subtitle>
@@ -250,8 +250,10 @@ export default {
 				? this.$route.path.split("/").slice(0, -1).join("/")
 				: this.$route.path;
 
-			if (!newPath.endsWith("/")) newPath += "/";
-			if (this.search) newPath += this.search;
+			if (this.search) {
+				if (!newPath.endsWith("/")) newPath += "/";
+				newPath += this.search;
+			}
 			if (newPath !== this.$route.path) this.$router.push(newPath);
 
 			this.loading = true;
@@ -312,7 +314,6 @@ export default {
 			return Object.keys(this.selectedPacks).filter((k) => this.selectedPacks[k].selected);
 		},
 		searchURL() {
-			if (!this.search) return `${this.$root.apiURL}/contributions/raw`;
 			const url = new URL(`${this.$root.apiURL}/contributions/search`);
 			url.searchParams.set("packs", this.selectedPackKeys.join("-"));
 			url.searchParams.set("users", this.selectedContributors.join("-"));

@@ -103,7 +103,7 @@ export default {
 	computed: {
 		formattedAuthors() {
 			if (!this.data || !this.data.authors) return { unknown: "Unknown" };
-			return this.data.authors.map((author) => this.contributors.find((c) => c.id == author));
+			return this.data.authors.map((author) => this.contributors.find((c) => c.id === author));
 		},
 	},
 	watch: {

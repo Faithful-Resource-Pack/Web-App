@@ -158,8 +158,10 @@ export default {
 				? this.$route.path.split("/").slice(0, -1).join("/")
 				: this.$route.path;
 
-			if (!newPath.endsWith("/")) newPath += "/";
-			if (this.search) newPath += this.search;
+			if (this.search) {
+				if (!newPath.endsWith("/")) newPath += "/";
+				newPath += this.search;
+			}
 			if (newPath !== this.$route.path) this.$router.push(newPath);
 
 			this.getUsers();
