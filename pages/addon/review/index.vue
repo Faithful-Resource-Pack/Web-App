@@ -36,10 +36,10 @@
 				/>
 			</div>
 			<template v-else>
-				<v-expansion-panels v-if="addons[status].length > 0">
+				<v-expansion-panels v-if="selectedListItems.length > 0">
 					<expansion-panels
 						v-model="selectedAddonId"
-						:addons="addons[status]"
+						:addons="selectedListItems"
 						:color="pageColor"
 						:contributors="contributors"
 						:status="status"
@@ -169,47 +169,33 @@ export default {
 			this.denyAddon = addon;
 		},
 		// adds results to this.addons, doesn't actually return it
-		fetchAddonsByStatus(status) {
-			return axios
-				.get(`${this.$root.apiURL}/addons/${status}`, this.$root.apiOptions)
-				.then((res) => {
-					this.addons[status] = res.data.sort((a, b) => {
-						if (a.last_updated && b.last_updated) return b.last_updated - a.last_updated;
+		async fetchAddonsByStatus(status) {
+			const res = await axios.get(`${this.$root.apiURL}/addons/${status}`, this.$root.apiOptions);
+			this.addons[status] = res.data.sort((a, b) => {
+				if (a.last_updated && b.last_updated) return b.last_updated - a.last_updated;
 
-						// if there's An Update Date it's automatically newer
-						if (a.last_updated) return -1;
-						if (b.last_updated) return 1;
+				// if there's An Update Date it's automatically newer
+				if (a.last_updated) return -1;
+				if (b.last_updated) return 1;
 
-						// no info to go off, just compare ids
-						return b.id - a.id;
-					});
-					this.loading[status] = false;
-					this.$forceUpdate();
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+				// no info to go off, just compare ids
+				return b.id - a.id;
+			});
+			this.$set(this.loading, status, false);
 		},
 		getContributors() {
-			axios
-				.get(`${this.$root.apiURL}/users/names`)
-				.then((res) => {
-					this.contributors = res.data;
-				})
-				.catch((err) => {
-					console.error(err);
-					this.$root.showSnackBar(err, "error");
-				});
+			axios.get(`${this.$root.apiURL}/users/names`).then((res) => {
+				this.contributors = res.data;
+			});
 		},
 		update() {
 			Promise.all([
 				this.getContributors(),
-				this.fetchAddonsByStatus("pending"),
-				this.fetchAddonsByStatus("denied"),
-				this.fetchAddonsByStatus("approved"),
-				this.fetchAddonsByStatus("archived"),
+				...["pending", "approved", "denied", "archived"].map((status) =>
+					this.fetchAddonsByStatus(status),
+				),
 			]).catch((err) => {
+				console.error(err);
 				this.$root.showSnackBar(err, "error");
 			});
 		},

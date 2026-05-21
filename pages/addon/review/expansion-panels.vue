@@ -3,23 +3,21 @@
 		<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
 		<v-expansion-panel
 			v-for="addon in addons"
-			:key="addon.id"
-			:ref="addon.id"
+			:key="addon.key"
+			:ref="addon.key"
 			class="review-expansion-panel"
 			rounded
-			@click="getAddon(addon.id)"
+			@click="getAddon(addon.key)"
 		>
 			<v-expansion-panel-header expand-icon="mdi-menu-down">
 				<v-list-item class="flex-column align-start px-0" style="min-height: 0px">
-					<v-list-item-title class="align-self-start">{{ addon.name }}</v-list-item-title>
-					<v-list-item-subtitle>{{ addon.options.tags.join(", ") }}</v-list-item-subtitle>
+					<v-list-item-title class="align-self-start">{{ addon.primary }}</v-list-item-title>
+					<v-list-item-subtitle>{{ addon.secondary }}</v-list-item-subtitle>
 				</v-list-item>
 			</v-expansion-panel-header>
 
 			<v-expansion-panel-content>
-				<template v-if="addonInPanelLoading === true">
-					<p>{{ $root.lang().global.loading }}</p>
-				</template>
+				<loading-page v-if="addonInPanelLoading" />
 				<template v-else>
 					<emitting-image
 						:src="addonInPanelHeaderURL"
@@ -97,18 +95,21 @@
 <script>
 import axios from "axios";
 
+import LoadingPage from "@layouts/loading-page.vue";
 import EmittingImage from "@components/emitting-image.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
+
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 
 export default {
 	name: "expansion-panels",
 	components: {
+		LoadingPage,
+		EmittingImage,
 		ImagePreviewer,
 		FullscreenPreview,
 		AddonInfo,
-		EmittingImage,
 	},
 	props: {
 		addons: {
