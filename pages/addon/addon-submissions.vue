@@ -87,8 +87,7 @@ export default {
 			axios
 				.get(`${this.$root.apiURL}/users/${authorID}/addons`, this.$root.apiOptions)
 				.then((res) => {
-					this.addons = res.data;
-					this.$forceUpdate();
+					this.addons = res.data.sort((a, b) => (b.last_updated || 0) - (a.last_updated || 0));
 				})
 				.catch((e) => {
 					console.error(e);
