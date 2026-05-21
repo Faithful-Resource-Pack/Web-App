@@ -137,7 +137,7 @@
 			<div class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</div>
 
 			<v-chip-group
-				v-model="submittedForm.selectedPacks"
+				v-model="submittedForm.options.packs"
 				multiple
 				mandatory
 				class="d-flex flex-row align-center"
@@ -148,17 +148,17 @@
 				<div class="px-2" />
 				<v-chip
 					v-for="pack in packs"
-					:key="pack.value"
+					:key="pack.id"
 					filter
-					:value="pack.value"
+					:value="pack.id"
 					:style="{ color: pack.color }"
 				>
-					{{ pack.label }}
+					{{ pack.name }}
 				</v-chip>
 			</v-chip-group>
 
 			<v-chip-group
-				v-model="submittedForm.selectedEditions"
+				v-model="submittedForm.options.tags"
 				multiple
 				mandatory
 				class="d-flex flex-row align-center"
@@ -168,13 +168,13 @@
 				</span>
 				<div class="px-2" />
 				<v-chip
-					v-for="edition in editions"
-					:key="edition.value"
+					v-for="edition in tags"
+					:key="edition.name"
 					filter
-					:value="edition.value"
+					:value="edition.name"
 					:style="{ color: edition.color }"
 				>
-					{{ edition.value }}
+					{{ edition.name }}
 				</v-chip>
 			</v-chip-group>
 
@@ -447,10 +447,9 @@ export default {
 					},
 				],
 				authors: [],
-				selectedEditions: ["Java"],
-				selectedPacks: [],
 				options: {
 					tags: [],
+					packs: [],
 					optifine: false,
 				},
 			},
@@ -466,14 +465,11 @@ export default {
 				(u) => String.urlRegex.test(u) || this.$root.lang().addons.downloads.link.rule,
 			],
 			validForm: false,
-			// todo: move this to pack API when all packs are supported
-			packs: [
-				{ label: "Faithful 32x", value: "32x", color: "#00a2ff" },
-				{ label: "Faithful 64x", value: "64x", color: "#ff0092" },
-			],
-			editions: [
-				{ value: "Java", color: "#1dd96a" },
-				{ value: "Bedrock", color: "#eee" },
+			packs: {},
+			// todo: make this a real tag list
+			tags: [
+				{ name: "Java", color: "#1dd96a" },
+				{ name: "Bedrock", color: "#eee" },
 			],
 			users: [],
 			previewOpen: false,
@@ -579,6 +575,11 @@ export default {
 				})
 				.catch((err) => console.trace(err));
 		},
+		getPacks() {
+			axios.get(`${this.$root.apiURL}/packs/search?tag=addons`).then((res) => {
+				this.packs = res.data;
+			});
+		},
 	},
 	computed: {
 		header() {
@@ -588,11 +589,6 @@ export default {
 		},
 		submittedData() {
 			const data = structuredClone(this.submittedForm);
-
-			// todo: store packs/editions separately
-			data.options.tags = [...data.selectedEditions, ...data.selectedPacks];
-			delete data.selectedEditions;
-			delete data.selectedPacks;
 
 			// we treat files with different endpoint
 			delete data.headerFile;
@@ -610,12 +606,6 @@ export default {
 				data = structuredClone(data);
 				data.headerFile = undefined;
 				data.screenshots = [];
-				data.selectedPacks = data.options.tags.filter((e) =>
-					this.packs.some((pack) => pack.value === e),
-				);
-				data.selectedEditions = data.options.tags.filter((e) =>
-					this.editions.some((edition) => edition.value === e),
-				);
 				this.submittedForm = data;
 			},
 			immediate: true,
@@ -624,6 +614,7 @@ export default {
 	},
 	beforeMount() {
 		this.getUsers();
+		this.getPacks();
 		this.submittedForm.authors = [this.$root.user.id];
 	},
 };

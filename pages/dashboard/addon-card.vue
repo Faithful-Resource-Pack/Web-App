@@ -45,19 +45,19 @@
 				<v-col
 					v-for="(number, tag) in data.numbers"
 					:key="tag"
-					cols="6"
-					sm="3"
+					cols="12"
+					sm="6"
 					class="d-flex align-stretch"
 				>
-					<dashboard-stat :label="tag" :value="number" />
+					<dashboard-stat :label="packs[tag]?.name || tag" :value="number" />
 				</v-col>
 			</v-row>
 			<v-row v-else id="stats-loader" class="mt-1 py-0 my-0 align-self-stretch" dense>
 				<v-col
 					v-for="i in 4"
 					:key="`skeleton-stats-${i}`"
-					cols="6"
-					sm="3"
+					cols="12"
+					sm="6"
 					class="d-flex align-stretch"
 				>
 					<div
@@ -108,6 +108,7 @@ export default {
 	data() {
 		return {
 			data: {},
+			packs: {},
 			loading: true,
 		};
 	},
@@ -153,6 +154,9 @@ export default {
 	},
 	created() {
 		this.get();
+		axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
+			this.packs = res.data;
+		});
 	},
 	watch: {
 		roles(n, o) {

@@ -134,6 +134,7 @@ export default {
 				archived: true,
 			},
 			contributors: [],
+			packs: {},
 			showDenyPopup: false,
 			denyAddon: {},
 			archive: false,
@@ -188,9 +189,15 @@ export default {
 				this.contributors = res.data;
 			});
 		},
+		getPacks() {
+			axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
+				this.packs = res.data;
+			});
+		},
 		update() {
 			Promise.all([
 				this.getContributors(),
+				this.getPacks(),
 				...["pending", "approved", "denied", "archived"].map((status) =>
 					this.fetchAddonsByStatus(status),
 				),
@@ -225,7 +232,7 @@ export default {
 					items: addons.map((a) => ({
 						key: String(a.id),
 						primary: a.name,
-						secondary: a.options.tags.join(", "),
+						secondary: a.options.packs.map((p) => this.packs[p]?.name || p).join(", "),
 					})),
 				}))
 				.reduce((acc, cur) => {

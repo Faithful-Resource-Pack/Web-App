@@ -12,7 +12,9 @@
 			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)" :loading="loading">
 				<template #title="{ name, options }">
 					<v-card-title>{{ name }}</v-card-title>
-					<v-card-subtitle>{{ options.tags.join(", ") }}</v-card-subtitle>
+					<v-card-subtitle>
+						{{ options.packs.map((p) => packs[p].name).join(", ") }}
+					</v-card-subtitle>
 				</template>
 				<template #text="{ approval, slug }">
 					<v-badge dot inline :color="colors[approval.status]" />
@@ -72,6 +74,7 @@ export default {
 				denied: "red",
 				archived: "grey",
 			},
+			packs: {},
 			error: undefined,
 			loading: true,
 			failed: {},
@@ -100,6 +103,11 @@ export default {
 		getHeaderImg(id) {
 			return `${this.$root.apiURL}/addons/${id}/header?discord=${this.$root.user.access_token}&t=${this.timestamp}`;
 		},
+		getPacks() {
+			axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
+				this.packs = res.data;
+			});
+		},
 		update() {
 			this.getAddons(this.$root.user.id);
 			this.$forceUpdate();
@@ -107,6 +115,7 @@ export default {
 	},
 	mounted() {
 		this.getAddons(this.$root.user.id);
+		this.getPacks();
 	},
 };
 </script>
