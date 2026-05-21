@@ -248,7 +248,7 @@ export default {
 					? axios.post(`${this.$root.apiURL}/packs`, data, this.$root.apiOptions)
 					: axios.put(`${this.$root.apiURL}/packs/${data.id}`, data, this.$root.apiOptions);
 
-			this.wrapSnackBar(requestPromise).then(() => this.$emit("close", true));
+			this.$root.wrapSnackBar(requestPromise).then(() => this.$emit("close", true));
 		},
 		createNewGithub(edition) {
 			this.formData.github[edition] = {
