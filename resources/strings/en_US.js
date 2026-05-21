@@ -328,7 +328,7 @@ export default {
 		},
 		remove: {
 			title: "Delete add-on",
-			description: "\"%s\" will be deleted forever. This can't be undone.",
+			description: '"%s" will be deleted forever. This can\'t be undone.',
 		},
 		general: {
 			loading_addon: "Loading add-on…",

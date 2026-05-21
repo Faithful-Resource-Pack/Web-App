@@ -116,7 +116,7 @@ export default defineStore("auth", {
 			});
 		},
 		async loadFaithfulProfile(accessToken) {
-			const res = await axios.get(`${window.apiURL}/users/newprofile`, {
+			const res = await axios.get(`${window.apiURL}/users/account`, {
 				headers: {
 					discord: accessToken,
 				},
