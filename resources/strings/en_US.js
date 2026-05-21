@@ -605,6 +605,7 @@ export default {
 				edit_user: "Edit user",
 				delete_user: "Delete account",
 				id: "Discord ID",
+				id_hint: "Changing the Discord ID will update all related contributions and add-ons",
 				username: "Username",
 				uuid: "Minecraft profile UUID",
 				roles: "User roles",

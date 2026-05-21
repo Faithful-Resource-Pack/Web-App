@@ -13,7 +13,9 @@
 						v-model="formData.id"
 						:color="color"
 						required
-						:disabled="!add"
+						clearable
+						persistent-hint
+						:hint="add ? undefined : '⚠️ ' + $root.lang().database.users.modal.id_hint"
 						:label="$root.lang().database.users.modal.id"
 					/>
 					<v-text-field
@@ -113,7 +115,7 @@ export default {
 				anonymous: false,
 				id: "",
 			},
-			default: {
+			defaults: {
 				username: "",
 				roles: [],
 				uuid: "",
@@ -129,20 +131,30 @@ export default {
 		},
 	},
 	methods: {
-		send() {
-			const data = this.formData;
-			const id = data.id;
+		async send() {
+			const data = structuredClone(this.formData);
 
 			// excess properties and therefore are not allowed
 			delete data.id;
 			delete data.bio;
 			delete data.media;
 
-			Object.keys(data).forEach((k) => (data[k] = data[k] === null ? this.default[k] : data[k]));
+			Object.keys(data).forEach((k) => (data[k] = data[k] === null ? this.defaults[k] : data[k]));
 
-			return this.$root
-				.wrapSnackBar(axios.post(`${this.$root.apiURL}/users/${id}`, data, this.$root.apiOptions))
-				.then(() => this.$emit("close", true));
+			const oldID = this.data.id;
+			const newID = this.formData.id;
+
+			const request =
+				// if adding there's no oldID to reference so we always POST
+				this.add || oldID === newID
+					? axios.post(`${this.$root.apiURL}/users/${newID}`, data, this.$root.apiOptions)
+					: axios.put(
+							`${this.$root.apiURL}/users/transfer/${oldID}/${newID}`,
+							data,
+							this.$root.apiOptions,
+						);
+
+			return this.$root.wrapSnackBar(request).then(() => this.$emit("close", true));
 		},
 	},
 	watch: {
