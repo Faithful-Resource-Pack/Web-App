@@ -69,13 +69,14 @@
 				<template #logo>
 					<img
 						src="https://database.faithfulpack.net/images/branding/logos/transparent/hd/main_logo.gif"
+						:alt="lang().global.connection.logo"
 						width="256"
 						class="ma-n7"
 					/>
 				</template>
 				<template #actions>
 					<div v-show="showActions" class="connection-problem text-center">
-						<p class="my-3 text--secondary">{{ $root.lang().global.connection.description }}</p>
+						<p class="my-3 text--secondary">{{ lang().global.connection.description }}</p>
 						<div class="connection-actions">
 							<!-- using secondary styles lets us keep the white discord logo on all themes -->
 							<v-btn
@@ -85,7 +86,7 @@
 								rel="noopener noreferrer"
 							>
 								<i class="v-icon notranslate v-icon--left mdi icon-discord"></i>
-								{{ $root.lang().global.connection.contact }}
+								{{ lang().global.connection.contact }}
 							</v-btn>
 							<v-btn
 								color="secondary"
@@ -94,7 +95,7 @@
 								rel="noopener noreferrer"
 							>
 								<v-icon left>mdi-chart-line</v-icon>
-								{{ $root.lang().global.connection.status }}
+								{{ lang().global.connection.status }}
 							</v-btn>
 						</div>
 					</div>

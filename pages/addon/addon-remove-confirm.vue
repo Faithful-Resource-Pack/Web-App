@@ -6,10 +6,7 @@
 		@close="$emit('close')"
 		@submit="deleteAddon"
 	>
-		<p>{{ $root.lang().addons.remove.labels.question.replace("%s", data.name) }}</p>
-		<v-alert type="warning" outlined dense>
-			{{ $root.lang().addons.remove.labels.warning }}
-		</v-alert>
+		<p>{{ $root.lang().addons.remove.description.replace("%s", data.name) }}</p>
 	</modal-form>
 </template>
 

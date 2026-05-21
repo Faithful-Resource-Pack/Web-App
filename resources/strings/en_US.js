@@ -31,6 +31,7 @@ export default {
 			},
 		},
 		connection: {
+			logo: "Faithful logo",
 			description: "Connection problems?",
 			contact: "Contact Us",
 			status: "Faithful Status",
@@ -326,11 +327,8 @@ export default {
 			details: "Details",
 		},
 		remove: {
-			title: "Confirm deletion",
-			labels: {
-				question: "Do you want to delete %s?",
-				warning: "This operation cannot be undone!",
-			},
+			title: "Delete add-on",
+			description: "\"%s\" will be deleted forever. This can't be undone.",
 		},
 		general: {
 			loading_addon: "Loading add-on…",
