@@ -18,7 +18,7 @@
 		<!-- wraps both mobile and desktop layouts -->
 		<div class="review-content-container my-2">
 			<!-- empty layout is shared across both mobile and desktop -->
-			<v-card v-if="selectedListItems.length === 0" class="main-container">
+			<v-card v-if="selectedListItems.length === 0" class="main-container text-center">
 				<ascii-error :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
 			<!-- desktop layout -->
@@ -48,7 +48,7 @@
 						@openDenyPopup="openDenyPopup"
 					/>
 				</v-expansion-panels>
-				<v-container v-else-if="loading[status] === true">
+				<v-container v-else-if="loading[status]">
 					{{ $root.lang().global.loading }}
 				</v-container>
 				<v-container v-else>
