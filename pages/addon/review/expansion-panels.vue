@@ -62,7 +62,7 @@
 							v-show="status !== 'approved'"
 							text
 							color="green"
-							@click="$emit('reviewAddon', addon, 'approved')"
+							@click="$emit('reviewAddon', addonInPanel, 'approved')"
 						>
 							{{ $root.lang().global.btn.approve }}
 						</v-btn>
