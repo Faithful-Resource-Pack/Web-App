@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container class="flex-grow-1">
 		<v-row no-gutters class="py-0 my-0" align="center">
 			<v-col cols="12" sm="6">
 				<div class="text-h4 py-4 d-flex flex-row align-center">
@@ -15,9 +15,11 @@
 			</v-col>
 		</v-row>
 
-		<div v-if="!loading && addons.length === 0">
-			{{ error || $root.lang().addons.general.no_submissions }}
-		</div>
+		<ascii-error
+			v-if="!loading && !addons.length"
+			:subtitle="error || $root.lang().addons.general.no_submissions"
+			:errorCode="errorCode"
+		/>
 		<div v-else class="my-2 text-h5">
 			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)" :loading="loading">
 				<template #title="{ name, options }">
@@ -62,14 +64,16 @@
 <script>
 import axios from "axios";
 
-import AddonRemoveConfirm from "./addon-remove-confirm.vue";
 import CardGrid from "@layouts/card-grid.vue";
+import AsciiError from "@components/ascii-error.vue";
+import AddonRemoveConfirm from "./addon-remove-confirm.vue";
 
 export default {
 	name: "addon-submissions",
 	components: {
-		AddonRemoveConfirm,
+		AsciiError,
 		CardGrid,
+		AddonRemoveConfirm,
 	},
 	data() {
 		return {
@@ -86,6 +90,7 @@ export default {
 			},
 			packs: {},
 			error: undefined,
+			errorCode: undefined,
 			loading: true,
 			failed: {},
 			timestamp: new Date().getTime(),
@@ -102,9 +107,13 @@ export default {
 				.then((res) => {
 					this.addons = res.data.sort((a, b) => (b.last_updated || 0) - (a.last_updated || 0));
 				})
-				.catch((e) => {
-					console.error(e);
-					this.error = `${e.statusCode}: ${e.response.value}`;
+				.catch((err) => {
+					console.error(err);
+					this.errorCode = err.response?.status;
+					this.error =
+						err.response.data?.message ||
+						err.response.statusText ||
+						this.$root.lang().addons.general.no_submissions;
 				})
 				.finally(() => {
 					this.loading = false;

@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<v-container class="flex-grow-1">
 		<v-row no-gutters class="py-0 my-0" align="center">
 			<v-col cols="12" sm="6">
 				<div class="text-h4 py-4 d-flex flex-row align-center">
@@ -15,9 +15,11 @@
 			</v-col>
 		</v-row>
 
-		<div v-if="!loading && posts.length === 0">
-			{{ error || $root.lang().global.no_results }}
-		</div>
+		<ascii-error
+			v-if="!loading && !posts.length"
+			:subtitle="error || $root.lang().global.no_results"
+			:errorCode="errorCode"
+		/>
 		<div v-else class="my-2 text-h5">
 			<card-grid
 				:items="posts"
@@ -66,10 +68,12 @@
 import axios from "axios";
 import PostRemoveConfirm from "./post-remove-confirm.vue";
 import CardGrid from "@layouts/card-grid.vue";
+import AsciiError from "@components/ascii-error.vue";
 
 export default {
 	name: "post-grid",
 	components: {
+		AsciiError,
 		CardGrid,
 		PostRemoveConfirm,
 	},
@@ -79,6 +83,7 @@ export default {
 			removeData: {},
 			posts: [],
 			loading: true,
+			errorCode: undefined,
 			error: undefined,
 			failed: {},
 		};
@@ -90,9 +95,13 @@ export default {
 				.then((res) => {
 					this.posts = Object.values(res.data).sort((a, b) => new Date(b.date) - new Date(a.date));
 				})
-				.catch((e) => {
-					console.error(e);
-					this.error = `${e.statusCode}: ${e.response.value}`;
+				.catch((err) => {
+					console.error(err);
+					this.errorCode = err.response?.status;
+					this.error =
+						err.response.data?.message ||
+						err.response.statusText ||
+						this.$root.lang().global.no_results;
 				})
 				.finally(() => {
 					this.loading = false;

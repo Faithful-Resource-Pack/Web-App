@@ -116,7 +116,7 @@ export default {
 		return {
 			textureObj: {},
 			error: null,
-			errorCode: 0,
+			errorCode: undefined,
 			selectedTab: null,
 			modalOpened: false,
 		};
@@ -181,10 +181,12 @@ export default {
 						this.textureObj = res.data;
 					})
 					.catch((err) => {
-						this.errorCode = err.response?.status;
 						console.error(err);
+						this.errorCode = err.response?.status;
 						this.error =
-							err.response?.data?.message || this.$root.lang().gallery.error_message.search_failed;
+							err.response.data?.message ||
+							err.response.statusText ||
+							this.$root.lang().gallery.error_message.search_failed;
 					});
 			},
 			immediate: true,
