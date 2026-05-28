@@ -22,7 +22,7 @@
 					<v-btn
 						v-if="approval.status == 'approved'"
 						color="blue"
-						:href="`https://www.faithfulpack.net/addons/${slug}`"
+						:href="`https://faithfulpack.net/addons/${slug}`"
 						target="_blank"
 						rel="noopener noreferrer"
 						icon

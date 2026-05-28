@@ -53,7 +53,7 @@
 								<v-btn
 									v-if="addon.approval.status == 'approved'"
 									color="blue"
-									:href="`https://www.faithfulpack.net/addons/${addon.slug}`"
+									:href="`https://faithfulpack.net/addons/${addon.slug}`"
 									target="_blank"
 									rel="noopener noreferrer"
 									icon
@@ -82,7 +82,7 @@
 								<v-btn
 									v-if="addon.approval.status == 'approved'"
 									color="blue"
-									:href="`https://www.faithfulpack.net/addons/${addon.slug}`"
+									:href="`https://faithfulpack.net/addons/${addon.slug}`"
 									target="_blank"
 									rel="noopener noreferrer"
 									icon

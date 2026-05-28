@@ -13,7 +13,7 @@
 							<a
 								v-if="addonInPanel.approval.status === 'approved'"
 								class="text--primary hover-underline"
-								:href="`https://www.faithfulpack.net/addons/${addonInPanel.slug}`"
+								:href="`https://faithfulpack.net/addons/${addonInPanel.slug}`"
 								target="blank"
 								rel="noopener noreferrer"
 							>
