@@ -1,9 +1,19 @@
 <template>
 	<v-container>
-		<div class="text-h4 py-4 d-flex flex-row align-center">
-			{{ $root.lang().posts.titles.list }}
-			<v-progress-circular v-if="loading" indeterminate class="ml-5" />
-		</div>
+		<v-row no-gutters class="py-0 my-0" align="center">
+			<v-col cols="12" sm="6">
+				<div class="text-h4 py-4 d-flex flex-row align-center">
+					{{ $root.lang().posts.titles.list }}
+					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
+				</div>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<v-btn block color="secondary" to="/posts/new">
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().posts.titles.new }}
+				</v-btn>
+			</v-col>
+		</v-row>
 
 		<div v-if="!loading && posts.length === 0">
 			{{ error || $root.lang().global.no_results }}

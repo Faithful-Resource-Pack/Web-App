@@ -1,9 +1,19 @@
 <template>
 	<v-container>
-		<div class="text-h4 py-4 d-flex flex-row align-center">
-			{{ $root.lang().addons.titles.submissions }}
-			<v-progress-circular v-if="loading" indeterminate class="ml-5" />
-		</div>
+		<v-row no-gutters class="py-0 my-0" align="center">
+			<v-col cols="12" sm="6">
+				<div class="text-h4 py-4 d-flex flex-row align-center">
+					{{ $root.lang().addons.titles.submissions }}
+					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
+				</div>
+			</v-col>
+			<v-col cols="12" sm="6">
+				<v-btn block color="secondary" to="/addons/new">
+					<v-icon left>mdi-plus</v-icon>
+					{{ $root.lang().addons.titles.submit }}
+				</v-btn>
+			</v-col>
+		</v-row>
 
 		<div v-if="!loading && addons.length === 0">
 			{{ error || $root.lang().addons.general.no_submissions }}
