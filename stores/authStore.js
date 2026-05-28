@@ -4,6 +4,7 @@ import axios from "axios";
 
 export default defineStore("auth", {
 	state: () => ({
+		app: null,
 		authListeners: [],
 
 		// user information
@@ -22,6 +23,7 @@ export default defineStore("auth", {
 	actions: {
 		// need app/dev for snackbars and logging
 		async login(app, isDev) {
+			this.app = app;
 			const discordToken = discordTokenStore();
 
 			discordToken.$subscribe(() => {
@@ -58,10 +60,15 @@ export default defineStore("auth", {
 			if (new URLSearchParams(location.search).has("access_token"))
 				history.replaceState(null, "", window.location.pathname);
 		},
-		switchAccount(id) {
+		async switchAccount(id) {
+			// fetch auth immediately from localstorage since it has the access/refresh tokens already
 			const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY))[id];
-			// we can get the auth already from localstorage and skip the validation
-			return discordTokenStore().authenticate(auth);
+			try {
+				await discordTokenStore().authenticate(auth);
+			} catch (err) {
+				this.app.showSnackBar(err, "error");
+				console.error(err);
+			}
 		},
 		logout(logoutId) {
 			const currentId = this.id;
@@ -74,7 +81,12 @@ export default defineStore("auth", {
 			// try to get next available account and log into that
 			const accounts = Object.entries(JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY)));
 			const nextAccountCandidate = accounts.find(([id]) => id !== currentId);
-			if (nextAccountCandidate) return discordToken.authenticate(nextAccountCandidate[1]);
+			if (nextAccountCandidate) {
+				return discordToken.authenticate(nextAccountCandidate[1]).catch((err) => {
+					this.app.showSnackBar(err, "error");
+					console.error("err");
+				});
+			}
 
 			// no more accounts, fully reset everything
 			localStorage.removeItem(CURRENT_USER_KEY);
