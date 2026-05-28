@@ -45,7 +45,7 @@
 			</card-grid>
 		</div>
 
-		<addon-remove-confirm v-model="remove.open" :data="remove.data" @close="update" />
+		<addon-remove-confirm v-model="remove.open" :data="remove.data" @close="getAddons" />
 	</v-container>
 </template>
 
@@ -86,9 +86,9 @@ export default {
 			this.remove.data = addon;
 			this.remove.open = true;
 		},
-		getAddons(authorID) {
+		getAddons() {
 			axios
-				.get(`${this.$root.apiURL}/users/${authorID}/addons`, this.$root.apiOptions)
+				.get(`${this.$root.apiURL}/users/${this.$root.user.id}/addons`, this.$root.apiOptions)
 				.then((res) => {
 					this.addons = res.data.sort((a, b) => (b.last_updated || 0) - (a.last_updated || 0));
 				})
@@ -108,13 +108,10 @@ export default {
 				this.packs = res.data;
 			});
 		},
-		update() {
-			this.getAddons(this.$root.user.id);
-			this.$forceUpdate();
-		},
 	},
 	mounted() {
-		this.getAddons(this.$root.user.id);
+		this.$root.auth.addChangeListener(() => this.getAddons());
+		this.getAddons();
 		this.getPacks();
 	},
 };

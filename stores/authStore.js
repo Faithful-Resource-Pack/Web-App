@@ -103,7 +103,7 @@ export default defineStore("auth", {
 			localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(cur));
 
 			// only emit once localStorage is updated
-			this.authListeners.forEach((cb) => cb(this.access_token));
+			this.authListeners.forEach((cb) => cb(this));
 		},
 		async loadDiscordProfile(accessToken) {
 			if (accessToken === undefined) return this.$reset();
@@ -113,7 +113,6 @@ export default defineStore("auth", {
 
 			const { id, global_name, username, avatar, banner } = res.data;
 			localStorage.setItem(CURRENT_USER_KEY, id);
-			this.updateAccounts(id, discordTokenStore().$state);
 
 			this.$patch({
 				// queue access token update here to prevent unnecessary rerenders
@@ -126,6 +125,8 @@ export default defineStore("auth", {
 				avatar: avatar ? `https://cdn.discordapp.com/avatars/${id}/${avatar}?size=1024` : null,
 				banner: banner ? `https://cdn.discordapp.com/banners/${id}/${banner}?size=1024` : null,
 			});
+
+			this.updateAccounts(id, discordTokenStore().$state);
 		},
 		async loadFaithfulProfile(accessToken) {
 			const res = await axios.get(`${window.apiURL}/users/account`, {
