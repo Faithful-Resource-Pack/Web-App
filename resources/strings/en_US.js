@@ -321,7 +321,7 @@ export default {
 	},
 	addons: {
 		titles: {
-			submit: "Submit a new add-on",
+			submit: "Submit new add-on",
 			edit: "Edit add-on",
 			submissions: "Add-on submissions",
 			details: "Details",

@@ -75,7 +75,7 @@ export default [
 					{
 						path: "/addons/new",
 						component: NewAddonPage,
-						name: "Submit a new add-on",
+						name: "Submit new add-on",
 					},
 					{
 						path: "/addons/edit/:id",
