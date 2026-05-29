@@ -7,7 +7,7 @@
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
 			<template v-if="addonInPanelLoading">
 				<v-skeleton-loader type="heading" />
-				<v-skeleton-loader type="text" class="mt-2" style="width: 50%" />
+				<v-skeleton-loader type="text" class="mt-2" style="width: 30%" />
 				<v-row>
 					<v-col cols="12" sm="7">
 						<v-skeleton-loader type="image" />
@@ -167,8 +167,6 @@ export default {
 	emits: ["reviewAddon", "openDenyPopup"],
 	data() {
 		return {
-			modalData: {},
-			modalOpen: false,
 			previewOpen: false,
 			addonInPanelLoading: true,
 			addonInPanel: {},
@@ -198,15 +196,6 @@ export default {
 				if (headerRes.value) this.addonInPanelHeaderURL = `${headerRes.value.data}?t=${Date.now()}`;
 				else this.addonInPanelHeaderURL = null;
 			});
-		},
-		openModal() {
-			this.modalData = this.addonInPanel;
-			this.modalOpen = true;
-		},
-		closeModal() {
-			this.modalOpen = false;
-			this.modalData = {};
-			this.update();
 		},
 		getUsername(id) {
 			if (id === null || id === undefined) return "Herobrine";

@@ -131,14 +131,13 @@ export default {
 		},
 		value: {
 			type: String,
-			required: true,
+			required: false,
+			default: undefined,
 		},
 	},
-	emits: ["reviewAddon", "openDenyPopup", "input", "close"],
+	emits: ["reviewAddon", "openDenyPopup", "input"],
 	data() {
 		return {
-			modalData: {},
-			modalOpen: false,
 			previewOpen: false,
 			addonInPanelLoading: true,
 			addonInPanel: {},
@@ -149,7 +148,6 @@ export default {
 	methods: {
 		getAddon(id) {
 			this.addonInPanelLoading = true;
-
 			this.$emit("input", id);
 
 			// allSettled if no header res
@@ -174,15 +172,6 @@ export default {
 		},
 		openHeader() {
 			this.previewOpen = true;
-		},
-		openModal() {
-			this.modalData = this.addonInPanel;
-			this.modalOpen = true;
-		},
-		closeModal() {
-			this.modalOpen = false;
-			this.modalData = {};
-			this.$emit("close");
 		},
 		getUsername(id) {
 			if (id === null || id === undefined) return "Herobrine";
