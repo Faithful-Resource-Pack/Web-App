@@ -460,6 +460,15 @@ a:hover .database-list-avatar {
 	flex: 1;
 }
 
+// expansion panel padding is enormous by default for some reason (bad for mobile)
+.v-expansion-panel-header {
+	padding: 16px;
+}
+
+.v-expansion-panel-content__wrap {
+	padding: 0 16px 16px 16px;
+}
+
 .transparent-tabs .v-tabs-bar,
 .transparent-tabs .v-tabs-items {
 	background-color: transparent !important;
