@@ -158,6 +158,10 @@ export default {
 			required: false,
 			default: undefined,
 		},
+		status: {
+			type: String,
+			required: true,
+		},
 		colors: {
 			type: Object,
 			required: false,
@@ -210,11 +214,6 @@ export default {
 			return (this.addonInPanel.files || [])
 				.filter((f) => f.use === "screenshot")
 				.map((f) => f.source);
-		},
-		status() {
-			return this.addonInPanel && this.addonInPanel.approval
-				? this.addonInPanel.approval.status
-				: undefined;
 		},
 		approvalAuthor() {
 			return this.getUsername(this.addonInPanel.approval.author);

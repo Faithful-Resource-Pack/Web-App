@@ -31,6 +31,7 @@
 				<review-preview
 					:addonId="selectedAddonId"
 					:colors="colors"
+					:status="status"
 					@reviewAddon="reviewAddon"
 					@openDenyPopup="openDenyPopup"
 				/>
