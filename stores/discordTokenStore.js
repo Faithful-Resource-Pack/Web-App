@@ -68,7 +68,7 @@ export default defineStore("discordToken", {
 			return auth && auth.access_token;
 		},
 		expiryDurationToTime(duration) {
-			return new Date(new Date().getTime() + duration * 1000 - 60000);
+			return new Date(Date.now() + duration * 1000 - 60000);
 		},
 		async refreshLogin(auth = undefined) {
 			if (auth === undefined) auth = this.$state;

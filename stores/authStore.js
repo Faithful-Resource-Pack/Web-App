@@ -35,7 +35,7 @@ export default defineStore("auth", {
 				// defer localStorage write to authStore mutation (has access to discord id)
 				setTimeout(
 					() => this.updateAccounts(id, discordToken.refreshLogin()),
-					new Date(discordToken.expires_at).getTime() - new Date().getTime(),
+					new Date(discordToken.expires_at).getTime() - Date.now(),
 				);
 
 				Promise.all([

@@ -171,8 +171,7 @@ export default {
 				this.addonInPanel = res.value.data;
 				this.addonInPanelLoading = false;
 
-				if (headerRes.value)
-					this.addonInPanelHeaderURL = `${headerRes.value.data}?t=${new Date().getTime()}`;
+				if (headerRes.value) this.addonInPanelHeaderURL = `${headerRes.value.data}?t=${Date.now()}`;
 				else this.addonInPanelHeaderURL = null;
 			});
 		},

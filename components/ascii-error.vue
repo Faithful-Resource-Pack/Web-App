@@ -13,7 +13,7 @@ d88   888  888    888 888    888&nbsp;
       888  Y88b  d88P Y88b  d88P&nbsp;
       888   "Y8888P"   "Y8888P" &nbsp;
 </pre
-				>
+			>
 			<pre v-else-if="errorCode === 401">
     d8888   .d8888b.   d888  &nbsp;
    d8P888  d88P  Y88b d8888  &nbsp;
@@ -24,8 +24,8 @@ d88   888  888    888   888  &nbsp;
       888  Y88b  d88P   888  &nbsp;
       888   "Y8888P"  8888888&nbsp;
 </pre
-				>
-				<pre v-else-if="errorCode === 422">
+			>
+			<pre v-else-if="errorCode === 422">
     d8888   .d8888b.   .d8888b. &nbsp;
    d8P888  d88P  Y88b d88P  Y88b&nbsp;
   d8P 888         888        888&nbsp;

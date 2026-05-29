@@ -93,7 +93,7 @@ export default {
 			errorCode: undefined,
 			loading: true,
 			failed: {},
-			timestamp: new Date().getTime(),
+			timestamp: Date.now(),
 		};
 	},
 	methods: {
