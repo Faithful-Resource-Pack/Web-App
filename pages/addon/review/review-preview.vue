@@ -5,7 +5,25 @@
 			class="main-container pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
 		>
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
-			<loading-page v-if="addonInPanelLoading" />
+			<template v-if="addonInPanelLoading">
+				<v-skeleton-loader type="heading" />
+				<v-skeleton-loader type="text" class="mt-2" style="width: 50%" />
+				<v-row>
+					<v-col cols="12" sm="7">
+						<v-skeleton-loader type="image" />
+					</v-col>
+					<v-col cols="12" sm="5">
+						<v-skeleton-loader
+							v-for="i in 3"
+							:key="i"
+							type="sentences"
+							class="mb-4"
+							style="width: 60%"
+						/>
+					</v-col>
+				</v-row>
+				<v-skeleton-loader type="paragraph" class="mt-4" />
+			</template>
 			<template v-else>
 				<div class="pb-2 d-flex align-center">
 					<div>
@@ -69,7 +87,15 @@
 			</v-list-item-title>
 			<div>{{ addonInPanel.approval.reason }}</div>
 		</v-card>
-		<v-card v-if="addonInPanelLoading === false" class="main-container mt-2 pa-2">
+		<v-card v-if="addonInPanelLoading" class="main-container mt-2 pa-2">
+			<div class="d-flex align-center ga-4">
+				<div class="flex-grow-1 mr-auto">
+					<v-skeleton-loader type="heading" />
+				</div>
+				<v-skeleton-loader v-for="i in 3" :key="i" type="button" />
+			</div>
+		</v-card>
+		<v-card v-else class="main-container mt-2 pa-2">
 			<div class="d-flex align-center">
 				<div class="mr-auto">
 					<div v-if="status === 'approved'">
@@ -117,7 +143,6 @@ import FullscreenPreview from "@components/fullscreen-preview.vue";
 import ImagePreviewer from "../image-previewer.vue";
 import AddonInfo from "./addon-info.vue";
 import EmittingImage from "@components/emitting-image.vue";
-import LoadingPage from "@layouts/loading-page.vue";
 
 export default {
 	name: "review-preview",
@@ -126,7 +151,6 @@ export default {
 		ImagePreviewer,
 		AddonInfo,
 		EmittingImage,
-		LoadingPage,
 	},
 	props: {
 		addonId: {
