@@ -37,18 +37,16 @@
 				/>
 			</div>
 			<template v-else>
-				<v-expansion-panels v-if="selectedListItems.length > 0">
-					<expansion-panels
-						v-model="selectedAddonId"
-						:addons="selectedListItems"
-						:color="pageColor"
-						:contributors="contributors"
-						:status="status"
-						@close="update"
-						@reviewAddon="reviewAddon"
-						@openDenyPopup="openDenyPopup"
-					/>
-				</v-expansion-panels>
+				<expansion-panels
+					v-if="selectedListItems.length > 0"
+					v-model="selectedAddonId"
+					:addons="selectedListItems"
+					:color="pageColor"
+					:contributors="contributors"
+					:status="status"
+					@reviewAddon="reviewAddon"
+					@openDenyPopup="openDenyPopup"
+				/>
 				<v-container v-else-if="loading[status]">
 					{{ $root.lang().global.loading }}
 				</v-container>
@@ -159,7 +157,7 @@ export default {
 				)
 				.then(() => {
 					this.selectedAddonId = undefined;
-					this.update();
+					this.getAddons();
 				});
 		},
 		closeDenyPopup(send = false, reason) {
@@ -183,7 +181,11 @@ export default {
 				// no info to go off, just compare ids
 				return b.id - a.id;
 			});
+
 			this.$set(this.loading, status, false);
+
+			// set selection as soon as available
+			if (this.status === status) this.updateSearch();
 		},
 		getContributors() {
 			axios.get(`${this.$root.apiURL}/users/names`).then((res) => {
@@ -195,7 +197,7 @@ export default {
 				this.packs = res.data;
 			});
 		},
-		update() {
+		getAddons() {
 			Promise.all([
 				this.getContributors(),
 				this.getPacks(),
@@ -207,10 +209,11 @@ export default {
 				this.$root.showSnackBar(err, "error");
 			});
 		},
-		searchUpdate() {
+		updateSearch() {
 			this.status = this.searchGet("status") || this.status;
 			this.$nextTick(() => {
-				this.selectedAddonId = this.searchGet("id") || this.selectedAddonId;
+				this.selectedAddonId =
+					this.searchGet("id") || this.addons[this.status][0]?.id || this.selectedAddonId;
 			});
 		},
 	},
@@ -257,17 +260,17 @@ export default {
 		"$route.query": {
 			handler(params, prev) {
 				if (JSON.stringify(params) === JSON.stringify(prev)) return;
-				this.searchUpdate();
+				this.updateSearch();
 			},
 			deep: true,
 			immediate: true,
 		},
 	},
 	created() {
-		this.searchUpdate();
+		this.updateSearch();
 	},
 	mounted() {
-		this.update();
+		this.getAddons();
 		this.pageStyles = generatePageStyles(this.pageColor);
 	},
 };

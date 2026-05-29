@@ -1,5 +1,5 @@
 <template>
-	<v-container class="px-0">
+	<v-expansion-panels>
 		<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
 		<v-expansion-panel
 			v-for="addon in addons"
@@ -17,7 +17,11 @@
 			</v-expansion-panel-header>
 
 			<v-expansion-panel-content>
-				<loading-page v-if="addonInPanelLoading" />
+				<template v-if="addonInPanelLoading">
+					<v-skeleton-loader type="image" />
+					<!-- this is a bit lazy but you literally Cannot notice it on phone screens -->
+					<v-skeleton-loader type="paragraph@3" class="mt-2" />
+				</template>
 				<template v-else>
 					<emitting-image
 						:src="addonInPanelHeaderURL"
@@ -89,13 +93,12 @@
 				</template>
 			</v-expansion-panel-content>
 		</v-expansion-panel>
-	</v-container>
+	</v-expansion-panels>
 </template>
 
 <script>
 import axios from "axios";
 
-import LoadingPage from "@layouts/loading-page.vue";
 import EmittingImage from "@components/emitting-image.vue";
 import FullscreenPreview from "@components/fullscreen-preview.vue";
 
@@ -105,7 +108,6 @@ import AddonInfo from "./addon-info.vue";
 export default {
 	name: "expansion-panels",
 	components: {
-		LoadingPage,
 		EmittingImage,
 		ImagePreviewer,
 		FullscreenPreview,
