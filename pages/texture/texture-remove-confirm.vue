@@ -65,7 +65,7 @@
 					{{ $root.lang().database.textures.delete_modal.affected_contributions }}
 					({{ contributions.length }})
 				</h2>
-				<v-list v-if="contributions.length">
+				<v-list v-if="!contributionsLoading">
 					<v-list-item v-for="(contrib, i) in contributions" :key="contrib.id" class="px-0">
 						<a :href="contrib.url" target="_blank" rel="noopener noreferrer">
 							<v-list-item-avatar v-if="contrib.url" class="database-list-sprite" tile>
@@ -185,6 +185,7 @@ export default {
 			deletePaths: true,
 			uses: [],
 			rawPaths: [],
+			contributionsLoading: true,
 			contributions: [],
 			packToName: {},
 			discordIDtoName: {},
@@ -213,12 +214,17 @@ export default {
 				});
 
 			if (!Object.keys(this.discordIDtoName).length)
-				axios.get(`${this.$root.apiURL}/contributions/authors`).then((res) => {
-					this.discordIDtoName = res.data.reduce((acc, cur) => {
-						acc[cur.id] = cur;
-						return acc;
-					}, {});
-				});
+				axios
+					.get(`${this.$root.apiURL}/contributions/authors`)
+					.then((res) => {
+						this.discordIDtoName = res.data.reduce((acc, cur) => {
+							acc[cur.id] = cur;
+							return acc;
+						}, {});
+					})
+					.finally(() => {
+						this.contributionsLoading = false;
+					});
 		},
 		loadUseInformation(useId) {
 			axios
