@@ -67,7 +67,7 @@
 						<v-btn color="red darken-1" text @click="resetModal">
 							{{ $root.lang().global.btn.reset }}
 						</v-btn>
-						<v-btn color="darken-1" text @click="send">
+						<v-btn color="darken-1" text :loading="loading" @click="send">
 							{{ $root.lang().global.btn.save }}
 						</v-btn>
 					</v-card-actions>
@@ -118,6 +118,7 @@ export default {
 			modalOpened: false,
 			selectedTab: null,
 			textures: [emptyTexture()],
+			loading: false,
 			jsonModalOpened: false,
 		};
 	},
@@ -171,6 +172,7 @@ export default {
 			this.textures = [emptyTexture()];
 		},
 		send() {
+			this.loading = true;
 			axios
 				.post(`${this.$root.apiURL}/textures/multiple`, this.cleanedData, this.$root.apiOptions)
 				.then(() => {
@@ -179,6 +181,9 @@ export default {
 				.catch((err) => {
 					console.error(err);
 					this.$root.showSnackBar(err, "error");
+				})
+				.finally(() => {
+					this.loading = false;
 				});
 		},
 	},
