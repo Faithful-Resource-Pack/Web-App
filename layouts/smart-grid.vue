@@ -78,7 +78,7 @@ export default {
 		},
 		columnCount() {
 			let count = this.baseColumnCount;
-			if (this.wide) count -= 1;
+			if (this.wide && count > 2) count = 2;
 			if (this.displayedResults === 1) count = 1;
 			return Math.max(1, count);
 		},
