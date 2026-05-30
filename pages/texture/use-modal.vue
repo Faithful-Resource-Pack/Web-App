@@ -69,7 +69,8 @@
 					<v-list-item-content>
 						<v-list-item-title :title="path.name">{{ path.name }}</v-list-item-title>
 						<v-list-item-subtitle :title="(path.versions || []).join(', ')">
-							{{ path.id }}: {{ formatPathVersions(path.versions) }}
+							<template v-if="add">{{ formatPathVersions(path.versions) }}</template>
+							<template v-else>{{ path.id }}: {{ formatPathVersions(path.versions) }}</template>
 						</v-list-item-subtitle>
 					</v-list-item-content>
 
