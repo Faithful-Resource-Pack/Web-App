@@ -7,7 +7,7 @@
 			<!-- only need dense for lg since the mobile layout is horizontal anyways -->
 			<v-row :dense="$vuetify.breakpoint.lg">
 				<v-col v-for="pack in packs" :key="pack" cols="12" sm="6">
-					<p class="title text-button text--secondary mb-0">
+					<p class="text-button mb-0">
 						{{ packToName[pack] }}
 					</p>
 					<v-data-table
