@@ -32,10 +32,12 @@ $dark-scroller-card: #272727;
 		scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar;
 	}
 
-	.main-container.theme--light * {
+	.theme--light .main-container,
+	.theme--light .main-container * {
 		scrollbar-color: $faithful-light-brand $light-scroller-card;
 	}
-	.main-container.theme--dark * {
+	.theme--dark .main-container,
+	.theme--dark .main-container * {
 		scrollbar-color: $faithful-dark-brand $dark-scroller-card;
 	}
 
@@ -96,12 +98,12 @@ $dark-scroller-card: #272727;
 		background: $dark-scroller-sidebar;
 	}
 
-	.main-container.theme--light::-webkit-scrollbar-track,
-	.main-container.theme--light *::-webkit-scrollbar-track {
+	.theme--light .main-container::-webkit-scrollbar-track,
+	.theme--light .main-container *::-webkit-scrollbar-track {
 		background: $light-scroller-card;
 	}
-	.main-container.theme--dark::-webkit-scrollbar-track,
-	.main-container.theme--dark *::-webkit-scrollbar-track {
+	.theme--dark .main-container::-webkit-scrollbar-track,
+	.theme--dark .main-container *::-webkit-scrollbar-track {
 		background: $dark-scroller-card;
 	}
 

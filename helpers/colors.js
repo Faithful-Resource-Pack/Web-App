@@ -32,6 +32,8 @@ export function generatePageStyles(pageColor) {
 	const darkBg = "#191919";
 	const lightFg = "#ffffff";
 	const darkFg = "#1e1e1e";
+	const lightCard = "#ffffff";
+	const darkCard = "#272727";
 
 	return `
 	<style>
@@ -54,12 +56,24 @@ export function generatePageStyles(pageColor) {
 			.theme--dark .v-menu__content {
 				scrollbar-color: ${hex} ${darkFg} !important;
 			}
+
+			.theme--light .main-container,
+			.theme--light .main-container * {
+				scrollbar-color: ${hex} ${lightCard} !important;
+			}
+
+			.theme--dark .main-container,
+			.theme--dark .main-container * {
+				scrollbar-color: ${hex} ${darkCard} !important;
+			}
 		}
 
 		@supports selector(::-webkit-scrollbar) {
 			/* separate selectors for the thumb/track so you only need to change the one property */
 			.v-main::-webkit-scrollbar-thumb,
 			.v-main *::-webkit-scrollbar-thumb,
+			.main-container::-webkit-scrollbar-thumb,
+			.main-container *::-webkit-scrollbar-thumb,
 			.colored::-webkit-scrollbar-thumb,
 			.colored *::-webkit-scrollbar-thumb,
 			.v-menu__content::-webkit-scrollbar-thumb {
