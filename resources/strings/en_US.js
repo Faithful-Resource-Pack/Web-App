@@ -135,6 +135,10 @@ export default {
 			add_account: "Add new account",
 			avatar_alt_text: "%s's avatar",
 		},
+		emitting_image: {
+			fullscreen: "Open in full screen",
+			delete: "Remove image",
+		}
 	},
 	missing_page: {
 		title: "Are you lost in The End?",

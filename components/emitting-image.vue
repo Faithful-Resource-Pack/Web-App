@@ -24,11 +24,18 @@
 				v-if="$listeners.fullscreen"
 				class="ma-1"
 				small
+				:title="$root.lang().global.emitting_image.fullscreen"
 				@click.stop="$emit('fullscreen', src)"
 			>
 				mdi-fullscreen
 			</v-icon>
-			<v-icon v-if="deletable" class="ma-1" small @click.stop="$emit('delete', src)">
+			<v-icon
+				v-if="deletable"
+				class="ma-1"
+				small
+				:title="$root.lang().global.emitting_image.delete"
+				@click.stop="$emit('delete', src)"
+			>
 				mdi-delete
 			</v-icon>
 		</v-card>
