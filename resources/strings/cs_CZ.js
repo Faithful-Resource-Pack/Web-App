@@ -162,7 +162,6 @@ export default {
 				authors: "Autor/Autoři",
 				description: "Popis",
 				links: "Odkazy",
-				options: "Možnosti",
 			},
 			labels: {
 				link: "Odkaz",

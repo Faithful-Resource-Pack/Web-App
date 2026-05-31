@@ -244,7 +244,6 @@ export default {
 				author_plural: "Autores",
 				description: "Descripción",
 				links: "Enlaces",
-				options: "Opciones",
 			},
 			labels: {
 				link: "Enlace",

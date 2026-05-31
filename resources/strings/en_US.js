@@ -476,7 +476,7 @@ export default {
 				author_plural: "Authors",
 				description: "Description",
 				links: "Links",
-				options: "Options",
+				compatibility: "Compatibility",
 			},
 			labels: {
 				link: "Link",

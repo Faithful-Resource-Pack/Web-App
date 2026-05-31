@@ -175,7 +175,6 @@ export default {
 				authors: "Auteur(s)",
 				description: "Description",
 				links: "Liens",
-				options: "Options",
 			},
 			labels: {
 				link: "Lien",

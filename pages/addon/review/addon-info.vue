@@ -17,11 +17,21 @@
 		</div>
 
 		<v-list-item-title class="uppercase">
-			{{ $root.lang().review.addon.titles.options }}
+			{{ $root.lang().review.addon.titles.compatibility }}
 		</v-list-item-title>
 		<div class="text--secondary mb-2">
-			<v-icon small>{{ optifineIcon }}</v-icon>
-			{{ $root.lang().review.addon.labels.optifine }}
+			<div>
+				<v-icon small>{{ checked(addonInPanel.options.tags.includes("Java")) }}</v-icon>
+				Java Edition
+			</div>
+			<div>
+				<v-icon small>{{ checked(addonInPanel.options.tags.includes("Bedrock")) }}</v-icon>
+				Bedrock Edition
+			</div>
+			<div>
+				<v-icon small>{{ checked(addonInPanel.options.optifine) }}</v-icon>
+				{{ $root.lang().review.addon.labels.optifine }}
+			</div>
 		</div>
 	</div>
 </template>
@@ -40,6 +50,11 @@ export default {
 			required: true,
 		},
 	},
+	methods: {
+		checked(option) {
+			return option ? "mdi-checkbox-marked-outline" : "mdi-checkbox-blank-outline";
+		},
+	},
 	computed: {
 		authorLabel() {
 			const key = this.addonInPanel.authors.length === 1 ? "author_singular" : "author_plural";
@@ -47,11 +62,6 @@ export default {
 		},
 		addonAuthors() {
 			return this.addonInPanel.authors.map((id) => this.getUsername(id)).join(", ");
-		},
-		optifineIcon() {
-			return this.addonInPanel.options.optifine
-				? "mdi-checkbox-marked-outline"
-				: "mdi-checkbox-blank-outline";
 		},
 	},
 };
