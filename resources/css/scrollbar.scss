@@ -10,6 +10,9 @@ $dark-scroller-fg: #1e1e1e;
 $light-scroller-sidebar: #ffffff;
 $dark-scroller-sidebar: #363636;
 
+$light-scroller-card: #ffffff;
+$dark-scroller-card: #272727;
+
 // taken from https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar#examples
 
 /* For browsers that support `scrollbar-*` properties */
@@ -19,6 +22,21 @@ $dark-scroller-sidebar: #363636;
 	}
 	.v-main.theme--dark * {
 		scrollbar-color: $faithful-dark-brand $dark-scroller-bg;
+	}
+
+	// match sidebar color
+	.v-navigation-drawer.theme--light * {
+		scrollbar-color: $faithful-light-brand $light-scroller-sidebar;
+	}
+	.v-navigation-drawer.theme--dark * {
+		scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar;
+	}
+
+	.main-container.theme--light * {
+		scrollbar-color: $faithful-light-brand $light-scroller-card;
+	}
+	.main-container.theme--dark * {
+		scrollbar-color: $faithful-dark-brand $dark-scroller-card;
 	}
 
 	// menus etc
@@ -31,14 +49,6 @@ $dark-scroller-sidebar: #363636;
 	.theme--dark .colored *,
 	.theme--dark .v-menu__content {
 		scrollbar-color: $faithful-dark-brand $dark-scroller-fg;
-	}
-
-	// match sidebar color
-	.v-navigation-drawer.theme--light * {
-		scrollbar-color: $faithful-light-brand $light-scroller-sidebar;
-	}
-	.v-navigation-drawer.theme--dark * {
-		scrollbar-color: $faithful-dark-brand $dark-scroller-sidebar;
 	}
 }
 
@@ -84,6 +94,15 @@ $dark-scroller-sidebar: #363636;
 	.v-navigation-drawer.theme--dark::-webkit-scrollbar-track,
 	.v-navigation-drawer.theme--dark *::-webkit-scrollbar-track {
 		background: $dark-scroller-sidebar;
+	}
+
+	.main-container.theme--light::-webkit-scrollbar-track,
+	.main-container.theme--light *::-webkit-scrollbar-track {
+		background: $light-scroller-card;
+	}
+	.main-container.theme--dark::-webkit-scrollbar-track,
+	.main-container.theme--dark *::-webkit-scrollbar-track {
+		background: $dark-scroller-card;
 	}
 
 	.theme--light .colored::-webkit-scrollbar-track,

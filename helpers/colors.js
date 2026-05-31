@@ -62,8 +62,7 @@ export function generatePageStyles(pageColor) {
 			.v-main *::-webkit-scrollbar-thumb,
 			.colored::-webkit-scrollbar-thumb,
 			.colored *::-webkit-scrollbar-thumb,
-			.v-menu__content::-webkit-scrollbar-thumb
-			{
+			.v-menu__content::-webkit-scrollbar-thumb {
 				background-color: ${hex} !important;
 			}
 		}
