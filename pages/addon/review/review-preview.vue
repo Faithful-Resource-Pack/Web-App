@@ -52,15 +52,7 @@ export default {
 	methods: {
 		getAddon(id) {
 			this.loading = true;
-
 			axios.get(`${this.$root.apiURL}/addons/${id}/all`, this.$root.apiOptions).then((res) => {
-				// void value if already here (closing tab)
-				if (this.addonInPanel.id === res.data.id) {
-					this.addonInPanel = {};
-					this.loading = true;
-					return;
-				}
-
 				this.addonInPanel = res.data;
 				this.loading = false;
 			});
