@@ -160,6 +160,9 @@ html.theme--light,
 
 a {
 	text-decoration: none;
+	&:not([class]):hover {
+		text-decoration: underline;
+	}
 }
 
 .noselect,
