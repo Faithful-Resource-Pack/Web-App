@@ -1,13 +1,13 @@
 <template>
-	<v-expansion-panels>
-		<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
+	<!-- vuetify 2 doesn't support using values and v-model so we have to do it manually -->
+	<v-expansion-panels v-model="selectedIndex" accordion>
 		<v-expansion-panel
 			v-for="addon in addons"
 			:key="addon.key"
-			:ref="addon.key"
+			:ref="`panel-${addon.key}`"
 			class="review-expansion-panel"
 			rounded
-			@click="getAddon(addon.key)"
+			@change="getAddon(addon.key)"
 		>
 			<v-expansion-panel-header expand-icon="mdi-menu-down">
 				<v-list-item class="flex-column align-start px-0" style="min-height: 0px">
@@ -15,82 +15,23 @@
 					<v-list-item-subtitle>{{ addon.secondary }}</v-list-item-subtitle>
 				</v-list-item>
 			</v-expansion-panel-header>
-
 			<v-expansion-panel-content>
-				<template v-if="addonInPanelLoading">
-					<v-skeleton-loader type="image" />
-					<!-- this is a bit lazy but you literally Cannot notice it on phone screens -->
-					<v-skeleton-loader type="paragraph@3" class="mt-2" />
-				</template>
-				<template v-else>
-					<emitting-image
-						:src="addonInPanelHeaderURL"
-						:aspect-ratio="16 / 9"
-						@fullscreen="openHeader"
-					/>
-
-					<!-- this positioning is a bit janky but there's not a great place for it -->
-					<v-list-item-title class="uppercase my-2">{{ date }}</v-list-item-title>
-
-					<addon-info :addonInPanel="addonInPanel" :getUsername="getUsername" />
-
-					<template v-if="addonSources.length > 0">
-						<v-list-item-title class="uppercase my-2">
-							{{ $root.lang().addons.images.title }}
-						</v-list-item-title>
-						<image-previewer :sources="addonSources" />
-					</template>
-
-					<v-list-item-title class="uppercase mt-2">
-						{{ $root.lang().review.addon.titles.description }}
-					</v-list-item-title>
-
-					<!-- eslint-disable-next-line vue/no-v-html -->
-					<div v-html="$root.compileMarkdown(addonInPanel.description)" />
-
-					<div v-if="status === 'approved'" class="mt-2">
-						<v-list-item-title class="uppercase my-2">
-							{{ $root.lang().review.addon.labels.approved_by.replace("%s", approvalAuthor) }}
-						</v-list-item-title>
-					</div>
-
-					<div v-if="status === 'denied' || status === 'archived'" class="my-2">
-						<v-list-item-title class="uppercase mt-2">
-							{{ $root.lang().review.addon.labels.denied_by.replace("%s", approvalAuthor) }}
-						</v-list-item-title>
-						<p class="text--secondary">{{ addon.approval.reason }}</p>
-					</div>
-
-					<div class="text-right mt-4">
-						<v-btn
-							v-show="status !== 'approved'"
-							text
-							color="green"
-							@click="$emit('reviewAddon', addonInPanel, 'approved')"
-						>
-							{{ $root.lang().global.btn.approve }}
-						</v-btn>
-						<v-btn
-							v-show="status !== 'denied'"
-							text
-							color="red"
-							@click="$emit('openDenyPopup', addonInPanel)"
-						>
-							{{ $root.lang().global.btn.deny }}
-						</v-btn>
-						<v-btn
-							v-show="status !== 'archived'"
-							text
-							color="gray"
-							@click="$emit('openDenyPopup', addonInPanel, 'archive')"
-						>
-							{{ $root.lang().global.btn.archive }}
-						</v-btn>
-						<v-btn text color="yellow" :to="`/addons/edit/${addonInPanel.id}`">
-							{{ $root.lang().global.btn.edit }}
-						</v-btn>
-					</div>
-				</template>
+				<v-divider class="my-4" />
+				<addon-panel
+					class="ma-n4"
+					:addon="addonInPanel"
+					:loading="loading"
+					:contributors="contributors"
+				/>
+				<v-divider class="my-4" />
+				<addon-status
+					class="ma-n4"
+					:addon="addonInPanel"
+					:loading="loading"
+					:contributors="contributors"
+					@reviewAddon="(...e) => $emit('reviewAddon', ...e)"
+					@openDenyPopup="(...e) => $emit('openDenyPopup', ...e)"
+				/>
 			</v-expansion-panel-content>
 		</v-expansion-panel>
 	</v-expansion-panels>
@@ -99,19 +40,14 @@
 <script>
 import axios from "axios";
 
-import EmittingImage from "@components/emitting-image.vue";
-import FullscreenPreview from "@components/fullscreen-preview.vue";
-
-import ImagePreviewer from "../image-previewer.vue";
-import AddonInfo from "./addon-info.vue";
+import AddonPanel from "./addon-panel.vue";
+import AddonStatus from "./addon-status.vue";
 
 export default {
 	name: "expansion-panels",
 	components: {
-		EmittingImage,
-		ImagePreviewer,
-		FullscreenPreview,
-		AddonInfo,
+		AddonPanel,
+		AddonStatus,
 	},
 	props: {
 		addons: {
@@ -126,11 +62,6 @@ export default {
 			type: String,
 			required: true,
 		},
-		color: {
-			type: String,
-			required: false,
-			default: "primary",
-		},
 		value: {
 			type: String,
 			required: false,
@@ -140,73 +71,44 @@ export default {
 	emits: ["reviewAddon", "openDenyPopup", "input"],
 	data() {
 		return {
-			previewOpen: false,
-			addonInPanelLoading: true,
 			addonInPanel: {},
-			addonURL: undefined,
-			addonInPanelHeaderURL: "",
+			selectedIndex: undefined,
+			loading: true,
 		};
 	},
 	methods: {
 		getAddon(id) {
-			this.addonInPanelLoading = true;
+			this.$nextTick(() => {
+				if (this.selectedIndex === undefined)
+					this.$router.push({ query: { ...this.$route.query, id: undefined } });
+			});
+
+			// prevent redundant navigation if opening with query param on mount
+			if (this.$route.query.id !== id) this.$router.push({ query: { ...this.$route.query, id } });
+
+			this.loading = true;
 			this.$emit("input", id);
 
-			// allSettled if no header res
-			Promise.allSettled([
-				axios.get(`${this.$root.apiURL}/addons/${id}/all`, this.$root.apiOptions),
-				axios.get(`${this.$root.apiURL}/addons/${id}/files/header`, this.$root.apiOptions),
-			]).then(([res, header_res]) => {
-				// void value if already here (closing tab)
-				if (this.addonInPanel.id === res.value.data.id) {
-					this.addonInPanel = {};
-					this.addonInPanelLoading = true;
-					return;
-				}
-
-				this.addonInPanel = res.value.data;
-				this.addonInPanelLoading = false;
-
-				if (header_res.value)
-					this.addonInPanelHeaderURL = `${header_res.value.data}?t=${Date.now()}`;
-				else this.addonInPanelHeaderURL = null;
+			axios.get(`${this.$root.apiURL}/addons/${id}/all`, this.$root.apiOptions).then((res) => {
+				this.addonInPanel = res.data;
+				this.loading = false;
+				this.$refs[`panel-${res.data.id}`][0].$el.scrollIntoView({
+					behavior: "smooth",
+					block: "center",
+				});
 			});
 		},
-		openHeader() {
-			this.previewOpen = true;
-		},
-		getUsername(id) {
-			if (id === null || id === undefined) return "Herobrine";
-			return this.contributors.find((c) => c.id === id)?.username || "Unknown User";
-		},
 	},
-	computed: {
-		addonSources() {
-			return (this.addonInPanel.files || [])
-				.filter((f) => f.use === "screenshot")
-				.map((f) => f.source);
+	watch: {
+		addons: {
+			handler(addons) {
+				if (this.$route.query.id === undefined) return;
+				this.selectedIndex = addons.findIndex((a) => a.key === this.$route.query.id);
+				this.getAddon(this.$route.query.id);
+			},
+			deep: true,
+			immediate: true,
 		},
-		approvalAuthor() {
-			return this.getUsername(this.addonInPanel.approval.author);
-		},
-		date() {
-			if (!this.addonInPanel.last_updated)
-				return this.$root.lang().review.addon.titles.unknown_date;
-
-			const formatted = this.$root.formatDate(this.addonInPanel.last_updated);
-			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
-		},
-	},
-	mounted() {
-		const foundAddon = this.addons.find((a) => a.id === this.value);
-
-		if (foundAddon) {
-			const refs = this.$refs[this.value];
-			if (refs === undefined) return;
-
-			const ref = refs[0];
-			ref.$children[0].$el.click();
-		}
 	},
 };
 </script>

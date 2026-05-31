@@ -359,12 +359,10 @@ export default {
 		addon: {
 			titles: {
 				author_singular: "Autor",
-				author_plural: "Autor(es)",
+				author_plural: "Autores",
 				description: "Descrição",
-				links: "Links",
 			},
 			labels: {
-				link: "Link",
 				optifine: "OptiFine",
 				approved_by: "Aprovado por %s",
 				denied_by: "Negado por %s",

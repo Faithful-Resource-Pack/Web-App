@@ -159,13 +159,11 @@ export default {
 		},
 		addon: {
 			titles: {
-				authors: "Autor/Autoři",
+				author_singular: "Autor",
+				author_plural: "Autoři",
 				description: "Popis",
-				links: "Odkazy",
 			},
 			labels: {
-				link: "Odkaz",
-				optifine: "OptiFine",
 				approved_by: "Schváleno administrátorem %s",
 				denied_by: "Zamítnuto administrátorem %s",
 				reason: "Důvod",

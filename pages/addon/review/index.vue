@@ -6,12 +6,7 @@
 			{{ $root.lang().review.titles.addons }}
 		</div>
 
-		<deny-popup
-			v-model="showDenyPopup"
-			:archive="archive"
-			:color="pageColor"
-			@close="closeDenyPopup"
-		/>
+		<deny-popup v-model="showModal" :archive="archive" :color="pageColor" @close="closeDenyPopup" />
 
 		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
 
@@ -19,10 +14,11 @@
 		<div class="review-content-container my-2">
 			<!-- empty layout is shared across both mobile and desktop -->
 			<v-card v-if="selectedListItems.length === 0" class="main-container text-center">
-				<ascii-error :subtitle="$root.lang().review.labels[status]" />
+				<loading-page v-if="loading" />
+				<ascii-error v-else :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
 			<!-- desktop layout -->
-			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="review-content ga-2">
+			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="d-flex ga-2">
 				<review-list
 					v-model="selectedAddonId"
 					:items="selectedListItems"
@@ -30,30 +26,21 @@
 				/>
 				<review-preview
 					:addonId="selectedAddonId"
-					:colors="colors"
 					:status="status"
+					:contributors="contributors"
 					@reviewAddon="reviewAddon"
 					@openDenyPopup="openDenyPopup"
 				/>
 			</div>
-			<template v-else>
-				<expansion-panels
-					v-if="selectedListItems.length > 0"
-					v-model="selectedAddonId"
-					:addons="selectedListItems"
-					:color="pageColor"
-					:contributors="contributors"
-					:status="status"
-					@reviewAddon="reviewAddon"
-					@openDenyPopup="openDenyPopup"
-				/>
-				<v-container v-else-if="loading[status]">
-					{{ $root.lang().global.loading }}
-				</v-container>
-				<v-container v-else>
-					{{ $root.lang().review.labels[status] }}
-				</v-container>
-			</template>
+			<expansion-panels
+				v-else
+				v-model="selectedAddonId"
+				:addons="selectedListItems"
+				:status="status"
+				:contributors="contributors"
+				@reviewAddon="reviewAddon"
+				@openDenyPopup="openDenyPopup"
+			/>
 		</div>
 	</v-container>
 </template>
@@ -62,6 +49,7 @@
 import axios from "axios";
 
 import AsciiError from "@components/ascii-error.vue";
+import LoadingPage from "@layouts/loading-page.vue";
 import ExpansionPanels from "./expansion-panels.vue";
 import DenyPopup from "./deny-popup.vue";
 import ReviewCategories from "./review-categories.vue";
@@ -99,9 +87,10 @@ const searchMixin = {
 };
 
 export default {
-	name: "review-addons-page",
+	name: "addon-review-page",
 	components: {
 		AsciiError,
+		LoadingPage,
 		ExpansionPanels,
 		DenyPopup,
 		ReviewCategories,
@@ -126,52 +115,44 @@ export default {
 				denied: [],
 				archived: [],
 			},
-			loading: {
-				pending: true,
-				denied: true,
-				approved: true,
-				archived: true,
-			},
+			loading: true,
 			contributors: [],
 			packs: {},
-			showDenyPopup: false,
-			denyAddon: {},
+			showModal: false,
+			modalId: {},
 			archive: false,
 			status: "pending",
 			selectedAddonId: undefined,
 		};
 	},
 	methods: {
-		reviewAddon(addon, status, reason = null) {
+		reviewAddon(addon, status = "approved", reason = null) {
 			const id = typeof addon === "object" ? addon.id : addon;
 			if (!this.$root.isLoggedIn) return;
 
-			const data = {
-				status: status,
-				reason: reason,
-			};
-
+			const data = { status, reason };
 			this.$root
 				.wrapSnackBar(
 					axios.put(`${this.$root.apiURL}/addons/${id}/review`, data, this.$root.apiOptions),
 				)
 				.then(() => {
-					this.selectedAddonId = undefined;
+					this.loading = true;
+					// focused addon is no longer in the same status list so remove the param and reload
+					this.searchDelete("id");
 					this.getAddons();
 				});
 		},
-		closeDenyPopup(send = false, reason) {
-			if (send) this.reviewAddon(this.denyAddon, this.archive ? "archived" : "denied", reason);
-		},
 		openDenyPopup(addon, archive = false) {
 			this.archive = !!archive;
-			this.showDenyPopup = true;
-			this.denyAddon = addon;
+			this.showModal = true;
+			this.modalId = addon;
 		},
-		// adds results to this.addons, doesn't actually return it
-		async fetchAddonsByStatus(status) {
-			const res = await axios.get(`${this.$root.apiURL}/addons/${status}`, this.$root.apiOptions);
-			this.addons[status] = res.data.sort((a, b) => {
+		closeDenyPopup(success = false, reason) {
+			if (success) this.reviewAddon(this.modalId, this.archive ? "archived" : "denied", reason);
+		},
+		async getAddons() {
+			const res = await axios.get(`${this.$root.apiURL}/addons/raw`, this.$root.apiOptions);
+			const addons = Object.values(res.data).sort((a, b) => {
 				if (a.last_updated && b.last_updated) return b.last_updated - a.last_updated;
 
 				// if there's An Update Date it's automatically newer
@@ -182,10 +163,11 @@ export default {
 				return b.id - a.id;
 			});
 
-			this.$set(this.loading, status, false);
+			for (const status of Object.keys(this.addons))
+				this.addons[status] = addons.filter((f) => f.approval.status === status);
 
-			// set selection as soon as available
-			if (this.status === status) this.updateSearch();
+			this.loading = false;
+			this.updateSearch();
 		},
 		getContributors() {
 			axios.get(`${this.$root.apiURL}/users/names`).then((res) => {
@@ -195,18 +177,6 @@ export default {
 		getPacks() {
 			axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
 				this.packs = res.data;
-			});
-		},
-		getAddons() {
-			Promise.all([
-				this.getContributors(),
-				this.getPacks(),
-				...["pending", "approved", "denied", "archived"].map((status) =>
-					this.fetchAddonsByStatus(status),
-				),
-			]).catch((err) => {
-				console.error(err);
-				this.$root.showSnackBar(err, "error");
 			});
 		},
 		updateSearch() {
@@ -270,26 +240,22 @@ export default {
 		this.updateSearch();
 	},
 	mounted() {
-		this.getAddons();
 		this.pageStyles = generatePageStyles(this.pageColor);
+
+		Promise.all([this.getContributors(), this.getPacks(), this.getAddons()]).catch((err) => {
+			console.error(err);
+			this.$root.showSnackBar(err, "error");
+		});
 	},
 };
 </script>
 
 <style lang="scss">
-$list-width: 40%;
-$preview-width: 60%;
+$list-width: calc(100% * 1 / 3);
+$preview-width: calc(100% * 2 / 3);
 
-/** NEW REVIEW LAYOUT */
 .review-content-container {
 	height: 70vh;
-}
-
-.review-content {
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-items: stretch;
 }
 
 // make sure all children take up the same space

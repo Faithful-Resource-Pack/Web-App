@@ -138,7 +138,7 @@ export default {
 		emitting_image: {
 			fullscreen: "Open in full screen",
 			delete: "Remove image",
-		}
+		},
 	},
 	missing_page: {
 		title: "Are you lost in The End?",
@@ -476,15 +476,15 @@ export default {
 			titles: {
 				last_updated: "Last updated %s",
 				unknown_date: "Last add-on update unknown",
+				compatibility: "Compatibility",
 				author_singular: "Author",
 				author_plural: "Authors",
 				description: "Description",
-				links: "Links",
-				compatibility: "Compatibility",
+				download_singular: "Download",
+				download_plural: "Downloads",
 			},
 			labels: {
-				link: "Link",
-				optifine: "OptiFine",
+				optifine: "Requires OptiFine",
 				approved_by: "Approved by %s",
 				denied_by: "Denied by %s",
 				reason: "Reason",

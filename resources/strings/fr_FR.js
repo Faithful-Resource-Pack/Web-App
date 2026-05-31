@@ -174,11 +174,8 @@ export default {
 			titles: {
 				authors: "Auteur(s)",
 				description: "Description",
-				links: "Liens",
 			},
 			labels: {
-				link: "Lien",
-				optifine: "OptiFine",
 				approved_by: "Approuvé par %s",
 				denied_by: "Refusé par %s",
 				reason: "Raison",

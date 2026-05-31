@@ -473,3 +473,19 @@ a:hover .database-list-avatar {
 .transparent-tabs .v-tabs-items {
 	background-color: transparent !important;
 }
+
+// for some reason it's really small by default (looks bad with paragraph text)
+.v-card__text {
+	line-height: unset;
+}
+
+// review users
+.v-skeleton-loader__list-item-avatar {
+	background: transparent !important;
+	padding: 0 !important;
+}
+
+// working block buttons (why isn't this a thing)
+.block .v-skeleton-loader__button {
+	width: auto;
+}

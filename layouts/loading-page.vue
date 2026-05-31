@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex flex-column align-center justify-center flex-grow-1 my-5" style="height: 100%">
+	<div class="d-flex flex-column align-center justify-center flex-grow-1 py-5" style="height: 100%">
 		<slot name="logo">
 			<v-progress-circular :size="150" :width="10" indeterminate />
 		</slot>

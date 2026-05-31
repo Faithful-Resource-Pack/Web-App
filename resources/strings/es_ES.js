@@ -243,11 +243,8 @@ export default {
 				author_singular: "Autor",
 				author_plural: "Autores",
 				description: "Descripción",
-				links: "Enlaces",
 			},
 			labels: {
-				link: "Enlace",
-				optifine: "OptiFine",
 				approved_by: "Aprobado por %s",
 				denied_by: "Denegado por %s",
 				reason: "Motivo",
