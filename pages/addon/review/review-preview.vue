@@ -1,18 +1,15 @@
 <template>
 	<div class="review-preview d-flex flex-column">
-		<v-card
-			style="height: 100%"
-			class="main-container pa-2 flex-grow-1 overflow-y-auto overflow-x-hidden"
-		>
+		<v-card class="main-container flex-grow-1 overflow-y-auto overflow-x-hidden">
 			<fullscreen-preview v-model="previewOpen" :src="addonInPanelHeaderURL" />
-			<template v-if="addonInPanelLoading">
-				<v-skeleton-loader type="heading" />
-				<v-skeleton-loader type="text" class="mt-2" style="width: 30%" />
+			<v-card-text v-if="addonInPanelLoading">
+				<v-skeleton-loader type="heading" class="my-1" />
+				<v-skeleton-loader type="text" class="my-4" style="width: 30%" />
 				<v-row>
-					<v-col cols="12" sm="7">
+					<v-col cols="12" sm="8">
 						<v-skeleton-loader type="image" />
 					</v-col>
-					<v-col cols="12" sm="5">
+					<v-col cols="12" sm="4">
 						<v-skeleton-loader
 							v-for="i in 3"
 							:key="i"
@@ -23,59 +20,59 @@
 					</v-col>
 				</v-row>
 				<v-skeleton-loader type="paragraph" class="mt-4" />
-			</template>
+			</v-card-text>
 			<template v-else>
-				<div class="pb-2 d-flex align-center">
-					<div>
-						<h2 class="h6" style="line-height: 24px">
-							<a
-								v-if="addonInPanel.approval.status === 'approved'"
-								class="text--primary hover-underline"
-								:href="`https://faithfulpack.net/addons/${addonInPanel.slug}`"
-								target="blank"
-								rel="noopener noreferrer"
-							>
-								{{ addonInPanel.name }}
-							</a>
-							<span v-else>
-								{{ addonInPanel.name }}
-							</span>
-							<span class="text--secondary font-weight-regular">{{ `#${addonInPanel.id}` }}</span>
-						</h2>
-						<div class="text--secondary subtitle-2 mt-1" style="line-height: 14px">
-							{{ date }}
-						</div>
-					</div>
-					<v-btn icon class="ml-auto" :to="`/addons/edit/${addonInPanel.id}`">
+				<v-card-title>
+					<span class="text-h5">
+						<a
+							v-if="addonInPanel.approval.status === 'approved'"
+							class="text--primary hover-underline"
+							:href="`https://faithfulpack.net/addons/${addonInPanel.slug}`"
+							target="blank"
+							rel="noopener noreferrer"
+						>
+							{{ addonInPanel.name }}
+						</a>
+						<span v-else>
+							{{ addonInPanel.name }}
+						</span>
+						<span class="text--secondary font-weight-light">{{ `#${addonInPanel.id}` }}</span>
+					</span>
+					<v-spacer />
+					<v-btn icon :to="`/addons/edit/${addonInPanel.id}`">
 						<v-icon>mdi-pencil</v-icon>
 					</v-btn>
-				</div>
-				<v-row>
-					<v-col cols="12" sm="7">
-						<emitting-image
-							:src="addonInPanelHeaderURL"
-							:aspect-ratio="16 / 9"
-							@fullscreen="openHeader"
-						/>
-					</v-col>
-					<v-col cols="12" sm="5">
-						<addon-info :addonInPanel="addonInPanel" :getUsername="getUsername" />
-					</v-col>
-				</v-row>
+				</v-card-title>
+				<v-card-subtitle>{{ date }}</v-card-subtitle>
+				<!-- v-card-text themes the colors for some reason -->
+				<div class="px-4">
+					<v-row>
+						<v-col cols="12" sm="8">
+							<emitting-image
+								:src="addonInPanelHeaderURL"
+								:aspect-ratio="16 / 9"
+								@fullscreen="openHeader"
+							/>
+						</v-col>
+						<v-col cols="12" sm="4">
+							<addon-info :addonInPanel="addonInPanel" :getUsername="getUsername" />
+						</v-col>
+					</v-row>
 
-				<template v-if="addonSources.length > 0">
-					<v-list-item-title class="uppercase my-2">
-						{{ $root.lang().addons.images.title }}
+					<template v-if="addonSources.length > 0">
+						<v-list-item-title class="uppercase mt-3 mb-2">
+							{{ $root.lang().addons.images.title }}
+						</v-list-item-title>
+						<image-previewer :sources="addonSources" />
+					</template>
+
+					<v-list-item-title class="uppercase mt-4">
+						{{ $root.lang().review.addon.titles.description }}
 					</v-list-item-title>
-					<image-previewer :sources="addonSources" />
-				</template>
 
-				<v-list-item-title class="uppercase pt-4">
-					{{ $root.lang().review.addon.titles.description }}
-				</v-list-item-title>
-
-				<!-- eslint-disable-next-line vue/no-v-html -->
-				<div v-html="$root.compileMarkdown(addonInPanel.description)" />
+					<!-- eslint-disable-next-line vue/no-v-html -->
+					<div v-html="$root.compileMarkdown(addonInPanel.description)" />
+				</div>
 			</template>
 		</v-card>
 		<v-card
@@ -87,7 +84,7 @@
 			</v-list-item-title>
 			<div>{{ addonInPanel.approval.reason }}</div>
 		</v-card>
-		<v-card v-if="addonInPanelLoading" class="main-container mt-2 pa-2">
+		<v-card v-if="addonInPanelLoading" class="main-container mt-2 px-4 py-2">
 			<div class="d-flex align-center ga-4">
 				<div class="flex-grow-1 mr-auto">
 					<v-skeleton-loader type="heading" />
@@ -95,7 +92,7 @@
 				<v-skeleton-loader v-for="i in 3" :key="i" type="button" />
 			</div>
 		</v-card>
-		<v-card v-else class="main-container mt-2 pa-2">
+		<v-card v-else class="main-container mt-2 px-4 py-2">
 			<div class="d-flex align-center">
 				<div class="mr-auto">
 					<div v-if="status === 'approved'">
