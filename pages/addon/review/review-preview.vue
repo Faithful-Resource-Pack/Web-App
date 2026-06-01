@@ -1,13 +1,13 @@
 <template>
 	<div class="review-preview d-flex flex-column">
 		<v-card class="main-container flex-grow-1 overflow-y-auto overflow-x-hidden">
-			<addon-panel :addon="addonInPanel" :loading="loading" :contributors="contributors" />
+			<addon-panel :addon="addonInPanel" :loading="loading" :authors="authors" />
 		</v-card>
 		<v-card class="main-container mt-2">
 			<addon-status
 				:addon="addonInPanel"
 				:loading="loading"
-				:contributors="contributors"
+				:authors="authors"
 				@reviewAddon="(...e) => $emit('reviewAddon', ...e)"
 				@openDenyPopup="(...e) => $emit('openDenyPopup', ...e)"
 			/>
@@ -33,7 +33,7 @@ export default {
 			required: false,
 			default: undefined,
 		},
-		contributors: {
+		authors: {
 			type: Array,
 			required: true,
 		},

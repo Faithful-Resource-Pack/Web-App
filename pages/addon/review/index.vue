@@ -27,7 +27,7 @@
 				<review-preview
 					:addonId="selectedAddonId"
 					:status="status"
-					:contributors="contributors"
+					:authors="authors"
 					@reviewAddon="reviewAddon"
 					@openDenyPopup="openDenyPopup"
 				/>
@@ -37,7 +37,7 @@
 				v-model="selectedAddonId"
 				:addons="selectedListItems"
 				:status="status"
-				:contributors="contributors"
+				:authors="authors"
 				@reviewAddon="reviewAddon"
 				@openDenyPopup="openDenyPopup"
 			/>
@@ -116,7 +116,7 @@ export default {
 				archived: [],
 			},
 			loading: true,
-			contributors: [],
+			authors: [],
 			packs: {},
 			showModal: false,
 			modalId: {},
@@ -169,9 +169,9 @@ export default {
 			this.loading = false;
 			this.updateSearch();
 		},
-		getContributors() {
+		getAuthors() {
 			axios.get(`${this.$root.apiURL}/users/names`).then((res) => {
-				this.contributors = res.data;
+				this.authors = res.data;
 			});
 		},
 		getPacks() {
@@ -242,7 +242,7 @@ export default {
 	mounted() {
 		this.pageStyles = generatePageStyles(this.pageColor);
 
-		Promise.all([this.getContributors(), this.getPacks(), this.getAddons()]).catch((err) => {
+		Promise.all([this.getAuthors(), this.getPacks(), this.getAddons()]).catch((err) => {
 			console.error(err);
 			this.$root.showSnackBar(err, "error");
 		});

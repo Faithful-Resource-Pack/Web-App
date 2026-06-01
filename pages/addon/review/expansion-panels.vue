@@ -17,18 +17,13 @@
 			</v-expansion-panel-header>
 			<v-expansion-panel-content>
 				<v-divider class="my-4" />
-				<addon-panel
-					class="ma-n4"
-					:addon="addonInPanel"
-					:loading="loading"
-					:contributors="contributors"
-				/>
+				<addon-panel class="ma-n4" :addon="addonInPanel" :loading="loading" :authors="authors" />
 				<v-divider class="my-4" />
 				<addon-status
 					class="ma-n4"
 					:addon="addonInPanel"
 					:loading="loading"
-					:contributors="contributors"
+					:authors="authors"
 					@reviewAddon="(...e) => $emit('reviewAddon', ...e)"
 					@openDenyPopup="(...e) => $emit('openDenyPopup', ...e)"
 				/>
@@ -54,7 +49,7 @@ export default {
 			type: Array,
 			required: true,
 		},
-		contributors: {
+		authors: {
 			type: Array,
 			required: true,
 		},

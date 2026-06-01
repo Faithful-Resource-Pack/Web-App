@@ -67,7 +67,9 @@
 						</div>
 
 						<span class="uppercase-unsized text--primary mt-4">{{ authorTitle }}</span>
-						<v-list class="mx-n2 pa-0" style="background: transparent" nav>
+
+						<!-- smaller than regular list so requires extra styling-->
+						<v-list nav class="mx-n2 pa-0" style="background: transparent">
 							<v-list-item
 								v-for="author in addonAuthors"
 								:key="author.id"
@@ -156,7 +158,7 @@ export default {
 			required: false,
 			default: false,
 		},
-		contributors: {
+		authors: {
 			type: Array,
 			required: false,
 			default: () => [],
@@ -186,11 +188,6 @@ export default {
 		downloads() {
 			return this.addon.files?.filter((f) => f.use === "download");
 		},
-		approvalAuthor() {
-			const id = this.addon.approval?.author;
-			if (id === null || id === undefined) return "Herobrine";
-			return this.contributors.find((c) => c.id === id)?.username || "Unknown User";
-		},
 		date() {
 			if (!this.addon.last_updated) return this.$root.lang().review.addon.titles.unknown_date;
 			const formatted = this.$root.formatDate(this.addon.last_updated);
@@ -205,7 +202,7 @@ export default {
 			return this.$root.lang().review.addon.titles[key];
 		},
 		addonAuthors() {
-			return this.addon.authors.map((id) => this.contributors.find((c) => c.id === id));
+			return this.addon.authors.map((id) => this.authors.find((c) => c.id === id));
 		},
 	},
 };

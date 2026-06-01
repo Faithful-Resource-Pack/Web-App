@@ -71,7 +71,7 @@ export default {
 			required: false,
 			default: false,
 		},
-		contributors: {
+		authors: {
 			type: Array,
 			required: true,
 		},
@@ -84,11 +84,8 @@ export default {
 		reason() {
 			return this.addon.approval.reason;
 		},
-		author() {
-			return this.addon.approval.author;
-		},
 		username() {
-			return this.contributors.find((c) => c.id === this.author)?.username || id;
+			return this.authors.find((c) => c.id === this.addon.approval.author)?.username || id;
 		},
 	},
 };
