@@ -16,11 +16,9 @@
 					</v-list-item-avatar>
 				</a>
 				<v-list-item-content>
-					<v-list-item-title>
-						{{ `[#${data.texture}] ${data.name} • ${$root.formatDate(data.date)}` }}
-					</v-list-item-title>
+					<v-list-item-title>[#{{ data.texture }}] {{ data.name }}</v-list-item-title>
 					<v-list-item-subtitle>
-						{{ packToName[data.pack]?.label || data.pack }}
+						{{ packs[data.pack]?.name || data.pack }} • {{ $root.formatDate(data.date) }}
 					</v-list-item-subtitle>
 				</v-list-item-content>
 			</v-list-item>
@@ -74,7 +72,7 @@ export default {
 			// when initially loaded it has no value
 			default: () => ({}),
 		},
-		packToName: {
+		packs: {
 			type: Object,
 			required: true,
 		},

@@ -41,7 +41,7 @@
 							:key="contrib.key"
 							:contrib="contrib"
 							:selected="selectedContrib === i"
-							:packToName="packToName"
+							:packs="packs"
 							:contributors="allContributors"
 							@clone="cloneContribution(contrib)"
 							@delete="deleteContrib(i)"
@@ -104,7 +104,7 @@ export default {
 			required: true,
 		},
 		packs: {
-			type: Array,
+			type: Object,
 			required: true,
 		},
 		contributors: {
@@ -231,12 +231,6 @@ export default {
 		},
 		allContributors() {
 			return [...this.contributors, ...this.searchedContributors];
-		},
-		packToName() {
-			return this.packs.reduce((acc, cur) => {
-				acc[cur.id] = cur.name;
-				return acc;
-			}, {});
 		},
 		isValid() {
 			return this.contribs.every(

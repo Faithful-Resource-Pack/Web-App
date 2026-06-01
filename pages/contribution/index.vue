@@ -11,7 +11,7 @@
 		<contribution-remove-confirm
 			v-model="remove.open"
 			:data="remove.data"
-			:packToName="selectedPacks"
+			:packs="packs"
 			:contributors="contributors"
 			@close="closeDeleteModal"
 		/>
@@ -98,34 +98,22 @@
 			{{ $root.lang().database.contributions.contribution_result }} ({{ contributions.length }})
 		</div>
 
-		<smart-grid :loading="loading" :items="contributions" track="id">
+		<smart-grid :loading="loading" :items="contributions" wide track="id">
 			<template #default="{ item }">
 				<v-list-item-avatar tile class="database-list-sprite">
 					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
-						<v-img class="texture-img" :src="item.url" :lazy-src="logos[item.pack]" />
+						<v-img class="texture-img" :src="item.url" :lazy-src="packs[item.pack]?.logo" />
 					</a>
 				</v-list-item-avatar>
 
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ `${item.name || "Unknown texture"} • ${$root.formatDate(item.date)}` }}
+						[#{{ item.texture }}] {{ textures[item.texture]?.name }}
 					</v-list-item-title>
 					<v-list-item-subtitle>
-						{{
-							(item.authors || [])
-								.map((id) => contributors.find((c) => c.id === id)?.username || id)
-								.join(", ")
-						}}
+						{{ packs[item.pack]?.name || item.pack }} • {{ $root.formatDate(item.date) }}
 					</v-list-item-subtitle>
-
-					<div>
-						<v-chip label x-small class="mr-1"> {{ packToCode[item.pack] }} </v-chip>
-						<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
-							<v-chip style="cursor: pointer" label x-small class="mr-1">
-								#{{ item.texture }} <span class="mdi mdi-open-in-new ml-1" />
-							</v-chip>
-						</a>
-					</div>
+					<author-chips :contribution="item" :contributors="contributors" @set="setAuthor" />
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
@@ -156,6 +144,7 @@ import ContributionModal from "./contribution-modal.vue";
 import ContributionRemoveConfirm from "./contribution-remove-confirm.vue";
 import UserSelect from "@components/user-select.vue";
 import SmartGrid from "@layouts/smart-grid.vue";
+import AuthorChips from "./author-chips.vue";
 
 const ALL_PACK_KEY = "all";
 
@@ -163,8 +152,9 @@ export default {
 	name: "contribution-page",
 	components: {
 		SmartGrid,
-		ContributionModal,
 		UserSelect,
+		AuthorChips,
+		ContributionModal,
 		ContributionRemoveConfirm,
 	},
 	data() {
@@ -180,9 +170,8 @@ export default {
 			},
 			contributors: [],
 			selectedContributors: [],
-			packs: [],
-			packToCode: {},
-			logos: {},
+			packs: {},
+			textures: {},
 			loading: false,
 			search: "",
 			contributions: [],
@@ -218,6 +207,10 @@ export default {
 		closeDeleteModal(refresh = false) {
 			if (refresh) this.startSearch();
 		},
+		setAuthor(id) {
+			this.selectedContributors = [id];
+			this.$nextTick(() => this.startSearch());
+		},
 		onPackChange(key, isSelected) {
 			if (!isSelected) {
 				// do nothing, at least one is selected
@@ -245,7 +238,7 @@ export default {
 			// other pack
 			this.$set(this.selectedPacks[ALL_PACK_KEY], "selected", false);
 		},
-		startSearch() {
+		async startSearch() {
 			let newPath = this.$route.params.name
 				? this.$route.path.split("/").slice(0, -1).join("/")
 				: this.$route.path;
@@ -257,41 +250,34 @@ export default {
 			if (newPath !== this.$route.path) this.$router.push(newPath);
 
 			this.loading = true;
-
-			Promise.all([axios.get(this.searchURL), axios.get(`${this.$root.apiURL}/textures/raw`)])
-				.then(([contributions, textures]) => {
-					this.contributions = Object.values(contributions.data)
-						.sort((a, b) => b.date - a.date)
-						.map((c) => ({
-							...c,
-							url: `${this.$root.apiURL}/textures/${c.texture}/url/${c.pack}/latest`,
-							name: textures.data[c.texture]?.name || "",
-						}));
-				})
-				.finally(() => {
-					this.loading = false;
-				})
-				.catch((err) => this.$root.showSnackBar(err, "error"));
+			try {
+				const res = await axios.get(this.searchURL);
+				this.contributions = Object.values(res.data)
+					.sort((a, b) => b.date - a.date)
+					// store url on contribution itself (cleaner)
+					.map((c) => {
+						c.url = `${this.$root.apiURL}/textures/${c.texture}/url/${c.pack}/latest`;
+						return c;
+					});
+			} catch (err) {
+				this.$root.showSnackBar(err, "error");
+			} finally {
+				this.loading = false;
+			}
 		},
 		async getPacks() {
-			this.packs = (await axios.get(`${this.$root.apiURL}/packs/search?type=submission`)).data;
-			for (const pack of Object.values(this.packs)) {
-				this.selectedPacks[pack.id] = {
-					key: pack.id,
-					label: pack.name,
+			this.packs = (
+				await axios.get(`${this.$root.apiURL}/packs/search?type=submission`)
+			).data.reduce((acc, cur) => {
+				// handle both at once
+				acc[cur.id] = cur;
+				this.selectedPacks[cur.id] = {
+					key: cur.id,
+					label: cur.name,
 					selected: false,
 				};
-				this.$set(this.logos, pack.id, pack.logo);
-				this.$set(
-					this.packToCode,
-					pack.id,
-					pack.name
-						.split(" ")
-						// Classic Faithful 32x Jappa -> CF32J
-						.map((el) => (isNaN(Number(el[0])) ? el[0].toUpperCase() : el.match(/\d+/g)?.[0]))
-						.join(""),
-				);
-			}
+				return acc;
+			}, {});
 		},
 		async getAuthors() {
 			const authors = (await axios.get(`${this.$root.apiURL}/contributions/authors`)).data;
@@ -308,6 +294,9 @@ export default {
 						: 0;
 			});
 		},
+		async getTextures() {
+			this.textures = (await axios.get(`${this.$root.apiURL}/textures/raw`)).data;
+		},
 	},
 	computed: {
 		selectedPackKeys() {
@@ -322,6 +311,7 @@ export default {
 		},
 	},
 	created() {
+		this.getTextures();
 		this.getPacks();
 		this.getAuthors();
 		this.search = this.$route.params.name || "";

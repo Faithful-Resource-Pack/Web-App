@@ -99,7 +99,7 @@ export default {
 			default: false,
 		},
 		packs: {
-			type: Array,
+			type: Object,
 			required: true,
 		},
 		contributors: {
@@ -125,7 +125,7 @@ export default {
 	},
 	computed: {
 		packList() {
-			return this.packs.map((p) => ({
+			return Object.values(this.packs).map((p) => ({
 				label: p.name,
 				value: p.id,
 			}));

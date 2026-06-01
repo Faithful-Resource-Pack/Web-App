@@ -41,7 +41,7 @@ export default {
 			required: false,
 			default: false,
 		},
-		packToName: {
+		packs: {
 			type: Object,
 			required: true,
 		},
@@ -59,7 +59,7 @@ export default {
 	},
 	computed: {
 		title() {
-			const pack = this.packToName[this.contrib.pack] || this.contrib.pack;
+			const pack = this.packs[this.contrib.pack].name || this.contrib.pack;
 			return `${pack} • ${this.$root.formatDate(this.contrib.date)}`;
 		},
 		subtitle() {

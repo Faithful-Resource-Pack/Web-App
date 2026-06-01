@@ -185,7 +185,7 @@ export default {
 			}, SEARCH_DELAY);
 		},
 		loadedUsers: {
-			handler(n) {
+			handler() {
 				this.$emit("newUser", this.userList);
 			},
 			deep: true,
