@@ -12,7 +12,8 @@
 		<div class="d-flex justify-space-between" :class="json ? 'align-start' : 'align-center'">
 			<div>
 				<h3 class="snackbar-title">{{ split.message }}</h3>
-				<p v-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
+				<pre v-if="split.submessage && split.pre" class="mt-2 mb-0">{{ split.submessage }}</pre>
+				<p v-else-if="split.submessage" class="mt-2 mb-0">{{ split.submessage }}</p>
 			</div>
 			<!-- this is such a stupid workaround for showing it only on errors -->
 			<div v-if="snackbar.color === 'error'" class="d-flex flex-nowrap ml-5">
@@ -107,9 +108,25 @@ export default {
 				};
 			}
 
+			// couldn't parse response, show which endpoint failed at least
+			if (message.config) {
+				return {
+					message: extractedMessage,
+					submessage: `${message.config.method.toUpperCase()} ${message.config.url}`,
+				};
+			}
+
+			if (message.stack) {
+				return {
+					message: extractedMessage,
+					submessage: message.stack,
+					pre: true,
+				};
+			}
+
 			return {
 				message: extractedMessage,
-				submessage: `${message.config.method.toUpperCase()} ${message.config.url}`,
+				submessage,
 			};
 		},
 		json() {
