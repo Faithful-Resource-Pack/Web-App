@@ -40,7 +40,7 @@
 			{{ $root.lang().database.versions.version_result }} ({{ grouped.length }})
 		</div>
 
-		<smart-grid :loading="!Object.keys(paths).length" :items="grouped" wide track="version">
+		<smart-grid :loading="!Object.keys(paths).length" :items="grouped" track="version">
 			<template #default="{ item }">
 				<a
 					:href="`/gallery/${item.edition}/default/${item.version}/all`"
@@ -54,9 +54,14 @@
 
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ item.version }} • {{ item.edition.toTitleCase() }}&nbsp;Edition
+						{{ item.version }}
 					</v-list-item-title>
-					<v-list-item-subtitle>{{ pathCount(item.paths) }}</v-list-item-subtitle>
+					<v-list-item-subtitle>
+						{{ item.edition.toTitleCase() }}&nbsp;Edition
+					</v-list-item-subtitle>
+					<v-list-item-subtitle>
+						{{ pathCount(item.paths) }}
+					</v-list-item-subtitle>
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
