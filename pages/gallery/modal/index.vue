@@ -143,7 +143,7 @@ export default {
 		},
 		subtitle() {
 			if (this.error || this.loading) return "";
-			return this.textureObj.texture.tags.join(" • ");
+			return this.textureObj.texture.tags.join(", ");
 		},
 		isIgnored() {
 			if (this.loading) return false;
