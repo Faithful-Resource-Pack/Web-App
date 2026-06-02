@@ -10,6 +10,7 @@
 			<v-card
 				class="py-2 px-4 d-flex align-center overflow-hidden main-container"
 				:class="classes[i]"
+				style="height: 100%"
 				:to="statusURL(cat.value)"
 			>
 				<v-badge inline dot left :color="cat.color" style="margin-left: -4px">
