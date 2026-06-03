@@ -131,11 +131,10 @@
 				:label="$root.lang().addons.general.slug.label"
 				:hint="$root.lang().addons.general.slug.hint"
 				:rules="form.slug.rules"
-				:counter="form.slug.counter"
+				:counter="form.slug.counter.max"
 			/>
 
 			<div class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</div>
-
 			<v-chip-group
 				v-model="submittedForm.options.packs"
 				multiple
