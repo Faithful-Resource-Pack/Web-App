@@ -100,32 +100,32 @@ export default {
 			else this.reason = "";
 		},
 		handleSubmit(data, approve) {
-			if (approve) return this.confirmSubmit(data, approve);
+			if (approve) return this.confirmSubmit(data, true);
 			this.reasonData = data;
 			this.reasonModalOpen = true;
 		},
-		confirmSubmit(data, approve) {
+		async confirmSubmit(data, approve) {
 			if (approve) data.reason = "Manager edit";
 			else {
 				data.reason = this.reason.trim();
 				this.reason = "";
 			}
 
-			return this.$root
-				.wrapSnackBar(
-					axios.patch(`${this.$root.apiURL}/addons/${this.id}`, data, this.$root.apiOptions),
-				)
-				.then(() => {
-					if (approve === true)
-						return axios.put(
-							`${this.$root.apiURL}/addons/${this.id}/review`,
-							{
-								status: "approved",
-								reason: "Manager edit",
-							},
-							this.$root.apiOptions,
-						);
-				});
+			// update no matter what then approve if manager selected
+			await this.$root.wrapSnackBar(
+				axios.patch(`${this.$root.apiURL}/addons/${this.id}`, data, this.$root.apiOptions),
+			);
+			if (approve === true)
+				await this.$root.wrapSnackBar(
+					axios.put(
+						`${this.$root.apiURL}/addons/${this.id}/review`,
+						{ status: "approved", reason: "Manager edit" },
+						this.$root.apiOptions,
+					),
+				);
+
+			// send you back after everything goes well (staying on the form feels weird)
+			this.$router.push("/addons/submissions");
 		},
 		handleHeader(file, remove = false) {
 			this.headerDisabled = true;
