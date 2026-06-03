@@ -29,7 +29,7 @@
 			<v-list>
 				<v-list-item v-for="({ org, repo }, edition) in data.github" :key="edition" class="px-0">
 					<v-list-item-content>
-						<v-list-item-title> {{ edition.toTitleCase() }} Edition </v-list-item-title>
+						<v-list-item-title>{{ edition.toTitleCase() }} Edition</v-list-item-title>
 						<v-list-item-subtitle>
 							<a :href="`https://github.com/${org}`" target="_blank" rel="noopener noreferrer">
 								{{ org }}

@@ -11,23 +11,13 @@
 			class="d-flex flex-column align-center justify-space-between flex-sm-row ga-4"
 		>
 			<div class="align-self-start align-self-sm-center">
-				<template v-if="status === 'pending' && reason">
-					<span class="uppercase-unsized">
-						{{ $root.lang().addons.general.reason.title }}
-					</span>
-					<p class="text--secondary mb-0">{{ reason }}</p>
-				</template>
-				<template v-if="status === 'approved'">
-					<span class="uppercase-unsized">
-						{{ $root.lang().review.addon.labels.approved_by.replace("%s", username) }}
-					</span>
-				</template>
-				<template v-if="status === 'denied' || status === 'archived'">
-					<span class="uppercase-unsized">
-						{{ $root.lang().review.addon.labels.denied_by.replace("%s", username) }}
-					</span>
-					<p class="text--secondary mb-0">{{ reason }}</p>
-				</template>
+				<span class="uppercase-unsized">
+					{{ title.replace("%s", username) }}
+				</span>
+				<p v-if="status !== 'approved'" class="text--secondary mb-0">
+					<template v-if="reason">{{ reason }}</template>
+					<i v-else>{{ $root.lang().review.addon.labels.no_reason }}</i>
+				</p>
 			</div>
 			<div class="d-flex flex-wrap flex-sm-nowrap justify-end align-self-end align-self-sm-center">
 				<v-btn
@@ -85,7 +75,23 @@ export default {
 			return this.addon.approval.reason;
 		},
 		username() {
-			return this.authors.find((c) => c.id === this.addon.approval.author)?.username || id;
+			return (
+				this.authors.find((c) => c.id === this.addon.approval.author)?.username ||
+				this.addon.approval.author
+			);
+		},
+		title() {
+			switch (this.status) {
+				case "pending":
+					return this.$root.lang().addons.general.reason.title;
+				case "approved":
+					return this.$root.lang().review.addon.labels.approved_by;
+				case "denied":
+					return this.$root.lang().review.addon.labels.denied_by;
+				case "archived":
+					return this.$root.lang().review.addon.labels.archived_by;
+			}
+			return this.$root.lang().review.addon.labels.unknown_status.replace("%s", this.status);
 		},
 	},
 };
