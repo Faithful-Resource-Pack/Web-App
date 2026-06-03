@@ -9,17 +9,7 @@
 		>
 			<v-card class="d-flex flex-column main-container" style="width: 100%">
 				<v-skeleton-loader v-if="loading" type="image, article" />
-				<template v-else>
-					<emitting-image :src="getImage(item)" :aspect-ratio="16 / 9" />
-					<!-- use scoped slots for more customizable layouts -->
-					<slot name="title" v-bind="item" />
-					<v-card-text style="flex-grow: 1">
-						<slot name="text" v-bind="item" />
-					</v-card-text>
-					<v-card-actions class="justify-end">
-						<slot name="btns" v-bind="item" />
-					</v-card-actions>
-				</template>
+				<slot v-else v-bind="item" />
 			</v-card>
 		</v-col>
 	</infinite-scroller>
@@ -27,7 +17,6 @@
 
 <script>
 import InfiniteScroller from "./infinite-scroller.vue";
-import EmittingImage from "@components/emitting-image.vue";
 
 // the cards are pretty chunky so not many have to be shown to fill the screen
 const MIN_DISPLAYED_RESULTS = 24;
@@ -37,7 +26,6 @@ export default {
 	name: "card-grid",
 	components: {
 		InfiniteScroller,
-		EmittingImage,
 	},
 	props: {
 		items: {
@@ -49,10 +37,6 @@ export default {
 			type: String,
 			required: false,
 			default: "id",
-		},
-		getImage: {
-			type: Function,
-			required: true,
 		},
 		loading: {
 			type: Boolean,
@@ -68,14 +52,9 @@ export default {
 	data() {
 		return {
 			displayedResults: MIN_DISPLAYED_RESULTS,
-			failed: {},
 		};
 	},
 	methods: {
-		onImageFail(item) {
-			this.failed[item[this.track]] = true;
-			return false;
-		},
 		showMore() {
 			this.displayedResults += RESULT_INCREMENT;
 		},

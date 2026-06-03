@@ -377,7 +377,7 @@ export default {
 			new: "Criar nova publicação",
 		},
 		status: {
-			published: "Publicado",
+			published: "Publicado em %s",
 			pending: "Pendente",
 		},
 		loading: "Carregando publicação…",

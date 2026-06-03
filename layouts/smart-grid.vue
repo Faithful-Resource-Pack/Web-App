@@ -9,7 +9,7 @@
 		<infinite-scroller v-else class="row" @more="showMore">
 			<v-col v-for="item in results" :key="item[track]" :cols="12 / columnCount">
 				<v-list-item>
-					<slot :item="item" />
+					<slot v-bind="item" />
 				</v-list-item>
 			</v-col>
 		</infinite-scroller>

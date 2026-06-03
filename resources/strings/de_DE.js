@@ -478,7 +478,7 @@ export default {
 			new: "Neuen Post erstellen",
 		},
 		status: {
-			published: "Veröffentlicht",
+			published: "Veröffentlicht am %s",
 			draft: "Entwurf",
 		},
 		loading: "Lade Post…",

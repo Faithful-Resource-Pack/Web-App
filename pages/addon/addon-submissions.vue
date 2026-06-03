@@ -21,38 +21,54 @@
 			:errorCode="errorCode"
 		/>
 		<div v-else class="my-2 text-h5">
-			<card-grid :items="addons" :getImage="(addon) => getHeaderImg(addon.id)" :loading="loading">
-				<template #title="{ name, options }">
-					<v-card-title>{{ name }}</v-card-title>
+			<card-grid :items="addons" :loading="loading">
+				<template #default="addon">
+					<!-- handles loading/error states automatically -->
+					<emitting-image
+						:src="addonHeader(addon)"
+						:aspect-ratio="16 / 9"
+						:alt="$root.lang().addons.images.header.labels.normal"
+					/>
+					<v-card-title class="d-block" style="word-break: break-word">
+						{{ addon.name }}
+						<v-btn
+							v-if="addon.approval.status == 'approved'"
+							right
+							color="blue"
+							:href="`https://faithfulpack.net/addons/${addon.slug}`"
+							target="_blank"
+							rel="noopener noreferrer"
+							icon
+							small
+						>
+							<v-icon small>mdi-open-in-new</v-icon>
+						</v-btn>
+					</v-card-title>
 					<v-card-subtitle>
-						{{ options.packs.map((p) => packs[p].name).join(", ") }}
+						{{ addonDate(addon.last_updated) }}
 					</v-card-subtitle>
-				</template>
-				<template #text="{ approval, slug }">
-					<v-badge dot inline :color="colors[approval.status]" />
-					{{ $root.lang().addons.status[approval.status] }}
-					<v-btn
-						v-if="approval.status == 'approved'"
-						color="blue"
-						:href="`https://faithfulpack.net/addons/${slug}`"
-						target="_blank"
-						rel="noopener noreferrer"
-						icon
-						small
-					>
-						<v-icon small>mdi-open-in-new</v-icon>
-					</v-btn>
-					<div v-if="approval.status === 'denied'">
-						{{ $root.lang().review.addon.labels.reason }}: {{ approval.reason }}
-					</div>
-				</template>
-				<template #btns="addon">
-					<v-btn text :to="`/addons/edit/${addon.id}`">
-						{{ $root.lang().global.btn.edit }}
-					</v-btn>
-					<v-btn color="red" text @click="deleteAddon(addon)">
-						{{ $root.lang().global.btn.delete }}
-					</v-btn>
+					<v-card-text class="d-flex align-start flex-grow-1">
+						<v-badge dot inline :color="colors[addon.approval.status]" />
+						<!-- by default it grows to the full container -->
+						<v-list-item dense style="flex: unset; min-height: 0" class="px-2">
+							<v-list-item-content class="py-0">
+								<v-list-item-title>
+									{{ $root.lang().addons.status[addon.approval.status] }}
+								</v-list-item-title>
+								<v-list-item-subtitle v-if="addon.approval.status !== 'approved'">
+									{{ addon.approval.reason }}
+								</v-list-item-subtitle>
+							</v-list-item-content>
+						</v-list-item>
+					</v-card-text>
+					<v-card-actions class="justify-end">
+						<v-btn text :to="`/addons/edit/${addon.id}`">
+							{{ $root.lang().global.btn.edit }}
+						</v-btn>
+						<v-btn color="red" text @click="deleteAddon(addon)">
+							{{ $root.lang().global.btn.delete }}
+						</v-btn>
+					</v-card-actions>
 				</template>
 			</card-grid>
 		</div>
@@ -67,12 +83,14 @@ import axios from "axios";
 import CardGrid from "@layouts/card-grid.vue";
 import AsciiError from "@components/ascii-error.vue";
 import AddonRemoveConfirm from "./addon-remove-confirm.vue";
+import EmittingImage from "@components/emitting-image.vue";
 
 export default {
 	name: "addon-submissions",
 	components: {
 		AsciiError,
 		CardGrid,
+		EmittingImage,
 		AddonRemoveConfirm,
 	},
 	data() {
@@ -119,8 +137,13 @@ export default {
 					this.loading = false;
 				});
 		},
-		getHeaderImg(id) {
-			return `${this.$root.apiURL}/addons/${id}/header?discord=${this.$root.user.access_token}&t=${this.timestamp}`;
+		addonHeader(addon) {
+			return `${this.$root.apiURL}/addons/${addon.id}/header?discord=${this.$root.user.access_token}&t=${this.timestamp}`;
+		},
+		addonDate(date) {
+			if (!date) return this.$root.lang().review.addon.titles.unknown_date;
+			const formatted = this.$root.formatDate(date);
+			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
 		},
 		getPacks() {
 			axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {

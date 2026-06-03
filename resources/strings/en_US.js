@@ -501,7 +501,7 @@ export default {
 			new: "Create new post",
 		},
 		status: {
-			published: "Published",
+			published: "Published on %s",
 			draft: "Draft",
 		},
 		loading: "Loading post…",
