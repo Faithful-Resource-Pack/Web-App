@@ -43,10 +43,12 @@ export default {
 	},
 	computed: {
 		showToggle() {
-			return this.contribution.authors.length > COLLAPSED_ITEM_LENGTH;
+			// don't show if there's only one item to expand
+			return this.contribution.authors.length > COLLAPSED_ITEM_LENGTH + 1;
 		},
 		authors() {
-			return this.collapsed
+			if (!this.collapsed) return this.contribution.authors;
+			return this.showToggle
 				? this.contribution.authors.slice(0, COLLAPSED_ITEM_LENGTH)
 				: this.contribution.authors;
 		},
