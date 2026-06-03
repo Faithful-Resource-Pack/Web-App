@@ -15,7 +15,7 @@
 					class="pr-sm-2 d-flex flex-column justify-space-around pb-0"
 				>
 					<span class="text-button">
-						{{ packToName[activity] || activity }}
+						{{ packToName[activity] || activity.toTitleCase() }}
 					</span>
 					<div class="heatmap-wrapper">
 						<calendar-heatmap

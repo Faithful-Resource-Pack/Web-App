@@ -11,7 +11,10 @@
 		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
 
 		<!-- wraps both mobile and desktop layouts -->
-		<div class="review-content-container my-2">
+		<div
+			class="review-content-container my-2"
+			:style="$vuetify.breakpoint.mdAndUp && 'height: 70vh'"
+		>
 			<!-- empty layout is shared across both mobile and desktop -->
 			<v-card v-if="selectedListItems.length === 0" class="main-container text-center">
 				<loading-page v-if="loading" />
@@ -253,10 +256,6 @@ export default {
 <style lang="scss">
 $list-width: calc(100% * 1 / 3);
 $preview-width: calc(100% * 2 / 3);
-
-.review-content-container {
-	height: 70vh;
-}
 
 // make sure all children take up the same space
 .review-content-container > * {
