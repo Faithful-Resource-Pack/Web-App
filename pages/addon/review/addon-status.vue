@@ -19,13 +19,16 @@
 					<i v-else>{{ $root.lang().review.addon.labels.no_reason }}</i>
 				</p>
 			</div>
-			<div class="d-flex flex-wrap flex-sm-nowrap justify-end align-self-end align-self-sm-center">
+			<div
+				class="d-flex flex-wrap flex-sm-nowrap justify-end align-self-end align-self-sm-center ga-2"
+			>
 				<v-btn
 					text
 					color="green"
 					:disabled="status === 'approved'"
 					@click="$emit('reviewAddon', addon.id)"
 				>
+					<v-icon left>mdi-check</v-icon>
 					{{ $root.lang().global.btn.approve }}
 				</v-btn>
 				<v-btn
@@ -34,6 +37,7 @@
 					:disabled="status === 'denied'"
 					@click="$emit('openDenyPopup', addon.id)"
 				>
+					<v-icon left>mdi-cancel</v-icon>
 					{{ $root.lang().global.btn.deny }}
 				</v-btn>
 				<v-btn
@@ -41,6 +45,7 @@
 					:disabled="status === 'archived'"
 					@click="$emit('openDenyPopup', addon.id, 'archive')"
 				>
+					<v-icon left>mdi-archive</v-icon>
 					{{ $root.lang().global.btn.archive }}
 				</v-btn>
 			</div>
