@@ -248,6 +248,8 @@ export default {
 		},
 		modalOpened(newValue) {
 			this.$nextTick(() => {
+				// prevent reading stale state before unmount (causes a billion console errors)
+				if (!newValue) return;
 				this.selectedContrib = 0;
 				this.contribs = [this.add ? emptyContrib() : { ...this.data, key: crypto.randomUUID() }];
 			});
