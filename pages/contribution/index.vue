@@ -99,35 +99,35 @@
 		</div>
 
 		<smart-grid :loading="loading" :items="contributions" wide track="id">
-			<template #default="{ item }">
+			<template #default="contrib">
 				<v-list-item-avatar tile class="database-list-sprite">
-					<a :href="`/gallery?show=${item.texture}`" target="_blank" rel="noopener noreferrer">
-						<v-img class="texture-img" :src="item.url" :lazy-src="packs[item.pack]?.logo" />
+					<a :href="`/gallery?show=${contrib.texture}`" target="_blank" rel="noopener noreferrer">
+						<v-img class="texture-img" :src="contrib.url" :lazy-src="packs[contrib.pack]?.logo" />
 					</a>
 				</v-list-item-avatar>
 
 				<v-list-item-content>
 					<v-list-item-title>
-						[#{{ item.texture }}] {{ textures[item.texture]?.name }}
+						[#{{ contrib.texture }}] {{ textures[contrib.texture]?.name }}
 					</v-list-item-title>
 					<v-list-item-subtitle>
-						{{ packs[item.pack]?.name || item.pack }} • {{ $root.formatDate(item.date) }}
+						{{ packs[contrib.pack]?.name || contrib.pack }} • {{ $root.formatDate(contrib.date) }}
 					</v-list-item-subtitle>
-					<author-chips :contribution="item" :contributors="contributors" @set="setAuthor" />
+					<author-chips :contribution="contrib" :contributors="contributors" @set="setAuthor" />
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
 					<v-btn
 						icon
 						:title="$root.lang().database.contributions.edit_contribution"
-						@click="editContribution(item)"
+						@click="editContribution(contrib)"
 					>
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
 					<v-btn
 						icon
 						:title="$root.lang().database.contributions.delete_contribution"
-						@click="askRemove(item)"
+						@click="askRemove(contrib)"
 					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>

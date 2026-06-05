@@ -53,14 +53,14 @@
 		</div>
 
 		<smart-grid :loading="loading" :items="users" wide track="id">
-			<template #default="{ item }">
+			<template #default="user">
 				<a
-					:href="`https://faithfulpack.net/user/${item.id}`"
+					:href="`https://faithfulpack.net/user/${user.id}`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<v-list-item-avatar v-if="item.uuid" class="database-list-sprite" tile>
-						<v-img :src="`https://vzge.me/face/96/${item.uuid}`" />
+					<v-list-item-avatar v-if="user.uuid" class="database-list-sprite" tile>
+						<v-img :src="`https://vzge.me/face/96/${user.uuid}`" />
 					</v-list-item-avatar>
 					<v-list-item-avatar v-else class="database-list-avatar">
 						<v-icon large>mdi-account</v-icon>
@@ -68,12 +68,12 @@
 				</a>
 
 				<v-list-item-content>
-					<v-list-item-title class="mb-1">{{ item.username }}</v-list-item-title>
-					<v-list-item-subtitle>{{ item.id }}</v-list-item-subtitle>
+					<v-list-item-title class="mb-1">{{ user.username }}</v-list-item-title>
+					<v-list-item-subtitle>{{ user.id }}</v-list-item-subtitle>
 					<v-chip-group column>
 						<!-- remove padding on top and re-add on bottom for nicer wrapping -->
 						<v-chip
-							v-for="userRole in item.roles"
+							v-for="userRole in user.roles"
 							:key="userRole"
 							class="mt-0 mb-2"
 							x-small
@@ -86,13 +86,13 @@
 
 				<!-- action buttons -->
 				<v-list-item-action class="merged-actions">
-					<v-btn icon :title="$root.lang().database.users.modal.edit_user" @click="openModal(item)">
+					<v-btn icon :title="$root.lang().database.users.modal.edit_user" @click="openModal(user)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
 					<v-btn
 						icon
 						:title="$root.lang().database.users.modal.delete_user"
-						@click="askRemove(item)"
+						@click="askRemove(user)"
 					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>

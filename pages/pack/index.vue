@@ -50,25 +50,25 @@
 			{{ $root.lang().database.packs.pack_result }} ({{ packs.length }})
 		</div>
 		<smart-grid :loading="!packs.length" :items="packs" wide track="id">
-			<template #default="{ item }">
+			<template #default="pack">
 				<v-list-item-avatar class="database-list-avatar">
-					<v-img :src="item.logo" />
+					<v-img :src="pack.logo" />
 				</v-list-item-avatar>
 				<v-list-item-content>
-					<v-list-item-title>{{ item.name }}</v-list-item-title>
+					<v-list-item-title>{{ pack.name }}</v-list-item-title>
 					<v-list-item-subtitle>
-						{{ (item.tags.map(formatTags) || []).join(", ") }}
+						{{ (pack.tags.map(formatTags) || []).join(", ") }}
 					</v-list-item-subtitle>
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
-					<v-btn icon :title="$root.lang().database.packs.modal.edit_pack" @click="openModal(item)">
+					<v-btn icon :title="$root.lang().database.packs.modal.edit_pack" @click="openModal(pack)">
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
 					<v-btn
 						icon
 						:title="$root.lang().database.packs.modal.delete_pack"
-						@click="askRemove(item)"
+						@click="askRemove(pack)"
 					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>

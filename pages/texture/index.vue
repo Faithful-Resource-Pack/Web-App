@@ -71,30 +71,30 @@
 		</div>
 
 		<smart-grid :loading="loading" :items="Object.values(textures)" track="id">
-			<template #default="{ item }">
-				<a :href="`/gallery?show=${item.id}`" target="_blank" rel="noopener noreferrer">
+			<template #default="texture">
+				<a :href="`/gallery?show=${texture.id}`" target="_blank" rel="noopener noreferrer">
 					<v-list-item-avatar class="database-list-avatar text--primary">
-						#{{ item.id }}
+						#{{ texture.id }}
 					</v-list-item-avatar>
 				</a>
 
 				<v-list-item-content>
-					<v-list-item-title>{{ item.name }}</v-list-item-title>
-					<v-list-item-subtitle>{{ (item.tags || []).join(", ") }}</v-list-item-subtitle>
+					<v-list-item-title>{{ texture.name }}</v-list-item-title>
+					<v-list-item-subtitle>{{ (texture.tags || []).join(", ") }}</v-list-item-subtitle>
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
 					<v-btn
 						icon
 						:title="$root.lang().database.textures.edit_texture"
-						@click="openTextureModal(item)"
+						@click="openTextureModal(texture)"
 					>
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
 					<v-btn
 						icon
 						:title="$root.lang().database.textures.delete_modal.title_texture"
-						@click="askRemove(item)"
+						@click="askRemove(texture)"
 					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>

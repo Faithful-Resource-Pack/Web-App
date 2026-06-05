@@ -41,34 +41,41 @@
 		</div>
 
 		<smart-grid :loading="!Object.keys(paths).length" :items="grouped" track="version">
-			<template #default="{ item }">
+			<template #default="version">
 				<a
-					:href="`/gallery/${item.edition}/default/${item.version}/all`"
+					:href="`/gallery/${version.edition}/default/${version.version}/all`"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					<v-list-item-avatar class="database-list-avatar text--primary">
-						<v-icon large>{{ item.latest ? "mdi-tag-arrow-up" : "mdi-tag" }}</v-icon>
+						<v-icon large>{{ version.latest ? "mdi-tag-arrow-up" : "mdi-tag" }}</v-icon>
 					</v-list-item-avatar>
 				</a>
-
 				<v-list-item-content>
 					<v-list-item-title>
-						{{ item.version }}
+						{{ version.version }}
 					</v-list-item-title>
 					<v-list-item-subtitle>
-						{{ item.edition.toTitleCase() }}&nbsp;Edition
+						{{ version.edition.toTitleCase() }}&nbsp;Edition
 					</v-list-item-subtitle>
 					<v-list-item-subtitle>
-						{{ pathCount(item.paths) }}
+						{{ pathCount(version.paths) }}
 					</v-list-item-subtitle>
 				</v-list-item-content>
 
 				<v-list-item-action class="merged-actions">
-					<v-btn icon :title="$root.lang().database.versions.modal.title" @click="openModal(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.versions.modal.title"
+						@click="openModal(version)"
+					>
 						<v-icon color="lighten-1">mdi-pencil</v-icon>
 					</v-btn>
-					<v-btn icon :title="$root.lang().database.versions.delete.title" @click="askRemove(item)">
+					<v-btn
+						icon
+						:title="$root.lang().database.versions.delete.title"
+						@click="askRemove(version)"
+					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
 				</v-list-item-action>
