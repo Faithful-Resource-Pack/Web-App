@@ -3,11 +3,10 @@
 		:title="$root.lang().dashboard.titles.profile"
 		to="/profile"
 		:clickable="$root.isLoggedIn"
-		class="d-flex flex-column"
 	>
-		<v-card-text class="d-flex flex-column justify-space-between flex-grow-1">
-			<div class="text-center mb-3">
-				<v-list-item-avatar tile class="dashboard-stat rounded-lg mb-5 mt-3" size="128">
+		<v-card-text class="flex-grow-1 d-flex flex-column justify-space-between">
+			<div class="d-flex justify-center align-center flex-md-column ga-3">
+				<v-list-item-avatar rounded class="dashboard-stat ma-3" size="128">
 					<v-img
 						v-if="!$root.isLoggedIn"
 						class="mx-auto"
@@ -21,17 +20,18 @@
 						{{ user.username[0] }}
 					</div>
 				</v-list-item-avatar>
-
-				<h3 class="text-h5 text--primary mb-2">
-					<template v-if="$root.isLoggedIn">{{ user.username }}</template>
-					<template v-else>{{ $root.lang().global.name }}</template>
-				</h3>
-				<span class="text--secondary">
-					<template v-if="$root.isLoggedIn">@{{ user.discordUsername }}</template>
-					<template v-else>{{ $root.lang().dashboard.profile.login_notice }}</template>
-				</span>
+				<!-- left text on mobile -->
+				<div class="text-md-center">
+					<h3 class="text-h5 text--primary mb-1" style="word-break: break-word">
+						<template v-if="$root.isLoggedIn">{{ user.username }}</template>
+						<template v-else>{{ $root.lang().global.name }}</template>
+					</h3>
+					<span class="text--secondary">
+						<template v-if="$root.isLoggedIn">@{{ user.discordUsername }}</template>
+						<template v-else>{{ $root.lang().dashboard.profile.login_notice }}</template>
+					</span>
+				</div>
 			</div>
-
 			<v-btn v-if="!$root.isLoggedIn" text color="primary" :href="$root.loginURL">
 				<v-icon left>mdi-login</v-icon>
 				{{ $root.lang().dashboard.profile.login_button }}
