@@ -106,7 +106,6 @@ export default {
 				denied: "red",
 				archived: "grey",
 			},
-			packs: {},
 			error: undefined,
 			errorCode: undefined,
 			loading: true,
@@ -145,16 +144,10 @@ export default {
 			const formatted = this.$root.formatDate(date);
 			return this.$root.lang().review.addon.titles.last_updated.replace("%s", formatted);
 		},
-		getPacks() {
-			axios.get(`${this.$root.apiURL}/packs/raw`).then((res) => {
-				this.packs = res.data;
-			});
-		},
 	},
 	mounted() {
 		this.$root.auth.addChangeListener(() => this.getAddons());
 		this.getAddons();
-		this.getPacks();
 	},
 };
 </script>
