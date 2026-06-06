@@ -80,10 +80,11 @@ export default {
 			return this.addon.approval.reason;
 		},
 		username() {
-			return (
-				this.authors.find((c) => c.id === this.addon.approval.author)?.username ||
-				this.addon.approval.author
-			);
+			// straight up doesn't exist
+			if (!this.addon.approval.author) return "Herobrine";
+			const author = this.authors.find((c) => c.id === this.addon.approval.author);
+			if (author.username) return author.username;
+			return `${this.$root.lang().database.anonymous} (${this.addon.approval.author})`;
 		},
 		title() {
 			switch (this.status) {

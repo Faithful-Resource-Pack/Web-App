@@ -91,8 +91,11 @@
 								/>
 								<v-list-item-content class="py-0 ps-2">
 									<v-list-item-title>
-										{{ author.username }}
+										{{ author.username || $root.lang().database.anonymous }}
 									</v-list-item-title>
+									<v-list-item-subtitle>
+										{{ author.id }}
+									</v-list-item-subtitle>
 								</v-list-item-content>
 							</v-list-item>
 						</v-list>
