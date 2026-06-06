@@ -127,6 +127,8 @@
 					v-for="{ name, source } in downloads"
 					:key="source"
 					:href="source"
+					target="_blank"
+					rel="noopener noreferrer"
 					color="secondary"
 					class="mt-2"
 					block
