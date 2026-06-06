@@ -19,8 +19,10 @@
 					<i v-else>{{ $root.lang().review.addon.labels.no_reason }}</i>
 				</p>
 			</div>
+			<!-- switch to columns if the reason is too long to fit nicely on the left -->
 			<div
 				class="d-flex flex-wrap flex-sm-nowrap justify-end align-self-end align-self-sm-center ga-2"
+				:class="longReason && 'flex-sm-column'"
 			>
 				<v-btn
 					text
@@ -98,6 +100,10 @@ export default {
 					return this.$root.lang().review.addon.labels.archived_by;
 			}
 			return this.$root.lang().review.addon.labels.unknown_status.replace("%s", this.status);
+		},
+		longReason() {
+			if (this.status === "approved") return false;
+			return this.reason.length > 150;
 		},
 	},
 };
