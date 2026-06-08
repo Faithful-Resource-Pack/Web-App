@@ -69,23 +69,6 @@ export default {
 	data() {
 		return {
 			headers: {
-				texture: [
-					{
-						text: this.$root.lang().gallery.modal.data.id,
-						value: "id",
-						sortable: false,
-					},
-					{
-						text: this.$root.lang().gallery.modal.data.name,
-						value: "name",
-						sortable: false,
-					},
-					{
-						text: this.$root.lang().gallery.modal.data.tags,
-						value: "tags",
-						sortable: false,
-					},
-				],
 				uses: [
 					{
 						text: this.$root.lang().gallery.modal.data.use_id,
@@ -129,14 +112,6 @@ export default {
 		},
 	},
 	computed: {
-		texture() {
-			return [
-				{
-					...this.textureObj.texture,
-					tags: this.textureObj.texture.tags.join(", "),
-				},
-			];
-		},
 		uses() {
 			return this.textureObj.uses;
 		},
