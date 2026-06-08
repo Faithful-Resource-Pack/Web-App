@@ -1,6 +1,6 @@
 <template>
 	<v-list class="pt-0" dense nav>
-		<v-subheader class="text--primary justify-center uppercase">
+		<v-subheader class="text--primary justify-center uppercase-unsized">
 			{{ $root.lang().global.themes.title }}
 		</v-subheader>
 		<v-list-item

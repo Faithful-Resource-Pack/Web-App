@@ -21,9 +21,7 @@
 		<div class="py-3">
 			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.paths }}</h2>
 			<div v-for="edition in editions" :key="edition">
-				<p class="text-button mb-0 mt-3">
-					{{ edition.toTitleCase() }}
-				</p>
+				<p class="uppercase text--secondary my-2">{{ edition.toTitleCase() }} Edition</p>
 				<v-data-table
 					dense
 					:headers="headers.paths"

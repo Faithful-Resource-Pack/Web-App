@@ -14,7 +14,7 @@
 					sm="6"
 					class="pr-sm-2 d-flex flex-column justify-space-around pb-0"
 				>
-					<span class="text-button">
+					<span class="uppercase text--secondary my-2">
 						{{ packToName[activity] || activity.toTitleCase() }}
 					</span>
 					<div class="heatmap-wrapper">
