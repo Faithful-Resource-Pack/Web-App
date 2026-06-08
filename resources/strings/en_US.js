@@ -459,8 +459,8 @@ export default {
 			approved: "Approved",
 			archived: "Archived",
 		},
-		deny_window: {
-			title: "Deny add-on",
+		reason_modal: {
+			deny_title: "Deny add-on",
 			archive_title: "Archive add-on",
 			label: "Write a reason…",
 			rule: "Any reason can be given",

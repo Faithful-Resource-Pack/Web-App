@@ -24,8 +24,7 @@
 					:addon="addonInPanel"
 					:loading="loading"
 					:authors="authors"
-					@reviewAddon="(...e) => $emit('reviewAddon', ...e)"
-					@openDenyPopup="(...e) => $emit('openDenyPopup', ...e)"
+					@review="(id, status) => $emit('review', id, status)"
 				/>
 			</v-expansion-panel-content>
 		</v-expansion-panel>
@@ -39,7 +38,7 @@ import AddonPanel from "./addon-panel.vue";
 import AddonStatus from "./addon-status.vue";
 
 export default {
-	name: "expansion-panels",
+	name: "mobile-reviewer",
 	components: {
 		AddonPanel,
 		AddonStatus,
@@ -63,7 +62,7 @@ export default {
 			default: undefined,
 		},
 	},
-	emits: ["reviewAddon", "openDenyPopup", "input"],
+	emits: ["review", "input"],
 	data() {
 		return {
 			addonInPanel: {},

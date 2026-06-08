@@ -2,17 +2,17 @@
 	<modal-form
 		v-model="modalOpened"
 		:title="title"
-		:disabled="!denyReason || (denyReason && denyReason.length == 0)"
+		:disabled="!reason || (reason && reason.length == 0)"
 		danger
 		@close="interacted(false)"
 		@submit="interacted(true)"
 	>
 		<v-text-field
-			v-model="denyReason"
+			v-model="reason"
 			:autofocus="!$vuetify.breakpoint.mobile"
 			:color="color"
 			required
-			:label="$root.lang().review.deny_window.label"
+			:label="$root.lang().review.reason_modal.label"
 			:rules="reasonRules"
 		/>
 	</modal-form>
@@ -22,7 +22,7 @@
 import ModalForm from "@layouts/modal-form.vue";
 
 export default {
-	name: "deny-popup",
+	name: "reason-modal",
 	components: {
 		ModalForm,
 	},
@@ -31,10 +31,9 @@ export default {
 			type: Boolean,
 			required: true,
 		},
-		archive: {
-			type: Boolean,
-			required: false,
-			default: false,
+		type: {
+			type: String,
+			required: true,
 		},
 		color: {
 			type: String,
@@ -46,23 +45,29 @@ export default {
 	data() {
 		return {
 			modalOpened: false,
-			denyReason: "",
-			reasonRules: [(u) => !u || u?.length > 0 || this.$root.lang().review.deny_window.rule],
+			reason: "",
+			reasonRules: [(u) => !u || u?.length > 0 || this.$root.lang().review.reason_modal.rule],
 		};
 	},
 	methods: {
 		interacted(submit = false) {
 			this.modalOpened = false;
-			this.$emit("close", submit, this.denyReason);
+			this.$emit("close", submit, this.reason);
 			// reset modal
-			if (submit) this.denyReason = "";
+			if (submit) this.reason = "";
 		},
 	},
 	computed: {
 		title() {
-			const strings = this.$root.lang().review.deny_window;
-			if (this.archive) return strings.archive_title;
-			return strings.title;
+			const strings = this.$root.lang().review.reason_modal;
+			switch (this.type) {
+				case "archived":
+					return strings.archive_title;
+				case "denied":
+					return strings.deny_title;
+			}
+			// todo: add better fallback
+			return strings.deny_title;
 		},
 	},
 	watch: {

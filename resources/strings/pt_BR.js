@@ -343,8 +343,8 @@ export default {
 			approved: "Aprovado",
 			archived: "Arquivado",
 		},
-		deny_window: {
-			title: "Negar addon",
+		reason_modal: {
+			deny_title: "Negar addon",
 			archive_title: "Arquivar add-on",
 			label: "Escreva um motivo…",
 			rule: "Qualquer motivo pode ser dado",

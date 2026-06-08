@@ -2,15 +2,19 @@
 	<v-container id="addonReviewPage">
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<div class="styles" v-html="pageStyles" />
+
+		<reason-modal
+			v-model="reasonModalOpened"
+			:type="reasonType"
+			:color="pageColor"
+			@close="closeReasonModal"
+		/>
+
 		<div class="text-h4 py-4">
 			{{ $root.lang().review.titles.addons }}
 		</div>
 
-		<deny-popup v-model="showModal" :archive="archive" :color="pageColor" @close="closeDenyPopup" />
-
 		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
-
-		<!-- wraps both mobile and desktop layouts -->
 		<div
 			class="review-content-container my-2"
 			:style="$vuetify.breakpoint.mdAndUp && 'height: 70vh'"
@@ -20,29 +24,27 @@
 				<loading-page v-if="loading" />
 				<ascii-error v-else :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
-			<!-- desktop layout -->
 			<div v-else-if="$vuetify.breakpoint.mdAndUp" class="d-flex ga-2">
 				<review-list
 					v-model="selectedAddonId"
 					:items="selectedListItems"
 					:activeColor="pageColor"
 				/>
+				<!-- no v-model since you can't change the active addon from the preview alone -->
 				<review-preview
 					:addonId="selectedAddonId"
 					:status="status"
 					:authors="authors"
-					@reviewAddon="reviewAddon"
-					@openDenyPopup="openDenyPopup"
+					@review="changeStatus"
 				/>
 			</div>
-			<expansion-panels
+			<mobile-reviewer
 				v-else
 				v-model="selectedAddonId"
 				:addons="selectedListItems"
 				:status="status"
 				:authors="authors"
-				@reviewAddon="reviewAddon"
-				@openDenyPopup="openDenyPopup"
+				@review="changeStatus"
 			/>
 		</div>
 	</v-container>
@@ -53,11 +55,13 @@ import axios from "axios";
 
 import AsciiError from "@components/ascii-error.vue";
 import LoadingPage from "@layouts/loading-page.vue";
-import ExpansionPanels from "./expansion-panels.vue";
-import DenyPopup from "./deny-popup.vue";
+
+import ReasonModal from "./reason-modal.vue";
+
 import ReviewCategories from "./review-categories.vue";
 import ReviewList from "./review-list.vue";
 import ReviewPreview from "./review-preview.vue";
+import MobileReviewer from "./mobile-reviewer.vue";
 
 import { generatePageStyles } from "@helpers/colors.js";
 
@@ -94,8 +98,8 @@ export default {
 	components: {
 		AsciiError,
 		LoadingPage,
-		ExpansionPanels,
-		DenyPopup,
+		MobileReviewer,
+		ReasonModal,
 		ReviewCategories,
 		ReviewList,
 		ReviewPreview,
@@ -121,16 +125,25 @@ export default {
 			loading: true,
 			authors: [],
 			packs: {},
-			showModal: false,
-			modalId: {},
-			archive: false,
+			reasonModalOpened: false,
+			reasonModalId: {},
+			reasonType: "denied",
 			status: "pending",
 			selectedAddonId: undefined,
 		};
 	},
 	methods: {
-		reviewAddon(addon, status = "approved", reason = null) {
-			const id = typeof addon === "object" ? addon.id : addon;
+		changeStatus(id, status) {
+			switch (status) {
+				case "approved":
+					return this.reviewAddon(id, status);
+				// both go through the same popup
+				case "denied":
+				case "archived":
+					return this.openReasonModal(id, status);
+			}
+		},
+		reviewAddon(id, status = "approved", reason = null) {
 			if (!this.$root.isLoggedIn) return;
 
 			const data = { status, reason };
@@ -145,13 +158,13 @@ export default {
 					this.getAddons();
 				});
 		},
-		openDenyPopup(addon, archive = false) {
-			this.archive = !!archive;
-			this.showModal = true;
-			this.modalId = addon;
+		openReasonModal(addon, reasonType = "denied") {
+			this.reasonType = reasonType;
+			this.reasonModalOpened = true;
+			this.reasonModalId = addon;
 		},
-		closeDenyPopup(success = false, reason) {
-			if (success) this.reviewAddon(this.modalId, this.archive ? "archived" : "denied", reason);
+		closeReasonModal(success = false, reason) {
+			if (success) this.reviewAddon(this.reasonModalId, this.reasonType, reason);
 		},
 		async getAddons() {
 			const res = await axios.get(`${this.$root.apiURL}/addons/raw`, this.$root.apiOptions);

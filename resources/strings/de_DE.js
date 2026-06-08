@@ -443,8 +443,8 @@ export default {
 			approved: "Genehmigt",
 			archived: "Archiviert",
 		},
-		deny_window: {
-			title: "Add-on ablehnen",
+		reason_modal: {
+			deny_title: "Add-on ablehnen",
 			archive_title: "Add-on archivieren",
 			label: "Schreibe einen Grund…",
 			rule: "Ein beliebiger Grund kann angegeben werden",

@@ -8,8 +8,7 @@
 				:addon="addonInPanel"
 				:loading="loading"
 				:authors="authors"
-				@reviewAddon="(...e) => $emit('reviewAddon', ...e)"
-				@openDenyPopup="(...e) => $emit('openDenyPopup', ...e)"
+				@review="(id, status) => $emit('review', id, status)"
 			/>
 		</v-card>
 	</div>
@@ -42,7 +41,7 @@ export default {
 			required: true,
 		},
 	},
-	emits: ["reviewAddon", "openDenyPopup"],
+	emits: ["review"],
 	data() {
 		return {
 			addonInPanel: {},

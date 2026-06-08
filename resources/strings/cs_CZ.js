@@ -148,7 +148,7 @@ export default {
 			denied: "Zamítnuto",
 			approved: "Schváleno",
 		},
-		deny_window: {
+		reason_modal: {
 			label: "Napiš důvod…",
 			rule: "Může být udán jakýkoliv důvod",
 		},

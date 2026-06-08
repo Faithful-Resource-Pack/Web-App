@@ -25,30 +25,15 @@
 				:class="longReason && 'flex-sm-column'"
 			>
 				<v-btn
+					v-for="button in buttons"
+					:key="button.status"
 					text
-					color="green"
-					:disabled="status === 'approved'"
-					@click="$emit('reviewAddon', addon.id)"
+					:color="button.color"
+					:disabled="status === button.status"
+					@click="$emit('review', addon.id, button.status)"
 				>
-					<v-icon left>mdi-check</v-icon>
-					{{ $root.lang().global.btn.approve }}
-				</v-btn>
-				<v-btn
-					text
-					color="red"
-					:disabled="status === 'denied'"
-					@click="$emit('openDenyPopup', addon.id)"
-				>
-					<v-icon left>mdi-cancel</v-icon>
-					{{ $root.lang().global.btn.deny }}
-				</v-btn>
-				<v-btn
-					text
-					:disabled="status === 'archived'"
-					@click="$emit('openDenyPopup', addon.id, 'archive')"
-				>
-					<v-icon left>mdi-archive</v-icon>
-					{{ $root.lang().global.btn.archive }}
+					<v-icon left>{{ button.icon }}</v-icon>
+					{{ $root.lang().global.btn[button.label] }}
 				</v-btn>
 			</div>
 		</v-card-text>
@@ -73,7 +58,32 @@ export default {
 			required: true,
 		},
 	},
-	emits: ["reviewAddon", "openDenyPopup"],
+	emits: ["review"],
+	data() {
+		return {
+			buttons: [
+				{
+					label: "approve",
+					status: "approved",
+					color: "green",
+					icon: "mdi-check",
+				},
+				{
+					label: "deny",
+					status: "denied",
+					color: "red",
+					icon: "mdi-cancel",
+				},
+				{
+					label: "archive",
+					status: "archived",
+					// default white/black for archive button (gray has bad text contrast)
+					color: undefined,
+					icon: "mdi-archive",
+				},
+			],
+		};
+	},
 	computed: {
 		status() {
 			return this.addon.approval.status;

@@ -160,7 +160,7 @@ export default {
 			approved: "Accepté(s)",
 			archived: "Archivé(s)",
 		},
-		deny_window: {
+		reason_modal: {
 			label: "Écrivez une raison…",
 			rule: "Toute raison peut être donnée",
 		},

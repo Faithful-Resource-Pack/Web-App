@@ -226,8 +226,8 @@ export default {
 			approved: "Aprobado",
 			archived: "Archivado",
 		},
-		deny_window: {
-			title: "Rechazar complemento",
+		reason_modal: {
+			deny_title: "Rechazar complemento",
 			label: "Escribe un motivo…",
 			rule: "Cualquier razón puede ser dada",
 		},
