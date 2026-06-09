@@ -85,4 +85,19 @@ export default {
 .dashboard-page #contribution-stats-card .v-card__text p {
 	width: 100%;
 }
+
+// custom skeleton loader tooltip styles
+.loader > * {
+	width: 100%;
+	min-height: 17px;
+	margin-bottom: 0;
+}
+
+.loader .v-skeleton-loader__heading {
+	border-radius: 8px;
+}
+
+.paragraph-loader {
+	min-height: 48px;
+}
 </style>

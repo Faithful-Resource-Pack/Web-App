@@ -17,12 +17,15 @@
 					<dashboard-stat :label="$root.lang().dashboard.totals[key] || key" :value="value" />
 				</v-col>
 			</v-row>
-			<v-row v-else dense class="d-flex">
-				<v-col v-for="i in 6" :key="`skeleton-${i}`" cols="12" sm="6" class="d-flex align-stretch">
-					<div class="dashboard-stat mb-0 rounded-lg pa-2">
-						<v-card-title class="pa-0 d-inline text--primary">
-							<v-skeleton-loader height="24" type="text" />
-						</v-card-title>
+			<v-row v-else dense>
+				<v-col v-for="i in 6" :key="`skeleton-${i}`" cols="12" sm="6" class="d-flex align-end">
+					<div
+						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+					>
+						<div class="d-flex align-end">
+							<v-skeleton-loader class="loader mr-2" width="30" height="24" type="heading" />
+							<v-skeleton-loader class="loader" width="120" min-height="14" type="text" />
+						</div>
 					</div>
 				</v-col>
 			</v-row>

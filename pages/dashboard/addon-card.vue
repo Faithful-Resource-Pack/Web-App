@@ -7,71 +7,67 @@
 		class="d-flex flex-column justify-space-between"
 	>
 		<v-card-text class="pb-0 flex-grow-1 d-flex flex-column">
-			<v-row v-if="!loading" dense class="d-flex align-stretch">
-				<template v-for="status in statuses">
+			<template v-if="!loading" dense class="d-flex align-stretch">
+				<v-row dense>
+					<template v-for="status in statuses">
+						<v-col
+							v-if="data[status] !== undefined"
+							:key="status"
+							cols="12"
+							:sm="$root.isAdmin && '3'"
+						>
+							<dashboard-stat
+								:label="$root.lang().review.titles[status]"
+								:value="data[status] || 0"
+								:color="statusColor[status]"
+							/>
+						</v-col>
+					</template>
+				</v-row>
+				<v-row dense>
 					<v-col
-						v-if="data[status] !== undefined"
-						:key="status"
+						v-for="(number, tag) in data.numbers"
+						:key="tag"
 						cols="12"
-						:class="['d-flex align-stretch', adminResults ? 'col-sm-3' : '']"
+						sm="6"
+						class="d-flex align-stretch"
 					>
-						<dashboard-stat
-							:label="$root.lang().review.titles[status]"
-							:value="data[status] || 0"
-							:color="statusColor[status]"
-						/>
+						<dashboard-stat :label="packs[tag]?.name || tag" :value="number" />
 					</v-col>
-				</template>
-			</v-row>
-			<v-row v-else dense class="d-flex align-stretch">
-				<v-col
-					v-for="i in skeletonCount"
-					:key="`skeleton-status-${i}`"
-					cols="12"
-					:class="['d-flex align-end', skeletonCount > 1 ? 'col-sm-3' : '']"
-				>
-					<div
-						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+				</v-row>
+			</template>
+			<template v-else>
+				<v-row dense>
+					<v-col
+						v-for="i in skeletonCount"
+						:key="`skeleton-status-${i}`"
+						cols="12"
+						:sm="$root.isAdmin && '3'"
 					>
-						<div class="d-flex align-end">
-							<v-skeleton-loader class="loader mr-1" width="30" height="24" type="heading" />
-							<v-skeleton-loader class="loader" width="60" min-height="17" type="text" />
+						<div
+							class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+						>
+							<div class="d-flex align-end">
+								<v-skeleton-loader class="loader mr-2" width="30" height="24" type="heading" />
+								<v-skeleton-loader class="loader" width="60" min-height="14" type="text" />
+							</div>
 						</div>
-					</div>
-				</v-col>
-			</v-row>
-
-			<v-row v-if="data" class="mt-1 py-0 my-0 align-self-stretch" dense>
-				<v-col
-					v-for="(number, tag) in data.numbers"
-					:key="tag"
-					cols="12"
-					sm="6"
-					class="d-flex align-stretch"
-				>
-					<dashboard-stat :label="packs[tag]?.name || tag" :value="number" />
-				</v-col>
-			</v-row>
-			<v-row v-else id="stats-loader" class="mt-1 py-0 my-0 align-self-stretch" dense>
-				<v-col
-					v-for="i in 4"
-					:key="`skeleton-stats-${i}`"
-					cols="12"
-					sm="6"
-					class="d-flex align-stretch"
-				>
-					<div
-						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
-					>
-						<div class="d-flex align-end">
-							<v-skeleton-loader class="loader mr-1" width="30" height="24" type="heading" />
-							<v-skeleton-loader class="loader" width="60" min-height="17" type="text" />
+					</v-col>
+				</v-row>
+				<v-row dense>
+					<v-col v-for="i in 4" :key="`skeleton-stats-${i}`" cols="12" sm="6">
+						<div
+							class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
+						>
+							<div class="d-flex align-end">
+								<v-skeleton-loader class="loader mr-2" width="30" height="24" type="heading" />
+								<v-skeleton-loader class="loader" width="120" min-height="14" type="text" />
+							</div>
 						</div>
-					</div>
-				</v-col>
-			</v-row>
+					</v-col>
+				</v-row>
+			</template>
 		</v-card-text>
-
 		<v-card-actions v-if="$root.isLoggedIn" class="d-flex mt-0 px-4 pt-1">
 			<v-row dense>
 				<v-col>
@@ -132,7 +128,7 @@ export default {
 		roles() {
 			return this.$root.user.roles.length;
 		},
-		url() {
+		endpointURL() {
 			return this.$root.isAdmin ? "/addons/stats-admin" : "/addons/stats";
 		},
 		skeletonCount() {
@@ -143,7 +139,7 @@ export default {
 		get() {
 			this.loading = true;
 			axios
-				.get(this.$root.apiURL + this.url, this.$root.apiOptions)
+				.get(this.$root.apiURL + this.endpointURL, this.$root.apiOptions)
 				.then((res) => {
 					this.data = res.data;
 				})
@@ -168,19 +164,3 @@ export default {
 	},
 };
 </script>
-
-<style lang="scss">
-#addon-card .loader > * {
-	width: 100%;
-	min-height: 17px;
-	margin-bottom: 0;
-}
-
-#addon-card .loader .v-skeleton-loader__heading {
-	border-radius: 8px;
-}
-
-#addon-card .paragraph-loader {
-	min-height: 48px;
-}
-</style>
