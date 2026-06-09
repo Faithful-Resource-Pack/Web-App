@@ -42,7 +42,7 @@ export default {
 	},
 	data() {
 		return {
-			pageColor: "blue-grey lighten-1",
+			pageColor: "blue-grey darken-1",
 			pageStyles: "",
 			jsonText: "{}",
 			json: {},

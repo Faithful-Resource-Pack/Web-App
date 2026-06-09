@@ -103,7 +103,7 @@ export default {
 	},
 	data() {
 		return {
-			pageColor: "pink lighten-1",
+			pageColor: "pink darken-1",
 			textColorOnPage: "white--text",
 			pageStyles: "",
 			paths: {},
