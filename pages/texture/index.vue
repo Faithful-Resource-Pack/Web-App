@@ -24,10 +24,10 @@
 			@close="removeTexture"
 		/>
 
-		<div class="text-h4 py-4">
+		<h1 class="text-h4 py-4">
 			{{ $root.lang().database.textures.title }}
-		</div>
-		<div class="my-2 text-h5">{{ $root.lang().database.textures.tag_filter }}</div>
+		</h1>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.textures.tag_filter }}</h2>
 		<div class="selector">
 			<v-btn
 				v-for="textureTag in textureTags"
@@ -39,7 +39,7 @@
 				{{ textureTag }}
 			</v-btn>
 		</div>
-		<div class="my-2 text-h5">{{ $root.lang().database.search }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.search }}</h2>
 		<search-box
 			v-model="search"
 			class="my-2"
@@ -66,9 +66,9 @@
 			</v-row>
 		</div>
 
-		<div class="my-2 text-h5">
+		<h2 class="text-h5 my-2">
 			{{ $root.lang().database.textures.texture_result }} ({{ Object.keys(textures).length }})
-		</div>
+		</h2>
 
 		<smart-grid :loading="loading" :items="Object.values(textures)" track="id">
 			<template #default="texture">

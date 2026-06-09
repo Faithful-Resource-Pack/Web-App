@@ -1,6 +1,6 @@
 <template>
 	<!-- can save some space by declaring the div a v-row using the underlying class -->
-	<infinite-scroller class="row" @more="showMore">
+	<infinite-scroller class="row mt-n3" @more="showMore">
 		<v-col
 			v-for="item in loading ? skeletonCount : shownItems"
 			:key="item[track]"

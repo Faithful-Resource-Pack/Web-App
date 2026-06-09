@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<div class="d-flex flex-wrap align-center justify-space-between py-4 ga-4">
-			<h4 class="text-h4">{{ $root.lang().profile.title }}</h4>
+			<h1 class="text-h4">{{ $root.lang().profile.title }}</h1>
 			<v-btn
 				color="secondary"
 				:href="`https://faithfulpack.net/user/${$root.user.id}`"
@@ -14,10 +14,10 @@
 			</v-btn>
 		</div>
 		<v-card class="main-container mb-2 pa-4">
-			<div class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</div>
+			<h2 class="text-h5 mb-5">{{ $root.lang().profile.general.title }}</h2>
 			<general-section v-model="localUser" :validate="validate" />
 
-			<div class="text-h5 mb-5">{{ $root.lang().profile.general.bio.label }}</div>
+			<h2 class="text-h5 mb-5">{{ $root.lang().profile.general.bio.label }}</h2>
 			<tabbed-text-field
 				v-model="localUser.bio"
 				class="mb-5"
@@ -29,7 +29,7 @@
 				}"
 			/>
 
-			<div class="text-h5 mb-5">{{ $root.lang().profile.social.title }}</div>
+			<h2 class="text-h5 mb-5">{{ $root.lang().profile.social.title }}</h2>
 			<social-section v-model="localUser" :validate="validate" />
 
 			<v-card-actions class="form-actions mt-5">

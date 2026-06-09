@@ -1,6 +1,6 @@
 <template>
 	<div class="dashboard-page pa-2 py-sm-4 px-sm-6">
-		<div class="text-h4 py-4">{{ greeting }}</div>
+		<h1 class="text-h4 py-4">{{ greeting }}</h1>
 
 		<v-row class="dashboard-card-container">
 			<v-col cols="12" md="3">

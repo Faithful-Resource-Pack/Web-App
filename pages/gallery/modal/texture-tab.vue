@@ -21,7 +21,7 @@
 		<div class="py-3">
 			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.paths }}</h2>
 			<div v-for="edition in editions" :key="edition">
-				<p class="uppercase text--secondary my-2">{{ edition.toTitleCase() }} Edition</p>
+				<h3 class="uppercase text--secondary my-2">{{ edition.toTitleCase() }} Edition</h3>
 				<v-data-table
 					dense
 					:headers="headers.paths"
@@ -33,7 +33,6 @@
 					<template #item.name="{ value }">
 						<span :title="value">{{ truncatePathName(value) }}</span>
 					</template>
-
 					<template #item.versions="{ value }">
 						<!-- title property gives alt text -->
 						<span :title="value.join(', ')">{{ formatPathVersions(value) }}</span>

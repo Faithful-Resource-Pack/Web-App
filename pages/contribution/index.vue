@@ -18,9 +18,9 @@
 
 		<v-row no-gutters class="py-0 my-0" align="center">
 			<v-col cols="12" sm="6">
-				<div class="text-h4 py-4">
+				<h1 class="text-h4 py-4">
 					{{ $root.lang().database.contributions.title }}
-				</div>
+				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block color="primary" @click="addContribution">

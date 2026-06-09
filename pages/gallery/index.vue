@@ -1,8 +1,10 @@
 <template>
 	<v-container :style="display.stretched ? 'max-width: 100% !important' : ''">
 		<v-row no-gutters>
-			<v-col cols="12" sm="6" class="text-h4 my-4">
-				{{ $root.lang().gallery.title }}
+			<v-col cols="12" sm="6">
+				<h1 class="text-h4 my-4">
+					{{ $root.lang().gallery.title }}
+				</h1>
 			</v-col>
 			<v-col v-if="$root.isAdmin" class="ml-auto my-4" cols="12" sm="6">
 				<v-btn block color="secondary" @click="clearCache">
@@ -20,7 +22,7 @@
 			@updateRoute="updateRoute"
 		/>
 
-		<div class="my-2 text-h5">{{ $root.lang().gallery.category.search }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().gallery.category.search }}</h2>
 		<search-box
 			v-model="search.search"
 			:placeholder="$root.lang().database.textures.search_texture"

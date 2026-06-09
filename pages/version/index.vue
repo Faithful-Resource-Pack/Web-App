@@ -10,9 +10,9 @@
 
 		<v-row no-gutters class="py-0 mb-0" align="center">
 			<v-col cols="12" sm="6">
-				<div class="text-h4 py-4">
+				<h1 class="text-h4 py-4">
 					{{ $root.lang().database.versions.title }}
-				</div>
+				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block :color="pageColor" class="white--text" @click="openNewVersionModal">
@@ -23,7 +23,7 @@
 		</v-row>
 
 		<!-- tag switcher -->
-		<div class="my-2 text-h5">{{ $root.lang().database.versions.edition_filter }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.versions.edition_filter }}</h2>
 		<div class="selector">
 			<v-btn
 				v-for="versionEdition in editions"
@@ -36,9 +36,9 @@
 			</v-btn>
 		</div>
 
-		<div class="my-2 text-h5">
+		<h2 class="text-h5 my-2">
 			{{ $root.lang().database.versions.version_result }} ({{ grouped.length }})
-		</div>
+		</h2>
 
 		<smart-grid :loading="!Object.keys(paths).length" :items="grouped" track="version">
 			<template #default="version">

@@ -1,8 +1,8 @@
 <template>
 	<v-dialog v-model="modalOpened" content-class="colored" :max-width="maxWidth" v-bind="$attrs">
 		<v-card>
-			<v-card-title class="headline justify-space-between">
-				<span>{{ title }}</span>
+			<v-card-title class="justify-space-between">
+				<h1 class="text-h5">{{ title }}</h1>
 				<v-btn icon @click="closeModal">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>

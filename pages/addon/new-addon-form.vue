@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<h4 class="text-h4 py-4">{{ $root.lang().addons.titles.submit }}</h4>
+		<h1 class="text-h4 py-4">{{ $root.lang().addons.titles.submit }}</h1>
 		<addon-form
 			addon-new
 			:screen-sources="screenSources"

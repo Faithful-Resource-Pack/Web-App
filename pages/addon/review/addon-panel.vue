@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<article>
 		<!-- image-previewer handles previews for screenshots -->
 		<fullscreen-preview v-model="previewOpen" :src="header" />
 		<v-card-text v-if="loading">
@@ -21,7 +21,7 @@
 		</v-card-text>
 		<template v-else>
 			<v-card-title>
-				<span class="text-h5">
+				<h1 class="text-h5">
 					<a
 						v-if="addon.approval.status === 'approved'"
 						class="text--primary hover-underline"
@@ -35,7 +35,7 @@
 						{{ addon.name }}
 					</span>
 					<span class="text--secondary font-weight-light">{{ `#${addon.id}` }}</span>
-				</span>
+				</h1>
 				<v-spacer />
 				<v-btn icon :title="$root.lang().global.btn.edit" :to="`/addons/edit/${addon.id}`">
 					<v-icon>mdi-pencil</v-icon>
@@ -43,14 +43,14 @@
 			</v-card-title>
 			<v-card-subtitle>{{ date }}</v-card-subtitle>
 			<v-card-text>
-				<v-row class="mb-2">
-					<v-col cols="12" sm="7">
+				<v-row>
+					<v-col cols="12" sm="8">
 						<emitting-image :src="header" :aspect-ratio="16 / 9" @fullscreen="openHeader" />
 					</v-col>
-					<v-col cols="12" sm="5">
-						<span class="uppercase-unsized text--primary">
+					<v-col cols="12" sm="4">
+						<h2 class="uppercase text--primary">
 							{{ $root.lang().review.addon.titles.compatibility }}
-						</span>
+						</h2>
 						<div class="text--secondary mb-4">
 							<div>
 								<v-icon small>{{ checked(addon.options.tags.includes("Java")) }}</v-icon>
@@ -66,7 +66,7 @@
 							</div>
 						</div>
 
-						<span class="uppercase-unsized text--primary mt-4">{{ authorTitle }}</span>
+						<h2 class="uppercase text--primary mt-4">{{ authorTitle }}</h2>
 
 						<!-- smaller than regular list so requires extra styling-->
 						<v-list nav class="mx-n2 pa-0" style="background: transparent">
@@ -103,15 +103,15 @@
 				</v-row>
 
 				<template v-if="screenshots.length > 0">
-					<span class="uppercase-unsized text--primary mt-4">
+					<h2 class="uppercase text--primary mt-4">
 						{{ $root.lang().addons.images.title }}
-					</span>
+					</h2>
 					<image-previewer :sources="screenshots" class="my-2" />
 				</template>
 
-				<span class="uppercase-unsized text--primary mt-4">
+				<h2 class="uppercase text--primary mt-4">
 					{{ $root.lang().review.addon.titles.description }}
-				</span>
+				</h2>
 
 				<!-- eslint-disable vue/no-v-html -->
 				<div
@@ -120,9 +120,9 @@
 				/>
 				<!-- eslint-enable vue/no-v-html -->
 
-				<span class="uppercase-unsized text--primary mt-4">
+				<h2 class="uppercase text--primary mt-4">
 					{{ downloadTitle }}
-				</span>
+				</h2>
 				<v-btn
 					v-for="{ name, source } in downloads"
 					:key="source"
@@ -138,7 +138,7 @@
 				</v-btn>
 			</v-card-text>
 		</template>
-	</div>
+	</article>
 </template>
 
 <script>

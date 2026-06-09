@@ -10,9 +10,9 @@
 			@close="closeReasonModal"
 		/>
 
-		<div class="text-h4 py-4">
+		<h1 class="text-h4 py-4">
 			{{ $root.lang().review.titles.addons }}
-		</div>
+		</h1>
 
 		<review-categories v-model="status" :activeColor="pageColor" :categories="categories" />
 		<div

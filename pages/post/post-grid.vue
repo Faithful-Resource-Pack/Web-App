@@ -2,10 +2,10 @@
 	<v-container class="flex-grow-1">
 		<v-row no-gutters class="py-0 my-0" align="center">
 			<v-col cols="12" sm="6">
-				<div class="text-h4 py-4 d-flex flex-row align-center">
+				<h1 class="text-h4 py-4 d-flex flex-row align-center">
 					{{ $root.lang().posts.titles.list }}
 					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
-				</div>
+				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block color="secondary" to="/posts/new">
@@ -20,55 +20,53 @@
 			:subtitle="error || $root.lang().global.no_results"
 			:errorCode="errorCode"
 		/>
-		<div v-else class="my-2 text-h5">
-			<card-grid :items="posts" :loading="loading">
-				<template #default="post">
-					<!-- handles loading/error states automatically -->
-					<emitting-image
-						:src="
-							post.header_img ||
-							'https://database.faithfulpack.net/images/website/posts/placeholder.jpg'
-						"
-						:aspect-ratio="16 / 9"
-						:alt="$root.lang().posts.general.header_img"
-					/>
-					<v-card-title class="d-block" style="word-break: break-word">
-						{{ postTitle(post.title).title }}
-						<v-btn
-							v-if="post.published"
-							right
-							color="blue"
-							:href="`https://faithfulpack.net/${post.permalink}`"
-							target="_blank"
-							rel="noopener noreferrer"
-							icon
-							small
-						>
-							<v-icon small>mdi-open-in-new</v-icon>
-						</v-btn>
-					</v-card-title>
-					<v-card-subtitle>{{ postTitle(post.title).subtitle }}</v-card-subtitle>
-					<v-card-text class="d-flex align-start flex-grow-1">
-						<v-badge dot inline :color="post.published ? 'green' : 'yellow'" />
-						<!-- by default it grows to the full container -->
-						<v-list-item dense style="flex: unset; min-height: 0" class="px-2">
-							<v-list-item-content class="py-0">
-								<v-list-item-title>{{ postDate(post) }}</v-list-item-title>
-								<v-list-item-subtitle>{{ post.permalink }}</v-list-item-subtitle>
-							</v-list-item-content>
-						</v-list-item>
-					</v-card-text>
-					<v-card-actions class="justify-end">
-						<v-btn text :to="`/posts/edit/${post.id}`">
-							{{ $root.lang().global.btn.edit }}
-						</v-btn>
-						<v-btn color="red" text @click="deletePost(post)">
-							{{ $root.lang().global.btn.delete }}
-						</v-btn>
-					</v-card-actions>
-				</template>
-			</card-grid>
-		</div>
+		<card-grid v-else :items="posts" :loading="loading">
+			<template #default="post">
+				<!-- handles loading/error states automatically -->
+				<emitting-image
+					:src="
+						post.header_img ||
+						'https://database.faithfulpack.net/images/website/posts/placeholder.jpg'
+					"
+					:aspect-ratio="16 / 9"
+					:alt="$root.lang().posts.general.header_img"
+				/>
+				<v-card-title class="d-block" style="word-break: break-word">
+					{{ postTitle(post.title).title }}
+					<v-btn
+						v-if="post.published"
+						right
+						color="blue"
+						:href="`https://faithfulpack.net/${post.permalink}`"
+						target="_blank"
+						rel="noopener noreferrer"
+						icon
+						small
+					>
+						<v-icon small>mdi-open-in-new</v-icon>
+					</v-btn>
+				</v-card-title>
+				<v-card-subtitle>{{ postTitle(post.title).subtitle }}</v-card-subtitle>
+				<v-card-text class="d-flex align-start flex-grow-1">
+					<v-badge dot inline :color="post.published ? 'green' : 'yellow'" />
+					<!-- by default it grows to the full container -->
+					<v-list-item dense style="flex: unset; min-height: 0" class="px-2">
+						<v-list-item-content class="py-0">
+							<v-list-item-title>{{ postDate(post) }}</v-list-item-title>
+							<v-list-item-subtitle>{{ post.permalink }}</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</v-card-text>
+				<v-card-actions class="justify-end">
+					<v-btn text :to="`/posts/edit/${post.id}`">
+						{{ $root.lang().global.btn.edit }}
+					</v-btn>
+					<v-btn color="red" text @click="deletePost(post)">
+						{{ $root.lang().global.btn.delete }}
+					</v-btn>
+				</v-card-actions>
+			</template>
+		</card-grid>
 
 		<post-remove-confirm v-model="removeOpen" :post="removeData" @close="getPosts" />
 	</v-container>

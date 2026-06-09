@@ -19,9 +19,9 @@
 
 		<v-row no-gutters class="py-0 mb-0" align="center">
 			<v-col cols="12" sm="6">
-				<div class="text-h4 py-4">
+				<h1 class="text-h4 py-4">
 					{{ $root.lang().database.packs.title }}
-				</div>
+				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block :color="pageColor" class="white--text" @click="openModal()">
@@ -32,7 +32,7 @@
 		</v-row>
 
 		<!-- tag switcher -->
-		<div class="my-2 text-h5">{{ $root.lang().database.packs.tag_filter }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.packs.tag_filter }}</h2>
 		<div class="selector">
 			<v-btn
 				v-for="packTag in packTags"
@@ -46,9 +46,7 @@
 		</div>
 
 		<!-- results -->
-		<div class="my-2 text-h5">
-			{{ $root.lang().database.packs.pack_result }} ({{ packs.length }})
-		</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.packs.pack_result }} ({{ packs.length }})</h2>
 		<smart-grid :loading="!packs.length" :items="packs" wide track="id">
 			<template #default="pack">
 				<v-list-item-avatar class="database-list-avatar">

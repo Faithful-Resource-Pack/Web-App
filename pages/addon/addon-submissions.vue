@@ -2,10 +2,10 @@
 	<v-container class="flex-grow-1">
 		<v-row no-gutters class="py-0 my-0" align="center">
 			<v-col cols="12" sm="6">
-				<div class="text-h4 py-4 d-flex flex-row align-center">
+				<h1 class="text-h4 py-4 d-flex flex-row align-center">
 					{{ $root.lang().addons.titles.submissions }}
 					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
-				</div>
+				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
 				<v-btn block color="secondary" to="/addons/new">
@@ -20,58 +20,56 @@
 			:subtitle="error || $root.lang().addons.general.no_submissions"
 			:errorCode="errorCode"
 		/>
-		<div v-else class="my-2 text-h5">
-			<card-grid :items="addons" :loading="loading">
-				<template #default="addon">
-					<!-- handles loading/error states automatically -->
-					<emitting-image
-						:src="addonHeader(addon)"
-						:aspect-ratio="16 / 9"
-						:alt="$root.lang().addons.images.header.labels.normal"
-					/>
-					<v-card-title class="d-block" style="word-break: break-word">
-						{{ addon.name }}
-						<v-btn
-							v-if="addon.approval.status == 'approved'"
-							right
-							color="blue"
-							:href="`https://faithfulpack.net/addons/${addon.slug}`"
-							target="_blank"
-							rel="noopener noreferrer"
-							icon
-							small
-						>
-							<v-icon small>mdi-open-in-new</v-icon>
-						</v-btn>
-					</v-card-title>
-					<v-card-subtitle>
-						{{ addonDate(addon.last_updated) }}
-					</v-card-subtitle>
-					<v-card-text class="d-flex align-start flex-grow-1">
-						<v-badge dot inline :color="colors[addon.approval.status]" />
-						<!-- by default it grows to the full container -->
-						<v-list-item dense style="flex: unset; min-height: 0" class="px-2">
-							<v-list-item-content class="py-0">
-								<v-list-item-title>
-									{{ $root.lang().addons.status[addon.approval.status] }}
-								</v-list-item-title>
-								<v-list-item-subtitle v-if="addon.approval.status !== 'approved'">
-									{{ addon.approval.reason }}
-								</v-list-item-subtitle>
-							</v-list-item-content>
-						</v-list-item>
-					</v-card-text>
-					<v-card-actions class="justify-end">
-						<v-btn text :to="`/addons/edit/${addon.id}`">
-							{{ $root.lang().global.btn.edit }}
-						</v-btn>
-						<v-btn color="red" text @click="deleteAddon(addon)">
-							{{ $root.lang().global.btn.delete }}
-						</v-btn>
-					</v-card-actions>
-				</template>
-			</card-grid>
-		</div>
+		<card-grid v-else :items="addons" :loading="loading">
+			<template #default="addon">
+				<!-- handles loading/error states automatically -->
+				<emitting-image
+					:src="addonHeader(addon)"
+					:aspect-ratio="16 / 9"
+					:alt="$root.lang().addons.images.header.labels.normal"
+				/>
+				<v-card-title class="d-block" style="word-break: break-word">
+					{{ addon.name }}
+					<v-btn
+						v-if="addon.approval.status == 'approved'"
+						right
+						color="blue"
+						:href="`https://faithfulpack.net/addons/${addon.slug}`"
+						target="_blank"
+						rel="noopener noreferrer"
+						icon
+						small
+					>
+						<v-icon small>mdi-open-in-new</v-icon>
+					</v-btn>
+				</v-card-title>
+				<v-card-subtitle>
+					{{ addonDate(addon.last_updated) }}
+				</v-card-subtitle>
+				<v-card-text class="d-flex align-start flex-grow-1">
+					<v-badge dot inline :color="colors[addon.approval.status]" />
+					<!-- by default it grows to the full container -->
+					<v-list-item dense style="flex: unset; min-height: 0" class="px-2">
+						<v-list-item-content class="py-0">
+							<v-list-item-title>
+								{{ $root.lang().addons.status[addon.approval.status] }}
+							</v-list-item-title>
+							<v-list-item-subtitle v-if="addon.approval.status !== 'approved'">
+								{{ addon.approval.reason }}
+							</v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+				</v-card-text>
+				<v-card-actions class="justify-end">
+					<v-btn text :to="`/addons/edit/${addon.id}`">
+						{{ $root.lang().global.btn.edit }}
+					</v-btn>
+					<v-btn color="red" text @click="deleteAddon(addon)">
+						{{ $root.lang().global.btn.delete }}
+					</v-btn>
+				</v-card-actions>
+			</template>
+		</card-grid>
 
 		<addon-remove-confirm v-model="remove.open" :data="remove.data" @close="getAddons" />
 	</v-container>

@@ -17,7 +17,7 @@
 				</v-alert>
 			</a>
 
-			<div class="text-h5">{{ $root.lang().addons.general.title }}</div>
+			<h2 class="text-h5">{{ $root.lang().addons.general.title }}</h2>
 			<v-row>
 				<!-- LEFT PART : INPUT -->
 				<v-col :class="$vuetify.breakpoint.smAndDown && 'pb-0'">
@@ -73,9 +73,9 @@
 				</v-col>
 			</v-row>
 
-			<div class="text-h5 my-3">
+			<h2 class="text-h5 my-3">
 				{{ $root.lang().addons.images.title }}
-			</div>
+			</h2>
 
 			<!-- upload field for images -->
 			<div class="my-5">
@@ -98,7 +98,7 @@
 				@delete="removeScreenshot"
 			/>
 
-			<div class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</div>
+			<h2 class="text-h5 mb-3">{{ $root.lang().addons.titles.info }}</h2>
 
 			<!-- Addon description -->
 			<tabbed-text-field
@@ -134,7 +134,7 @@
 				:counter="form.slug.counter.max"
 			/>
 
-			<div class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</div>
+			<h2 class="text-h5 mb-3">{{ $root.lang().addons.compatibility.title }}</h2>
 			<v-chip-group
 				v-model="submittedForm.options.packs"
 				multiple
@@ -183,7 +183,7 @@
 				:label="$root.lang().addons.compatibility.optifine.label"
 			/>
 
-			<div class="text-h5">{{ $root.lang().addons.downloads.title }}</div>
+			<h2 class="text-h5">{{ $root.lang().addons.downloads.title }}</h2>
 
 			<!-- cannot use obj.key as index since it rerenders the form on change otherwise -->
 			<v-row v-for="(obj, index) in submittedForm.downloads" :key="index" class="mt-1">

@@ -12,12 +12,12 @@
 		/>
 		<user-remove-confirm v-model="remove.open" :data="remove.data" @close="update" />
 
-		<div class="text-h4 py-4">
+		<h1 class="text-h4 py-4">
 			{{ $root.lang().database.users.title }}
-		</div>
+		</h1>
 
 		<!-- role switcher -->
-		<div class="my-2 text-h5">{{ $root.lang().database.users.role_filter }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.users.role_filter }}</h2>
 		<div class="selector">
 			<v-btn
 				v-for="userRole in userRoles"
@@ -31,7 +31,7 @@
 		</div>
 
 		<!-- search -->
-		<div class="my-2 text-h5">{{ $root.lang().database.search }}</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.search }}</h2>
 		<search-box
 			v-model="search"
 			class="my-2"
@@ -48,9 +48,7 @@
 		</v-btn>
 
 		<!-- results -->
-		<div class="my-2 text-h5">
-			{{ $root.lang().database.users.user_result }} ({{ users.length }})
-		</div>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.users.user_result }} ({{ users.length }})</h2>
 
 		<smart-grid :loading="loading" :items="users" wide track="id">
 			<template #default="user">
