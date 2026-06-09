@@ -8,15 +8,18 @@
 			@click.stop="$emit('fullscreen')"
 		>
 			<template #placeholder>
-				<v-row
-					class="fill-height ma-0"
-					align="center"
-					justify="center"
-					style="background-color: rgba(255, 255, 255, 0.1)"
+				<div
+					class="d-flex align-center justify-center"
+					style="height: 100%"
+					:style="{
+						backgroundColor: $root.theme.isDark
+							? 'rgba(255, 255, 255, 0.12)'
+							: 'rgba(0, 0, 0, 0.12)',
+					}"
 				>
-					<v-progress-circular v-if="src !== null" indeterminate color="grey lighten-5" />
+					<v-progress-circular v-if="src" indeterminate />
 					<v-icon v-else x-large>mdi-image-off</v-icon>
-				</v-row>
+				</div>
 			</template>
 		</v-img>
 		<v-card class="d-inline-block ma-2" rounded style="position: absolute; right: 0; top: 0">

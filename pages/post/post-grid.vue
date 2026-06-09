@@ -29,7 +29,7 @@
 						'https://database.faithfulpack.net/images/website/posts/placeholder.jpg'
 					"
 					:aspect-ratio="16 / 9"
-					:alt="$root.lang().posts.general.header_img"
+					:alt="$root.lang().posts.general.header_img.label"
 				/>
 				<v-card-title class="d-block" style="word-break: break-word">
 					{{ postTitle(post.title).title }}
