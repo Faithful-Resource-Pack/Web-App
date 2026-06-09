@@ -18,10 +18,12 @@
 			<v-row v-else class="py-0 my-0" dense>
 				<v-col v-for="i in 4" :key="`user-stats-${i}`" cols="12" sm="3">
 					<div
-						style="min-height: 56px"
-						class="dashboard-stat mb-0 rounded-lg pa-3 d-flex align-center"
+						class="dashboard-stat mb-0 flex-grow-1 rounded-lg pa-2 d-flex align-center paragraph-loader"
 					>
-						<v-skeleton-loader height="24" type="heading" width="100%" />
+						<div class="d-flex align-end">
+							<v-skeleton-loader class="loader mr-2" width="30" height="24" type="heading" />
+							<v-skeleton-loader class="loader" width="60" min-height="14" type="text" />
+						</div>
 					</div>
 				</v-col>
 			</v-row>

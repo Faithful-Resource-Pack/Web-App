@@ -7,7 +7,7 @@
 		class="d-flex flex-column justify-space-between"
 	>
 		<v-card-text class="pb-0 flex-grow-1 d-flex flex-column">
-			<template v-if="!loading" dense class="d-flex align-stretch">
+			<template v-if="!loading">
 				<v-row dense>
 					<template v-for="status in statuses">
 						<v-col
