@@ -18,10 +18,19 @@
 			</v-list-item-subtitle>
 		</v-list-item-content>
 		<v-list-item-action class="merged-actions no-bg">
-			<v-btn icon @click="$emit('clone')">
+			<v-btn
+				icon
+				:title="$root.lang().database.contributions.modal.clone_contribution"
+				@click="$emit('clone')"
+			>
 				<v-icon>mdi-content-duplicate</v-icon>
 			</v-btn>
-			<v-btn icon :color="selected ? 'primary' : 'red lighten-1'" @click="$emit('delete')">
+			<v-btn
+				icon
+				:color="selected ? color : 'red lighten-1'"
+				:title="$root.lang().database.contributions.delete_contribution"
+				@click="$emit('delete')"
+			>
 				<v-icon>mdi-delete</v-icon>
 			</v-btn>
 		</v-list-item-action>
@@ -48,6 +57,11 @@ export default {
 		contributors: {
 			type: Array,
 			required: true,
+		},
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
 		},
 	},
 	emits: ["clone", "delete"],

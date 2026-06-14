@@ -11,9 +11,10 @@
 			<v-col class="flex-grow-0 flex-shrink-1" :cols="$vuetify.breakpoint.mdAndUp ? false : 12">
 				<contribution-form
 					v-model="contribs[selectedContrib]"
+					add
 					:packs="packs"
 					:contributors="contributors"
-					add
+					:color="color"
 					@newUser="addNewUsers"
 				/>
 			</v-col>
@@ -35,7 +36,7 @@
 					:class="$vuetify.breakpoint.mdAndUp ? 'contribution-form-list' : ''"
 					two-line
 				>
-					<v-list-item-group v-model="selectedContrib" mandatory color="primary">
+					<v-list-item-group v-model="selectedContrib" mandatory :color="color">
 						<summary-item
 							v-for="(contrib, i) in contribs"
 							:key="contrib.key"
@@ -43,6 +44,7 @@
 							:selected="selectedContrib === i"
 							:packs="packs"
 							:contributors="allContributors"
+							:color="color"
 							@clone="cloneContribution(contrib)"
 							@delete="deleteContrib(i)"
 						/>
@@ -59,6 +61,7 @@
 			v-model="contribs[selectedContrib]"
 			:packs="packs"
 			:contributors="contributors"
+			:color="color"
 			@newUser="addNewUsers"
 		/>
 	</modal-form>
@@ -110,6 +113,11 @@ export default {
 		contributors: {
 			type: Array,
 			required: true,
+		},
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
 		},
 	},
 	emits: ["input", "close"],

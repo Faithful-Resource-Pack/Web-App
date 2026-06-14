@@ -1,23 +1,20 @@
 <template>
 	<v-card
 		:disabled="disabled"
-		:color="flat ? '' : 'rgba(0,0,0,0.165)'"
 		:flat="flat"
-		:class="['qd-datepicker', flat ? '' : 'pt-2 px-4 pb-4']"
+		:class="['qd-datepicker', flat ? '' : 'main-container pa-4']"
 		:style="style"
 		v-bind="$attrs"
 	>
-		<div class="font-weight-medium text--secondary mt-3">{{ labels.year }}</div>
+		<div class="font-weight-medium text--secondary">{{ labels.year }}</div>
 		<v-text-field
-			class="mt-0"
-			placeholder="Regular"
-			flat
+			:value="year"
+			class="pt-0"
+			:color="color"
+			:placeholder="currentYear"
 			hide-details
 			type="number"
-			:value="year"
-			:max="thisYear"
-			min="0"
-			@input="(e) => newYear(e)"
+			@input="(e) => updateYear(e)"
 		/>
 		<div class="font-weight-medium text--secondary my-3">{{ labels.month }}</div>
 		<v-row class="qd-months" dense>
@@ -26,11 +23,12 @@
 					:key="`qd-month-${i}`"
 					class="qd-month pa-0"
 					block
-					:color="i - 1 == month ? 'primary' : ''"
+					:color="i - 1 === month ? color : ''"
+					:class="i - 1 === month ? 'white--text' : ''"
 					:disabled="disabled"
 					elevation="0"
 					small
-					@click="newMonth(i)"
+					@click="updateMonth(i)"
 				>
 					{{ upperMonths[i - 1] }}
 				</v-btn>
@@ -42,11 +40,12 @@
 				v-for="i in 31"
 				:key="`qd-day-${i}`"
 				class="qd-day px-0"
-				:color="i == day ? 'primary' : ''"
+				:color="i === day ? color : ''"
+				:class="i === day ? 'white--text' : ''"
 				:text="i !== day"
-				:elevation="i == day ? 2 : 0"
+				:elevation="i === day ? 2 : 0"
 				:disabled="disabled || i > daysInCurMonth"
-				@click="newDay(i)"
+				@click="updateDay(i)"
 			>
 				{{ i }}
 			</v-btn>
@@ -75,7 +74,7 @@ export default {
 		flat: {
 			type: Boolean,
 			required: false,
-			default: () => false,
+			default: false,
 		},
 		labels: {
 			type: Object,
@@ -85,14 +84,20 @@ export default {
 		block: {
 			type: Boolean,
 			required: false,
-			default: () => false,
+			default: false,
+		},
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
 		},
 	},
 	emits: ["input"],
 	data() {
 		return {
 			date: new Date(new Date(this.value).setHours(0, 0, 0, 0)),
-			thisYear: new Date().getFullYear(),
+			// presumably the year isn't changing while using the page (lol)
+			currentYear: String(new Date().getFullYear()),
 		};
 	},
 	computed: {
@@ -125,19 +130,18 @@ export default {
 				this.date = correctedDay;
 			}
 		},
-		newDay(i) {
+		updateDay(i) {
 			this.date.setDate(i);
 			this.date = new Date(this.date);
 		},
-		newMonth(m) {
+		updateMonth(m) {
 			this.checkAndMaxDate(this.year, m);
 			this.date.setMonth(m - 1);
 			this.date = new Date(this.date);
 		},
-		newYear(e) {
-			let parsed = Number.parseInt(e);
-			let newYear = this.year;
-			if (!Number.isNaN(parsed)) newYear = parsed;
+		updateYear(e) {
+			const parsed = Number.parseInt(e);
+			const newYear = Number.isNaN(parsed) ? this.year : parsed;
 
 			this.checkAndMaxDate(newYear, this.month + 1);
 			this.date.setFullYear(newYear);

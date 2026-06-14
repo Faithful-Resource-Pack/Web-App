@@ -1,11 +1,15 @@
 <template>
 	<v-container>
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<div class="styles" v-html="pageStyles" />
+
 		<contribution-modal
 			v-model="modalOpen"
 			:data="modalData"
 			:add="modalAdd"
 			:packs="packs"
 			:contributors="contributors"
+			:color="pageColor"
 			@close="closeModal"
 		/>
 		<contribution-remove-confirm
@@ -23,7 +27,7 @@
 				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<v-btn block color="primary" @click="addContribution">
+				<v-btn block :color="pageColor" :class="textColorOnPage" @click="addContribution">
 					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().database.contributions.add_contributions }}
 				</v-btn>
@@ -41,6 +45,7 @@
 				<v-checkbox
 					v-model="packObj.selected"
 					:label="packObj.label"
+					:color="pageColor"
 					hide-details
 					class="ma-0 pt-0"
 					@change="(val) => onPackChange(key, val)"
@@ -54,16 +59,14 @@
 			<v-col cols="12" sm="6" class="pt-0 py-sm-0">
 				<user-select
 					v-model="selectedContributors"
-					persistent-placeholder
+					:color="pageColor"
 					:label="$root.lang().database.contributions.user_filter"
-					outlined
-					:users="contributors"
 					:placeholder="$root.lang().database.contributions.select_user"
+					persistent-placeholder
+					outlined
 					hide-details
-					class="my-0 pt-0"
-					small-chips
-					deletable-chips
 					clearable
+					:users="contributors"
 					@newUser="
 						(users) => {
 							contributors = users;
@@ -74,14 +77,13 @@
 			<v-col cols="12" sm="6" class="pb-0 py-sm-0">
 				<v-text-field
 					v-model="search"
-					persistent-placeholder
 					:label="$root.lang().database.contributions.texture_filter"
-					outlined
-					style="height: 100%"
-					type="search"
-					class="pt-0 my-0"
-					height="100%"
 					:placeholder="$root.lang().database.textures.search_texture"
+					persistent-placeholder
+					outlined
+					type="search"
+					height="100%"
+					:color="pageColor"
 					hide-details
 					@keyup.enter="startSearch()"
 				/>
@@ -89,7 +91,7 @@
 		</v-row>
 
 		<!-- Search button -->
-		<v-btn block color="primary" class="my-6" @click="startSearch()">
+		<v-btn block :color="pageColor" class="my-6" :class="textColorOnPage" @click="startSearch()">
 			<v-icon left dark>mdi-magnify</v-icon>
 			{{ $root.lang().database.contributions.search_contributions }}
 		</v-btn>
@@ -145,6 +147,7 @@ import ContributionRemoveConfirm from "./contribution-remove-confirm.vue";
 import UserSelect from "@components/user-select.vue";
 import SmartGrid from "@layouts/smart-grid.vue";
 import AuthorChips from "./author-chips.vue";
+import { generatePageStyles } from "@helpers/colors.js";
 
 const ALL_PACK_KEY = "all";
 
@@ -159,6 +162,9 @@ export default {
 	},
 	data() {
 		return {
+			pageColor: "green darken-1",
+			pageStyles: "",
+			textColorOnPage: "white--text",
 			// more convenient to have as object for retrieval
 			selectedPacks: {
 				[ALL_PACK_KEY]: {
@@ -310,13 +316,6 @@ export default {
 			return url.toString();
 		},
 	},
-	created() {
-		this.getTextures();
-		this.getPacks();
-		this.getAuthors();
-		this.search = this.$route.params.name || "";
-		this.$nextTick(() => this.startSearch());
-	},
 	watch: {
 		contributors: {
 			handler(newValue) {
@@ -326,6 +325,16 @@ export default {
 			},
 			deep: true,
 		},
+	},
+	created() {
+		this.getTextures();
+		this.getPacks();
+		this.getAuthors();
+		this.search = this.$route.params.name || "";
+		this.$nextTick(() => this.startSearch());
+	},
+	mounted() {
+		this.pageStyles = generatePageStyles(this.pageColor);
 	},
 };
 </script>

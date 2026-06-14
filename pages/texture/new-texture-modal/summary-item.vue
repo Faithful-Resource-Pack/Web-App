@@ -15,7 +15,12 @@
 			</V-list-item-subtitle>
 		</v-list-item-content>
 		<v-list-item-action>
-			<v-btn icon :color="selected ? color : 'red lighten-1'" @click="$emit('delete')">
+			<v-btn
+				icon
+				:color="selected ? color : 'red lighten-1'"
+				:title="$root.lang().database.textures.delete_modal.title_texture"
+				@click="$emit('delete')"
+			>
 				<v-icon>mdi-delete</v-icon>
 			</v-btn>
 		</v-list-item-action>

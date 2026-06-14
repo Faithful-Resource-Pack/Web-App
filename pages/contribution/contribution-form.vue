@@ -6,6 +6,7 @@
 				<quick-date-picker
 					v-model="contrib.date"
 					:class="$vuetify.breakpoint.mdAndDown && 'mx-auto'"
+					:color="color"
 					flat
 					:months="months"
 					:labels="$root.lang().global.datepicker"
@@ -19,11 +20,14 @@
 					persistent-hint
 					:hint="'⚠️ ' + $root.lang().database.contributions.modal.id_hint"
 					:label="$root.lang().database.contributions.modal.id"
+					:color="color"
 				/>
 				<v-select
 					v-model="contrib.pack"
 					:label="$root.lang().database.contributions.modal.pack"
 					:items="packList"
+					:color="color"
+					:item-color="color"
 					item-text="label"
 					item-value="value"
 					:hide-details="add"
@@ -32,6 +36,7 @@
 				<!-- must manually handle v-model to prevent type errors -->
 				<multi-range-input
 					v-if="add"
+					:color="color"
 					:value="Array.isArray(contrib.texture) ? contrib.texture : []"
 					:label="$root.lang().database.contributions.modal.texture_ids"
 					:errors="$root.lang().database.contributions.modal.id_field_errors"
@@ -45,6 +50,7 @@
 				<div v-else class="d-flex align-center">
 					<v-text-field
 						v-model.number="contrib.texture"
+						:color="color"
 						:label="$root.lang().database.contributions.modal.texture_id"
 						required
 						:hide-details="add"
@@ -67,6 +73,7 @@
 					:error-messages="
 						contrib.length === 0 ? [$root.lang().database.contributions.authorless] : []
 					"
+					:color="color"
 					@newUser="(users) => $emit('newUser', users)"
 				/>
 			</v-col>
@@ -105,6 +112,11 @@ export default {
 		contributors: {
 			type: Array,
 			required: true,
+		},
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
 		},
 	},
 	emits: ["newUser", "input"],

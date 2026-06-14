@@ -1,6 +1,8 @@
 <template>
 	<v-autocomplete
 		v-model="content"
+		:color="color"
+		:item-color="color"
 		:items="userList"
 		:loading="users.length == 0 || isSearching"
 		:search-input.sync="search"
@@ -20,7 +22,7 @@
 				v-bind="data.attrs"
 				@click:close="remove(data.item.id)"
 			>
-				<v-avatar class="white--text" :class="{ primary: !data.item.uuid }" left>
+				<v-avatar class="white--text" :class="{ [color]: !data.item.uuid }" left>
 					<v-img
 						v-if="data.item.uuid"
 						eager
@@ -58,7 +60,7 @@
 			</template>
 		</template>
 		<template #no-data>
-			<v-btn block elevation="0" color="primary" class="mt-4" @click="startSearch(search)">
+			<v-btn block elevation="0" :color="color" class="mt-4" @click="startSearch(search)">
 				<v-icon left dark>mdi-magnify</v-icon>
 				{{ $root.lang().database.search }}
 			</v-btn>
@@ -87,6 +89,11 @@ export default {
 			required: false,
 			default: () => 0,
 		},
+		color: {
+			type: String,
+			required: false,
+			default: "primary",
+		}
 	},
 	emits: ["input", "newUser"],
 	data() {
