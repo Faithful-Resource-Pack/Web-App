@@ -1,14 +1,16 @@
 <template>
-	<v-dialog v-model="modalOpened" :width="`${aspectRatio * 90}vh`" height="90vh">
+	<v-dialog v-model="previewOpened" :width="`${aspectRatio * 90}vh`" height="90vh">
 		<v-card>
-			<v-img
-				:style="styles"
-				:src="src"
-				:alt="alt"
-				:aspect-ratio="aspectRatio"
-				contain
-				@click="close"
-			/>
+			<v-img :style="styles" :src="src" :alt="alt" :aspectRatio="aspectRatio" contain />
+			<v-card
+				class="theme--dark d-inline-block ma-2"
+				rounded
+				style="position: absolute; right: 0; top: 0"
+			>
+				<v-btn icon color="white" @click="close">
+					<v-icon>mdi-close</v-icon>
+				</v-btn>
+			</v-card>
 		</v-card>
 	</v-dialog>
 </template>
@@ -45,12 +47,12 @@ export default {
 	emits: ["input"],
 	data() {
 		return {
-			modalOpened: false,
+			previewOpened: false,
 		};
 	},
 	methods: {
 		close() {
-			this.modalOpened = false;
+			this.previewOpened = false;
 		},
 	},
 	computed: {
@@ -60,9 +62,9 @@ export default {
 	},
 	watch: {
 		value(newValue) {
-			this.modalOpened = newValue;
+			this.previewOpened = newValue;
 		},
-		modalOpened(newValue) {
+		previewOpened(newValue) {
 			this.$emit("input", newValue);
 		},
 	},

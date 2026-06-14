@@ -22,25 +22,29 @@
 				</div>
 			</template>
 		</v-img>
-		<v-card class="d-inline-block ma-2" rounded style="position: absolute; right: 0; top: 0">
-			<v-icon
+		<v-card
+			class="theme--dark d-inline-block ma-2"
+			rounded
+			style="position: absolute; right: 0; top: 0"
+		>
+			<v-btn
 				v-if="$listeners.fullscreen"
-				class="ma-1"
 				small
+				icon
 				:title="$root.lang().global.emitting_image.fullscreen"
-				@click.stop="$emit('fullscreen', src)"
+				@click="$emit('fullscreen', src)"
 			>
-				mdi-fullscreen
-			</v-icon>
-			<v-icon
+				<v-icon small color="white">mdi-fullscreen</v-icon>
+			</v-btn>
+			<v-btn
 				v-if="deletable"
-				class="ma-1"
 				small
+				icon
 				:title="$root.lang().global.emitting_image.delete"
-				@click.stop="$emit('delete', src)"
+				@click="$emit('delete', src)"
 			>
-				mdi-delete
-			</v-icon>
+				<v-icon small color="white">mdi-delete</v-icon>
+			</v-btn>
 		</v-card>
 	</div>
 </template>
