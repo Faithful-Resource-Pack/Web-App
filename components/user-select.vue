@@ -93,7 +93,7 @@ export default {
 			type: String,
 			required: false,
 			default: "primary",
-		}
+		},
 	},
 	emits: ["input", "newUser"],
 	data() {

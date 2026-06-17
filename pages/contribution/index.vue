@@ -17,6 +17,7 @@
 			:data="remove.data"
 			:packs="packs"
 			:contributors="contributors"
+			:textures="textures"
 			@close="closeDeleteModal"
 		/>
 

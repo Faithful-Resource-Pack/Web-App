@@ -16,7 +16,9 @@
 					</v-list-item-avatar>
 				</a>
 				<v-list-item-content>
-					<v-list-item-title>[#{{ data.texture }}] {{ data.name }}</v-list-item-title>
+					<v-list-item-title>
+						[#{{ data.texture }}] {{ textures[data.texture]?.name }}
+					</v-list-item-title>
 					<v-list-item-subtitle>
 						{{ packs[data.pack]?.name || data.pack }} • {{ $root.formatDate(data.date) }}
 					</v-list-item-subtitle>
@@ -78,6 +80,10 @@ export default {
 		},
 		contributors: {
 			type: Array,
+			required: true,
+		},
+		textures: {
+			type: Object,
 			required: true,
 		},
 	},
