@@ -81,7 +81,7 @@
 							>
 								<img
 									:src="`https://vzge.me/face/64/${author.uuid || 'X-Steve'}`"
-									:aria-label="
+									:alt="
 										$root
 											.lang()
 											.global.account_manager.avatar_alt_text.replace('%s', author.username)

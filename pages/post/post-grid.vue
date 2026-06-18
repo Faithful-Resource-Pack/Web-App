@@ -40,6 +40,7 @@
 						:href="`https://faithfulpack.net/${post.permalink}`"
 						target="_blank"
 						rel="noopener noreferrer"
+						:title="$root.lang().posts.go_to_post"
 						icon
 						small
 					>

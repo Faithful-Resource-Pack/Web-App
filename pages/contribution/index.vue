@@ -93,7 +93,7 @@
 
 		<!-- Search button -->
 		<v-btn block :color="pageColor" class="my-6" :class="textColorOnPage" @click="startSearch()">
-			<v-icon left dark>mdi-magnify</v-icon>
+			<v-icon left>mdi-magnify</v-icon>
 			{{ $root.lang().database.contributions.search_contributions }}
 		</v-btn>
 

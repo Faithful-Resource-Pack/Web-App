@@ -53,7 +53,6 @@ export default {
 		},
 		btn: {
 			add: "Add",
-			add_download: "Add download",
 			submit: "Submit",
 			submit_for_review: "Submit for review",
 			submit_and_approve: "Submit and approve",
@@ -133,6 +132,7 @@ export default {
 			title: "Account manager",
 			active_account: "Active account",
 			add_account: "Add new account",
+			switch_accounts: "Switch to account",
 			avatar_alt_text: "%s's avatar",
 		},
 		emitting_image: {
@@ -219,6 +219,7 @@ export default {
 		social: {
 			title: "Social media",
 			add: "Add social media",
+			remove: "Remove social media",
 			type: {
 				label: "Social type",
 				rules: {
@@ -337,6 +338,7 @@ export default {
 		general: {
 			loading_addon: "Loading add-on…",
 			no_submissions: "You don't have any submitted add-ons!",
+			go_to_addon: "View public add-on listing",
 			rules: "Make sure to read the add-on rules before submitting",
 			title: "General",
 			name: {
@@ -430,6 +432,10 @@ export default {
 		},
 		downloads: {
 			title: "Downloads",
+			add_group: "Add download group",
+			add_item: "Add download to group",
+			remove_group: "Remove download group and items",
+			remove_item: "Remove download from group",
 			name: {
 				placeholder: "CurseForge, GitHub…",
 				label: "Name",
@@ -505,6 +511,7 @@ export default {
 			draft: "Draft",
 		},
 		loading: "Loading post…",
+		go_to_post: "View published post",
 		general: {
 			heading: "General",
 			title: {
@@ -535,7 +542,11 @@ export default {
 		download: {
 			heading: "Downloads",
 			add_category: "Add download category",
+			add_item_to_category: "Add download to category",
 			add_single_item: "Add single download",
+			remove_category: "Remove download category and items",
+			remove_item_in_category: "Remove download from category",
+			remove_single_item: "Remove single download",
 			category: "Download category name",
 			name: "Download name",
 			link: "Download link",
@@ -545,6 +556,8 @@ export default {
 			heading: "Changelog",
 			add_category: "Add changelog category",
 			add_item: "Add changelog item",
+			remove_category: "Remove changelog category",
+			remove_item: "Remove changelog item",
 			import_json: "Import JSON",
 			form_levels: {
 				primary: "Primary category",
@@ -596,6 +609,8 @@ export default {
 				pack: "Resource pack",
 				texture_id: "Texture ID",
 				texture_ids: "Texture IDs",
+				increment_texture: "Increment texture ID",
+				decrement_texture: "Decrement texture ID",
 				id_field_errors: {
 					one_required: "At least one texture ID or an ID range is required",
 					incorrect_value: "Incorrect texture %value% ID or ID range",
@@ -640,6 +655,8 @@ export default {
 				title: "Texture",
 				subtitle: "Uses and paths",
 				tagless: "No tags added",
+				copy_button: "Copy texture data as JSON",
+				json_button: "Import JSON data",
 				copy_json_data: "Copied JSON data to clipboard",
 				id_hint: "Changing the texture ID can break everything!",
 				id: "Texture ID",

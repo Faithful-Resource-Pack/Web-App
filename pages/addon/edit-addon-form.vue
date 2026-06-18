@@ -1,7 +1,13 @@
 <template>
 	<v-container>
 		<div class="d-flex align-center py-4">
-			<v-btn large icon class="mx-2" to="/addons/submissions">
+			<v-btn
+				large
+				icon
+				:title="$root.lang().addons.titles.submissions"
+				class="mx-2"
+				to="/addons/submissions"
+			>
 				<v-icon large>mdi-chevron-left</v-icon>
 			</v-btn>
 			<h1 class="text-h4">

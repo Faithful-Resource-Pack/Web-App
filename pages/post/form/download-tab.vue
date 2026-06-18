@@ -31,20 +31,31 @@
 							/>
 						</v-col>
 						<v-col class="flex-grow-0 flex-shrink-0">
-							<v-btn v-if="indexLinks === 0" icon @click="addItemToCategory(index)">
+							<v-btn
+								v-if="indexLinks === 0"
+								icon
+								:title="$root.lang().posts.download.add_item_to_category"
+								@click="addItemToCategory(index)"
+							>
 								<v-icon>mdi-plus</v-icon>
 							</v-btn>
 							<v-btn
 								v-else
 								icon
 								color="red lighten-1"
+								:title="$root.lang().posts.download.remove_item_in_category"
 								@click="removeItemInCategory(index, indexLinks)"
 							>
 								<v-icon>mdi-minus</v-icon>
 							</v-btn>
 						</v-col>
 						<v-col v-if="indexLinks === 0" class="flex-grow-0 flex-shrink-0">
-							<v-btn icon color="red lighten-1" @click="removeItem(index)">
+							<v-btn
+								icon
+								color="red lighten-1"
+								:title="$root.lang().posts.download.remove_category"
+								@click="removeItem(index)"
+							>
 								<v-icon>mdi-delete</v-icon>
 							</v-btn>
 						</v-col>
@@ -63,7 +74,12 @@
 					/>
 				</v-col>
 				<v-col class="flex-grow-0 flex-shrink-0">
-					<v-btn icon color="red lighten-1" @click="removeItem(index)">
+					<v-btn
+						icon
+						color="red lighten-1"
+						:title="$root.lang().posts.download.remove_single_item"
+						@click="removeItem(index)"
+					>
 						<v-icon>mdi-minus</v-icon>
 					</v-btn>
 				</v-col>

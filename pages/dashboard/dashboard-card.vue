@@ -3,7 +3,7 @@
 		<v-card-title class="d-flex align-center pb-2">
 			<h2 class="text-h5">{{ title }}</h2>
 			<v-spacer />
-			<v-btn v-if="to && clickable" icon :to="to" class="rounded-lg" :aria-label="title">
+			<v-btn v-if="to && clickable" icon :to="to" class="rounded-lg" :title="title">
 				<v-icon large>mdi-chevron-right</v-icon>
 			</v-btn>
 		</v-card-title>

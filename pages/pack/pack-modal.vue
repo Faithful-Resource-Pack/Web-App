@@ -97,7 +97,12 @@
 					</v-btn>
 				</v-col>
 				<v-col class="flex-grow-0 flex-shrink-0">
-					<v-btn block color="error darken-1" @click="deleteSubmission(formData)">
+					<v-btn
+						block
+						color="error darken-1"
+						:title="$root.lang().database.packs.submissions.delete_submission"
+						@click="deleteSubmission(formData)"
+					>
 						<v-icon>mdi-delete</v-icon>
 					</v-btn>
 				</v-col>

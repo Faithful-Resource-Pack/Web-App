@@ -34,7 +34,7 @@
 						absolute
 						plain
 						icon
-						:aria-label="$root.lang().gallery.share"
+						:title="$root.lang().gallery.share"
 						@click.stop="$emit('share', texture.textureID)"
 					>
 						<v-icon>mdi-share-variant</v-icon>

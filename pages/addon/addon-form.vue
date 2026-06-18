@@ -213,15 +213,29 @@
 							/>
 						</v-col>
 						<v-col class="flex-grow-0 flex-shrink-0">
-							<v-btn v-if="indexLinks === 0" icon @click="addDownloadLink(index)">
+							<v-btn
+								v-if="indexLinks === 0"
+								icon
+								:title="$root.lang().addons.downloads.add_item"
+								@click="addDownloadLink(index)"
+							>
 								<v-icon color="lighten-1">mdi-plus</v-icon>
 							</v-btn>
-							<v-btn v-else icon @click="removeDownloadLink(index, indexLinks)">
+							<v-btn
+								v-else
+								icon
+								:title="$root.lang().addons.downloads.remove_item"
+								@click="removeDownloadLink(index, indexLinks)"
+							>
 								<v-icon color="red lighten-1">mdi-minus</v-icon>
 							</v-btn>
 						</v-col>
 						<v-col v-if="index !== 0 && indexLinks === 0" class="flex-grow-0 flex-shrink-0">
-							<v-btn icon @click="removeDownloadGroup(index)">
+							<v-btn
+								icon
+								:title="$root.lang().addons.downloads.remove_group"
+								@click="removeDownloadGroup(index)"
+							>
 								<v-icon color="red lighten-1">mdi-delete</v-icon>
 							</v-btn>
 						</v-col>
@@ -230,7 +244,7 @@
 			</v-row>
 			<v-btn block color="secondary" @click="addDownloadGroup">
 				<v-icon left>mdi-playlist-plus</v-icon>
-				{{ $root.lang().global.btn.add_download }}
+				{{ $root.lang().addons.downloads.add_group }}
 			</v-btn>
 
 			<v-card-actions class="form-actions mt-5">

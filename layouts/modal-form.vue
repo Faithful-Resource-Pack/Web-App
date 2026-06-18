@@ -3,7 +3,7 @@
 		<v-card>
 			<v-card-title class="justify-space-between">
 				<h1 class="text-h5">{{ title }}</h1>
-				<v-btn icon @click="closeModal">
+				<v-btn icon :title="$root.lang().global.btn.close" @click="closeModal">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 			</v-card-title>

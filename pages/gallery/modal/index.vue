@@ -7,7 +7,7 @@
 		@close="closeModal"
 	>
 		<template #toolbar>
-			<v-btn icon @click="$emit('share', textureID)">
+			<v-btn icon :title="$root.lang().gallery.share" @click="$emit('share', textureID)">
 				<v-icon>mdi-share-variant</v-icon>
 			</v-btn>
 		</template>

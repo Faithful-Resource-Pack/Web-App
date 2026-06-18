@@ -16,7 +16,6 @@ export default {
 		},
 		btn: {
 			add: "Přidat",
-			add_download: "Přidat odkaz ke stažení",
 			submit: "Odeslat",
 			cancel: "Zrušit",
 			close: "Zavřít",

@@ -11,7 +11,7 @@
 		<div class="styles" v-html="pageStyles" />
 		<v-card class="d-flex flex-column">
 			<v-toolbar class="flex-grow-0 px-2">
-				<v-btn icon @click.stop="closeModal">
+				<v-btn icon :title="$root.lang().global.btn.close" @click.stop="closeModal">
 					<v-icon>mdi-close</v-icon>
 				</v-btn>
 				<v-toolbar-title v-if="loading">

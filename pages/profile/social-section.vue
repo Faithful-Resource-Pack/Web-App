@@ -25,7 +25,7 @@
 						/>
 					</v-col>
 					<v-col class="flex-grow-0 flex-shrink-0">
-						<v-btn icon @click="removeSocialMedia(i)">
+						<v-btn icon :title="$root.lang().profile.social.remove" @click="removeSocialMedia(i)">
 							<v-icon color="red lighten-1">mdi-minus</v-icon>
 						</v-btn>
 					</v-col>

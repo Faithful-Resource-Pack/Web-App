@@ -45,7 +45,6 @@ export default {
 		},
 		btn: {
 			add: "Hinzufügen",
-			add_download: "Download hinzufügen",
 			submit: "Senden",
 			submit_for_review: "Zur Überprüfung senden",
 			submit_and_approve: "Senden und genehmigen",

@@ -51,11 +51,12 @@
 								<v-badge dot inline :color="colors[addon.approval.status]" />
 								{{ $root.lang().addons.status[addon.approval.status] }}
 								<v-btn
-									v-if="addon.approval.status == 'approved'"
+									v-if="addon.approval.status === 'approved'"
 									color="blue"
 									:href="`https://faithfulpack.net/addons/${addon.slug}`"
 									target="_blank"
 									rel="noopener noreferrer"
+									:title="$root.lang().addons.general.go_to_addon"
 									icon
 									small
 								>
@@ -80,11 +81,12 @@
 								<v-badge dot inline :color="colors[addon.approval.status]" />
 								{{ $root.lang().addons.status[addon.approval.status] }}
 								<v-btn
-									v-if="addon.approval.status == 'approved'"
+									v-if="addon.approval.status === 'approved'"
 									color="blue"
 									:href="`https://faithfulpack.net/addons/${addon.slug}`"
 									target="_blank"
 									rel="noopener noreferrer"
+									:title="$root.lang().addons.general.go_to_addon"
 									icon
 									small
 								>

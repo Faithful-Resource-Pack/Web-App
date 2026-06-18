@@ -1,33 +1,32 @@
 <template>
-	<v-dialog v-model="modalOpened" content-class="colored" max-width="800">
-		<v-card>
-			<v-card-title class="justify-space-between">
-				{{ $root.lang().global.json_editor.import_data }}
-				<v-btn icon @click="closeModal">
-					<v-icon>mdi-close</v-icon>
-				</v-btn>
-			</v-card-title>
-			<prism-editor
-				v-model="jsonData"
-				class="json-editor json-modal-editor"
-				:highlight="highlighter"
-				line-numbers
-			/>
-			<v-btn block :color="color" class="white--text" @click="parseJSON">
-				<v-icon left>mdi-upload</v-icon>
-				{{ $root.lang().global.json_editor.parse_json }}
-			</v-btn>
-		</v-card>
-	</v-dialog>
+	<modal-form
+		v-model="modalOpened"
+		max-width="800"
+		:title="$root.lang().global.json_editor.import_data"
+		hide-actions
+	>
+		<prism-editor
+			v-model="jsonData"
+			class="json-editor json-modal-editor"
+			:highlight="highlighter"
+			line-numbers
+		/>
+		<v-btn block :color="color" class="white--text" @click="parseJSON">
+			<v-icon left>mdi-upload</v-icon>
+			{{ $root.lang().global.json_editor.parse_json }}
+		</v-btn>
+	</modal-form>
 </template>
 
 <script>
 import Prism from "prismjs";
 import { PrismEditor } from "vue-prism-editor";
+import ModalForm from "@layouts/modal-form.vue";
 
 export default {
 	name: "json-modal",
 	components: {
+		ModalForm,
 		PrismEditor,
 	},
 	props: {

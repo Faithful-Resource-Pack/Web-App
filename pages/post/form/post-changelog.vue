@@ -11,7 +11,12 @@
 				/>
 			</v-col>
 			<v-col class="flex-grow-0 flex-shrink-0">
-				<v-btn icon :size="categoryHeight" @click="$emit('delete')">
+				<v-btn
+					icon
+					:size="categoryHeight"
+					:title="$root.lang().posts.changelog.remove_item"
+					@click="$emit('delete')"
+				>
 					<v-icon color="red lighten-1">mdi-minus</v-icon>
 				</v-btn>
 			</v-col>
@@ -30,7 +35,12 @@
 					/>
 				</v-col>
 				<v-col class="flex-grow-0 flex-shrink-0">
-					<v-btn icon :size="categoryHeight" @click="$emit('delete')">
+					<v-btn
+						icon
+						:size="categoryHeight"
+						:title="$root.lang().posts.changelog.remove_category"
+						@click="$emit('delete')"
+					>
 						<v-icon color="red lighten-1">mdi-delete</v-icon>
 					</v-btn>
 				</v-col>

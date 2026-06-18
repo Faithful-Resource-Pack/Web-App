@@ -75,10 +75,18 @@
 					</v-list-item-content>
 
 					<v-list-item-action class="merged-actions">
-						<v-btn icon @click="openPathModal(path, index)">
+						<v-btn
+							icon
+							:title="$root.lang().database.textures.paths.edit_path"
+							@click="openPathModal(path, index)"
+						>
 							<v-icon color="lighten-1">mdi-pencil</v-icon>
 						</v-btn>
-						<v-btn icon @click="askRemovePath(path, index)">
+						<v-btn
+							icon
+							:title="$root.lang().database.textures.delete_modal.title_path"
+							@click="askRemovePath(path, index)"
+						>
 							<v-icon color="red lighten-1">mdi-delete</v-icon>
 						</v-btn>
 					</v-list-item-action>

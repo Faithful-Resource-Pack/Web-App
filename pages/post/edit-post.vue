@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<div class="d-flex align-center py-4">
-			<v-btn large icon class="mx-2" to="/posts/list">
+			<v-btn large icon class="mx-2" :title="$root.lang().posts.titles.list" to="/posts/list">
 				<v-icon large>mdi-chevron-left</v-icon>
 			</v-btn>
 			<h1 class="text-h4">

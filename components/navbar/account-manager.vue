@@ -26,11 +26,12 @@
 					<v-btn
 						icon
 						:disabled="profile.id === $root.user.id"
+						:title="$root.lang().global.account_manager.switch_accounts"
 						@click="$root.auth.switchAccount(profile.id)"
 					>
 						<v-icon color="lighten-1">mdi-swap-horizontal</v-icon>
 					</v-btn>
-					<v-btn icon @click="$root.auth.logout(profile.id)">
+					<v-btn icon :title="$root.lang().global.logout" @click="$root.auth.logout(profile.id)">
 						<v-icon color="red lighten-1">mdi-logout</v-icon>
 					</v-btn>
 				</v-list-item-action>

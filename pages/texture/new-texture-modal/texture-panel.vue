@@ -53,7 +53,12 @@
 						/>
 					</v-col>
 					<v-col class="flex-grow-0 flex-shrink-0">
-						<v-btn color="red lighten-1" icon @click="deleteUse(ui)">
+						<v-btn
+							color="red lighten-1"
+							icon
+							:title="$root.lang().database.textures.delete_modal.title_use"
+							@click="deleteUse(ui)"
+						>
 							<v-icon>mdi-delete</v-icon>
 						</v-btn>
 					</v-col>
@@ -97,7 +102,13 @@
 							/>
 						</v-col>
 						<v-col class="flex-grow-0 flex-shrink-0">
-							<v-btn class="ml-3" color="red lighten-1" icon @click="deletePath(ui, pi)">
+							<v-btn
+								class="ml-3"
+								color="red lighten-1"
+								icon
+								:title="$root.lang().database.textures.delete_modal.title_path"
+								@click="deletePath(ui, pi)"
+							>
 								<v-icon>mdi-minus</v-icon>
 							</v-btn>
 						</v-col>

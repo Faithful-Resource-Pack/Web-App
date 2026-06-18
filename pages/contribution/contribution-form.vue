@@ -57,10 +57,18 @@
 						class="mr-2"
 						min="0"
 					/>
-					<v-btn icon @click="incrementTextureID">
+					<v-btn
+						icon
+						:title="$root.lang().database.contributions.modal.increment_texture"
+						@click="incrementTextureID"
+					>
 						<v-icon>mdi-chevron-up</v-icon>
 					</v-btn>
-					<v-btn icon @click="decrementTextureID">
+					<v-btn
+						icon
+						:title="$root.lang().database.contributions.modal.decrement_texture"
+						@click="decrementTextureID"
+					>
 						<v-icon>mdi-chevron-down</v-icon>
 					</v-btn>
 				</div>

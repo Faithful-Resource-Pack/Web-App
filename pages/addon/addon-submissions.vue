@@ -37,6 +37,7 @@
 						:href="`https://faithfulpack.net/addons/${addon.slug}`"
 						target="_blank"
 						rel="noopener noreferrer"
+						:title="$root.lang().addons.general.go_to_addon"
 						icon
 						small
 					>

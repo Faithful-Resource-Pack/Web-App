@@ -6,8 +6,12 @@
 		@close="$emit('close')"
 	>
 		<template #toolbar>
-			<v-btn icon @click="copyData"><v-icon>mdi-content-copy</v-icon></v-btn>
-			<v-btn icon @click="openJSONModal"><v-icon>mdi-code-json</v-icon></v-btn>
+			<v-btn :title="$root.lang().database.textures.modal.copy_button" icon @click="copyData">
+				<v-icon>mdi-content-copy</v-icon>
+			</v-btn>
+			<v-btn icon :title="$root.lang().database.textures.modal.json_button" @click="openJSONModal">
+				<v-icon>mdi-code-json</v-icon>
+			</v-btn>
 		</template>
 		<json-modal v-model="jsonModalOpened" :color="color" initialValue="[]" @data="parseJSON" />
 		<div class="px-10 py-5">
@@ -18,7 +22,12 @@
 						<v-tab v-for="(texture, i) in textures" :key="texture.key" append>
 							<span v-if="texture.name">{{ texture.name }}</span>
 							<i v-else>{{ $root.lang().database.nameless }}</i>
-							<v-btn :color="color" icon @click="deleteTexture(i)">
+							<v-btn
+								:color="color"
+								icon
+								:title="$root.lang().database.textures.delete_modal.title_texture"
+								@click="deleteTexture(i)"
+							>
 								<v-icon>mdi-minus</v-icon>
 							</v-btn>
 						</v-tab>

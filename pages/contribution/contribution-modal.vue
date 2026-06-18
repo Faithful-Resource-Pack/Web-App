@@ -50,7 +50,7 @@
 						/>
 					</v-list-item-group>
 				</v-list>
-				<v-btn color="secondary" elevation="0" block @click.stop.prevent="addContribution">
+				<v-btn color="secondary" block @click.stop.prevent="addContribution">
 					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().database.contributions.modal.add_new_contribution }}
 				</v-btn>
