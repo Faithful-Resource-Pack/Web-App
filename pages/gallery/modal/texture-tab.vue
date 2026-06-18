@@ -7,7 +7,6 @@
 				dense
 				:headers="headers.uses"
 				:items="uses"
-				class="elevation-1"
 				hide-default-footer
 				disable-pagination
 			>
@@ -26,7 +25,6 @@
 					dense
 					:headers="headers.paths"
 					:items="paths[edition]"
-					class="elevation-1"
 					hide-default-footer
 					disable-pagination
 				>

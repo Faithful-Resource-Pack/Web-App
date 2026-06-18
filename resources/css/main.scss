@@ -453,7 +453,8 @@ a:hover .database-list-avatar {
 	color: rgba(255, 255, 255, 0.87);
 }
 
-.theme--light .main-container {
+.theme--light .main-container,
+.theme--light .v-data-table {
 	background: white;
 	border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }

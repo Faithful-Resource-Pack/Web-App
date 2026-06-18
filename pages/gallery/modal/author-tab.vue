@@ -14,7 +14,6 @@
 						dense
 						:headers="headers"
 						:items="getContributions(pack)"
-						class="elevation-1"
 						hide-default-footer
 						disable-pagination
 						:no-data-text="$root.lang().gallery.modal.no_contributions"
