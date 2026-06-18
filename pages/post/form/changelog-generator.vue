@@ -54,12 +54,14 @@
 					</v-btn>
 				</v-col>
 			</v-row>
-			<prism-editor
-				v-model="outputData"
-				class="json-editor json-modal-editor mt-5"
-				readonly
-				:highlight="highlighter"
-			/>
+			<v-card class="main-container mt-5 pa-1">
+				<prism-editor
+					v-model="outputData"
+					class="json-editor json-modal-editor"
+					readonly
+					:highlight="highlighter"
+				/>
+			</v-card>
 		</template>
 	</modal-form>
 </template>
