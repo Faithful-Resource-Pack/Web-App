@@ -20,7 +20,7 @@
 			:style="$vuetify.breakpoint.mdAndUp && 'height: 70vh'"
 		>
 			<!-- empty layout is shared across both mobile and desktop -->
-			<v-card v-if="selectedListItems.length === 0" class="main-container text-center">
+			<v-card v-if="selectedListItems.length === 0" class="main-container text-center px-4 py-8">
 				<loading-page v-if="loading" />
 				<ascii-error v-else :subtitle="$root.lang().review.labels[status]" />
 			</v-card>
