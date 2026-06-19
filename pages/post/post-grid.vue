@@ -1,14 +1,14 @@
 <template>
 	<v-container class="flex-grow-1">
-		<v-row no-gutters class="py-0 my-0" align="center">
+		<v-row no-gutters class="my-2 py-0" align="center">
 			<v-col cols="12" sm="6">
-				<h1 class="text-h4 py-4 d-flex flex-row align-center">
+				<h1 class="text-h4 my-2 d-flex flex-row align-center">
 					{{ $root.lang().posts.titles.list }}
 					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
 				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
-				<v-btn block color="secondary" to="/posts/new">
+				<v-btn block class="my-2" color="secondary" to="/posts/new">
 					<v-icon left>mdi-plus</v-icon>
 					{{ $root.lang().posts.titles.new }}
 				</v-btn>
