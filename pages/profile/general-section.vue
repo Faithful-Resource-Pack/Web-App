@@ -1,14 +1,9 @@
 <template>
 	<div
-		class="d-flex flex-row justify-center align-center"
+		class="d-flex flex-row justify-center align-start mb-5"
 		:class="$vuetify.breakpoint.xs && 'flex-wrap'"
 	>
-		<img
-			v-if="localUser.uuid && localUser.uuid.length === uuidMaxLength"
-			class="mx-5"
-			:src="avatar"
-			:alt="$root.lang().profile.general.uuid.skin_alt_text"
-		/>
+		<img class="mx-5" :src="avatar" :alt="$root.lang().profile.general.uuid.skin_alt_text" />
 		<div class="flex-grow-1">
 			<v-form lazy-validation>
 				<v-text-field
@@ -29,7 +24,7 @@
 					:label="$root.lang().profile.general.uuid.label"
 					:hint="$root.lang().profile.general.uuid.hint"
 				/>
-				<v-checkbox v-model="localUser.anonymous" class="extended-checkbox">
+				<v-checkbox v-model="localUser.anonymous" class="extended-checkbox" hide-details>
 					<template #label>
 						<p class="text--primary mb-2">
 							{{ $root.lang().profile.general.anonymous.label }}
@@ -95,7 +90,12 @@ export default {
 			const base = this.$vuetify.breakpoint.xs
 				? "https://vzge.me/head/128"
 				: "https://vzge.me/full/256";
-			return `${base}/${this.localUser.uuid}`;
+
+			const user =
+				this.localUser.uuid && this.localUser.uuid.length === this.uuidMaxLength
+					? this.localUser.uuid
+					: "X-Steve";
+			return `${base}/${user}`;
 		},
 	},
 	watch: {

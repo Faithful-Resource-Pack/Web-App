@@ -7,6 +7,13 @@
 		@submit="send"
 	>
 		<v-row>
+			<v-col v-if="$vuetify.breakpoint.smAndUp" cols="3">
+				<img
+					:src="`https://vzge.me/full/256/${formData.uuid || 'X-Steve'}`"
+					:alt="$root.lang().profile.general.uuid.skin_alt_text"
+					style="width: 100%; max-width: 250"
+				/>
+			</v-col>
 			<v-col cols="12" sm="9">
 				<v-form ref="form" lazy-validation>
 					<v-text-field
@@ -57,13 +64,6 @@
 						</template>
 					</v-checkbox>
 				</v-form>
-			</v-col>
-			<v-col v-if="formData.uuid && $vuetify.breakpoint.smAndUp" cols="3">
-				<img
-					:src="`https://vzge.me/full/256/${formData.uuid}`"
-					:alt="$root.lang().profile.general.uuid.skin_alt_text"
-					style="width: 100%; max-width: 250"
-				/>
 			</v-col>
 		</v-row>
 	</modal-form>

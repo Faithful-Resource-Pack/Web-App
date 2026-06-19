@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<div class="d-flex flex-wrap align-center justify-space-between py-4 ga-4">
+		<div class="d-flex flex-wrap align-center justify-space-between my-4 ga-4">
 			<h1 class="text-h4">{{ $root.lang().profile.title }}</h1>
 			<v-btn
 				color="secondary"
