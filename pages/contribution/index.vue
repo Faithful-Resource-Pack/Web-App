@@ -83,9 +83,9 @@
 					persistent-placeholder
 					outlined
 					type="search"
-					height="100%"
 					:color="pageColor"
 					hide-details
+					clearable
 					@keyup.enter="startSearch()"
 				/>
 			</v-col>

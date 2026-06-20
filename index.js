@@ -330,13 +330,13 @@ const app = new Vue({
 		},
 	},
 	created() {
-		// can't load after three seconds, show error message
+		// can't load after five seconds, show error message
 		setTimeout(() => {
 			this.showActions = true;
-		}, 3000);
+		}, 5000);
 
-		this.reloadSettings();
 		if (this.$vuetify.breakpoint.mdAndDown) this.drawerOpen = false;
+		this.reloadSettings();
 		this.translation.setup();
 		this.theme.setup(this);
 		this.auth.login(this, Vue.config.devtools);

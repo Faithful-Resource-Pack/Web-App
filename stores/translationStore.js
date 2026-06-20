@@ -39,7 +39,7 @@ export default defineStore("translation", {
 			this.$patch({ selectedLang: id });
 		},
 		getLang() {
-			// navigator language uses bcp47 formatting, read from there if user hasn't overridden config
+			// localstorage overrides any automatic language detection (already visited site)
 			const savedLangId = localStorage.getItem(LANG_KEY);
 			if (this.supportedLang(savedLangId)) return savedLangId;
 
