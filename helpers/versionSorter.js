@@ -7,7 +7,7 @@ export default function versionSorter(a, b) {
 	const aStrings = a.split(".");
 	const aNumbers = aStrings.map((aPart) => Number(aPart));
 	const bStrings = b.split(".");
-	const bNumbers = aStrings.map((bPart) => Number(bPart));
+	const bNumbers = bStrings.map((bPart) => Number(bPart));
 
 	// non-numbered versions go above everything else
 	if (
