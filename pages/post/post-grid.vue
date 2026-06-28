@@ -5,6 +5,7 @@
 				<h1 class="text-h4 my-2 d-flex flex-row align-center">
 					{{ $root.lang().posts.titles.list }}
 					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
+					<template v-else-if="posts.length">({{ posts.length }})</template>
 				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">

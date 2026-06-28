@@ -5,6 +5,7 @@
 				<h1 class="text-h4 d-flex flex-row align-center my-2">
 					{{ $root.lang().addons.titles.submissions }}
 					<v-progress-circular v-if="loading" indeterminate class="ml-5" />
+					<template v-else-if="addons.length">({{ addons.length }})</template>
 				</h1>
 			</v-col>
 			<v-col cols="12" sm="6">
