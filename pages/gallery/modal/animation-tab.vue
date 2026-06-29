@@ -1,6 +1,6 @@
 <template>
 	<div class="gallery-info py-3">
-		<h2>{{ $root.lang().gallery.modal.animation.texture_mcmeta }}</h2>
+		<h2 class="text-h5">{{ $root.lang().gallery.modal.animation.texture_mcmeta }}</h2>
 		<prism-editor
 			v-model="jsonData"
 			style="margin-top: 10px"

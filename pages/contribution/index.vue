@@ -36,7 +36,7 @@
 		</v-row>
 
 		<!-- Pack selection -->
-		<h2 class="my-2 text-h5">{{ $root.lang().database.contributions.pack_filter }}</h2>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.contributions.pack_filter }}</h2>
 		<div class="d-flex flex-wrap ma-n1">
 			<v-card
 				v-for="(packObj, key) in selectedPacks"
@@ -55,7 +55,7 @@
 		</div>
 
 		<!-- Contribution search -->
-		<h2 class="my-2 text-h5">{{ $root.lang().database.search }}</h2>
+		<h2 class="text-h5 my-2">{{ $root.lang().database.search }}</h2>
 		<v-row align="stretch" class="my-2">
 			<v-col cols="12" sm="6" class="pt-0 py-sm-0">
 				<user-select

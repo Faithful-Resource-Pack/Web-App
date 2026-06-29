@@ -2,7 +2,7 @@
 	<div>
 		<!-- eslint-disable vue/valid-v-slot -->
 		<div class="py-3">
-			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.uses }}</h2>
+			<h2 class="text-h5 mb-3">{{ $root.lang().gallery.modal.info.uses }}</h2>
 			<v-data-table
 				dense
 				:headers="headers.uses"
@@ -18,7 +18,7 @@
 			</v-data-table>
 		</div>
 		<div class="py-3">
-			<h2 class="mb-3">{{ $root.lang().gallery.modal.info.paths }}</h2>
+			<h2 class="text-h5 mb-3">{{ $root.lang().gallery.modal.info.paths }}</h2>
 			<div v-for="edition in editions" :key="edition">
 				<h3 class="uppercase text--secondary my-2">{{ edition.toTitleCase() }} Edition</h3>
 				<v-data-table

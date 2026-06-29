@@ -3,7 +3,7 @@
 		<!-- eslint-disable vue/valid-v-slot -->
 		<!-- vuetify uses dots as table fields but eslint reads them as modifiers -->
 		<div v-for="{ category, packs } in authorCategories" :key="category" class="py-3">
-			<h2 class="mb-3">{{ category }}</h2>
+			<h2 class="text-h5 mb-3">{{ category }}</h2>
 			<!-- only need dense for lg since the mobile layout is horizontal anyways -->
 			<v-row :dense="$vuetify.breakpoint.lg">
 				<v-col v-for="pack in packs" :key="pack" cols="12" sm="6">

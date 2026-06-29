@@ -1,6 +1,6 @@
 <template>
 	<v-tab-item>
-		<h2 class="pt-5 pb-3">{{ $root.lang().database.textures.modal.title }}</h2>
+		<h2 class="text-h5 mt-5 mb-3">{{ $root.lang().database.textures.modal.title }}</h2>
 		<v-row>
 			<v-col cols="12" sm="6">
 				<v-text-field
@@ -26,7 +26,7 @@
 				/>
 			</v-col>
 		</v-row>
-		<h2 class="py-3">
+		<h2 class="text-h5 my-3">
 			{{ $root.lang().database.textures.modal.subtitle }}
 		</h2>
 		<v-timeline class="timeline-left" dense align-top>
