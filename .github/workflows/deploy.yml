@@ -17,7 +17,7 @@ jobs:
         PORT: ${{ secrets.VPS_SSH_PORT }}
         KEY: ${{ secrets.VPS_SSH_KEY }}
         script: |
-          cd /var/www/html/webapp.faithfulpack.net/
+          cd /var/www/html/studio.faithfulpack.net/
           git stash
           git pull
           pnpm install
