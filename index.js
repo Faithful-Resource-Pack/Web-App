@@ -219,7 +219,9 @@ const app = new Vue({
 			lang: (store) => store.lang,
 		}),
 		loginURL() {
-			return `${this.apiURL}/auth/discord/webapp`;
+			// todo: permalink to /studio after migration is finished
+			const target = location.host.startsWith("localhost") ? "webapp" : location.host.split(".")[0];
+			return `${this.apiURL}/auth/discord/${target}`;
 		},
 		apiURL() {
 			if (
